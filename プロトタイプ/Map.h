@@ -1,14 +1,17 @@
 #pragma once
 #ifndef _MAP_INCLUDE_
 #define _MAP_INCLUDE_
+#include <vector>
 #include "BaseTask.h"
+using namespace std;
 
 class cMap:public cBaseTask {
 private:
 	int m_maxUnit;
-	double m_x, m_y, m_width, m_height;
+	double m_width, m_height;
 	int m_roomNum;
-	sDoor door[];
+	vector<sDoor> door;
+	sPos pos;
 
 public:
 	cMap();
@@ -22,6 +25,10 @@ public:
 struct sDoor {
 	sDoor* destination;
 	double x, y, width, height;
+};
+
+struct sPos {
+	double x, y;
 };
 
 
