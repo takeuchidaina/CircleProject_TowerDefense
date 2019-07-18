@@ -1,6 +1,6 @@
 #include <iostream>
 #include "DxLib.h"
-
+#include "Mouse.h"
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
@@ -28,7 +28,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		　UpdateやDrawなどの毎回呼び出すものを記述する
 
 		*************************************************/
-
+		cMouse::Instance()->Update();
+		cMouse::Instance()->Draw();
 	}
 
 	// 終了
@@ -46,8 +47,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 // URL : https://dxlib.xsrv.jp/function/dxfunc_input.html#R5N2
 
 // マウスの呼び出し
-// GetMouseInput();
-// 変数 = GetMouseInput();	// マウスの入力を取得
-// 例) if(変数 & MOUSE_INPUT_LEFT ) == 1)	// 左クリックされたら
+// GetcMouseInput();
+// 変数 = GetcMouseInput();	// マウスの入力を取得
+// 例) if(変数 & cMouse_INPUT_LEFT ) == 1)	// 左クリックされたら
 // URL : https://dxlib.xsrv.jp/function/dxfunc_input.html#R5N8
 
