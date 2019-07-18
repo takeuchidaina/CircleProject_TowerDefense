@@ -28,22 +28,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		　UpdateやDrawなどの毎回呼び出すものを記述する
 
 		*************************************************/
-
-#pragma region Mouse
 		cMouse::Instance()->Update();
-#ifdef MOUSE_DEBUG
-		DrawFormatString(0, 0, GetColor(255, 255, 255), "%d,%d",
-			cMouse::Instance()->GetX(),
-			cMouse::Instance()->GetY()
-		);
-		DrawFormatString(0, 20, GetColor(255, 255, 255), "%d %d",
-			cMouse::Instance()->GetPressCnt(cMouse::LEFT_CLICK),
-			cMouse::Instance()->GetPressCnt(cMouse::RIGHT_CLICK)
-		);
-#endif // DEBUG
-#pragma endregion
-
-
+		cMouse::Instance()->Draw();
 	}
 
 	// 終了
