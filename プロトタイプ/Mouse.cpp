@@ -1,5 +1,6 @@
 #include "Mouse.h"
 
+// コンストラクタ
 cMouse::cMouse(){
 	x = 0;
 	y = 0;
@@ -7,10 +8,16 @@ cMouse::cMouse(){
 	//buttonReleaseCnt[KEY_NUM] = { 0 };
 }
 
+// デストラクタ
 cMouse::~cMouse(){
 	//
 }
 
+/************************************************
+
+クリックやドラッグ情報の取得
+
+************************************************/
 void cMouse::Update() {
 
 	int nowButtonState = GetMouseInput();
@@ -33,34 +40,53 @@ void cMouse::Update() {
 	}
 }
 
-//keyCodeのキーが押されているフレーム数を返す
+/************************************************
+
+引数のキーが押されているフレーム数を返す
+
+************************************************/
 int cMouse::GetPressCnt(int keyCode) {
-	if (!isAvailableCode(keyCode)) {
+	if (!IsAvailableCode(keyCode)) {
 		return -1;
 	}
 	return buttonPressCnt[keyCode];
 }
 
-//keyCodeのキーが離されているフレーム数を返す
+/************************************************
+
+引数のキーが離されているフレーム数を返す
+
+************************************************/
 int cMouse::GetReleaseCnt(int keyCode) {
-	if (!isAvailableCode(keyCode)) {
+	if (!IsAvailableCode(keyCode)) {
 		return -1;
 	}
 	return buttonReleaseCnt[keyCode];
 }
 
-//keyCodeが有効な値かチェックする
-bool cMouse::isAvailableCode(int keyCode) {
+/************************************************
+
+各関数の引数が有効な値か確認する
+
+************************************************/
+bool cMouse::IsAvailableCode(int keyCode) {
 	if (!(0 <= keyCode && keyCode < KEY_NUM)) {
 		return false;
 	}
 	return true;
 }
 
+/************************************************
+
+デバッグ文字の表示
+
+************************************************/
 void cMouse::Draw() {
 
 #ifdef MOUSE_DEBUG
+	// マウスの座標の表示
 	DrawFormatString(0, 0, WH, "%d,%d", x, y);
+	// クリックされているカウントの表示
 	DrawFormatString(0, 20, WH, "%d %d",
 		buttonPressCnt[LEFT_CLICK], buttonPressCnt[RIGHT_CLICK]);
 #endif // DEBUG
