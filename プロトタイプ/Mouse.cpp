@@ -58,16 +58,11 @@ bool cMouse::isAvailableCode(int keyCode) {
 }
 
 void cMouse::Draw() {
-	// ‚È‚µ
+
 #ifdef MOUSE_DEBUG
-	DrawFormatString(0, 0, GetColor(255, 255, 255), "%d,%d",
-		cMouse::Instance()->GetX(),
-		cMouse::Instance()->GetY()
-	);
-	DrawFormatString(0, 20, GetColor(255, 255, 255), "%d %d",
-		cMouse::Instance()->GetPressCnt(cMouse::LEFT_CLICK),
-		cMouse::Instance()->GetPressCnt(cMouse::RIGHT_CLICK)
-	);
+	DrawFormatString(0, 0, WH, "%d,%d", x, y);
+	DrawFormatString(0, 20, WH, "%d %d",
+		buttonPressCnt[LEFT_CLICK], buttonPressCnt[RIGHT_CLICK]);
 #endif // DEBUG
 
 }
