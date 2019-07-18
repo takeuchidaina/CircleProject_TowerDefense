@@ -2,6 +2,7 @@
 #include <iostream>
 #include "DxLib.h"
 #include "DebugList.h"
+#include "ColorListh.h"
 #include "Singleton.h"
 
 class cMouse : public cSingleton<cMouse> {
