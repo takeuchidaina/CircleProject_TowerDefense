@@ -1,6 +1,6 @@
 #include <iostream>
 #include "DxLib.h"
-
+#include "Mouse.h"
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
@@ -29,6 +29,21 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 		*************************************************/
 
+#pragma region Mouse
+		cMouse::Instance()->Update();
+#ifdef MOUSE_DEBUG
+		DrawFormatString(0, 0, GetColor(255, 255, 255), "%d,%d",
+			cMouse::Instance()->GetX(),
+			cMouse::Instance()->GetY()
+		);
+		DrawFormatString(0, 20, GetColor(255, 255, 255), "%d %d",
+			cMouse::Instance()->GetPressCnt(cMouse::LEFT_CLICK),
+			cMouse::Instance()->GetPressCnt(cMouse::RIGHT_CLICK)
+		);
+#endif // DEBUG
+#pragma endregion
+
+
 	}
 
 	// 終了
@@ -46,8 +61,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 // URL : https://dxlib.xsrv.jp/function/dxfunc_input.html#R5N2
 
 // マウスの呼び出し
-// GetMouseInput();
-// 変数 = GetMouseInput();	// マウスの入力を取得
-// 例) if(変数 & MOUSE_INPUT_LEFT ) == 1)	// 左クリックされたら
+// GetcMouseInput();
+// 変数 = GetcMouseInput();	// マウスの入力を取得
+// 例) if(変数 & cMouse_INPUT_LEFT ) == 1)	// 左クリックされたら
 // URL : https://dxlib.xsrv.jp/function/dxfunc_input.html#R5N8
 
