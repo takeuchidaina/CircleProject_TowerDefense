@@ -46,19 +46,19 @@ public:
 	virtual void Draw();
 
 	/*****************************************************
-	名前　：int GetPressCnt(int keyCode);
-	概要　：buttonPressCnt[keyCode]の値を返す
-	引数　：keyCode:フレーム数を知りたいキーコード
-	戻り値：keyCodeのキーが押されているフレーム数
+	名前　：int GetPressCnt(int _keyCode);
+	概要　：buttonPressCnt[_keyCode]の値を返す
+	引数　：_keyCode:フレーム数を知りたいキーコード
+	戻り値：_keyCodeのキーが押されているフレーム数
 	******************************************************/
-	int GetPressCnt(int keyCode);
+	int GetPressCnt(int _keyCode);
 	/*****************************************************
-	名前　：int GetReleaseCnt(int keyCode);
-	概要　：buttonReleaseCnt[keyCode]の値を返す
-	引数　：keyCode:フレーム数を知りたいキーコード
-	戻り値：keyCodeのキーが離されているフレーム数を取得
+	名前　：int GetReleaseCnt(int _keyCode);
+	概要　：buttonReleaseCnt[_keyCode]の値を返す
+	引数　：_keyCode:フレーム数を知りたいキーコード
+	戻り値：_keyCodeのキーが離されているフレーム数を取得
 	******************************************************/
-	int GetReleaseCnt(int keyCode);
+	int GetReleaseCnt(int _keyCode);
 	/*****************************************************
 	名前　：int GetX();
 	概要　：マウスカーソル座標 x の値を返す
@@ -81,13 +81,13 @@ private:
 	int buttonReleaseCnt[KEY_NUM];	// 離されているカウント
 
 	/*****************************************************
-	名前　：IsAvailableCode(int keyCode)
+	名前　：IsAvailableCode(int _keyCode)
 	概要　：引数がキーとして有効な値かを確認する
-	引数　：keyCode:各ゲット関数でどのキーを参照するか
+	引数　：_keyCode:各ゲット関数でどのキーを参照するか
 	　　　　　　　　引数で受け取ったもの
 	戻り値：TRUE:有効　FALSE:無効
 	詳細　：関数で受け取った引数のエラーチェック用関数
 	******************************************************/
-	bool IsAvailableCode(int keyCode);
+	bool IsAvailableCode(int _keyCode);
 
 };

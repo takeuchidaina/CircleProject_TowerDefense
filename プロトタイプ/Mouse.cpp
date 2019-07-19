@@ -45,11 +45,11 @@ void cMouse::Update() {
 引数のキーが押されているフレーム数を返す
 
 ************************************************/
-int cMouse::GetPressCnt(int keyCode) {
-	if (!IsAvailableCode(keyCode)) {
+int cMouse::GetPressCnt(int _keyCode) {
+	if (!IsAvailableCode(_keyCode)) {
 		return -1;
 	}
-	return buttonPressCnt[keyCode];
+	return buttonPressCnt[_keyCode];
 }
 
 /************************************************
@@ -57,11 +57,11 @@ int cMouse::GetPressCnt(int keyCode) {
 引数のキーが離されているフレーム数を返す
 
 ************************************************/
-int cMouse::GetReleaseCnt(int keyCode) {
-	if (!IsAvailableCode(keyCode)) {
+int cMouse::GetReleaseCnt(int _keyCode) {
+	if (!IsAvailableCode(_keyCode)) {
 		return -1;
 	}
-	return buttonReleaseCnt[keyCode];
+	return buttonReleaseCnt[_keyCode];
 }
 
 /************************************************
@@ -69,8 +69,8 @@ int cMouse::GetReleaseCnt(int keyCode) {
 各関数の引数が有効な値か確認する
 
 ************************************************/
-bool cMouse::IsAvailableCode(int keyCode) {
-	if (!(0 <= keyCode && keyCode < KEY_NUM)) {
+bool cMouse::IsAvailableCode(int _keyCode) {
+	if (!(0 <= _keyCode && _keyCode < KEY_NUM)) {
 		return false;
 	}
 	return true;
