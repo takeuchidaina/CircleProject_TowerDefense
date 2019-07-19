@@ -26,7 +26,7 @@
   ・if(MOUSE_X > 100)	// マウスのx座標が100より大きい
   ・if(MOUSE_PRESS(LEFT_CLICK) == 1) // 左クリック
 ********************************************************/
-#define MOUSE_X cMouse::instance()->GetX()
+#define MOUSE_X cMouse::Instance()->GetX()
 #define MOUSE_Y cMouse::Instance()->GetY()
 #define MOUSE_PRESS cMouse::Instance()->GetPressCnt
 #define MOUSE_RELEASE cMouse::Instance()->GetReleaseCnt
@@ -35,6 +35,9 @@
 #define MOUSE_WHEEL_INIT cMouse::Instance()->InitMouseWheel()
 #define MOUSE_DISPLAY cMouse::Instance()->SetMouseDisplay
 
+#define LEFT_CLICK 0
+#define RIGHT_CLICK 1
+
 class cMouse : public cSingleton<cMouse> {
 
 	cMouse();
@@ -42,10 +45,6 @@ class cMouse : public cSingleton<cMouse> {
 	friend cSingleton< cMouse >;
 
 public:
-	// constexpr変数の値はコンパイル時に決定されROM化可能な値である。
-	// その目的は、計算処理を実行時ではなくコンパイル時に移して、実行時のプログラムを高速化することにある。
-	static constexpr int LEFT_CLICK = 0;	// 左クリック
-	static constexpr int RIGHT_CLICK = 1;	// 右クリック
 
 	virtual void Update();
 	virtual void Draw();
