@@ -4,6 +4,7 @@
 cMouse::cMouse(){
 	x = 0;
 	y = 0;
+	wheel = 0;
 	//buttonPressCnt[KEY_NUM] = { 0 };
 	//buttonReleaseCnt[KEY_NUM] = { 0 };
 }
@@ -20,6 +21,7 @@ cMouse::~cMouse(){
 ************************************************/
 void cMouse::Update() {
 
+	/*クリック*/
 	int nowButtonState = GetMouseInput();
 
 	GetMousePoint(&x, &y);
@@ -38,6 +40,10 @@ void cMouse::Update() {
 			buttonReleaseCnt[i]++;				//離されカウンタを増やす
 		}
 	}
+
+	/*ホイール*/
+	wheel += GetMouseWheelRotVol();
+
 }
 
 /************************************************
@@ -85,10 +91,12 @@ void cMouse::Draw() {
 
 #ifdef MOUSE_DEBUG
 	// マウスの座標の表示
-	DrawFormatString(0, 0, WH, "%d,%d", x, y);
+	DrawFormatString(500, 0, WH, "x:%d y:%d", x, y);
 	// クリックされているカウントの表示
-	DrawFormatString(0, 20, WH, "%d %d",
+	DrawFormatString(500, 20, WH, "左:%d 右:%d",
 		buttonPressCnt[LEFT_CLICK], buttonPressCnt[RIGHT_CLICK]);
+	// 回転量を表示
+	DrawFormatString(500, 40, GetColor(255, 255, 255), "ホイール:%d", wheel);
 #endif // DEBUG
 
 }
