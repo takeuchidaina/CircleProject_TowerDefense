@@ -1,6 +1,7 @@
 #include <iostream>
 #include "DxLib.h"
 #include "Mouse.h"
+#include "Keyboard.h"
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
@@ -30,6 +31,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		*************************************************/
 		cMouse::Instance()->Update();
 		cMouse::Instance()->Draw();
+		cKeyboard::Instance()->Update();
+		cKeyboard::Instance()->Draw();
+		
 	}
 
 	// I—¹
