@@ -149,12 +149,12 @@ void cMouse::Draw() {
 
 #ifdef MOUSE_DEBUG
 	// マウスの座標の表示
-	DrawFormatString(500, 0, WH, "x:%d y:%d", x, y);
+	DrawFormatString(1150, 660, WH, "x:%d y:%d", x, y);
 	// クリックされているカウントの表示
-	DrawFormatString(500, 20, WH, "左:%d 右:%d",
+	DrawFormatString(1150, 680, WH, "左:%d 右:%d",
 		buttonPressCnt[LEFT_CLICK], buttonPressCnt[RIGHT_CLICK]);
 	// 回転量を表示
-	DrawFormatString(500, 40, GetColor(255, 255, 255), "ホイール:%d", wheel);
+	DrawFormatString(1150, 700, GetColor(255, 255, 255), "ホイール:%d", wheel);
 #endif // DEBUG
 
 }

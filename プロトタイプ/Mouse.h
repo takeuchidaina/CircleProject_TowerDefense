@@ -6,6 +6,9 @@
 #include "ColorListh.h"
 #include "Singleton.h"
 
+#ifndef _INCLUED_MOUSE_
+#define _INCLUED_MOUSE_
+
 /********************************************************
 ●概要
 　マウス全般
@@ -134,3 +137,5 @@ private:
 	bool IsAvailableCode(int _keyCode);
 
 };
+
+#endif // _INCLUED_MOUSE_
