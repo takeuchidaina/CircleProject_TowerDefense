@@ -27,6 +27,7 @@
 命名規則：オブジェクト名_DEBUG
 ※アイウエオ順になるようにしてください
 ********************************************************/
+#define KEYBOARD_DEBUG		// キーボード
 #define SCENE_MGR_DEBUG		// シーンマネージャー
 #define MOUSE_DEBUG			// マウス
 #define MAP_MGR_DEBUG		// マップマネージャー
