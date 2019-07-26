@@ -121,10 +121,10 @@ public:
 
 private:
 	static constexpr int KEY_NUM = 8;	// キー総数
-	int x, y;		// マウスカーソル座標x,y
-	int wheel;		// マウスホイールのスクロール量
-	int buttonPressCnt[KEY_NUM];	// 押されているカウント
-	int buttonReleaseCnt[KEY_NUM];	// 離されているカウント
+	int m_x, m_y;		// マウスカーソル座標x,y
+	int m_wheel;		// マウスホイールのスクロール量
+	int m_buttonPressCnt[KEY_NUM];	// 押されているカウント
+	int m_buttonReleaseCnt[KEY_NUM];	// 離されているカウント
 
 	/*****************************************************
 	名前　：IsAvailableCode(int _keyCode)
