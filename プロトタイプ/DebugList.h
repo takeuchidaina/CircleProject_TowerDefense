@@ -1,5 +1,8 @@
 #pragma once
 
+#ifndef _INCLUED_DEBUGLIST_
+#define _INCLUED_DEBUGLIST_
+
 /********************************************************
 ●概要
 　デバッグで表示されるものを管理します。
@@ -30,3 +33,5 @@
 #define MAP_DEBUG			// マップ
 #define UNIT_MGR_DEBUG		// ユニットマネージャー
 #define UNIT_DEBUG			// ユニット
+
+#endif // !_INCLUED_DEBUGLIST_
