@@ -2,6 +2,7 @@
 #include "DxLib.h"
 #include "Mouse.h"
 #include "Keyboard.h"
+#include "FPS.h"
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
@@ -17,7 +18,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 　		実体宣言を行う
 
 	*************************************************/
-
+	cFPS fps;
 
 	// ループ
 	while ((ScreenFlip() == 0 && ProcessMessage() == 0 && ClearDrawScreen() == 0) && CheckHitKey(KEY_INPUT_ESCAPE) == 0) {
@@ -33,7 +34,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		cMouse::Instance()->Draw();
 		cKeyboard::Instance()->Update();
 		cKeyboard::Instance()->Draw();
-		
+		fps.Update();
+		fps.Draw();
 	}
 
 	// 終了
