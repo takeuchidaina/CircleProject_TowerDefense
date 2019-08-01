@@ -1,75 +1,79 @@
-#include <iostream>
-#include <vector>       
-
-#include "DxLib.h"
-#include "BaseTask.h"
 #include "MapMgr.h"
 
-using namespace std;
+cMapMgr::cMapMgr(){
+	mapLood(fileName);
+}
+ cMapMgr::~cMapMgr(){
+	 
+ }
 
-int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
-{
-	// 画面サイズの変更
-	SetWindowSize(1280, 720);
-	SetGraphMode(1280, 720, 16);
+ // マップの読み込み
+ bool cMapMgr::mapLood(string fname) {
 
-	// ウィンドウモード変更と初期化と裏画面設定
-	ChangeWindowMode(TRUE), DxLib_Init(), SetDrawScreen(DX_SCREEN_BACK);
+	 //ワイド文字変換用のロケール設定
+	 std::locale::global(std::locale("japanese"));
 
-	/*************************************************
+	 ifstream ifs;
+	 ifs.open(fname.c_str());
 
-　		実体宣言を行う
+	 while (!ifs.eof()) {
+		 
+		 char c = 0;
+		 string line;
+		 getline(ifs, line);
+		 line.push_back(comma);
+		 line.push_back('/0');
 
-	*************************************************/
+		 //deque<string> csvfname;
 
-	class cMapMgr : public cBaseTask {
+		 for (int i = 0, j = 0; i < line.size(); i++) {
+			 if (line[i] == comma) {
+				 string s = line.substr(j, i - j);
+				 i++;
+				 j = i;
+				 map.push_back(s);
+			 }
+		 }
+		 map.push_back(line);
+	 }
+	 ifs.close();
 
-			std::vector<cMap> map;		// cMapの宣言
-			int mapnum;	// 部屋数
-
-		virtual void Init() {			// 仮想関数
-
-			FileHandle = FileRead_open();	// .csv　読み込み
-
-
-			FileHandle = FileRead_close();	// .csv　閉じる
-
-		}
-
-		virtual void Update() {
-
-		}
-
-		virtual void Draw() {
-
-		}
-
-	};
-
-
-
-	// ループ
-	while ((ScreenFlip() == 0 && ProcessMessage() == 0 && ClearDrawScreen() == 0) && CheckHitKey(KEY_INPUT_ESCAPE) == 0) {
-
-		// escを押すと終了
-
-		/*************************************************
-
-		　UpdateやDrawなどの毎回呼び出すものを記述する
-
-		*************************************************/
-
-		////////////////マップ.csvベース
-//Map					         Door01	 Door02	 Door03	 Door04	
-//x	y	width	height	maxUnit	 x	y	 x	y	 x	y	 x	y
+	 return 1;
+ }
 
 
+void cMapMgr::Init(){	
 
-	}
-
-	// 終了
-	DxLib_End();
-	return 0;
 }
 
+void cMapMgr::Update(){
+
+}
+
+void cMapMgr::Draw(){
+
+}
+
+
+// 
+int cMapMgr::stringChangeInt(int x, int y){
+	string s = w(y, x);
+	if (s.size() == 0) return -1;
+	int n = atoi(s.c_str());
+	return n;
+}
+
+int cMapMgr::csvSizeY() {
+	return map.size();
+}
+
+int cMapMgr::csvSizeX(int y) {
+	if (y < 0 || y >= map.size()) return -1;
+	return map[y].size();
+}
+
+
+////////////////マップ.csvベース
+//Map					         Door01	 Door02	 Door03	 Door04	
+//x	y	width	height	maxUnit	 x	y	 x	y	 x	y	 x	y
 
