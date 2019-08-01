@@ -4,6 +4,17 @@
 #ifndef _INCLUDE_P_SORD_
 #define _INCLUDE_P_SORD_
 
+/********************************************************
+●概要
+　プレイヤー剣士ユニットクラス
+
+●作成者
+　髙井隆太郎
+
+●更新日
+　
+********************************************************/
+
 class cPSord : public cPlayerUnit
 {
 public:
@@ -22,12 +33,11 @@ public:
 	void Update() {}
 	void Draw()
 	{
-		//DrawCircle(x, y, 10, GetColor(255, 0, 0));
-
 		DrawBox(x-UNIT_WIDTH/2, y, x+UNIT_WIDTH/2, y+ UNIT_HEIGHT, GetColor(255, 0, 0), TRUE);
 	}
 
-	/*virtual void Set_Target(vector<cEnemyUnit>* _enemy)
+	/* TODO;
+	virtual void Set_Target(vector<cEnemyUnit>* _enemy)
 	{
 		double distance;
 
@@ -38,7 +48,8 @@ public:
 				target = _enemy[i];
 			}
 		}
-	}*/
+	}
+	*/
 
 private:
 	virtual void Attack() {}
