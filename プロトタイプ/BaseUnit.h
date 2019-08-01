@@ -5,8 +5,10 @@
 #include <vector>
 using namespace std;
 
-#define UNIT_WIDTH 64
-#define UNIT_HEIGHT 64
+#ifndef _INCLUDE_BASE_UNIT_
+#define _INCLUDE_BASE_UNIT_
+
+
 
 class cBaseUnit : public cBaseTask
 {
@@ -43,13 +45,14 @@ public:
 		condition = eNone;
 		nextRoom = -1;
 		isOnActive = true;
-		state = eStey;
+		state = eIdle;
 	}
 
 	// ŽŸ‚ÉŒü‚©‚¤•”‰®‚ÌƒZƒbƒg
-	void Set_NextRoom(int rr)
+	void Set_NextRoom(int _nextRoom)
 	{
-		nextRoom = rr;
+		nextRoom = _nextRoom;
 	}
 
 };
+#endif // !_INCLUDE_BASE_UNIT_

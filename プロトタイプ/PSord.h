@@ -1,6 +1,9 @@
 #pragma once
 #include "PlayerUnit.h"
 
+#ifndef _INCLUDE_P_SORD_
+#define _INCLUDE_P_SORD_
+
 class cPSord : public cPlayerUnit
 {
 public:
@@ -11,9 +14,9 @@ public:
 		room = _room;
 		hp = 50;
 		atk = 50;
-		speed = 3;
+		speed = 3.0;
 		atkCoolTime = 3;
-		target = NULL;
+		//target = NULL;
 	}
 
 	void Update() {}
@@ -21,7 +24,7 @@ public:
 	{
 		//DrawCircle(x, y, 10, GetColor(255, 0, 0));
 
-		DrawBox(x-32, y, x+32, y+ 64, GetColor(255, 0, 0), TRUE);
+		DrawBox(x-UNIT_WIDTH/2, y, x+UNIT_WIDTH/2, y+ UNIT_HEIGHT, GetColor(255, 0, 0), TRUE);
 	}
 
 	/*virtual void Set_Target(vector<cEnemyUnit>* _enemy)
@@ -40,3 +43,4 @@ public:
 private:
 	virtual void Attack() {}
 };
+#endif // !_INCLUDE_PSORD_

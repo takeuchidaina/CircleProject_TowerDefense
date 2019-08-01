@@ -5,6 +5,9 @@
 #include "Mouse.h"
 #include "Constant.h"
 
+#ifndef _INCLUDE_INGAME_MGR_
+#define _INCLUDE_INGAME_MGR_
+
 class cInGameMgr : public cSingleton <cInGameMgr>
 {
 	cInGameMgr() {}
@@ -22,7 +25,7 @@ public:
 		{
 			if (true == map.CheckInto(cMouse::Instance()->GetX(), cMouse::Instance()->GetY()))
 			{
-				unit.Add_PSord(cMouse::Instance()->GetX(), map.Get_Graound() - UNIT_HEIGHT);
+				unit.Add_PSord(cMouse::Instance()->GetX(), map.Get_Ground() - UNIT_HEIGHT);
 			}
 		}
 
@@ -35,3 +38,4 @@ public:
 		unit.Draw();
 	}
 };
+#endif // !_INCLUDE_INGAME_MGR_

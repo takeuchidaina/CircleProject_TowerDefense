@@ -1,6 +1,9 @@
 #pragma once
 #include "PlayerUnit.h"
 
+#ifndef _INCLUDE_P_ARCHER_
+#define _INCLUDE_P_ARCHER_
+
 class cPArcher : public cPlayerUnit
 {
 public:
@@ -11,7 +14,7 @@ public:
 		room = _room;
 		hp = 30;
 		atk = 20;
-		speed = 3;
+		speed = 3.0;
 		atkCoolTime = 5;
 	}
 
@@ -25,3 +28,4 @@ public:
 private:
 	virtual void Attack() {}
 };
+#endif // !_INCLUDE_P_ARCHER_

@@ -13,7 +13,13 @@ bool cMap::CheckInto(double _x, double _y)
 		{
 			return true;
 		}
-		else return false;
+		else
+		{
+			return false;
+		}
 	}
-	else return false;
+	else
+	{
+		return false;
+	}
 }

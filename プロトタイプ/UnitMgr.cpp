@@ -11,6 +11,7 @@ void cUnitMgr::Update()
 	//	player.emplace_back(new cPArcher(100, 150, 1));
 	//}
 
+	UnitSelectUI();
 
 }
 
@@ -21,5 +22,21 @@ void cUnitMgr::Draw()
 		player[i]->Draw();
 	}
 
+	for (int i = 0; i < ui.size(); i++)
+	{
+		ui[i].Draw();
+	}
+
+#ifdef UNIT_MGR_DEBUG
 	DrawFormatString(100, 100, GetColor(255, 0, 0), "ユニット数：%d", player.size());
+#endif // UNIT_MGR_DEBUG
+}
+
+void cUnitMgr::UnitSelectUI()
+{
+	for (int i = 0; i < 2; i++)
+	{
+		ui.emplace_back(200 + 65 * i, i);
+	}
+	
 }

@@ -3,6 +3,9 @@
 //#include "EnemyUnit.h"
 #include <math.h>
 
+#ifndef _INCLUDE_PLAYER_UNIT_
+#define _INCLUDE_PLAYER_UNIT_
+
 class cPlayerUnit : public cBaseUnit
 {
 protected:
@@ -33,3 +36,4 @@ public:
 
 
 };
+#endif // !_INCLUDE_PLAYER_UNIT_

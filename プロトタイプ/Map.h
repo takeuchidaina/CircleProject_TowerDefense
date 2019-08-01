@@ -13,8 +13,8 @@ class cMap
 public:
 	cMap()
 	{
-		x = 300; y = 500;
-		w = 300; h = 150;
+		x = 300.0; y = 500.0;
+		w = 150.0; h = 100.0;
 		maxUnit = 3;
 		roomNum = 1;
 	}
@@ -26,7 +26,7 @@ public:
 	}
 
 	bool CheckInto(double, double);
-	double Get_Graound()
+	double Get_Ground()
 	{
 		return y + h;
 	}
