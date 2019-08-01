@@ -12,6 +12,7 @@
 œXV“ú
 2019/08/01 ì¬
 **********************************************************/
+
 #ifndef _INCLUDE_ISCENECHANGER_
 #define _INCLUDE_ISCENECHANGER_
 
