@@ -42,7 +42,7 @@ public:
 
 	void SetComma(char c) { comma = c; }
 
-	cMapMgr() {comma = L','; }
+	cMapMgr() {comma = ','; }
 	cMapMgr(string fname) { comma = ','; mapLood(fname); }
 
 	virtual void Init();

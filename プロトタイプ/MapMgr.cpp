@@ -13,15 +13,20 @@ cMapMgr::cMapMgr(){
 	 //ワイド文字変換用のロケール設定
 	 std::locale::global(std::locale("japanese"));
 
-	 ifstream ifs;
-	 ifs.open(fname.c_str());
+	 std::ifstream ifs("test.txt");				//	ファイルストリームを宣言
+	 ifs.open(fname.c_str());	// ファイルを開く
 
-	 while (!ifs.eof()) {
+	 if (!ifs) {		// エラー処理     ifsをつけるのはファイルを開くのを失敗したかどうか
+		 std::cerr <<"ファイルオープン失敗" << std::endl;
+		 std::exit(1);
+	 }
+
+	 while (!ifs.eof()) {		// ファイルストリームが終わるまで回る
 		 
 		 char c = 0;
 		 string line;
-		 getline(ifs, line);
-		 line.push_back(comma);
+		 getline(ifs, line);	 // ifsで開いたファイルから1行読み込む
+		 line.push_back(comma);  // 配列に','を追加
 		 line.push_back('/0');
 
 		 //deque<string> csvfname;
@@ -31,10 +36,10 @@ cMapMgr::cMapMgr(){
 				 string s = line.substr(j, i - j);
 				 i++;
 				 j = i;
-				 map.push_back(s);
+				 map.push_back(s);	// 配列に一時保存
 			 }
 		 }
-		 map.push_back(line);
+		 map.push_back(line);		// 配列に保存
 	 }
 	 ifs.close();
 
@@ -56,7 +61,7 @@ void cMapMgr::Draw(){
 
 
 // 
-int cMapMgr::stringChangeInt(int x, int y){
+int cMapMgr::stringChangeInt(int x, int y){		// string型をint型にする
 	string s = w(y, x);
 	if (s.size() == 0) return -1;
 	int n = atoi(s.c_str());
