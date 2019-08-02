@@ -34,7 +34,11 @@ void cFPS::Update() {
 
 ************************************************/
 void cFPS::Draw() {
-	DrawFormatString(0, 0, GetColor(255, 255, 255), "%.1f", m_fps);
+
+#ifdef FPS_DEBUG
+	DrawFormatString(1220, 0, WH, "%.1f", m_fps);
+#endif // FPS_DEBUG
+
 }
 
 /************************************************
