@@ -19,7 +19,7 @@ class cBaseTask
 {
 public:
 
-	virtual ~cBaseTask();
+	virtual ~cBaseTask() {};
 
 	/*****************************************************
 	–¼‘O@FInit()

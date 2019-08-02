@@ -4,6 +4,7 @@
 #include "ISceneChanger.h"
 #include "BaseScene.h"
 #include "BaseTask.h"
+#include "GameMgr.h"
 
 /**********************************************************
 ●概要
@@ -24,6 +25,7 @@ class cSceneMgr:public ISceneChanger , cBaseTask {
 
 public:
 	cSceneMgr();
+	virtual ~cSceneMgr() {}
 
 	void Init()override;
 	void Update()override;
@@ -33,8 +35,10 @@ public:
 	void ChangeScene(eScene _nextScene)override;
 
 private:
+
 	cBaseScene* m_scene;	// シーン管理変数
 	eScene m_nextScene;		// 次のシーン
+
 };
 
 #endif // !_INCLUED_SCENEMGR_

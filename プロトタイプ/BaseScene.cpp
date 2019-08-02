@@ -4,6 +4,10 @@ cBaseScene::cBaseScene(ISceneChanger* _scene){
 	sceneChanger = _scene;
 }
 
+void cBaseScene::Init() {
+
+}
+
 void cBaseScene::Update() {
 
 }

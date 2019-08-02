@@ -1,6 +1,8 @@
 #pragma once
 
 #include "DxLib.h"
+#include "DebugList.h"
+#include "ColorListh.h"
 #include "BaseTask.h"
 #include "ISceneChanger.h"
 
@@ -27,7 +29,6 @@ protected:
 public:
 	cBaseScene(ISceneChanger* _scene);
 	virtual ~cBaseScene(){}
-
 	virtual void Init()override;
 	virtual void Update()override;
 	virtual void Draw()override;

@@ -2,7 +2,7 @@
 
 cSceneMgr::cSceneMgr() : m_nextScene(E_SCENE_NONE){
 
-	//m_scene = (cBaseScene*) new cInGameMgr(this);
+	m_scene = (cBaseScene*) new cGameMgr(this);
 }
 
 void cSceneMgr::Init() {
@@ -26,7 +26,7 @@ void cSceneMgr::Update() {
 			//m_scene = (cBaseScene*) new cMenu(this);
 			break;
 		case E_SCENE_GAME:
-			//m_scene = (cBaseScene*) new cGame(this);
+			//m_scene = (cBaseScene*) new cGameMgr(this);
 			break;
 		case E_SCENE_RISULT:
 			//m_scene = (cBaseScene*) new cRisult(this);
