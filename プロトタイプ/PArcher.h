@@ -1,6 +1,20 @@
 #pragma once
 #include "PlayerUnit.h"
 
+#ifndef _INCLUDE_P_ARCHER_
+#define _INCLUDE_P_ARCHER_
+
+/********************************************************
+●概要
+　プレイヤー弓兵ユニットクラス
+
+●作成者
+　髙井隆太郎
+
+●更新日
+　
+********************************************************/
+
 class cPArcher : public cPlayerUnit
 {
 public:
@@ -11,7 +25,7 @@ public:
 		room = _room;
 		hp = 30;
 		atk = 20;
-		speed = 3;
+		speed = 3.0;
 		atkCoolTime = 5;
 	}
 
@@ -25,3 +39,4 @@ public:
 private:
 	virtual void Attack() {}
 };
+#endif // !_INCLUDE_P_ARCHER_

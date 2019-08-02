@@ -5,8 +5,19 @@
 #include <vector>
 using namespace std;
 
-#define UNIT_WIDTH 64
-#define UNIT_HEIGHT 64
+#ifndef _INCLUDE_BASE_UNIT_
+#define _INCLUDE_BASE_UNIT_
+
+/********************************************************
+●概要
+　Unitのベースクラス
+
+●作成者
+　髙井隆太郎
+
+●更新日
+  
+********************************************************/
 
 class cBaseUnit : public cBaseTask
 {
@@ -25,15 +36,6 @@ protected:
 	// cMapMgr* mapMgr			// マップ全体のアドレス
 
 public:
-	//cBaseUnit(int hh, double xx, double yy, int rr, int aa, double ss, int act, double ar)
-	//{
-	//	hp = hh; x = xx; y = yy; room = rr; atk = aa; speed = ss; atkCoolTime = act; atkR = ar;
-	//	isOnActive = true;
-	//	nextRoom = -1;
-	//	condition = eNone;
-	//	state = eStey;
-	//}
-	//~cBaseUnit();
 
 	void Update() {}
 	void Draw() {}
@@ -43,13 +45,19 @@ public:
 		condition = eNone;
 		nextRoom = -1;
 		isOnActive = true;
-		state = eStey;
+		state = eIdle;
 	}
 
-	// 次に向かう部屋のセット
-	void Set_NextRoom(int rr)
+	/*********************************************************************
+	関数名：void Set_NextRoom(int)
+	概要：次に向かう部屋をセット
+	引数：_nextRoom:次に向かう部屋番号
+	戻り値：なし
+	*********************************************************************/
+	void Set_NextRoom(int _nextRoom)
 	{
-		nextRoom = rr;
+		nextRoom = _nextRoom;
 	}
 
 };
+#endif // !_INCLUDE_BASE_UNIT_
