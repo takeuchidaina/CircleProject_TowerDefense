@@ -20,32 +20,32 @@ struct sDoor {
 class cMap:public cBaseTask {
 
 private:
-	double m_x, m_y;			//À•W
-	double m_width, m_height;	//•‚‚³
-	int m_maxUnit;				//•”‰®‚É‚¢‚ç‚ê‚éÅ‘åƒ†ƒjƒbƒg”
-	int m_roomNum;				//•”‰®”Ô†
-	vector<sDoor> m_door;		//ƒhƒA‚Ìvector”z—ñ
+	double m_x, m_y;			//ï¿½ï¿½W
+	double m_width, m_height;	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	int m_maxUnit;				//ï¿½ï¿½ï¿½ï¿½ï¿½É‚ï¿½ï¿½ï¿½ï¿½ï¿½Å‘åƒ†ï¿½jï¿½bï¿½gï¿½ï¿½
+	int m_roomNum;				//ï¿½ï¿½ï¿½ï¿½ï¿½Ôï¿½
+	vector<sDoor> m_door;		//ï¿½hï¿½Aï¿½ï¿½vectorï¿½zï¿½ï¿½
 
 public:
-	cMap(double _x, double _y, double _w, double _h, int _maxUnit, int _roomNum, vector<sDoor>& _door);//ƒhƒA”z—ñ‚ğQÆ“n‚µ
+	cMap(double _x, double _y, double _w, double _h, int _maxUnit, int _roomNum, vector<sDoor>& _door);//ï¿½hï¿½Aï¿½zï¿½ï¿½ï¿½Qï¿½Æ“nï¿½ï¿½
 	virtual ~cMap();
 	virtual void Init();
 	virtual void Update();
 	virtual void Draw();
 	virtual void End();
 
-	//ƒhƒA‚ÌƒAƒhƒŒƒX‚ÌGetŠÖ”‚ÆSetŠÖ”
-	//i=ƒhƒA”Ô†
+	//ï¿½hï¿½Aï¿½ÌƒAï¿½hï¿½ï¿½ï¿½Xï¿½ï¿½Getï¿½Öï¿½ï¿½ï¿½Setï¿½Öï¿½
+	//i=ï¿½hï¿½Aï¿½Ôï¿½
 	sDoor* GetDestination(int i) { return m_door[i].destination; }
 	void SetDestination(int i, sDoor* _des) { m_door[i].destination = _des; }
 
-	//‚ˆä’Ç‰Á
+	//ï¿½ï¿½ï¿½ï¿½Ç‰ï¿½
 	bool CheckInto(double, double);
 	double Get_Ground()
 	{
 		return m_y + m_height;
 	}
-	//‚±‚±‚Ü‚Å
+	//ï¿½ï¿½ï¿½ï¿½ï¿½Ü‚ï¿½
 };
 
 #endif _MAP_INCLUDE_

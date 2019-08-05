@@ -1,5 +1,9 @@
 #include <iostream>
 #include "DxLib.h"
+#include "SceneMgr.h"
+#include "Mouse.h"
+#include "Keyboard.h"
+#include "FPS.h"
 
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
@@ -16,7 +20,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 　		実体宣言を行う
 
 	*************************************************/
-
+	//cFPS fps;
+	cSceneMgr sceneMgr;
 
 	// ループ
 	while ((ScreenFlip() == 0 && ProcessMessage() == 0 && ClearDrawScreen() == 0) && CheckHitKey(KEY_INPUT_ESCAPE) == 0) {
@@ -28,26 +33,20 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		　UpdateやDrawなどの毎回呼び出すものを記述する
 
 		*************************************************/
+		cMouse::Instance()->Update();
+		cMouse::Instance()->Draw();
+		cKeyboard::Instance()->Update();
+		cKeyboard::Instance()->Draw();
+		//fps.Update();
+		//fps.Draw();
 
+		sceneMgr.Update();
+		sceneMgr.Draw();
+		
 	}
 
 	// 終了
 	DxLib_End();
 	return 0;
 }
-
-
-// キーボードの呼び出し
-// CheckHitKey( );
-// ()の中にKEY_INPUT_○○と記入する
-// ○○に大文字のアルファベットなどを記述
-// 例) if(CheckHitKey(KEY_INPUT_W) == 1)  // wが押されたら
-// 例) if(CheckHitKey(KEY_INPUT_W) >= 1)  // wが押されているなら
-// URL : https://dxlib.xsrv.jp/function/dxfunc_input.html#R5N2
-
-// マウスの呼び出し
-// GetMouseInput();
-// 変数 = GetMouseInput();	// マウスの入力を取得
-// 例) if(変数 & MOUSE_INPUT_LEFT ) == 1)	// 左クリックされたら
-// URL : https://dxlib.xsrv.jp/function/dxfunc_input.html#R5N8
 
