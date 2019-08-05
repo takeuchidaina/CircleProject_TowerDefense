@@ -1,6 +1,6 @@
 #include "Map.h"
 
-//ï¿½Rï¿½ï¿½ï¿½Xï¿½gï¿½ï¿½ï¿½Nï¿½^ï¿½Aï¿½ï¿½ï¿½ï¿½
+//ƒRƒ“ƒXƒgƒ‰ƒNƒ^A‰Šú‰»
 cMap::cMap(double _x, double _y, double _w, double _h, int _maxUnit, int _roomNum, vector<sDoor>& _door) {
 	m_x = _x;
 	m_y = _y;
@@ -24,7 +24,7 @@ void cMap::Update() {
 }
 
 void cMap::Draw() {
-	//ï¿½Æ‚è‚ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	//‚Æ‚è‚ ‚¦‚¸” 
 	DrawBox(m_x, m_y, m_x + m_width + 1, m_y + m_height + 1, WH, TRUE);
 	for (int i = 0; i < m_door.size(); i++) {
 		DrawBox(m_door[i].x, m_door[i].y, m_door[i].x + m_door[i].width + 1, m_door[i].y + m_door[i].height + 1, BL, TRUE);
@@ -35,13 +35,12 @@ void cMap::End() {
 	;
 }
 
-//ï¿½ï¿½ï¿½ï¿½Ç‰ï¿½
+//‚ˆä’Ç‰Á
 bool cMap::CheckInto(double _x, double _y)
 {
 	if (m_x + (UNIT_HEIGHT / 2) <= _x && m_x + m_width - (UNIT_WIDTH / 2) >= _x)
 	{
 		if (m_y <= _y && m_y + m_height >= _y)
-
 		{
 			return true;
 		}
@@ -55,3 +54,4 @@ bool cMap::CheckInto(double _x, double _y)
 		return false;
 	}
 }
+//‚±‚±‚Ü‚Å
