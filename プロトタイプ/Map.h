@@ -1,33 +1,51 @@
 #pragma once
+
+#include <vector>
 #include "DxLib.h"
-#include "PlayerUnit.h"
+#include "BaseTask.h"
+#include "ColorListh.h"
 #include "Constant.h"
 
-class cMap
-{
-	double x, y;
-	double w, h;
-	int maxUnit;
-	int roomNum;
+
+
+#ifndef _MAP_INCLUDE_
+#define _MAP_INCLUDE_
+using namespace std;
+
+struct sDoor {
+	sDoor* destination;
+	double x, y, width, height;
+};
+
+class cMap:public cBaseTask {
+
+private:
+	double m_x, m_y;			//��W
+	double m_width, m_height;	//������
+	int m_maxUnit;				//�����ɂ�����ő僆�j�b�g��
+	int m_roomNum;				//�����ԍ�
+	vector<sDoor> m_door;		//�h�A��vector�z��
 
 public:
-	cMap()
-	{
-		x = 300.0; y = 500.0;
-		w = 150.0; h = 100.0;
-		maxUnit = 3;
-		roomNum = 1;
-	}
+	cMap(double _x, double _y, double _w, double _h, int _maxUnit, int _roomNum, vector<sDoor>& _door);//�h�A�z���Q�Ɠn��
+	virtual ~cMap();
+	virtual void Init();
+	virtual void Update();
+	virtual void Draw();
+	virtual void End();
 
-	void Update();
-	void Draw()
-	{
-		DrawBox(x, y, x + w, y + h, GetColor(255, 255, 255), TRUE);
-	}
+	//�h�A�̃A�h���X��Get�֐���Set�֐�
+	//i=�h�A�ԍ�
+	sDoor* GetDestination(int i) { return m_door[i].destination; }
+	void SetDestination(int i, sDoor* _des) { m_door[i].destination = _des; }
 
+	//����ǉ�
 	bool CheckInto(double, double);
 	double Get_Ground()
 	{
-		return y + h;
+		return m_y + m_height;
 	}
+	//�����܂�
 };
+
+#endif _MAP_INCLUDE_
