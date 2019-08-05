@@ -34,3 +34,24 @@ void cMap::Draw() {
 void cMap::End() {
 	;
 }
+
+//çÇà‰í«â¡
+bool cMap::CheckInto(double _x, double _y)
+{
+	if (m_x + (UNIT_HEIGHT / 2) <= _x && m_x + m_width - (UNIT_WIDTH / 2) >= _x)
+	{
+		if (m_y <= _y && m_y + m_height >= _y)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	else
+	{
+		return false;
+	}
+}
+//Ç±Ç±Ç‹Ç≈
