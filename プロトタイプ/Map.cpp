@@ -25,7 +25,10 @@ void cMap::Update() {
 
 void cMap::Draw() {
 	//‚Æ‚è‚ ‚¦‚¸” 
-	DrawBox(m_x, m_y, m_x + m_width + 1, m_y + m_height + 1, GetColor(255, 255, 255), FALSE);
+	DrawBox(m_x, m_y, m_x + m_width + 1, m_y + m_height + 1, WH, TRUE);
+	for (int i = 0; i < m_door.size(); i++) {
+		DrawBox(m_door[i].x, m_door[i].y, m_door[i].x + m_door[i].width + 1, m_door[i].y + m_door[i].height + 1, BL, TRUE);
+	}
 }
 
 void cMap::End() {
