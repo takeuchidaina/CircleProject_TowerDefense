@@ -31,6 +31,7 @@
 ********************************************************/
 #define MOUSE_X cMouse::Instance()->GetX()
 #define MOUSE_Y cMouse::Instance()->GetY()
+#define MOUSE_V cMouse::Instance()->GetV()
 #define MOUSE_PRESS cMouse::Instance()->GetPressCnt
 #define MOUSE_RELEASE cMouse::Instance()->GetReleaseCnt
 #define MOUSE_WHEEL cMouse::Instance()->GetWheel()
@@ -82,6 +83,14 @@ public:
 	戻り値：マウスカーソル座標 y
 	******************************************************/
 	int GetY();
+	/***********************************************************
+	関数名：GetV()
+	説明：カーソル座標をワールド座標に変換して返す
+　　　	  受け取る側はVECTOR型の変数で受け取る
+	引数：なし
+	戻り値：説明が難しい
+	***********************************************************/
+	VECTOR GetV();
 	/*****************************************************
 	名前　：int GetWheel();
 	概要　：マウスのスクロール量 wheel の値を返す
