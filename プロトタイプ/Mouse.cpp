@@ -43,6 +43,10 @@ void cMouse::Update() {
 
 	/*ホイール*/
 	m_wheel += GetMouseWheelRotVol();
+	if (m_wheel <= 0)
+	{
+		m_wheel = 0;
+	}
 
 }
 
@@ -105,6 +109,17 @@ int cMouse::GetX() {
 int cMouse::GetY() {
 	return m_y;
 }
+
+/************************************************
+
+マウスのワールド座標を返す
+
+************************************************/
+VECTOR cMouse::GetV()
+{
+	return ConvScreenPosToWorldPos(VGet(m_x, m_y, 0.0f));
+}
+
 /************************************************
 
 マウスのホイール量を返す
