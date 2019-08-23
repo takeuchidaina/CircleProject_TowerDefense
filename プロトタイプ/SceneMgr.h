@@ -4,7 +4,10 @@
 #include "ISceneChanger.h"
 #include "BaseScene.h"
 #include "BaseTask.h"
+#include "Title.h"
+#include "Menu.h"
 #include "GameMgr.h"
+#include "Result.h"
 
 /**********************************************************
 œŠT—v

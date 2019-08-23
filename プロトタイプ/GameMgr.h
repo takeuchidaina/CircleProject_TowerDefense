@@ -6,6 +6,8 @@
 #include "BaseScene.h"
 #include "BaseTask.h"
 #include "ISceneChanger.h"
+#include "Mouse.h"
+#include "Keyboard.h"
 #include "FPS.h"
 
 #ifndef _INCLUDE_GAMEMGR_
