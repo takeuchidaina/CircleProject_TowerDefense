@@ -9,6 +9,8 @@ void cTitle::Init() {
 
 void cTitle::Update() {
 
+#ifdef TITLE_DEBUG
+
 	//ƒ^ƒCƒgƒ‹‚Ö
 	if (GET_KEY_PRESS(KEY_INPUT_T)) {
 		sceneChanger->ChangeScene(E_SCENE_TITLE);
@@ -25,6 +27,8 @@ void cTitle::Update() {
 	if (GET_KEY_PRESS(KEY_INPUT_R)) {
 		sceneChanger->ChangeScene(E_SCENE_RESULT);
 	}
+
+#endif // TITLE_DEBUG
 
 }
 
