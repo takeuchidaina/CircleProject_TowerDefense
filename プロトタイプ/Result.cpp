@@ -1,14 +1,13 @@
-#include "GameMgr.h"
+#include "Result.h"
 
-cGameMgr::cGameMgr(ISceneChanger* _scene) : cBaseScene(_scene) {
-	cGameMgr::Init();
+cResult::cResult(ISceneChanger* _scene) : cBaseScene(_scene) {
+	cResult::Init();
 }
 
-void cGameMgr::Init() {
+void cResult::Init() {
 }
 
-void cGameMgr::Update() {
-	fps.Update();
+void cResult::Update() {
 
 	//タイトルへ
 	if (GET_KEY_PRESS(KEY_INPUT_T)) {
@@ -29,17 +28,16 @@ void cGameMgr::Update() {
 
 }
 
-void cGameMgr::Draw() {
+void cResult::Draw() {
 
 	cBaseScene::Draw();
-	fps.Draw();
 
-#ifdef GAMEMGR_DEBUG
-	DrawFormatString(0, 0, WH, "ゲーム画面");
-#endif // GAMEMGR_DEBUG
+#ifdef RESULT_DEBUG
+	DrawFormatString(0, 0, WH, "リザルト画面");
+#endif // RESULT_DEBUG
 
 }
 
-void cGameMgr::End() {
+void cResult::End() {
 
 }

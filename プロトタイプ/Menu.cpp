@@ -1,14 +1,14 @@
-#include "GameMgr.h"
+#include "Menu.h"
 
-cGameMgr::cGameMgr(ISceneChanger* _scene) : cBaseScene(_scene) {
-	cGameMgr::Init();
+cMenu::cMenu(ISceneChanger* _scene) : cBaseScene(_scene) {
+	cMenu::Init();
 }
 
-void cGameMgr::Init() {
+void cMenu::Init() {
+
 }
 
-void cGameMgr::Update() {
-	fps.Update();
+void cMenu::Update() {
 
 	//タイトルへ
 	if (GET_KEY_PRESS(KEY_INPUT_T)) {
@@ -29,17 +29,16 @@ void cGameMgr::Update() {
 
 }
 
-void cGameMgr::Draw() {
+void cMenu::Draw() {
 
 	cBaseScene::Draw();
-	fps.Draw();
 
-#ifdef GAMEMGR_DEBUG
-	DrawFormatString(0, 0, WH, "ゲーム画面");
-#endif // GAMEMGR_DEBUG
+#ifdef MENU_DEBUG
+	DrawFormatString(0, 0, WH, "メニュー画面");
+#endif // MENU_DEBUG
 
 }
 
-void cGameMgr::End() {
+void cMenu::End() {
 
 }

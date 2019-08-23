@@ -6,18 +6,13 @@
 #include "BaseScene.h"
 #include "BaseTask.h"
 #include "ISceneChanger.h"
-#include "Mouse.h"
 #include "Keyboard.h"
-#include "FPS.h"
+#include "Mouse.h"
 
-#ifndef _INCLUDE_GAMEMGR_
-#define _INCLUDE_GAMEMGR_
-
-class cGameMgr : public cBaseScene{
+class cResult : public cBaseScene {
 
 public:
-
-	cGameMgr(ISceneChanger* _scene);
+	cResult(ISceneChanger* _scene);
 
 	void Init()override;
 	void Update()override;
@@ -26,7 +21,4 @@ public:
 
 private:
 
-	cFPS fps;
 };
-
-#endif // !_INCLUDE_GAMEMGR_

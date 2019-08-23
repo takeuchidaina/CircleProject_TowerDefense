@@ -1,14 +1,13 @@
-#include "GameMgr.h"
+#include "Title.h"
 
-cGameMgr::cGameMgr(ISceneChanger* _scene) : cBaseScene(_scene) {
-	cGameMgr::Init();
+cTitle::cTitle(ISceneChanger* _scene) : cBaseScene(_scene) {
+	cTitle::Init();
 }
 
-void cGameMgr::Init() {
+void cTitle::Init() {
 }
 
-void cGameMgr::Update() {
-	fps.Update();
+void cTitle::Update() {
 
 	//タイトルへ
 	if (GET_KEY_PRESS(KEY_INPUT_T)) {
@@ -29,17 +28,16 @@ void cGameMgr::Update() {
 
 }
 
-void cGameMgr::Draw() {
+void cTitle::Draw() {
 
 	cBaseScene::Draw();
-	fps.Draw();
 
-#ifdef GAMEMGR_DEBUG
-	DrawFormatString(0, 0, WH, "ゲーム画面");
-#endif // GAMEMGR_DEBUG
+#ifdef TITLE_DEBUG
+	DrawFormatString(0, 0, WH, "タイトル画面");
+#endif // TITLE_DEBUG
 
 }
 
-void cGameMgr::End() {
+void cTitle::End() {
 
 }
