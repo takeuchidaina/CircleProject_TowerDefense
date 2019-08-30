@@ -32,6 +32,7 @@
 #define GAMEMGR_DEBUG		// ゲームマネージャー
 #define SCENE_MGR_DEBUG		// シーンマネージャー
 #define TITLE_DEBUG			// タイトル
+#define BUTTON_DEBUG		// ボタン
 #define MOUSE_DEBUG			// マウス
 #define MAP_MGR_DEBUG		// マップマネージャー
 #define MAP_DEBUG			// マップ
