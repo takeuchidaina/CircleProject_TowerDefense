@@ -22,20 +22,20 @@
 
 typedef enum
 {
-	eNone,		// ‚È‚µ
+	E_NONE,		// ‚È‚µ
 
 
 }eCondition;
 
 typedef enum
 {
-	eSord,		// Œ•m
-	eArcher,		// ‹|•º
+	E_SORD,		// Œ•m
+	E_ARCHER,	// ‹|•º
 }eUnitType;
 
 typedef enum
 {
-	eIdle,		// ‘Ò‹@’†
-	eAttack,	// UŒ‚’†
-	eMove,		// ˆÚ“®’†
+	E_IDLE,		// ‘Ò‹@’†
+	E_ATTACK,	// UŒ‚’†
+	E_MOVE,		// ˆÚ“®’†
 }eState;
