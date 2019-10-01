@@ -8,18 +8,18 @@ cButton::~cButton()
 {
 }
 
-cButton::Init() {
+void cButton::Init() {
 
 }
 
-cButton::Update() {
+void cButton::Update() {
 
 }
 
-cButton::Draw() {
+void cButton::Draw() {
 
 }
 
-cButton::End() {
+void cButton::End() {
 
 }
