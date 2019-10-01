@@ -4,9 +4,11 @@ using namespace std;
 #include <vector>
 #include <fstream>
 #include <string>
-//#include <deque>
+#include <stdlib.h>
+
 #include "DxLib.h"
 #include "BaseTask.h"
+#include "Map.h"
 
 /*******************参考サイト****************************
 https://qiita.com/takoyaki3/items/269060a916a66d9c411a		csv読み込み
@@ -23,27 +25,35 @@ https://qiita.com/takoyaki3/items/269060a916a66d9c411a		csv読み込み
 #ifndef _INCLUDE_MAPMGR_
 #define _INCLUDE_MAPMGR_
 
+#define _MAP_STATUS_ 7
+
 class cMapMgr : public cBaseTask {
 private:
 	//deque<deque<string>> csvfname;
-	char comma; //区切りとなるカンマ。
+	string comma; //区切りとなるカンマ。
 	cMapMgr();
 
 public:
-	std::vector<cMap> map;		// cMapの宣言
+	vector<int> cMap;		// cMapの宣言
 
-	bool mapLood(string line);				// マップをロードする関数
+	bool MapLood(/*string _line*/);				// マップをロードする関数
 	string fileName;
-	string w (int x, int y);
-	int stringChangeInt(int x, int y);		// stringの文字列をintにしてる
-	int csvSizeY();							// csvファイルの行を取得
-	int csvSizeX(int x);					// 取得した行を指定して列を取得
-	int mapnum;								// 部屋数
+	//string w (int _x, int _y);
+	int AsciiToInt(int _x, int _y);		    // stringの文字列をintにしてる
+	int CsvSizeY();							// csvファイルの行を取得
+	int CsvSizeX(int _x);					// 取得した行を指定して列を取得
+	
 
-	void SetComma(char c) { comma = c; }
+	// MAPのオープンに使う変数たち
+	char MapBase[256];						// (MAP/MAP_)までを入れる
+	char MapHandle[256];					//	結果的に開く変数
+	char MapNum[256];						// 部屋数とMapのナンバー
+	int MapFlag = 1;						// MapNumに代入前の数字	
+
+	void SetComma(string _c) { comma = _c; }
 
 	cMapMgr() {comma = ','; }
-	cMapMgr(string fname) { comma = ','; mapLood(fname); }
+	//cMapMgr(string _fname) { comma = ','; MapLood(_fname); }
 
 	virtual void Init();
 	virtual void Update();
