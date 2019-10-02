@@ -9,6 +9,7 @@
 #include "Mouse.h"
 #include "Keyboard.h"
 #include "FPS.h"
+#include "Camera.h"
 
 #ifndef _INCLUDE_GAMEMGR_
 #define _INCLUDE_GAMEMGR_
@@ -26,6 +27,7 @@ public:
 private:
 	
 	cFPS m_fps;
+	cCamera m_camera;
 };
 
 #endif // !_INCLUDE_GAMEMGR_

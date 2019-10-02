@@ -8,6 +8,8 @@ void cGameMgr::Init() {
 
 void cGameMgr::Update() {
 	m_fps.Update();
+	m_camera.Update();
+	
 
 #ifdef GAMEMGR_DEBUG
 
@@ -39,7 +41,10 @@ void cGameMgr::Draw() {
 
 #ifdef GAMEMGR_DEBUG
 	DrawFormatString(0, 0, WH, "ÉQÅ[ÉÄâÊñ ");
+	//DrawBox(100,100,600,600,GR,TRUE);
 #endif // GAMEMGR_DEBUG
+
+	m_camera.Draw();
 
 }
 
