@@ -25,6 +25,7 @@ public:
 	//MATRIX GetMatrix();
 	//void Move();
 	int ModelHandle;
+	int GrHandle;
 
 private:
 	typedef struct {
