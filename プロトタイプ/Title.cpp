@@ -35,9 +35,9 @@ void cTitle::Update() {
 
 	//項目の移動の上限による処理
 	if (nowSelect < 0) {
-		nowSelect = m_menu[menuNum-1].menu;
+		nowSelect = m_menu[m_menuNum-1].menu;
 	}
-	nowSelect %= menuNum;
+	nowSelect %= m_menuNum;
 
 #ifndef TITLE_DEBUG
 	//項目を選択した状態でエンターを押すとシーン変更
@@ -86,7 +86,7 @@ void cTitle::Draw() {
 	//cBaseScene::Draw();
 
 	//文字の表示
-	for (int i = 0; i < menuNum; i++) {
+	for (int i = 0; i < m_menuNum; i++) {
 		DrawFormatString(m_menu[i].x,m_menu[i].y,WH,m_menu[i].text);
 	}
 

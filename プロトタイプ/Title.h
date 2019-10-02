@@ -53,13 +53,13 @@ private:
 		char text[20];
 	}sSelectMenu;
 
-	const int menuNum = E_TITLE_MAX;
+	const int m_menuNum = E_TITLE_MAX;
 	sSelectMenu m_menu[E_TITLE_MAX];
 
 	const int FONT_SIZE = 20;
 	const int TEXT_X = 350;
 	const int TEXT_Y = 300;
-	int nowSelect;
+	int nowSelect = 0;
 
 
 };
