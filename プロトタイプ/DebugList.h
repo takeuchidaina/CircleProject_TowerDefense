@@ -28,6 +28,7 @@
 ※アイウエオ順になるようにしてください
 ********************************************************/
 #define FPS_DEBUG			// FPS
+#define CAMERA_DEBUG		// カメラ
 #define KEYBOARD_DEBUG		// キーボード
 #define GAMEMGR_DEBUG		// ゲームマネージャー
 #define SCENE_MGR_DEBUG		// シーンマネージャー
@@ -40,5 +41,7 @@
 #define RESULT_DEBUG		// リザルト
 #define UNIT_MGR_DEBUG		// ユニットマネージャー
 #define UNIT_DEBUG			// ユニット
+#define ENEMY_MGR_DEBUG		// エネミーマネージャー
+#define ENEMY_DEBUG			// エネミーユニット
 
 #endif // !_INCLUED_DEBUGLIST_
