@@ -47,6 +47,10 @@ void cMouse::Update() {
 	{
 		m_wheel = 0;
 	}
+	if (m_wheel >= 7)
+	{
+		m_wheel = 7;
+	}
 
 }
 

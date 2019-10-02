@@ -134,6 +134,8 @@ private:
 	int m_wheel;		// マウスホイールのスクロール量
 	int m_buttonPressCnt[KEY_NUM];	// 押されているカウント
 	int m_buttonReleaseCnt[KEY_NUM];	// 離されているカウント
+	const int WHEEL_LIMIT_UP = 7;		// ホイールの最大値
+	const int WHEEL_LIMIT_DOWN = 0;		// ホイールの最小値
 
 	/*****************************************************
 	名前　：IsAvailableCode(int _keyCode)
