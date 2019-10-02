@@ -26,6 +26,7 @@ public:
 	//void Move();
 	int ModelHandle;
 	int GrHandle;
+	double m_zoom;
 
 private:
 	typedef struct {
