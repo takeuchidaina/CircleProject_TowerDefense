@@ -1,32 +1,31 @@
 #include "GameMgr.h"
 
 cGameMgr::cGameMgr(ISceneChanger* _scene) : cBaseScene(_scene) {
-	cGameMgr::Init();
 }
 
 void cGameMgr::Init() {
 }
 
 void cGameMgr::Update() {
-	fps.Update();
+	m_fps.Update();
 
 #ifdef GAMEMGR_DEBUG
 
 	//タイトルへ
-	if (GET_KEY_PRESS(KEY_INPUT_T)) {
-		sceneChanger->ChangeScene(E_SCENE_TITLE);
+	if (GET_KEY_PRESS(KEY_INPUT_T) == 1) {
+		m_sceneChanger->ChangeScene(E_SCENE_TITLE);
 	}
 	//メニューへ
-	if (GET_KEY_PRESS(KEY_INPUT_M)) {
-		sceneChanger->ChangeScene(E_SCENE_MENU);
+	if (GET_KEY_PRESS(KEY_INPUT_M) == 1) {
+		m_sceneChanger->ChangeScene(E_SCENE_MENU);
 	}
 	//ゲームへ
-	if (GET_KEY_PRESS(KEY_INPUT_G)) {
-		sceneChanger->ChangeScene(E_SCENE_GAME);
+	if (GET_KEY_PRESS(KEY_INPUT_G) == 1) {
+		m_sceneChanger->ChangeScene(E_SCENE_GAME);
 	}
 	//リザルトへ
-	if (GET_KEY_PRESS(KEY_INPUT_R)) {
-		sceneChanger->ChangeScene(E_SCENE_RESULT);
+	if (GET_KEY_PRESS(KEY_INPUT_R) == 1) {
+		m_sceneChanger->ChangeScene(E_SCENE_RESULT);
 	}
 
 #endif // GAMEMGR_DEBUG
@@ -36,7 +35,7 @@ void cGameMgr::Update() {
 void cGameMgr::Draw() {
 
 	cBaseScene::Draw();
-	fps.Draw();
+	m_fps.Draw();
 
 #ifdef GAMEMGR_DEBUG
 	DrawFormatString(0, 0, WH, "ゲーム画面");

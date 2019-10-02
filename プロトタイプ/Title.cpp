@@ -1,7 +1,6 @@
 #include "Title.h"
 
 cTitle::cTitle(ISceneChanger* _scene) : cBaseScene(_scene) {
-	cTitle::Init();
 }
 
 void cTitle::Init() {
@@ -46,7 +45,7 @@ void cTitle::Update() {
 		switch (nowSelect)
 		{
 		case E_TITLE_GAME:
-			sceneChanger->ChangeScene(E_SCENE_MENU);
+			m_sceneChanger->ChangeScene(E_SCENE_MENU);
 			break;
 		case E_TITLE_END:
 			DxLib_End();
@@ -63,13 +62,13 @@ void cTitle::Update() {
 		switch (nowSelect)
 		{
 		case E_TITLE_MENU:
-			sceneChanger->ChangeScene(E_SCENE_MENU);
+			m_sceneChanger->ChangeScene(E_SCENE_MENU);
 			break;
 		case E_TITLE_GAME:
-			sceneChanger->ChangeScene(E_SCENE_GAME);
+			m_sceneChanger->ChangeScene(E_SCENE_GAME);
 			break;
 		case E_TITLE_RESULT:
-			sceneChanger->ChangeScene(E_SCENE_RESULT);
+			m_sceneChanger->ChangeScene(E_SCENE_RESULT);
 			break;
 		case E_TITLE_END:
 			DxLib_End();

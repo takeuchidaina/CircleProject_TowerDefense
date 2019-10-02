@@ -16,7 +16,6 @@
 class cGameMgr : public cBaseScene{
 
 public:
-
 	cGameMgr(ISceneChanger* _scene);
 
 	void Init()override;
@@ -25,8 +24,8 @@ public:
 	void End()override;
 
 private:
-
-	cFPS fps;
+	
+	cFPS m_fps;
 };
 
 #endif // !_INCLUDE_GAMEMGR_
