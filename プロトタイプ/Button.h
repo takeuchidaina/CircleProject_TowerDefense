@@ -7,28 +7,36 @@
 #include "Mouse.h"
 #include "Keyboard.h"
 
+#ifndef _INCLUED_BUTTON_
+#define _INCLUED_BUTTON_
+
 class cButton : public cBaseTask {
 
 public:
+	//左上x,左上y,右下x,右下y,画像のファイルパス
+	//cButton(double _ux,double _uy, double _dx, double _dy,const char* _filepth);
 	cButton();
 	~cButton();
 
-	virtual void Init();
-	virtual void Update();
+	virtual void Init(double _ux, double _uy, double _dx, double _dy, const char* _filepth);
+	virtual void Update() {}
 	virtual void Draw();
-	virtual void End();
+	virtual void End() {}
 
-	//ボタンの生成
-	//引数:左上(x,y),右下(x,y),ボタンの名前,色or画像
-	//最終的には画像も表示できるように
-
-	//ボタンを押しているかどうか
-	//引数:ボタンの名前
-	//Updateでマウスクリックがされていたら毎回当たり判定を取る
-	//当たっていたらフラグをtrueにする
-
-	//フラグがtrueかfalseで色を変えるようにする
+	/*****************************************************
+	名前　：bool ButtonClick();
+	概要　：ボタンがクリックされているかどうかを判断
+	引数　：なし
+	戻り値：true:クリック　false:クリックされていない
+	******************************************************/
+	bool ButtonClick();
 
 private:
-
+	double m_ux;		//左上x
+	double m_uy;		//左上y
+	double m_dx;		//右下x
+	double m_dy;		//右下y
+	int m_image;		//画像
 };
+
+#endif // !_INCLUED_BUTTON_
