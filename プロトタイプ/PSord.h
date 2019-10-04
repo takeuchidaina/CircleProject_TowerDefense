@@ -20,20 +20,20 @@ class cPSord : public cPlayerUnit
 public:
 	cPSord(double _x, double _y, int _room) : cPlayerUnit()
 	{
-		x = _x;
-		y = _y;
-		room = _room;
-		hp = 50;
-		atk = 50;
-		speed = 3.0;
-		atkCoolTime = 3;
+		m_x = _x;
+		m_y = _y;
+		m_room = _room;
+		m_hp = 50;
+		m_atk = 50;
+		m_speed = 3.0;
+		m_atkCoolTime = 3;
 		//target = NULL;
 	}
 
-	void Update() {}
-	void Draw()
+	virtual void Update() {}
+	virtual void Draw()
 	{
-		DrawBox(x-UNIT_WIDTH/2, y, x+UNIT_WIDTH/2, y+ UNIT_HEIGHT, GetColor(255, 0, 0), TRUE);
+		DrawBox(m_x-UNIT_WIDTH/2, m_y, m_x+UNIT_WIDTH/2, m_y+ UNIT_HEIGHT, GetColor(255, 0, 0), TRUE);
 	}
 
 	/* TODO;

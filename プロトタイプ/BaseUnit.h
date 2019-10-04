@@ -22,30 +22,30 @@ using namespace std;
 class cBaseUnit : public cBaseTask
 {
 protected:
-	double x, y;			// 座標
-	int hp;					// HP
-	int room;				// 現在いる部屋番号
-	int atk;				// 攻撃力
-	int condition;			// 状態異常
-	double speed;			// 移動速度
-	int atkCoolTime;		// 次の攻撃までの時間
-	int nextRoom;			// 次に向かう部屋番号
-	double atkR;			// 射程範囲
-	bool isOnActive;		// 生存フラグ
-	int state;				// 現在の状態
+	double m_x, m_y;			// 座標
+	int m_hp;					// HP
+	int m_room;				// 現在いる部屋番号
+	int m_atk;				// 攻撃力
+	int m_condition;			// 状態異常
+	double m_speed;			// 移動速度
+	int m_atkCoolTime;		// 次の攻撃までの時間
+	int m_nextRoom;			// 次に向かう部屋番号
+	double m_atkR;			// 射程範囲
+	bool m_isOnActive;		// 生存フラグ
+	int m_state;				// 現在の状態
 	// cMapMgr* mapMgr			// マップ全体のアドレス
 
 public:
 
-	void Update() {}
-	void Draw() {}
+	virtual void Update() {}
+	virtual void Draw() {}
 
 	cBaseUnit()
 	{
-		condition = eNone;
-		nextRoom = -1;
-		isOnActive = true;
-		state = eIdle;
+		m_condition = E_NONE;
+		m_nextRoom = -1;
+		m_isOnActive = true;
+		m_state = E_IDLE;
 	}
 
 	/*********************************************************************
@@ -56,7 +56,7 @@ public:
 	*********************************************************************/
 	void Set_NextRoom(int _nextRoom)
 	{
-		nextRoom = _nextRoom;
+		m_nextRoom = _nextRoom;
 	}
 
 };

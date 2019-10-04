@@ -20,19 +20,19 @@ class cPArcher : public cPlayerUnit
 public:
 	cPArcher(double _x, double _y, int _room) : cPlayerUnit()
 	{
-		x = _x;
-		y = _y;
-		room = _room;
-		hp = 30;
-		atk = 20;
-		speed = 3.0;
-		atkCoolTime = 5;
+		m_x = _x;
+		m_y = _y;
+		m_room = _room;
+		m_hp = 30;
+		m_atk = 20;
+		m_speed = 3.0;
+		m_atkCoolTime = 5;
 	}
 
 	virtual void Update() {}
 	virtual void Draw()
 	{
-		DrawCircle(x, y, 10, GetColor(255, 0, 0));
+		DrawCircle(m_x, m_y, 10, GetColor(255, 0, 0));
 	}
 	virtual void Set_Target() {}
 
