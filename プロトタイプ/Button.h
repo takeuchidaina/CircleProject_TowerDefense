@@ -6,6 +6,7 @@
 #include "BaseTask.h"
 #include "Mouse.h"
 #include "Keyboard.h"
+#include "Hit.h"
 
 #ifndef _INCLUED_BUTTON_
 #define _INCLUED_BUTTON_
@@ -37,6 +38,8 @@ private:
 	double m_dx;		//‰E‰ºx
 	double m_dy;		//‰E‰ºy
 	int m_image;		//‰æ‘œ
+
+	cHit m_hit;
 };
 
 #endif // !_INCLUED_BUTTON_

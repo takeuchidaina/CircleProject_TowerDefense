@@ -32,9 +32,16 @@ void cButton::Init(double _ux, double _uy, double _dx, double _dy, const char* _
 	}
 }
 
+//クリックされているかどうか
 bool cButton::ButtonClick() {
-	//クリックされているかどうか
-	return true;
+
+	if(m_hit.Rect(m_ux,m_uy,(m_dx-m_ux),(m_dy-m_ux),
+				  MOUSE_X,MOUSE_Y,(MOUSE_X+1),(MOUSE_Y+1)) == TRUE) {
+		return TRUE;
+	}
+	else {
+		return FALSE;
+	}
 }
 
 void cButton::Draw() {
