@@ -5,111 +5,67 @@ cTitle::cTitle(ISceneChanger* _scene) : cBaseScene(_scene) {
 
 void cTitle::Init() {
 
-	
-#ifdef TITLE_DEBUG
-	// x,y,eMenu,name
-	m_menu[E_TITLE_MENU]   = { TEXT_X,TEXT_Y,E_TITLE_MENU,"メニュー" },
-	m_menu[E_TITLE_GAME]   = { TEXT_X,TEXT_Y + (FONT_SIZE * E_TITLE_GAME) ,E_TITLE_GAME,"ゲーム" },
-	m_menu[E_TITLE_RESULT] = { TEXT_X,TEXT_Y + (FONT_SIZE * E_TITLE_RESULT),E_TITLE_GAME,"リザルト" },
-	m_menu[E_TITLE_END]    = { TEXT_X,TEXT_Y + (FONT_SIZE * E_TITLE_END),E_TITLE_END,"終了" };
-#endif // TITLE_DEBUG
-
 	nowSelect = 0;
 
-	//背景
-	m_background = LoadGraph("../resource/img/TitleBackGround.jpg");
-	if (m_background == NULL) {
-		//error
-	}
-	//ロゴ
-	m_logo = LoadGraph("../resource/img/TitleLogo.png");
-	if (m_logo == NULL) {
-		//error
-	}
-	//開始ボタン
-	m_startButton = LoadGraph("../resource/img/TitleStartButton.png");
-	if (m_startButton == NULL) {
-		//error
-	}
-	//終了ボタン
-	m_endButton = LoadGraph("../resource/img/TitleEndButton.png");
-	if (m_endButton == NULL) {
-		//error
+	//メニューの初期化
+	m_menu[E_TITLE_MENU] = { {120,500,520,600,"../resource/img/TitleStartButton.png" },E_SCENE_MENU };
+	m_menu[E_TITLE_END] = { {760,500,1160,600,"../resource/img/TitleEndButton.png" }, E_SCENE_END };
+	for (int i = 0; i < E_TITLE_MAX; i++) {
+		m_btn[i].Init(m_menu[i].image.ux, m_menu[i].image.uy,
+						 m_menu[i].image.dx, m_menu[i].image.dy,
+							m_menu[i].image.filePath.c_str());
 	}
 
+	//画像の初期化
+	m_image[E_BACK_GROUND] = { 0,0,1280,960,"../resource/img/TitleBackGround.jpg"};
+	m_image[E_LOGO] = { 50,0,1330,960,"../resource/img/TitleLogo.png"};
+	for (int i = 0; i < E_IMAGE_MAX;i++) {
+		m_image[i].handle = LoadGraph(m_image[i].filePath.c_str());
+		if (m_image[i].handle == NULL) {
+			//error
+		}
+	}
 }
 
 void cTitle::Update() {
 
-	//なぜかシーンの変更を二回行っている
-	
-	//項目の移動
-	if (GET_KEY_PRESS(KEY_INPUT_DOWN) == 1) {
-		nowSelect++;
-	}
-	if (GET_KEY_PRESS(KEY_INPUT_UP) == 1) {
-		nowSelect--;
-	}
-
-	//項目の移動の上限による処理
-	if (nowSelect < 0) {
-		nowSelect = m_menu[m_menuNum-1].menu;
-	}
-	nowSelect %= m_menuNum;
-
-
-#ifdef TITLE_DEBUG
-	//項目を選択した状態でエンターを押すとシーン変更
-	if (GET_KEY_PRESS(KEY_INPUT_RETURN) == 1) {
-		switch (nowSelect)
-		{
-		case E_TITLE_MENU:
-			m_sceneChanger->ChangeScene(E_SCENE_MENU);
-			break;
-		case E_TITLE_GAME:
-			m_sceneChanger->ChangeScene(E_SCENE_GAME);
-			break;
-		case E_TITLE_RESULT:
-			m_sceneChanger->ChangeScene(E_SCENE_RESULT);
-			break;
-		case E_TITLE_END:
-			DxLib_End();
-			break;
-		default:
-			break;
+	//クリックされたらボタンの上か判断
+	if (MOUSE_PRESS(LEFT_CLICK) == 1) {
+		for (int i = 0; i < E_TITLE_MAX;i++) {
+			if (m_btn[i].ButtonClick() == TRUE) {
+				m_sceneChanger->ChangeScene((eScene)m_menu[i].menu);
+			}
 		}
 	}
-#endif // TITLE_DEBUG
 
 }
 
 void cTitle::Draw() {
 
-	DrawGraph(0, 0, m_background, TRUE);	//背景
-	DrawGraph(50, -100, m_logo, TRUE);		//ロゴ
-	DrawGraph(640-225, 400, m_startButton, TRUE);	//開始ボタン
-	DrawGraph(640-225, 550, m_endButton, TRUE);		//終了ボタン
-	//DrawGraph(95, 500, m_startButton, TRUE);	//開始ボタン
-	//DrawGraph(735, 500, m_endButton, TRUE);	//終了ボタン
-
-	//文字の表示
-	for (int i = 0; i < m_menuNum; i++) {
-		DrawFormatString(m_menu[i].x,m_menu[i].y,WH,m_menu[i].text);
+	//画像表示 (※背景があるので一番最初に呼び出すこと)
+	for (int i = 0; i < E_IMAGE_MAX; i++) {
+		DrawExtendGraph(m_image[i].ux, m_image[i].uy,
+			m_image[i].dx, m_image[i].dy, m_image[i].handle, TRUE);
 	}
 
-	//選択項目の横に矢印を表示
-	DrawFormatString(m_menu[nowSelect].x - FONT_SIZE, m_menu[nowSelect].y, WH, "→");
+	//ボタン表示
+	for (int i = 0; i < E_TITLE_MAX; i++) {
+		m_btn[i].Draw();
+	}
+
+
 
 #ifdef TITLE_DEBUG
 	DrawFormatString(0, 0, WH, "タイトル画面");
+	DrawFormatString(0, 20, WH, "nowSelect:%d",nowSelect);
 #endif // TITLE_DEBUG
 
 }
 
 void cTitle::End() {
+
 	//画像ハンドルの削除
-	DeleteGraph(m_background);
-	DeleteGraph(m_logo);
-	DeleteGraph(m_startButton);
-	DeleteGraph(m_endButton);
+	for (int i = 0; i < E_IMAGE_MAX; i++) {
+		DeleteGraph(m_image[i].handle);
+	}
 }
