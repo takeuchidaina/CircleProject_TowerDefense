@@ -12,7 +12,7 @@
 //}
 cButton::cButton()
 {
-	//
+	m_ux = 0, m_uy = 0, m_dx = 0, m_dy = 0;
 }
 
 cButton::~cButton()
@@ -32,9 +32,16 @@ void cButton::Init(double _ux, double _uy, double _dx, double _dy, const char* _
 	}
 }
 
+//クリックされているかどうか
 bool cButton::ButtonClick() {
-	//クリックされているかどうか
-	return true;
+
+	if(m_hit.Rect(m_ux,m_uy,(m_dx-m_ux),(m_dy-m_uy),
+				  MOUSE_X,MOUSE_Y,(MOUSE_X+1.0),(MOUSE_Y+1.0)) == TRUE) {
+		return TRUE;
+	}
+	else {
+		return FALSE;
+	}
 }
 
 void cButton::Draw() {

@@ -23,6 +23,7 @@ typedef enum {
 	E_SCENE_MENU,		// メニュー
 	E_SCENE_GAME,		// ゲーム
 	E_SCENE_RESULT,		// リザルト
+	E_SCENE_END,
 	E_SCENE_NONE,		// 無し
 
 }eScene;

@@ -8,6 +8,7 @@
 #include "ISceneChanger.h"
 #include "Keyboard.h"
 #include "Mouse.h"
+#include "Button.h"
 #include <string.h>
 
 using namespace std;         //  名前空間指定
@@ -24,22 +25,44 @@ public:
 
 private:
 
-#ifdef TITLE_DEBUG
+#ifndef TITLE_DEBUG
 	// メニュー項目一覧
 	typedef enum {
 		E_TITLE_MENU,
 		E_TITLE_GAME,
 		E_TITLE_RESULT,
 		E_TITLE_END,
-		E_TITLE_MAX
+		E_TITLE_MAX,
 	}eTitle;
 #endif // TITLE_DEBUG
 
+#ifdef TITLE_DEBUG
+	// メニュー項目一覧
+	typedef enum {
+		E_TITLE_MENU,
+		E_TITLE_END,
+		E_TITLE_MAX,
+	}eTitle;
+#endif // TITLE_DEBUG
+
+	// 画像の種類
+	typedef enum {
+		E_BACK_GROUND,
+		E_LOGO,
+		E_IMAGE_MAX,
+	}eImage;
+
+	// 画像配置の必要情報
+	typedef struct {
+		double ux=0, uy=0, dx=0, dy=0;	//左上xy,右下xy
+		string filePath="";		//画像のファイルパス
+		int handle=0;				//画像ハンドル
+	}sImage;
+
 	// メニューの必要情報
 	typedef struct {
-		int x, y;
-		eTitle menu;
-		char text[20];
+		sImage image;			//画像情報
+		int menu = 0;			    //メニュー項目
 	}sSelectMenu;
 
 	const int m_menuNum = E_TITLE_MAX;	//メニュー項目数
@@ -50,9 +73,7 @@ private:
 	const int TEXT_Y = 300;		//一行目の座標y
 	int nowSelect = 0;			//現在の選択メニュー
 
-	int m_background;			//背景画像
-	int m_logo;					//ロゴ画像
-	int m_startButton;			//開始ボタン
-	int m_endButton;			//終了ボタン
-
+	sImage m_image[E_IMAGE_MAX];	//ボタン以外の画像
+	cButton m_btn[E_TITLE_MAX];		//ボタン
+	
 };
