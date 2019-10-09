@@ -33,8 +33,11 @@ protected:
 	double atkR;			// 射程範囲
 	bool isOnActive;		// 生存フラグ
 	int state;				// 現在の状態
+	int m_direction;		// ユニットの向き　1(U_RIGHT):右 -1(U_LEFT):左
+	int m_moveCnt;
+	int m_moveAnime[4] = { 1, 0, 1, 2};
 
-	int m_img;
+	int m_imgNum;
 	int m_imgtbl[6];
 	// cMapMgr* mapMgr			// マップ全体のアドレス
 
@@ -49,6 +52,20 @@ public:
 		nextRoom = -1;
 		isOnActive = true;
 		state = eIdle;
+	}
+
+	void Move()
+	{
+		m_moveCnt++;
+		if (m_moveCnt >= 64)
+		{
+			m_imgNum++;
+			if (m_imgNum >= 4)
+			{
+				m_imgNum = 0;
+			}
+			m_moveCnt = 0;
+		}
 	}
 
 	/*********************************************************************

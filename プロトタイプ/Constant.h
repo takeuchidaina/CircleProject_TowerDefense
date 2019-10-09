@@ -6,6 +6,9 @@
 #define UNIT_WIDTH 64
 #define UNIT_HEIGHT 64
 
+#define U_RIGHT 1
+#define U_LEFT -1
+
 /********************************************************
 ●概要
   共通定義用ヘッダーファイル

@@ -15,6 +15,11 @@ void cUnitMgr::Update()
 
 	//UnitSelectUI();
 
+	for (int i = 0; i < player.size(); i++)
+	{
+		player[i]->Move();
+	}
+
 }
 
 void cUnitMgr::Draw()

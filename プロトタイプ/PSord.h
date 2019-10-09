@@ -1,6 +1,7 @@
 #pragma once
 #include "PlayerUnit.h"
 #include "WinBox.h"
+#include "ColorListh.h"
 
 #ifndef _INCLUDE_P_SORD_
 #define _INCLUDE_P_SORD_
@@ -29,9 +30,12 @@ public:
 		atk = 50;
 		speed = 3.0;
 		atkCoolTime = 3;
+		m_imgNum = 0;
+		m_moveCnt = 0;
+		m_direction = U_RIGHT;
 		//target = NULL;
 
-		m_img = LoadGraph("../resource/img/player.png");
+		//m_img = LoadGraph("../resource/img/player.png");
 
 		if (0 != LoadDivGraph("../resource/img/player.png", 6, 3, 2, 64, 64, m_imgtbl))
 		{
@@ -42,9 +46,14 @@ public:
 	void Update() {}
 	void Draw()
 	{
+		int imgNum = m_moveAnime[m_imgNum];
+		if (m_direction == U_RIGHT)
+		{
+			imgNum += 3;
+		}
 		//DrawBox(x-UNIT_WIDTH/2, y, x+UNIT_WIDTH/2, y+ UNIT_HEIGHT, GetColor(255, 0, 0), TRUE);
 		//DrawLine3D(m_pos, VGet(m_pos.x, m_pos.y + 50, 0.0f), GetColor(255, 0, 0));
-		DrawBillboard3D(m_pos, 0.5f, 0.5f, 64, 0.0f, m_imgtbl[0], TRUE);
+		DrawBillboard3D(m_pos, 0.5f, 0.5f, 64, 0.0f, m_imgtbl[imgNum], TRUE);
 		////DrawModiBillboard3D(m_pos,
 		//	64 * 0, 64 * 0,
 		//	64 + 64 * 0, 64 * 0,
@@ -52,6 +61,7 @@ public:
 		//	64 + 64 * 0, 64 * 0,
 		//	m_imgtbl[0], TRUE);
 		//DrawGraph(300, 100, m_img, TRUE);
+		DrawFormatString(100, 400, RD, "%d", imgNum);
 	}
 
 	VECTOR GetPos()
