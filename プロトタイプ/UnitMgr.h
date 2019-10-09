@@ -6,6 +6,7 @@
 #include "Constant.h"
 #include "PSord.h"
 #include "PArcher.h"
+#include "Mouse.h"
 #include <vector>
 using namespace std;
 
@@ -50,7 +51,7 @@ class cUnitMgr : public cBaseTask
 {
 	vector<cPlayerUnit*> player;
 
-	vector<cUnitSelectUI> ui;
+	//vector<cUnitSelectUI> ui;
 
 public:
 	cUnitMgr() {}
@@ -62,7 +63,7 @@ public:
 		player.emplace_back(new cPSord(_x, _y, 1));
 	}
 
-	void UnitSelectUI();
+	//void UnitSelectUI();
 };
 
 #endif  // !_INCLUDE_UNIT_MGR_

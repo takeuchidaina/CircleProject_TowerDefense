@@ -30,12 +30,12 @@ public:
 		
 	}
 
-	virtual void Update() {}
-	virtual void Draw() {}
+	void Update() {}
+	void Draw() {}
 
 	void Set_Pos(double _x, double _y)
 	{
-		m_x = _x; m_y = _y;
+		m_pos.x = _x; m_pos.y = _y;
 	}
 
 

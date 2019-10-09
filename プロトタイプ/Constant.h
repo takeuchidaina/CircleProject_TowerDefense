@@ -3,8 +3,8 @@
 #define WINDOW_WIDTH 1280
 #define WINDOW_HEIGHT 720
 
-#define UNIT_WIDTH 32
-#define UNIT_HEIGHT 40
+#define UNIT_WIDTH 64
+#define UNIT_HEIGHT 64
 
 /********************************************************
 œŠT—v
@@ -22,20 +22,20 @@
 
 typedef enum
 {
-	E_NONE,		// ‚È‚µ
+	eNone,		// ‚È‚µ
 
 
 }eCondition;
 
 typedef enum
 {
-	E_SORD,		// Œ•m
-	E_ARCHER,	// ‹|•º
+	eSord,		// Œ•m
+	eArcher,		// ‹|•º
 }eUnitType;
 
 typedef enum
 {
-	E_IDLE,		// ‘Ò‹@’†
-	E_ATTACK,	// UŒ‚’†
-	E_MOVE,		// ˆÚ“®’†
+	eIdle,		// ‘Ò‹@’†
+	eAttack,	// UŒ‚’†
+	eMove,		// ˆÚ“®’†
 }eState;
