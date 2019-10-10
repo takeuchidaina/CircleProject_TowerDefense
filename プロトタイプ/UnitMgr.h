@@ -6,6 +6,7 @@
 #include "Constant.h"
 #include "PSord.h"
 #include "PArcher.h"
+#include "Mouse.h"
 #include <vector>
 using namespace std;
 
@@ -23,34 +24,9 @@ using namespace std;
 #ifndef _INCLUED_UNIT_MGR_
 #define _INCLUED_UNIT_MGR_
 
-class cUnitSelectUI
-{
-	double x, y, width, height;
-	int type;
-
-public:
-	cUnitSelectUI(double _x, int _type)
-	{
-		x = _x;
-		y = 1250.0;
-		width = 60.0;
-		height = 30.0;
-
-		type = _type;
-	}
-
-	void Draw()
-	{
-		DrawBox(x, y, x + width, y + height, GetColor(0, 0, 255), TRUE);
-		DrawFormatString(x + 5, y + 10, GetColor(0, 0, 0), "%d", type);
-	}
-};
-
 class cUnitMgr : public cBaseTask
 {
 	vector<cPlayerUnit*> player;
-
-	vector<cUnitSelectUI> ui;
 
 public:
 	cUnitMgr() {}
@@ -62,7 +38,11 @@ public:
 		player.emplace_back(new cPSord(_x, _y, 1));
 	}
 
-	void UnitSelectUI();
+	void Add_PArcher(double _x, double _y)
+	{
+		player.emplace_back(new cPArcher(_x, _y, 1));
+	}
+
 };
 
 #endif  // !_INCLUDE_UNIT_MGR_
