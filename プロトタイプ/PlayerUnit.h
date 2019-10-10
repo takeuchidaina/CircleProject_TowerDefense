@@ -20,7 +20,7 @@
 class cPlayerUnit : public cBaseUnit
 {
 protected:
-	int number;
+	int m_number;
 	//cEnemyUnit* target;	// �_���G���j�b�g
 
 public:
@@ -32,12 +32,6 @@ public:
 
 	void Update() {}
 	void Draw() {}
-
-	void Set_Pos(double _x, double _y)
-	{
-		m_pos.x = _x; m_pos.y = _y;
-	}
-
 
 };
 #endif // !_INCLUDE_PLAYER_UNIT_

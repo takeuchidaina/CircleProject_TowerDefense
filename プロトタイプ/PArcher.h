@@ -22,17 +22,33 @@ public:
 	{
 		m_pos.x = _x;
 		m_pos.y = _y;
-		room = _room;
-		hp = 30;
-		atk = 20;
-		speed = 3.0;
-		atkCoolTime = 5;
+		m_pos.z = 0.0f;
+		m_room = _room;
+		m_hp = 50;
+		m_atk = 50;
+		m_speed = 3.0;
+		m_atkCoolTime = 3;
+		m_imgNum = 0;
+		m_moveCnt = 0;
+		m_direction = U_RIGHT;
+		//target = NULL;
+
+		if (0 != LoadDivGraph("../resource/img/player2.png", 6, 3, 2, 64, 64, m_imgtbl))
+		{
+			ErrBox("âÊëúì«Ç›çûÇ›é∏îs");
+		}
 	}
 
 	virtual void Update() {}
 	virtual void Draw()
 	{
-		//DrawCircle(m_pos.x, y, 10, GetColor(255, 0, 0));
+		int imgNum = m_moveAnime[m_imgNum];
+		if (m_direction == U_RIGHT)
+		{
+			imgNum += 3;
+		}
+
+		DrawBillboard3D(m_pos, 0.5f, 0.5f, 64, 0.0f, m_imgtbl[imgNum], TRUE);
 	}
 	virtual void Set_Target() {}
 
