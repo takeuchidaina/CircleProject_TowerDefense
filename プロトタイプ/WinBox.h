@@ -5,13 +5,12 @@
 
 
 /*
-Žg‚¢•û
-‚PAWinBox.h‚ðƒCƒ“ƒNƒ‹[ƒh‚·‚é
-‚QAƒGƒ‰[•¶‚ðo‚µ‚½‚¢Š‚É
-ErrBox("‚±‚±‚ÉƒGƒ‰[“à—e");
-‚Ì‚æ‚¤‚É‘‚­B
+ä½¿ã„æ–¹
+ï¼‘ã€WinBox.hã‚’ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ã™ã‚‹
+ï¼’ã€ã‚¨ãƒ©ãƒ¼æ–‡ã‚’å‡ºã—ãŸã„æ‰€ã«
+ErrBox("ã“ã“ã«ã‚¨ãƒ©ãƒ¼å†…å®¹");
+ã®ã‚ˆã†ã«æ›¸ãã€‚
 */
 extern void ErrBox(const char*);
 extern void ReportBox(const char*);
-extern int InterfaceYesNoBox();
 #endif
