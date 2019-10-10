@@ -5,7 +5,7 @@ void ErrBox(const char* tmp) {
 	MessageBox(
 		NULL,
 		TEXT(tmp),
-		TEXT("ƒGƒ‰["),
+		TEXT("ã‚¨ãƒ©ãƒ¼"),
 		MB_OK | MB_ICONWARNING);
 }
 
@@ -13,16 +13,6 @@ void ReportBox(const char* tmp) {
 	MessageBox(
 		NULL,
 		TEXT(tmp),
-		TEXT("•ñ"),
+		TEXT("å ±å‘Š"),
 		MB_OK | MB_ICONINFORMATION);
-}
-
-int InterfaceYesNoBox() {
-	int flag;
-	flag = MessageBox(
-		NULL,
-		TEXT("ƒQ[ƒ€ƒpƒbƒh‚Å‘€ì‚µ‚Ü‚·‚©H"),
-		TEXT("‘€ìİ’è"),
-		MB_YESNO | MB_ICONQUESTION);
-	return flag;
 }
