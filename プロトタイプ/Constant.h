@@ -42,3 +42,9 @@ typedef enum
 	eAttack,	// UŒ‚’†
 	eMove,		// ˆÚ“®’†
 }eState;
+
+typedef struct
+{
+	int sNextRoom;
+	double sNextX;
+}sNextMove;
