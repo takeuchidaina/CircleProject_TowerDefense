@@ -8,6 +8,7 @@
 #include "PArcher.h"
 #include "Mouse.h"
 #include <vector>
+#include "Log.h"
 using namespace std;
 
 /********************************************************
@@ -27,20 +28,43 @@ using namespace std;
 class cUnitMgr : public cBaseTask
 {
 	vector<cPlayerUnit*> player;
+	int m_num;
 
 public:
-	cUnitMgr() {}
+	cUnitMgr()
+	{
+		m_num = 0;
+	}
+
+	~cUnitMgr()
+	{
+		
+	}
 	void Update();
 	void Draw();
 
 	void Add_PSord(double _x, double _y)
 	{
-		player.emplace_back(new cPSord(_x, _y, 1));
+		player.emplace_back(new cPSord(_x, _y, 1, m_num));
+		m_num++;
+		//cLog::Instance()->DebugLog("Œ•m‚ğ¶¬");
+		//DEBUG_LOG("Œ•m‚ğ¶¬");
 	}
 
 	void Add_PArcher(double _x, double _y)
 	{
-		player.emplace_back(new cPArcher(_x, _y, 1));
+		player.emplace_back(new cPArcher(_x, _y, 1, m_num));
+		m_num++;
+		//cLog::Instance()->DebugLog("‹|•º‚ğ¶¬");
+	}
+
+	int CheckPlayerClick(VECTOR _pos);
+
+	void Set_NextPlayerPos(int _playerNum, int _nextRoom, double _nextX)
+	{
+		player[_playerNum]->Set_NextMove(_nextRoom, _nextX);
+		player[_playerNum]->Set_State(eMove);
+		DEBUG_LOG("Ÿ‚ÌÀ•WƒZƒbƒg");
 	}
 
 };

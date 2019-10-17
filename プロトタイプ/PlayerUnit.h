@@ -30,8 +30,19 @@ public:
 		
 	}
 
-	void Update() {}
-	void Draw() {}
+	/*void Update() {}
+	void Draw() {}*/
+
+	int Get_Num()
+	{
+		return m_num;
+	}
+
+	void Set_NextMove(int _nextRoom, double _nextX)
+	{
+		m_nextMove.sNextRoom = _nextRoom;
+		m_nextMove.sNextX = _nextX;
+	}
 
 };
 #endif // !_INCLUDE_PLAYER_UNIT_

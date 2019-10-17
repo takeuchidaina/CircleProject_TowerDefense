@@ -1,12 +1,11 @@
 #include <iostream>
 #include "DxLib.h"
-//#include "SceneMgr.h"
 #include "Mouse.h"
-//#include "Keyboard.h"
 #include "FPS.h"
 #include "UnitMgr.h"
 #include "cMap.h"
 #include "Camera.h"
+#include "Log.h"
 
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
@@ -32,10 +31,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	cCamera camera;
 
-	VECTOR tmpos;
-
-	VECTOR testpos = VGet(0,0,0);
-
 	// ループ
 	while ((ScreenFlip() == 0 && ProcessMessage() == 0 && ClearDrawScreen() == 0) && CheckHitKey(KEY_INPUT_ESCAPE) == 0) {
 
@@ -48,47 +43,61 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		*************************************************/
 		cMouse::Instance()->Update();
 		cMouse::Instance()->Draw();
-		/*cKeyboard::Instance()->Update();
-		cKeyboard::Instance()->Draw();*/
+		
 		fps.Update();
 		fps.Draw();
 
-		//if (cMouse::Instance()->GetReleaseCnt(0) == 1)
-		if (MOUSE_PRESS(LEFT_CLICK) == 1)
+		if (MOUSE_PRESS(LEFT_CLICK) == 1 && CheckHitKey(KEY_INPUT_S) >= 1)
 		{
-			if (true == map.CheckInto(MOUSE_V.x, MOUSE_V.y))
+			if (-1 != map.CheckInto(MOUSE_V.x, MOUSE_V.y))
 			{
 				player.Add_PSord(MOUSE_V.x, map.Get_Ground()+UNIT_HEIGHT/2);
 
 			}
-			testpos = MOUSE_V;
+		}
+		if (MOUSE_PRESS(LEFT_CLICK) == 1 && CheckHitKey(KEY_INPUT_A) >= 1)
+		{
+			if (-1 != map.CheckInto(MOUSE_V.x, MOUSE_V.y))
+			{
+				player.Add_PArcher(MOUSE_V.x, map.Get_Ground() + UNIT_HEIGHT / 2);
+
+			}
 		}
 
-		DrawFormatString(100, 200, RD, "%f", testpos.x);
-		DrawFormatString(100, 250, RD, "%f", testpos.y);
+		if (MOUSE_PRESS(LEFT_CLICK) == 1 && cMouse::Instance()->GetPlayerNum() >= 0 && CheckHitKeyAll != 0)
+		{
+			int tmp = map.CheckInto(MOUSE_V.x, MOUSE_V.y);
+			if (tmp != -1)
+			{
+				player.Set_NextPlayerPos(cMouse::Instance()->GetPlayerNum(), tmp, MOUSE_V.x);
+				cMouse::Instance()->SetPlayerNum(-1);
+			}
+		}
+
+		if (MOUSE_PRESS(LEFT_CLICK) == 1)
+		{
+			int tmp = 0;
+
+			tmp = player.CheckPlayerClick(MOUSE_V);
+			if (0 <= tmp)
+			{
+				cMouse::Instance()->SetPlayerNum(tmp);
+				DEBUG_LOG("プレイヤーナンバー格納");
+			}
+		}
 
 		map.Draw();
+		
 		
 		player.Update();
 		player.Draw();
 
-		/*sceneMgr.Update();
-		sceneMgr.Draw();*/
-		
 		camera.Update();
 		camera.Draw();
 
-		/*** 座標 ***/
-
-		DrawLine3D(VGet(0, 0, 0), VGet(100, 0, 0), RD);
-		DrawLine3D(VGet(0, 0, 0), VGet(0, 100, 0), GR);
-
-		tmpos = ConvScreenPosToWorldPos(VGet(500, 100, 0.0f));
-
-		DrawCircle(500, 100, 50, RD);
-		//DrawCircle(tmpos.x, tmpos.y, 50, RD);
-		DrawLine3D(tmpos, VGet(tmpos.x, tmpos.y+100, 0.0f), GR);
-
+		cLog::Instance()->Update();
+		cLog::Instance()->Draw();
+		
 	}
 
 	// 終了
