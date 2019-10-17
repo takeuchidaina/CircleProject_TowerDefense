@@ -5,6 +5,7 @@ cMouse::cMouse(){
 	m_x = 0;
 	m_y = 0;
 	m_wheel = 0;
+	m_playerNum = -1;
 	//buttonPressCnt[KEY_NUM] = { 0 };
 	//buttonReleaseCnt[KEY_NUM] = { 0 };
 }
@@ -46,10 +47,6 @@ void cMouse::Update() {
 	if (m_wheel <= 0)
 	{
 		m_wheel = 0;
-	}
-	if (m_wheel >= 7)
-	{
-		m_wheel = 7;
 	}
 
 }
@@ -176,4 +173,19 @@ bool cMouse::IsAvailableCode(int _keyCode) {
 		return FALSE;
 	}
 	return TRUE;
+}
+
+/************************************************
+
+プレイヤーナンバー格納
+
+************************************************/
+void cMouse::SetPlayerNum(int _num)
+{
+	m_playerNum = _num;
+}
+
+int cMouse::GetPlayerNum()
+{
+	return m_playerNum;
 }
