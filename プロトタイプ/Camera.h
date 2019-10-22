@@ -42,6 +42,12 @@ private:
 
 	}sCameraInfo;
 
+	double m_wheelPosX;
+	double m_wheelPosY;
+	bool m_wheelClick;
+
+	
+
 	sCameraInfo m_camera;
 	VECTOR m_speed;
 };

@@ -27,6 +27,9 @@ void cCamera::Init() {
 	MOUSE_WHEEL_INIT;			//マウスホイールの値の初期化
 	m_wheeled = MOUSE_WHEEL;	//マウスホイール量の代入
 
+	m_wheelPosX = MOUSE_X;
+	m_wheelPosY = MOUSE_Y;
+
 #ifdef CAMERA_DEBUG
 	GrHandle = LoadGraph("../resource/img/sample.png");
 #endif // CAMERA_DEBUG
@@ -52,6 +55,23 @@ void cCamera::Update() {
 		m_wheeled = MOUSE_WHEEL;
 	}
 
+	//移動
+	if (MOUSE_PRESS(MIDDLE_CLICK) == 1 && m_wheelClick == FALSE) {
+		m_wheelClick = TRUE;
+		m_wheelPosX = MOUSE_X;
+		m_wheelPosY = MOUSE_Y;
+	}
+	else if (MOUSE_PRESS(MIDDLE_CLICK) == 0 && m_wheelClick == TRUE) {
+		m_wheelClick = FALSE;
+		m_camera.pos.x += m_wheelPosX - MOUSE_X;
+		m_camera.target.x += m_wheelPosX - MOUSE_X;
+		m_camera.pos.y -= m_wheelPosY - MOUSE_Y;
+		m_camera.target.y -= m_wheelPosY - MOUSE_Y;
+	}
+	
+
+
+	/*
 	//移動制御 カメラ座標の変化とそれに伴い注視点を一緒に移動 → 回転がしない
 	if (GET_KEY_PRESS(KEY_INPUT_W) > 0) {
 		m_camera.pos.y -= m_speed.y;
@@ -69,6 +89,7 @@ void cCamera::Update() {
 		m_camera.pos.x -= m_speed.x;
 		m_camera.target.x -= m_speed.x;
 	}
+	*/
 
 	//カメラの座標、注視点を更新
 	SetCameraPositionAndTarget_UpVecY(m_camera.pos, m_camera.target);

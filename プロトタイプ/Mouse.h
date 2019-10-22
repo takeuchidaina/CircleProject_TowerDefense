@@ -41,6 +41,7 @@
 
 #define LEFT_CLICK 0
 #define RIGHT_CLICK 1
+#define MIDDLE_CLICK 2
 
 class cMouse : public cSingleton<cMouse> {
 
