@@ -106,6 +106,12 @@ void cCamera::Draw() {
 	DrawFormatString(300,300,WH,"target x:%d y:%d\n pos x:%d y:%d", m_camera.target.x, m_camera.target.y, m_camera.pos.x, m_camera.pos.y);
 	DrawCircle(m_camera.target.x, m_camera.target.y, 10, RD, TRUE);
 	DrawCircle(m_camera.pos.x, m_camera.pos.y, 10, BL, FALSE);
+
+	//âÊñ ÉtÉåÅ[ÉÄ
+	DrawLine3D(VGet(-640.0f, -360.0f, m_camera.target.z), VGet(640.0f, -360.0f, m_camera.target.z), GetColor(255, 255, 255));
+	DrawLine3D(VGet(-640.0f, -360.0f, m_camera.target.z), VGet(-640.0f, 360.0f, m_camera.target.z), GetColor(255, 255, 255));
+	DrawLine3D(VGet(640.0f, 360.0f, m_camera.target.z), VGet(-640.0f, 360.0f, m_camera.target.z), GetColor(255, 255, 255));
+	DrawLine3D(VGet(640.0f, 360.0f, m_camera.target.z), VGet(640.0f, -360.0f, m_camera.target.z), GetColor(255, 255, 255));
 #endif // CAMERA_DEBUG
 
 }
