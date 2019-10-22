@@ -44,10 +44,6 @@ void cMouse::Update() {
 
 	/*ƒzƒC[ƒ‹*/
 	m_wheel += GetMouseWheelRotVol();
-	if (m_wheel <= 0)
-	{
-		m_wheel = 0;
-	}
 
 }
 

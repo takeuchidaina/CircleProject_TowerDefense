@@ -46,10 +46,7 @@ private:
 	double m_wheelPosY;
 	bool m_wheelClick;
 
-	
-
 	sCameraInfo m_camera;
-	VECTOR m_speed;
 };
 
 #endif // !_INCLUED_CAMERA_

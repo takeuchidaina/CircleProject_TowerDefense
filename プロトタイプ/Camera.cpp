@@ -11,10 +11,6 @@ cCamera::~cCamera()
 
 void cCamera::Init() {
 
-	m_speed.x = 10.0;
-	m_speed.y = 10.0;
-	m_speed.z = 0.0;
-
 	m_camera.pos.x = 0.0;
 	m_camera.pos.y = 0.0;
 	m_camera.pos.z = -800.0;
@@ -43,16 +39,35 @@ void cCamera::Update() {
 	// 拡大縮小
 	SetupCamera_Ortho(m_zoom);		//値でカメラの距離が変わる(z軸)
 
-	//TODO:マウスの値依存なのでマウスホイールの値7以上が使えず改善が必要
 	//拡大
 	if (m_wheeled < MOUSE_WHEEL) {
-		m_zoom -= ZOOM_SCALE;
+
+		//ホイールによって拡大率を変化
+		if (m_zoom > ZOOM_LIMIT_DOWN ) {
+			m_zoom -= ZOOM_SCALE;
+		}
 		m_wheeled = MOUSE_WHEEL;
+
+		//カメラの座標・注視点を変化
+		m_camera.pos.x += m_camera.target.x - MOUSE_X;
+		m_camera.pos.y += m_camera.target.y - MOUSE_Y;
+		m_camera.target.x -= m_camera.target.x - MOUSE_X;
+		m_camera.target.y -= m_camera.target.y - MOUSE_Y;
 	}
 	//縮小
 	else if (m_wheeled > MOUSE_WHEEL) {
-		m_zoom += ZOOM_SCALE;
+
+		//ホイールによって拡大率を変化
+		if (m_zoom < ZOOM_LIMIT_UP) {
+			m_zoom += ZOOM_SCALE;
+		}
 		m_wheeled = MOUSE_WHEEL;
+
+		//カメラの座標・注視点を変化
+		m_camera.pos.x += m_camera.target.x - MOUSE_X;
+		m_camera.pos.y += m_camera.target.y - MOUSE_Y;
+		m_camera.target.x -= m_camera.target.x - MOUSE_X;
+		m_camera.target.y -= m_camera.target.y - MOUSE_Y;
 	}
 
 	//移動
@@ -63,33 +78,13 @@ void cCamera::Update() {
 	}
 	else if (MOUSE_PRESS(MIDDLE_CLICK) == 0 && m_wheelClick == TRUE) {
 		m_wheelClick = FALSE;
+
+		//クリックが押された地点離された地点の座標を元に移動
 		m_camera.pos.x += m_wheelPosX - MOUSE_X;
 		m_camera.target.x += m_wheelPosX - MOUSE_X;
 		m_camera.pos.y -= m_wheelPosY - MOUSE_Y;
 		m_camera.target.y -= m_wheelPosY - MOUSE_Y;
 	}
-	
-
-
-	/*
-	//移動制御 カメラ座標の変化とそれに伴い注視点を一緒に移動 → 回転がしない
-	if (GET_KEY_PRESS(KEY_INPUT_W) > 0) {
-		m_camera.pos.y -= m_speed.y;
-		m_camera.target.y -= m_speed.y;
-	}
-	if (GET_KEY_PRESS(KEY_INPUT_A) > 0) {
-		m_camera.pos.x += m_speed.x;
-		m_camera.target.x += m_speed.x;
-	}
-	if (GET_KEY_PRESS(KEY_INPUT_S) > 0) {
-		m_camera.pos.y += m_speed.y;
-		m_camera.target.y += m_speed.y;
-	}
-	if (GET_KEY_PRESS(KEY_INPUT_D) > 0) {
-		m_camera.pos.x -= m_speed.x;
-		m_camera.target.x -= m_speed.x;
-	}
-	*/
 
 	//カメラの座標、注視点を更新
 	SetCameraPositionAndTarget_UpVecY(m_camera.pos, m_camera.target);
@@ -106,6 +101,11 @@ void cCamera::Draw() {
 		VGet(100.0f, 100.0f, 0.0f),
 		VGet(500.0f, 400.0f, 0.0f),
 		VGet(600.0f, 100.0f, 100.0f), GetColor(255, 255, 255), TRUE);
+
+	//座標表示
+	DrawFormatString(300,300,WH,"target x:%d y:%d\n pos x:%d y:%d", m_camera.target.x, m_camera.target.y, m_camera.pos.x, m_camera.pos.y);
+	DrawCircle(m_camera.target.x, m_camera.target.y, 10, RD, TRUE);
+	DrawCircle(m_camera.pos.x, m_camera.pos.y, 10, BL, FALSE);
 #endif // CAMERA_DEBUG
 
 }
