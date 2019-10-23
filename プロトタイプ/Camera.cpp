@@ -26,11 +26,6 @@ void cCamera::Init() {
 	m_wheelPosX = MOUSE_X;
 	m_wheelPosY = MOUSE_Y;
 
-#ifdef CAMERA_DEBUG
-	GrHandle = LoadGraph("../resource/img/sample.png");
-#endif // CAMERA_DEBUG
-
-
 }
 
 void cCamera::Update() {
@@ -93,14 +88,6 @@ void cCamera::Update() {
 void cCamera::Draw() {
 
 #ifdef CAMERA_DEBUG
-	//3D用の画像表示
-	DrawBillboard3D(VGet(120.0f, 240.0f, 100.0f), 0.5f, 0.5f, 120.0f, 0.0f, GrHandle, TRUE);
-
-	//謎の三角形
-	DrawTriangle3D(
-		VGet(100.0f, 100.0f, 0.0f),
-		VGet(500.0f, 400.0f, 0.0f),
-		VGet(600.0f, 100.0f, 100.0f), GetColor(255, 255, 255), TRUE);
 
 	//座標表示
 	DrawFormatString(300,300,WH,"target x:%d y:%d\n pos x:%d y:%d", m_camera.target.x, m_camera.target.y, m_camera.pos.x, m_camera.pos.y);
@@ -117,7 +104,5 @@ void cCamera::Draw() {
 }
 
 void cCamera::End() {
-
-	DeleteGraph(GrHandle);
 
 }

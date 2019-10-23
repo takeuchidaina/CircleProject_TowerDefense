@@ -27,12 +27,6 @@ public:
 	const double ZOOM_SCALE = 100.0;		//拡大縮小の移動値
 	int m_wheeled;							//過去のホイールの値の格納
 
-#ifdef CAMERA_DEBUG
-	int GrHandle;	//デバッグ用画像ハンドル
-#endif // !CAMERA_DEBUG
-
-
-
 private:
 	typedef struct {
 
