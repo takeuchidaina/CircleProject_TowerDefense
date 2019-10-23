@@ -10,6 +10,8 @@
 #include "Keyboard.h"
 #include "FPS.h"
 #include "Camera.h"
+#include "UnitMgr.h"
+#include "cMap.h"
 
 #ifndef _INCLUDE_GAMEMGR_
 #define _INCLUDE_GAMEMGR_
@@ -23,11 +25,15 @@ public:
 	void Update()override;
 	void Draw()override;
 	void End()override;
-
+	
 private:
 	
 	cFPS m_fps;
 	cCamera m_camera;
+	cUnitMgr m_PUnit;
+	void PUnitGenerate();
+
+	cMap m_map;
 };
 
 #endif // !_INCLUDE_GAMEMGR_
