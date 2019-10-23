@@ -22,7 +22,7 @@ public:
 	virtual void End();
 
 	double m_zoom;							//拡大率
-	const double ZOOM_LIMIT_UP = 1000.0;	//カメラの最大縮小値
+	const double ZOOM_LIMIT_UP = 719.5;		//カメラの最大縮小値 1280x720が丁度表示される
 	const double ZOOM_LIMIT_DOWN = 300.0;	//カメラの最小拡大値
 	const double ZOOM_SCALE = 100.0;		//拡大縮小の移動値
 	int m_wheeled;							//過去のホイールの値の格納
