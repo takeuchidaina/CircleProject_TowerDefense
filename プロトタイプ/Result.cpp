@@ -1,12 +1,14 @@
 #include "Result.h"
 
 cResult::cResult(ISceneChanger* _scene) : cBaseScene(_scene) {
+	Init();
 }
 
 void cResult::Init() {
 }
 
 void cResult::Update() {
+	DrawFormatString(0, 0, RD, "GAME CLEAR");
 
 #ifdef RESULT_DEBUG
 
@@ -33,8 +35,7 @@ void cResult::Update() {
 
 void cResult::Draw() {
 
-	cBaseScene::Draw();
-
+	DrawFormatString(500, 400, RD, "GAME CLEAR");
 #ifdef RESULT_DEBUG
 	DrawFormatString(0, 0, WH, "ƒŠƒUƒ‹ƒg‰æ–Ê");
 #endif // RESULT_DEBUG

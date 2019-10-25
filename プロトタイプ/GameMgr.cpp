@@ -1,10 +1,12 @@
 #include "GameMgr.h"
 
 cGameMgr::cGameMgr(ISceneChanger* _scene) : cBaseScene(_scene) {
-
+	Init();
 }
 
 void cGameMgr::Init() {
+	cTime* ptime = new cTime(TIME_LIMIT);
+	m_time = *ptime;
 }
 
 void cGameMgr::Update() {
@@ -13,14 +15,14 @@ void cGameMgr::Update() {
 	m_PUnit.Update();
 	m_escort.Update();
 	m_camera.Update();
+	m_time.Update();
 	
 	PUnitGenerate();
 
+#ifdef GAMEMGR_DEBUG
 	if (GET_KEY_PRESS(KEY_INPUT_E) == 1) {
 		EscortDamageCalc(50);
 	}
-#ifdef GAMEMGR_DEBUG
-
 	//タイトルへ
 	if (GET_KEY_PRESS(KEY_INPUT_T) == 1) {
 		m_sceneChanger->ChangeScene(E_SCENE_TITLE);
@@ -35,6 +37,7 @@ void cGameMgr::Update() {
 	}
 	//リザルトへ
 	if (GET_KEY_PRESS(KEY_INPUT_R) == 1) {
+		
 		m_sceneChanger->ChangeScene(E_SCENE_RESULT);
 	}
 
@@ -44,7 +47,6 @@ void cGameMgr::Update() {
 
 void cGameMgr::Draw() {
 
-	cBaseScene::Draw();
 	m_fps.Draw();
 
 #ifdef GAMEMGR_DEBUG
@@ -55,7 +57,7 @@ void cGameMgr::Draw() {
 	m_PUnit.Draw();
 	m_escort.Draw();
 	m_camera.Draw();
-	
+	m_time.Draw();
 }
 
 void cGameMgr::End() {
@@ -64,9 +66,18 @@ void cGameMgr::End() {
 void cGameMgr::EscortDamageCalc(int _damage) {
 	//HPが無くなったらリザルトへ
 	if (m_escort.DamageCalc(_damage) == false) {
+		//resultDefSuccess = false;
 		m_sceneChanger->ChangeScene(E_SCENE_RESULT);
 	}
 }
+
+void cGameMgr::DefSuccessJudge() {
+	if (m_time.GetSecond() < 0) {
+		//resultDefSuccess = true;
+		m_sceneChanger->ChangeScene(E_SCENE_RESULT);
+	}
+}
+
 void cGameMgr::PUnitGenerate() {
 
 	if (MOUSE_PRESS(LEFT_CLICK) == 1 && CheckHitKey(KEY_INPUT_S) >= 1)

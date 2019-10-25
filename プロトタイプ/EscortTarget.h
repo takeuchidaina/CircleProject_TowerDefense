@@ -9,7 +9,7 @@ class cEscortTarget : public cBaseTask
 {
 public:
 	cEscortTarget();
-	~cEscortTarget();
+	virtual ~cEscortTarget();
 
 	virtual void Init();
 	virtual void Update();
