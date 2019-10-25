@@ -42,7 +42,7 @@ private:
 	cMapMgr m_mapMgr;
 	cEscortTarget m_escort;
 	cTime m_time;
-
+	int m_img;
 	const int TIME_LIMIT = 120;	//•b
 };
 

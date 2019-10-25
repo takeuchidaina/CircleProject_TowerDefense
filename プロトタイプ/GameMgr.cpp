@@ -7,6 +7,7 @@ cGameMgr::cGameMgr(ISceneChanger* _scene) : cBaseScene(_scene) {
 void cGameMgr::Init() {
 	cTime* ptime = new cTime(TIME_LIMIT);
 	m_time = *ptime;
+	m_img = LoadGraph("../resource/img/GameBG.png");
 }
 
 void cGameMgr::Update() {
@@ -48,6 +49,7 @@ void cGameMgr::Update() {
 void cGameMgr::Draw() {
 
 	m_fps.Draw();
+	DrawBillboard3D(VGet(0.0f,0.0f,0.0f), 0.5, 0.5, 1280, 0, m_img, FALSE);
 
 #ifdef GAMEMGR_DEBUG
 	DrawFormatString(0, 0, WH, "ÉQÅ[ÉÄâÊñ ");
