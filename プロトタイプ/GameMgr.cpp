@@ -1,23 +1,29 @@
 #include "GameMgr.h"
 
 cGameMgr::cGameMgr(ISceneChanger* _scene) : cBaseScene(_scene) {
-	//cMap *map = new cMap(100, 200, 800 / 2, 450 / 2, 1);
-	//m_map = *map;
-	//delete(map);
+	Init();
 }
 
 void cGameMgr::Init() {
+	cTime* ptime = new cTime(TIME_LIMIT);
+	m_time = *ptime;
+	m_img = LoadGraph("../resource/img/GameBG.png");
 }
 
 void cGameMgr::Update() {
 	m_fps.Update();
-	m_camera.Update();
 	m_mapMgr.Update();
 	m_PUnit.Update();
+	m_escort.Update();
+	m_camera.Update();
+	m_time.Update();
 	
 	PUnitGenerate();
-#ifdef GAMEMGR_DEBUG
 
+#ifdef GAMEMGR_DEBUG
+	if (GET_KEY_PRESS(KEY_INPUT_E) == 1) {
+		EscortDamageCalc(50);
+	}
 	//タイトルへ
 	if (GET_KEY_PRESS(KEY_INPUT_T) == 1) {
 		m_sceneChanger->ChangeScene(E_SCENE_TITLE);
@@ -32,6 +38,7 @@ void cGameMgr::Update() {
 	}
 	//リザルトへ
 	if (GET_KEY_PRESS(KEY_INPUT_R) == 1) {
+		
 		m_sceneChanger->ChangeScene(E_SCENE_RESULT);
 	}
 
@@ -41,21 +48,36 @@ void cGameMgr::Update() {
 
 void cGameMgr::Draw() {
 
-	cBaseScene::Draw();
 	m_fps.Draw();
+	DrawBillboard3D(VGet(0.0f,0.0f,0.0f), 0.5, 0.5, 1280, 0, m_img, FALSE);
 
 #ifdef GAMEMGR_DEBUG
 	DrawFormatString(0, 0, WH, "ゲーム画面");
 	//DrawBox(100,100,600,600,GR,TRUE);
 #endif // GAMEMGR_DEBUG
-
-	m_camera.Draw();
 	m_mapMgr.Draw();
 	m_PUnit.Draw();
-	
+	m_escort.Draw();
+	m_camera.Draw();
+	m_time.Draw();
 }
 
 void cGameMgr::End() {
+}
+
+void cGameMgr::EscortDamageCalc(int _damage) {
+	//HPが無くなったらリザルトへ
+	if (m_escort.DamageCalc(_damage) == false) {
+		//resultDefSuccess = false;
+		m_sceneChanger->ChangeScene(E_SCENE_RESULT);
+	}
+}
+
+void cGameMgr::DefSuccessJudge() {
+	if (m_time.GetSecond() < 0) {
+		//resultDefSuccess = true;
+		m_sceneChanger->ChangeScene(E_SCENE_RESULT);
+	}
 }
 
 void cGameMgr::PUnitGenerate() {
