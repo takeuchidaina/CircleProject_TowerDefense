@@ -1,5 +1,4 @@
 #pragma once
-using namespace std;
 #include <iostream>
 #include <vector>
 #include <fstream>
@@ -7,6 +6,10 @@ using namespace std;
 //#include <deque>
 #include "DxLib.h"
 #include "BaseTask.h"
+#include "CSVLoad.h"
+#include "Map.h"
+
+using namespace std;
 
 /*******************参考サイト****************************
 https://qiita.com/takoyaki3/items/269060a916a66d9c411a		csv読み込み
@@ -24,26 +27,15 @@ https://qiita.com/takoyaki3/items/269060a916a66d9c411a		csv読み込み
 #define _INCLUDE_MAPMGR_
 
 class cMapMgr : public cBaseTask {
-private:
-	//deque<deque<string>> csvfname;
-	char comma; //区切りとなるカンマ。
-	cMapMgr();
-
 public:
-	std::vector<cMap> map;		// cMapの宣言
+	vector<cMap>map;		// cMapの宣言
+	vector<vector<double>> tmpMap; //仮格納
 
-	bool mapLood(string line);				// マップをロードする関数
-	string fileName;
-	string w (int x, int y);
-	int stringChangeInt(int x, int y);		// stringの文字列をintにしてる
-	int csvSizeY();							// csvファイルの行を取得
-	int csvSizeX(int x);					// 取得した行を指定して列を取得
-	int mapnum;								// 部屋数
+	string fileName;			//ファイルネーム
+	int mapnum;					// 部屋数
 
-	void SetComma(char c) { comma = c; }
-
-	cMapMgr() {comma = ','; }
-	cMapMgr(string fname) { comma = ','; mapLood(fname); }
+	cMapMgr();
+	~cMapMgr();
 
 	virtual void Init();
 	virtual void Update();

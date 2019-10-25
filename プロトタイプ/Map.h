@@ -1,20 +1,22 @@
 #pragma once
 
+
 #include <vector>
 #include "DxLib.h"
 #include "BaseTask.h"
 #include "ColorListh.h"
 #include "Constant.h"
-
+//#include "MapMgr.h"
+using namespace std;
 
 
 #ifndef _MAP_INCLUDE_
 #define _MAP_INCLUDE_
-using namespace std;
 
 struct sDoor {
 	sDoor* destination;
 	double x, y, width, height;
+	int desMap, desDoor;
 };
 
 class cMap:public cBaseTask {
@@ -26,13 +28,14 @@ private:
 	int m_roomNum;				//部屋番号
 	vector<sDoor> m_door;		//ドアのvector配列
 
+	int img;
+
 public:
 	cMap(double _x, double _y, double _w, double _h, int _maxUnit, int _roomNum, vector<sDoor>& _door);//ドア配列を参照渡し
-	virtual ~cMap();
+	~cMap();
 	virtual void Init();
 	virtual void Update();
 	virtual void Draw();
-	virtual void End();
 
 	//ドアのアドレスのGet関数とSet関数
 	//i=ドア番号

@@ -1,84 +1,69 @@
 #include "MapMgr.h"
 
 cMapMgr::cMapMgr(){
-	mapLood(fileName);
+	fileName = "C:/Users/nwuser/Documents/school/2GM/サークル/TowerDefense/Map1.csv";
+	Init();
+
 }
- cMapMgr::~cMapMgr(){
-	 
- }
-
- // マップの読み込み
- bool cMapMgr::mapLood(string fname) {
-
-	 //ワイド文字変換用のロケール設定
-	 std::locale::global(std::locale("japanese"));
-
-	 std::ifstream ifs("test.txt");				//	ファイルストリームを宣言
-	 ifs.open(fname.c_str());	// ファイルを開く
-
-	 if (!ifs) {		// エラー処理     ifsをつけるのはファイルを開くのを失敗したかどうか
-		 std::cerr <<"ファイルオープン失敗" << std::endl;
-		 std::exit(1);
-	 }
-
-	 while (!ifs.eof()) {		// ファイルストリームが終わるまで回る
-		 
-		 char c = 0;
-		 string line;
-		 getline(ifs, line);	 // ifsで開いたファイルから1行読み込む
-		 line.push_back(comma);  // 配列に','を追加
-		 line.push_back('/0');
-
-		 //deque<string> csvfname;
-
-		 for (int i = 0, j = 0; i < line.size(); i++) {
-			 if (line[i] == comma) {
-				 string s = line.substr(j, i - j);
-				 i++;
-				 j = i;
-				 map.push_back(s);	// 配列に一時保存
-			 }
-		 }
-		 map.push_back(line);		// 配列に保存
-	 }
-	 ifs.close();
-
-	 return 1;
- }
-
+cMapMgr::~cMapMgr(){
+	;
+}
 
 void cMapMgr::Init(){	
 
+	tmpMap=CSVLoad(fileName);
+
+	double tmpX, tmpY, tmpW, tmpH;
+	int tmpMaxUnit,tmpRoomNum;
+	vector<sDoor> tmpDoor(4);
+
+	for (int i = 0; i < tmpMap.size(); i++) {
+		for (int j = 0; j < tmpMap[i].size(); j++) {
+			switch (j) {
+			case 0:tmpRoomNum = tmpMap[i][j]; break;
+			case 1:tmpX = tmpMap[i][j];	break;
+			case 2:tmpY = tmpMap[i][j];	break;
+			case 3:tmpW = tmpMap[i][j];	break;
+			case 4:tmpH = tmpMap[i][j];	break;
+			case 5:tmpMaxUnit = tmpMap[i][j];	break;
+			case 6:tmpDoor[0].x = tmpMap[i][j];	break;
+			case 7:tmpDoor[0].y = tmpMap[i][j];	break;
+			case 8:tmpDoor[0].desMap = tmpMap[i][j];	break;
+			case 9:tmpDoor[0].desDoor = tmpMap[i][j];	break;
+			case 10:tmpDoor[1].x = tmpMap[i][j];	break;
+			case 11:tmpDoor[1].y = tmpMap[i][j];	break;
+			case 12:tmpDoor[1].desMap = tmpMap[i][j];	break;
+			case 13:tmpDoor[1].desDoor = tmpMap[i][j];	break;
+			case 14:tmpDoor[2].x = tmpMap[i][j];	break;
+			case 15:tmpDoor[2].y = tmpMap[i][j];	break;
+			case 16:tmpDoor[2].desMap = tmpMap[i][j];	break;
+			case 17:tmpDoor[2].desDoor = tmpMap[i][j];	break;
+			case 18:tmpDoor[3].x = tmpMap[i][j];	break;
+			case 19:tmpDoor[3].y = tmpMap[i][j];	break;
+			case 20:tmpDoor[3].desMap = tmpMap[i][j];	break;
+			case 21:tmpDoor[3].desDoor = tmpMap[i][j];	break;
+			default:break;
+			}
+		}
+		cMap tmp(tmpX, tmpY, tmpW, tmpH, tmpMaxUnit, tmpRoomNum, tmpDoor);
+		map.push_back(tmp);
+	}
 }
 
 void cMapMgr::Update(){
-
+	for (int i = 0; i < map.size(); i++) {
+		map[i].Update();
+	}
 }
 
 void cMapMgr::Draw(){
-
-}
-
-
-// 
-int cMapMgr::stringChangeInt(int x, int y){		// string型をint型にする
-	string s = w(y, x);
-	if (s.size() == 0) return -1;
-	int n = atoi(s.c_str());
-	return n;
-}
-
-int cMapMgr::csvSizeY() {
-	return map.size();
-}
-
-int cMapMgr::csvSizeX(int y) {
-	if (y < 0 || y >= map.size()) return -1;
-	return map[y].size();
+	for (int i = 0; i < map.size(); i++) {
+		map[i].Draw();
+	}
 }
 
 
 ////////////////マップ.csvベース
-//Map					         Door01	 Door02	 Door03	 Door04	
-//x	y	width	height	maxUnit	 x	y	 x	y	 x	y	 x	y
+//Map					         Door01	 destinetion	Door02  destinetion
+//x	y	width	height	maxUnit	 x	y	 map  door		x	y	map  door
 
