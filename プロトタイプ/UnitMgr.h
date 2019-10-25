@@ -43,17 +43,17 @@ public:
 	void Update();
 	void Draw();
 
-	void Add_PSord(double _x, double _y)
+	void Add_PSord(double _x, double _y,int _room)
 	{
-		player.emplace_back(new cPSord(_x, _y, 1, m_num));
+		player.emplace_back(new cPSord(_x, _y, _room, m_num));
 		m_num++;
 		//cLog::Instance()->DebugLog("Œ•Žm‚ð¶¬");
 		//DEBUG_LOG("Œ•Žm‚ð¶¬");
 	}
 
-	void Add_PArcher(double _x, double _y)
+	void Add_PArcher(double _x, double _y,int _room)
 	{
-		player.emplace_back(new cPArcher(_x, _y, 1, m_num));
+		player.emplace_back(new cPArcher(_x, _y, _room, m_num));
 		m_num++;
 		//cLog::Instance()->DebugLog("‹|•º‚ð¶¬");
 	}

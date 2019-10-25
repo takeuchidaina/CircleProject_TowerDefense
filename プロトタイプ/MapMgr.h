@@ -44,6 +44,10 @@ public:
 	virtual void Init();
 	virtual void Update();
 	virtual void Draw();
+
+	double Get_Ground(int _num);
+	int CheckInto(double _x, double _y);
+	int GetMapSize();
 };
 
 #endif _INCLUDE_MAPMGR_

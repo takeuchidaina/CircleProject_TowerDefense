@@ -12,7 +12,7 @@ void cGameMgr::Init() {
 void cGameMgr::Update() {
 	m_fps.Update();
 	m_camera.Update();
-	m_map.Update();
+	m_mapMgr.Update();
 	m_PUnit.Update();
 	
 	PUnitGenerate();
@@ -50,7 +50,7 @@ void cGameMgr::Draw() {
 #endif // GAMEMGR_DEBUG
 
 	m_camera.Draw();
-	m_map.Draw();
+	m_mapMgr.Draw();
 	m_PUnit.Draw();
 	
 }
@@ -59,32 +59,35 @@ void cGameMgr::End() {
 }
 
 void cGameMgr::PUnitGenerate() {
+
 	if (MOUSE_PRESS(LEFT_CLICK) == 1 && CheckHitKey(KEY_INPUT_S) >= 1)
 	{
-		if (-1 != m_map.CheckInto(MOUSE_V.x, MOUSE_V.y))
+		int tmp = m_mapMgr.CheckInto(MOUSE_V.x, MOUSE_V.y);
+		if (tmp != -1)
 		{
-			m_PUnit.Add_PSord(MOUSE_V.x, m_map.Get_Ground() + UNIT_HEIGHT / 2);
-		}
-	}
-	if (MOUSE_PRESS(LEFT_CLICK) == 1 && CheckHitKey(KEY_INPUT_A) >= 1)
-	{
-		if (-1 != m_map.CheckInto(MOUSE_V.x, MOUSE_V.y))
-		{
-			m_PUnit.Add_PArcher(MOUSE_V.x, m_map.Get_Ground() + UNIT_HEIGHT / 2);
+			m_PUnit.Add_PSord(MOUSE_V.x, m_mapMgr.Get_Ground(tmp) + UNIT_HEIGHT / 2, tmp);
 
 		}
 	}
-	if (MOUSE_PRESS(LEFT_CLICK) == 1 && cMouse::Instance()->GetPlayerNum() >= 0 && CheckHitKeyAll != 0)
+	else if (MOUSE_PRESS(LEFT_CLICK) == 1 && CheckHitKey(KEY_INPUT_A) >= 1)
 	{
-		int tmp = m_map.CheckInto(MOUSE_V.x, MOUSE_V.y);
+		int tmp = m_mapMgr.CheckInto(MOUSE_V.x, MOUSE_V.y);
+		if (tmp != -1)
+		{
+			m_PUnit.Add_PArcher(MOUSE_V.x, m_mapMgr.Get_Ground(tmp) + UNIT_HEIGHT / 2, tmp);
+
+		}
+	}
+	else if (MOUSE_PRESS(LEFT_CLICK) == 1 && cMouse::Instance()->GetPlayerNum() >= 0 && CheckHitKeyAll != 0)
+	{
+		int tmp = m_mapMgr.CheckInto(MOUSE_V.x, MOUSE_V.y);
 		if (tmp != -1)
 		{
 			m_PUnit.Set_NextPlayerPos(cMouse::Instance()->GetPlayerNum(), tmp, MOUSE_V.x);
 			cMouse::Instance()->SetPlayerNum(-1);
 		}
 	}
-
-	if (MOUSE_PRESS(LEFT_CLICK) == 1)
+	else if (MOUSE_PRESS(LEFT_CLICK) == 1)
 	{
 		int tmp = 0;
 
