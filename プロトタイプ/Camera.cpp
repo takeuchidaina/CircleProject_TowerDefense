@@ -26,6 +26,8 @@ void cCamera::Init() {
 	m_wheelPosX = MOUSE_X;
 	m_wheelPosY = MOUSE_Y;
 
+	m_wheelClick = FALSE;
+
 }
 
 void cCamera::Update() {
@@ -44,10 +46,10 @@ void cCamera::Update() {
 		m_wheeled = MOUSE_WHEEL;
 
 		//カメラの座標・注視点を変化
-		m_camera.pos.x += m_camera.target.x - MOUSE_X;
-		m_camera.pos.y += m_camera.target.y - MOUSE_Y;
-		m_camera.target.x -= m_camera.target.x - MOUSE_X;
-		m_camera.target.y -= m_camera.target.y - MOUSE_Y;
+		//m_camera.pos.x += m_camera.target.x - MOUSE_X;
+		//m_camera.pos.y += m_camera.target.y - MOUSE_Y;
+		//m_camera.target.x -= m_camera.target.x - MOUSE_X;
+		//m_camera.target.y -= m_camera.target.y - MOUSE_Y;
 	}
 	//縮小
 	else if (m_wheeled > MOUSE_WHEEL) {
@@ -59,10 +61,10 @@ void cCamera::Update() {
 		m_wheeled = MOUSE_WHEEL;
 
 		//カメラの座標・注視点を変化
-		m_camera.pos.x += m_camera.target.x - MOUSE_X;
-		m_camera.pos.y += m_camera.target.y - MOUSE_Y;
-		m_camera.target.x -= m_camera.target.x - MOUSE_X;
-		m_camera.target.y -= m_camera.target.y - MOUSE_Y;
+		//m_camera.pos.x += m_camera.target.x - MOUSE_X;
+		//m_camera.pos.y += m_camera.target.y - MOUSE_Y;
+		//m_camera.target.x -= m_camera.target.x - MOUSE_X;
+		//m_camera.target.y -= m_camera.target.y - MOUSE_Y;
 	}
 
 	//移動
