@@ -24,6 +24,26 @@ void cUnitMgr::Update()
 		}
 	}
 
+	for (int i = 0; i < enemy.size(); i++)
+	{
+		switch (enemy[i]->Get_State())
+		{
+		case eIdle:
+			break;
+
+		case eAttack:
+			enemy[i]->Attack();
+			break;
+
+		case eMove:
+			enemy[i]->Move();
+			break;
+
+		default:
+			break;
+		}
+	}
+
 }
 
 void cUnitMgr::Draw()
@@ -32,6 +52,10 @@ void cUnitMgr::Draw()
 	{
 		player[i]->Draw();
 	}
+	for (int i = 0; i < enemy.size(); i++)
+	{
+		enemy[i]->Draw();
+	}a
 
 #ifdef UNIT_MGR_DEBUG
 	DrawFormatString(100, 100, GetColor(255, 0, 0), "ユニット数：%d", player.size());
@@ -54,6 +78,22 @@ int cUnitMgr::CheckPlayerClick(VECTOR _pos)
 		}
 		
 	}
+	return -1;
+}
 
+int cUnitMgr::CheckEnemyClick(VECTOR _pos)
+{
+	for (int i = 0; i < enemy.size(); i++)
+	{
+		VECTOR e_pos = enemy[i]->Get_Pos();
+
+		if ((e_pos.x - UNIT_WIDTH / 2) <= _pos.x && (e_pos.x + UNIT_WIDTH / 2) >= _pos.x)
+		{
+			if ((e_pos.y - UNIT_HEIGHT / 2) <= _pos.y && (e_pos.y + UNIT_HEIGHT / 2) >= _pos.y)
+			{
+				return enemy[i]->Get_Num();
+			}
+		}
+	}
 	return -1;
 }

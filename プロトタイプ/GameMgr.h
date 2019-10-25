@@ -31,8 +31,12 @@ private:
 	
 	cFPS m_fps;
 	cCamera m_camera;
+
 	cUnitMgr m_PUnit;
 	void PUnitGenerate();
+
+	cUnitMgr m_EUnit;
+	void EUnitGenerate();
 
 	cMapMgr m_mapMgr;
 	//cMap m_map;
