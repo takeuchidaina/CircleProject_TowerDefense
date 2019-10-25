@@ -1,9 +1,9 @@
 #include "GameMgr.h"
 
 cGameMgr::cGameMgr(ISceneChanger* _scene) : cBaseScene(_scene) {
-	cMap *map = new cMap(100, 200, 800 / 2, 450 / 2, 1);
-	m_map = *map;
-	delete(map);
+	//cMap *map = new cMap(100, 200, 800 / 2, 450 / 2, 1);
+	//m_map = *map;
+	//delete(map);
 }
 
 void cGameMgr::Init() {
@@ -64,7 +64,6 @@ void cGameMgr::PUnitGenerate() {
 		if (-1 != m_map.CheckInto(MOUSE_V.x, MOUSE_V.y))
 		{
 			m_PUnit.Add_PSord(MOUSE_V.x, m_map.Get_Ground() + UNIT_HEIGHT / 2);
-
 		}
 	}
 	if (MOUSE_PRESS(LEFT_CLICK) == 1 && CheckHitKey(KEY_INPUT_A) >= 1)

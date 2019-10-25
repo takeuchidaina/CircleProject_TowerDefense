@@ -31,8 +31,11 @@ private:
 	int img;
 
 public:
+	//規定コンストラクタを作ってもそれが呼ばれるので
+	//MapMgrにGet関数をGetするやつを作る
+	cMap(){ ; }
 	cMap(double _x, double _y, double _w, double _h, int _maxUnit, int _roomNum, vector<sDoor>& _door);//ドア配列を参照渡し
-	~cMap();
+	virtual ~cMap() {}
 	virtual void Init();
 	virtual void Update();
 	virtual void Draw();

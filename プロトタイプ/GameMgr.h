@@ -11,7 +11,8 @@
 #include "FPS.h"
 #include "Camera.h"
 #include "UnitMgr.h"
-#include "cMap.h"
+#include "MapMgr.h"
+#include "Map.h"
 
 #ifndef _INCLUDE_GAMEMGR_
 #define _INCLUDE_GAMEMGR_
@@ -33,6 +34,7 @@ private:
 	cUnitMgr m_PUnit;
 	void PUnitGenerate();
 
+	cMapMgr m_mapMgr;
 	cMap m_map;
 };
 
