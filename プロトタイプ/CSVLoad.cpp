@@ -13,7 +13,7 @@ vector<vector<double>> CSVLoad(string& _filename) {
 
 	vector<double> tmpData;
 	char del = ',';
-	int roomNum = 1;
+	int roomNum = 0;
 
 	if (ifs.fail()) {        // エラー処理     ifsをつけるのはファイルを開くのを失敗したかどうか
 		cerr << "ファイルオープン失敗" << endl;

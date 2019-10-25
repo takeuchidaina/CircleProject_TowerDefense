@@ -13,8 +13,8 @@ void cMapMgr::Init(){
 
 	tmpMap=CSVLoad(fileName);
 
-	double tmpX, tmpY, tmpW, tmpH;
-	int tmpMaxUnit,tmpRoomNum;
+	double tmpX=0.0, tmpY=0.0, tmpW=0.0, tmpH=0.0;
+	int tmpMaxUnit=0,tmpRoomNum=0;
 	vector<sDoor> tmpDoor(4);
 
 	for (int i = 0; i < tmpMap.size(); i++) {
@@ -60,7 +60,26 @@ void cMapMgr::Draw(){
 	for (int i = 0; i < map.size(); i++) {
 		map[i].Draw();
 	}
+	DrawFormatString(300,400,RD,"roomNum:%d",map[0].GetRoomNum());
 
+}
+
+double cMapMgr::Get_Ground(int _num) {
+	return map[_num].Get_Ground();
+}
+
+int cMapMgr::CheckInto(double _x, double _y) {
+	for (int i = 0; i < map.size();i++) {
+		if (map[i].CheckInto(_x, _y) == true) {
+			return map[i].GetRoomNum();
+		}
+	}
+	return -1;
+	
+}
+
+int cMapMgr::GetMapSize() {
+	return map.size();
 }
 
 ////////////////マップ.csvベース

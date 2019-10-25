@@ -35,7 +35,7 @@ private:
 	void PUnitGenerate();
 
 	cMapMgr m_mapMgr;
-	cMap m_map;
+	//cMap m_map;
 };
 
 #endif // !_INCLUDE_GAMEMGR_

@@ -22,7 +22,7 @@ struct sDoor {
 class cMap:public cBaseTask {
 
 private:
-	double m_x, m_y;			//左下座標
+	//double m_x, m_y;			//左下座標
 	double m_width, m_height;	//幅高さ
 	int m_maxUnit;				//部屋にいられる最大ユニット数
 	int m_roomNum;				//部屋番号
@@ -30,10 +30,10 @@ private:
 
 	int img;
 
+	VECTOR m_pos;
+
 public:
-	//規定コンストラクタを作ってもそれが呼ばれるので
-	//MapMgrにGet関数をGetするやつを作る
-	cMap(){ ; }
+
 	cMap(double _x, double _y, double _w, double _h, int _maxUnit, int _roomNum, vector<sDoor>& _door);//ドア配列を参照渡し
 	virtual ~cMap() {}
 	virtual void Init();
@@ -45,13 +45,16 @@ public:
 	sDoor* GetDestination(int i) { return m_door[i].destination; }
 	void SetDestination(int i, sDoor* _des) { m_door[i].destination = _des; }
 
-	//高井追加
 	bool CheckInto(double, double);
 	double Get_Ground()
 	{
-		return m_y + m_height;
+		return m_pos.y - (m_height / 2);
 	}
-	//ここまで
+	int GetRoomNum() {
+		return m_roomNum;
+	}
+
+
 };
 
 #endif _MAP_INCLUDE_
