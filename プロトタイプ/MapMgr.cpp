@@ -1,7 +1,7 @@
 #include "MapMgr.h"
 
 cMapMgr::cMapMgr(){
-	fileName = "C:/Users/nwuser/Documents/school/2GM/サークル/TowerDefense/Map1.csv";
+	fileName = "../resource/Map/Map1.csv";
 	Init();
 
 }
@@ -61,11 +61,6 @@ void cMapMgr::Draw(){
 		map[i].Draw();
 	}
 
-}
-
-int cMapMgr::CsvSizeX(int _y) {
-	if (_y < 0 || _y >= cMap.size()) return -1;
-	return cMap[_y].size();
 }
 
 ////////////////マップ.csvベース

@@ -10,14 +10,10 @@ cMap::cMap(double _x, double _y, double _w, double _h, int _maxUnit, int _roomNu
 	m_roomNum = _roomNum;
 	m_door = _door;
 
-	img= LoadGraph("../resource/img/‰¼.jpg");
+	img= LoadGraph("../resource/img/sample.png");
 	if (img == NULL) {
 		DrawString(50, 50, "‰æ‘œŽ¸”s", GetColor(255,0,255));
 	}
-}
-
-cMap::~cMap() {
-	;
 }
 
 void cMap::Init() {
