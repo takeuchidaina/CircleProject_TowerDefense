@@ -9,6 +9,11 @@ cMap::cMap(double _x, double _y, double _w, double _h, int _maxUnit, int _roomNu
 	m_maxUnit = _maxUnit;
 	m_roomNum = _roomNum;
 	m_door = _door;
+
+	img= LoadGraph("../resource/img/‰¼.jpg");
+	if (img == NULL) {
+		DrawString(50, 50, "‰æ‘œŽ¸”s", GetColor(255,0,255));
+	}
 }
 
 cMap::~cMap() {
@@ -25,14 +30,10 @@ void cMap::Update() {
 
 void cMap::Draw() {
 	//‚Æ‚è‚ ‚¦‚¸” 
-	DrawBox(m_x, m_y, m_x + m_width + 1, m_y + m_height + 1, WH, TRUE);
+	DrawBillboard3D(VGet(m_x,m_y,0.0f),0.5,0.5,400,0,0,img,FALSE);
 	for (int i = 0; i < m_door.size(); i++) {
 		DrawBox(m_door[i].x, m_door[i].y, m_door[i].x + m_door[i].width + 1, m_door[i].y + m_door[i].height + 1, BL, TRUE);
 	}
-}
-
-void cMap::End() {
-	;
 }
 
 //‚ˆä’Ç‰Á

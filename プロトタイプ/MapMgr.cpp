@@ -1,111 +1,66 @@
 #include "MapMgr.h"
 
-cMapMgr::cMapMgr(){			// ƒRƒ“ƒXƒg
+cMapMgr::cMapMgr(){
+	fileName = "C:/Users/nwuser/Documents/school/2GM/ã‚µãƒ¼ã‚¯ãƒ«/TowerDefense/Map1.csv";
+	Init();
 
-	MapLood(/*fileName*/);
 }
- cMapMgr::~cMapMgr(){
-	 
- }
-
- // ƒ}ƒbƒv‚Ì“Ç‚İ‚İ
- bool cMapMgr::MapLood(/*string _fname*/) {
-
-	 //ƒƒCƒh•¶š•ÏŠ·—p‚ÌƒƒP[ƒ‹İ’è
-	 locale::global(locale("japanese"));
-
-	 strcpy(MapBase, "MAP/Test");
-
-	 sprintf(MapNum, "%d", MapFlag);
-
-	 strcpy(MapHandle, MapBase);	 
-
-	 strcat(MapHandle, MapNum);
-
-	 strcat(MapHandle, ".csv");
-
-	 ifstream ifs;						// ƒtƒ@ƒCƒ‹ƒXƒgƒŠ[ƒ€‚ğéŒ¾
-	 ifs.open(MapHandle);				// ƒtƒ@ƒCƒ‹‚ğŠJ‚­
-
-	 if (!ifs) {		// ƒGƒ‰[ˆ—     ifs‚ğ‚Â‚¯‚é‚Ì‚Íƒtƒ@ƒCƒ‹‚ğŠJ‚­‚Ì‚ğ¸”s‚µ‚½‚©‚Ç‚¤‚©
-		 cerr <<"ƒtƒ@ƒCƒ‹ƒI[ƒvƒ“¸”s" << endl;
-		 exit(1);
-	 }
-
-	 /*
-	 for (int i = 0; i < _MAP_STATUS_; i++) {
-		 int n;
-		 cin >> n;
-		 cMap.push_back(n);
-	 }
-	 */
-
-	 while (!ifs.eof()) {		// ƒtƒ@ƒCƒ‹ƒXƒgƒŠ[ƒ€‚ªI‚í‚é‚Ü‚Å‰ñ‚é
-		 
-		 //char c = 0;
-		 string line;
-
-		 getline(ifs, line);	 // ifs‚ÅŠJ‚¢‚½ƒtƒ@ƒCƒ‹‚©‚ç1s“Ç‚İ‚Ş
-		 cin >> line;			 // ˆês“Ç‚İ‚İ
-		 if(line == comma){
-			 int tmp = atoi(line.c_str());		// string‚ğint
-			 cMap.push_back(tmp);
-		 }
-		 /////////////////////////////////////////////////////
-
-		 line.push_back(',');  // ”z—ñ‚É','‚ğ’Ç‰Á
-		 
-
-		 //deque<string> csvfname;
-
-		 for (int i = 0, j = 0; i < line.size(); i++) {
-			 if (line[i] == comma) {
-				 string s = line.substr(j, i - j);		// j‚©‚çi-j‚ğstring s‚É‘ã“ü
-				 i++;
-				 j = i;
-				 line.push_back(s);	// ”z—ñ‚Éˆê•Û‘¶
-			 }
-		 }
-		 line.push_back(line);		// ”z—ñ‚É•Û‘¶
-	 }
-	 ifs.close();
-
-	 return 1;
- }
+cMapMgr::~cMapMgr(){
+	;
+}
 
 void cMapMgr::Init(){	
 
+	tmpMap=CSVLoad(fileName);
+
+	double tmpX, tmpY, tmpW, tmpH;
+	int tmpMaxUnit,tmpRoomNum;
+	vector<sDoor> tmpDoor(4);
+
+	for (int i = 0; i < tmpMap.size(); i++) {
+		for (int j = 0; j < tmpMap[i].size(); j++) {
+			switch (j) {
+			case 0:tmpRoomNum = tmpMap[i][j]; break;
+			case 1:tmpX = tmpMap[i][j];	break;
+			case 2:tmpY = tmpMap[i][j];	break;
+			case 3:tmpW = tmpMap[i][j];	break;
+			case 4:tmpH = tmpMap[i][j];	break;
+			case 5:tmpMaxUnit = tmpMap[i][j];	break;
+			case 6:tmpDoor[0].x = tmpMap[i][j];	break;
+			case 7:tmpDoor[0].y = tmpMap[i][j];	break;
+			case 8:tmpDoor[0].desMap = tmpMap[i][j];	break;
+			case 9:tmpDoor[0].desDoor = tmpMap[i][j];	break;
+			case 10:tmpDoor[1].x = tmpMap[i][j];	break;
+			case 11:tmpDoor[1].y = tmpMap[i][j];	break;
+			case 12:tmpDoor[1].desMap = tmpMap[i][j];	break;
+			case 13:tmpDoor[1].desDoor = tmpMap[i][j];	break;
+			case 14:tmpDoor[2].x = tmpMap[i][j];	break;
+			case 15:tmpDoor[2].y = tmpMap[i][j];	break;
+			case 16:tmpDoor[2].desMap = tmpMap[i][j];	break;
+			case 17:tmpDoor[2].desDoor = tmpMap[i][j];	break;
+			case 18:tmpDoor[3].x = tmpMap[i][j];	break;
+			case 19:tmpDoor[3].y = tmpMap[i][j];	break;
+			case 20:tmpDoor[3].desMap = tmpMap[i][j];	break;
+			case 21:tmpDoor[3].desDoor = tmpMap[i][j];	break;
+			default:break;
+			}
+		}
+		cMap tmp(tmpX, tmpY, tmpW, tmpH, tmpMaxUnit, tmpRoomNum, tmpDoor);
+		map.push_back(tmp);
+	}
 }
 
 void cMapMgr::Update(){
-
+	for (int i = 0; i < map.size(); i++) {
+		map[i].Update();
+	}
 }
 
 void cMapMgr::Draw(){
-	cout << endl;
-}
+	for (int i = 0; i < map.size(); i++) {
+		map[i].Draw();
+	}
 
-/*
-string cMapMgr::w(int _y, int _x) {
-	if (_x < 0 || _y < 0) return L'';
-	if (_y >= map.size()) return L'';
-	if (_x >= map[_y].size()) return L'';
-
-	return map[_y][_x];
-}
-*/
-
-
-int cMapMgr::AsciiToInt(int _x, int _y) {		// stringŒ^‚ğintŒ^‚É‚·‚é
-	string strTmp = w(_y, _x);					// 
-	if (strTmp.size() == 0) return -1;
-	int intTmp = atoi(strTmp.c_str());
-	cout << strlen(strTmp.c_str()) << "\n";
-	return intTmp;
-}
-
-int cMapMgr::CsvSizeY() {
-	return cMap.size();
 }
 
 int cMapMgr::CsvSizeX(int _y) {
@@ -113,7 +68,7 @@ int cMapMgr::CsvSizeX(int _y) {
 	return cMap[_y].size();
 }
 
-////////////////ƒ}ƒbƒv.csvƒx[ƒX
-//Map					         Door01	 Door02	 Door03	 Door04	
-//x	y	width	height	maxUnit	 x	y	 x	y	 x	y	 x	y
+////////////////ãƒãƒƒãƒ—.csvãƒ™ãƒ¼ã‚¹
+//Map					         Door01	 destinetion	Door02  destinetion
+//x	y	width	height	maxUnit	 x	y	 map  door		x	y	map  door
 
