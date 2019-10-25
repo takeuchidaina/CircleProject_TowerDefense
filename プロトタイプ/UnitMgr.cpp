@@ -2,16 +2,27 @@
 
 void cUnitMgr::Update()
 {
-	//if (CheckHitKey(KEY_INPUT_S) == 1)
-	//{
-	//	player.emplace_back(new cPSord(100, 100, 1));
-	//}
-	//if (CheckHitKey(KEY_INPUT_A) == 1)
-	//{
-	//	player.emplace_back(new cPArcher(100, 150, 1));
-	//}
+	
+	for (int i = 0; i < player.size(); i++)
+	{
+		switch (player[i]->Get_State())
+		{
+		case eIdle:
 
-	UnitSelectUI();
+			break;
+
+		case eAttack:
+
+			break;
+
+		case eMove:
+			player[i]->Move();
+			break;
+
+		default:
+			break;
+		}
+	}
 
 }
 
@@ -22,21 +33,27 @@ void cUnitMgr::Draw()
 		player[i]->Draw();
 	}
 
-	for (int i = 0; i < ui.size(); i++)
-	{
-		ui[i].Draw();
-	}
-
 #ifdef UNIT_MGR_DEBUG
 	DrawFormatString(100, 100, GetColor(255, 0, 0), "ユニット数：%d", player.size());
 #endif // UNIT_MGR_DEBUG
 }
 
-void cUnitMgr::UnitSelectUI()
+int cUnitMgr::CheckPlayerClick(VECTOR _pos)
 {
-	for (int i = 0; i < 2; i++)
+	for (int i = 0; i < player.size(); i++)
 	{
-		ui.emplace_back(200 + 65 * i, i);
+		VECTOR p_pos = player[i]->Get_Pos();
+
+		if ((p_pos.x - UNIT_WIDTH / 2) <= _pos.x && (p_pos.x + UNIT_WIDTH / 2) >= _pos.x)
+		{
+			if ((p_pos.y - UNIT_HEIGHT / 2) <= _pos.y && (p_pos.y + UNIT_HEIGHT / 2) >= _pos.y)
+			{
+				return player[i]->Get_Num();
+			}
+			
+		}
+		
 	}
-	
+
+	return -1;
 }

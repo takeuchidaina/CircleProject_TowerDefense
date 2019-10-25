@@ -3,7 +3,8 @@
 #include <vector>
 #include <fstream>
 #include <string>
-//#include <deque>
+#include <stdlib.h>
+
 #include "DxLib.h"
 #include "BaseTask.h"
 #include "CSVLoad.h"
@@ -11,28 +12,31 @@
 
 using namespace std;
 
-/*******************QlƒTƒCƒg****************************
-https://qiita.com/takoyaki3/items/269060a916a66d9c411a		csv“Ç‚İ‚İ
+/*******************å‚è€ƒã‚µã‚¤ãƒˆ****************************
+https://qiita.com/takoyaki3/items/269060a916a66d9c411a		csvèª­ã¿è¾¼ã¿
 *********************************************************/
 
 /**********************************************************
- substrcæ‚èo‚·’·‚³‚ÍÈ—ª‚·‚é‚±‚Æ‚ª‚Å‚«A‚»‚Ìê‡‚Íw’è‚µ‚½ˆÊ’u‚©‚çÅŒã‚Ü‚Å‚Ì
-		 •”•ª•¶š—ñ‚ğæ“¾‚Å‚«‚Ü‚·B
+ substrâ€¦å–ã‚Šå‡ºã™é•·ã•ã¯çœç•¥ã™ã‚‹ã“ã¨ãŒã§ãã€ãã®å ´åˆã¯æŒ‡å®šã—ãŸä½ç½®ã‹ã‚‰æœ€å¾Œã¾ã§ã®
+		 éƒ¨åˆ†æ–‡å­—åˆ—ã‚’å–å¾—ã§ãã¾ã™ã€‚
 
-	—á)	 •Ï”.substr(ŠJnˆÊ’u, æ‚èo‚·’·‚³);
+	ä¾‹)	 å¤‰æ•°.substr(é–‹å§‹ä½ç½®, å–ã‚Šå‡ºã™é•·ã•);
 *********************************************************/
 
 
 #ifndef _INCLUDE_MAPMGR_
 #define _INCLUDE_MAPMGR_
 
-class cMapMgr : public cBaseTask {
-public:
-	vector<cMap>map;		// cMap‚ÌéŒ¾
-	vector<vector<double>> tmpMap; //‰¼Ši”[
+#define _MAP_STATUS_ 7
 
-	string fileName;			//ƒtƒ@ƒCƒ‹ƒl[ƒ€
-	int mapnum;					// •”‰®”
+class cMapMgr : public cBaseTask {
+
+public:
+	vector<cMap>map;		// cMapã®å®£è¨€
+	vector<vector<double>> tmpMap; //ä»®æ ¼ç´
+
+	string fileName;			//ãƒ•ã‚¡ã‚¤ãƒ«ãƒãƒ¼ãƒ 
+	int mapnum;					// éƒ¨å±‹æ•°
 
 	cMapMgr();
 	~cMapMgr();

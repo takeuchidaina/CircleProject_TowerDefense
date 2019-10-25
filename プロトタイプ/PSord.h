@@ -1,5 +1,8 @@
 #pragma once
 #include "PlayerUnit.h"
+#include "WinBox.h"
+#include "ColorListh.h"
+#include "Log.h"
 
 #ifndef _INCLUDE_P_SORD_
 #define _INCLUDE_P_SORD_
@@ -18,22 +21,49 @@
 class cPSord : public cPlayerUnit
 {
 public:
-	cPSord(double _x, double _y, int _room) : cPlayerUnit()
+	cPSord(double _x, double _y, int _room, int _num) : cPlayerUnit()
 	{
-		x = _x;
-		y = _y;
-		room = _room;
-		hp = 50;
-		atk = 50;
-		speed = 3.0;
-		atkCoolTime = 3;
+		m_pos.x = _x;
+		m_pos.y = _y;
+		m_pos.z = 0.0f;
+		m_num = _num;
+		m_room = _room;
+		m_hp = 50;
+		m_atk = 50;
+		m_speed = 0.25;
+		m_atkCoolTime = 3;
+		m_imgNum = 0;
+		m_moveCnt = 0;
+		m_direction = U_RIGHT;
 		//target = NULL;
+
+		if (0 != LoadDivGraph("../resource/img/player.png", 6, 3, 2, 64, 64, m_imgtbl))
+		{
+			ErrBox("âÊëúì«Ç›çûÇ›é∏îs");
+		}
 	}
 
-	void Update() {}
+	~cPSord()
+	{
+		// âÊëúçÌèú
+		for (int i = 0; i < 6; i++)
+		{
+			DeleteGraph(m_imgtbl[i]);
+		}
+	}
+
+	/*void Update()
+	{
+		
+	}
 	void Draw()
 	{
-		DrawBox(x-UNIT_WIDTH/2, y, x+UNIT_WIDTH/2, y+ UNIT_HEIGHT, GetColor(255, 0, 0), TRUE);
+		
+	}*/
+
+	VECTOR GetPos()
+	{
+		return m_pos;
 	}
 
 	/* TODO;

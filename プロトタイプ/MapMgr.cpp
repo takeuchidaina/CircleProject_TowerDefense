@@ -1,7 +1,7 @@
 #include "MapMgr.h"
 
 cMapMgr::cMapMgr(){
-	fileName = "C:/Users/nwuser/Documents/school/2GM/ƒT[ƒNƒ‹/TowerDefense/Map1.csv";
+	fileName = "C:/Users/nwuser/Documents/school/2GM/ã‚µãƒ¼ã‚¯ãƒ«/TowerDefense/Map1.csv";
 	Init();
 
 }
@@ -60,10 +60,15 @@ void cMapMgr::Draw(){
 	for (int i = 0; i < map.size(); i++) {
 		map[i].Draw();
 	}
+
 }
 
+int cMapMgr::CsvSizeX(int _y) {
+	if (_y < 0 || _y >= cMap.size()) return -1;
+	return cMap[_y].size();
+}
 
-////////////////ƒ}ƒbƒv.csvƒx[ƒX
+////////////////ãƒãƒƒãƒ—.csvãƒ™ãƒ¼ã‚¹
 //Map					         Door01	 destinetion	Door02  destinetion
 //x	y	width	height	maxUnit	 x	y	 map  door		x	y	map  door
 

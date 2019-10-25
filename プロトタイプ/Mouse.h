@@ -41,6 +41,7 @@
 
 #define LEFT_CLICK 0
 #define RIGHT_CLICK 1
+#define MIDDLE_CLICK 2
 
 class cMouse : public cSingleton<cMouse> {
 
@@ -99,6 +100,8 @@ public:
 	******************************************************/
 	int GetWheel();
 
+	int GetPlayerNum();
+
 #pragma endregion
 
 #pragma region Set,Init関数一覧
@@ -125,6 +128,13 @@ public:
 	戻り値：なし
 	******************************************************/
 	void SetMouseDisplay(bool _isDisplay);
+	/*****************************************************
+	名前　：void SetPlayerNum(int _num);
+	概要　：プレイヤーナンバーの格納
+	引数　：int _num:格納するプレイヤーナンバー
+	戻り値：なし
+	******************************************************/
+	void SetPlayerNum(int _num);
 
 #pragma endregion
 
@@ -134,6 +144,9 @@ private:
 	int m_wheel;		// マウスホイールのスクロール量
 	int m_buttonPressCnt[KEY_NUM];	// 押されているカウント
 	int m_buttonReleaseCnt[KEY_NUM];	// 離されているカウント
+	const int WHEEL_LIMIT_UP = 7;
+	const int WHEEL_LIMIT_DOWN = 0;
+	int m_playerNum;	// プレイヤーナンバーの格納用
 
 	/*****************************************************
 	名前　：IsAvailableCode(int _keyCode)
@@ -145,6 +158,15 @@ private:
 	******************************************************/
 	bool IsAvailableCode(int _keyCode);
 
+	/*****************************************************
+	名前　：IsAvailableCode(int _keyCode)
+	概要　：引数がキーとして有効な値かを確認する
+	引数　：_keyCode:各ゲット関数でどのキーを参照するか
+	　　　　　　　　 引数で受け取ったもの
+	戻り値：TRUE:有効　FALSE:無効
+	詳細　：関数で受け取った引数のエラーチェック用関数
+	******************************************************/
+	//int 
 };
 
 #endif // _INCLUED_MOUSE_

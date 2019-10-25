@@ -24,15 +24,15 @@
 class cBaseScene : public cBaseTask {
 
 protected:
-	ISceneChanger* sceneChanger;	// クラス所有基にシーン切り替えを伝える
+	ISceneChanger* m_sceneChanger;	// クラス所有基にシーン切り替えを伝える
 
 public:
 	cBaseScene(ISceneChanger* _scene);
 	virtual ~cBaseScene(){}
-	virtual void Init()override;
-	virtual void Update()override;
-	virtual void Draw()override;
-	virtual void End()override;
+	virtual void Init()override {}
+	virtual void Update()override {}
+	virtual void Draw()override {}
+	virtual void End()override {}
 
 private:
 

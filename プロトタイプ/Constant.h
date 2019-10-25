@@ -1,10 +1,13 @@
 #pragma once
 
-#define WINDOW_WIDTH 1280
-#define WINDOW_HEIGHT 720
+#define WINDOW_WIDTH 1280	// Window幅
+#define WINDOW_HEIGHT 720	// Window高さ
 
-#define UNIT_WIDTH 32
-#define UNIT_HEIGHT 40
+#define UNIT_WIDTH 64		// ユニット幅
+#define UNIT_HEIGHT 64		// ユニット高さ
+
+#define U_RIGHT 1			// 右向き
+#define U_LEFT -1			// 左向き
 
 /********************************************************
 ●概要
@@ -30,7 +33,7 @@ typedef enum
 typedef enum
 {
 	eSord,		// 剣士
-	eArcher,		// 弓兵
+	eArcher,	// 弓兵
 }eUnitType;
 
 typedef enum
@@ -39,3 +42,9 @@ typedef enum
 	eAttack,	// 攻撃中
 	eMove,		// 移動中
 }eState;
+
+typedef struct
+{
+	int sNextRoom;
+	double sNextX;
+}sNextMove;
