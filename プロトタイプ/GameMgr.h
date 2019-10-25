@@ -13,6 +13,7 @@
 #include "UnitMgr.h"
 #include "MapMgr.h"
 #include "Map.h"
+#include "EscortTarget.h"
 
 #ifndef _INCLUDE_GAMEMGR_
 #define _INCLUDE_GAMEMGR_
@@ -28,13 +29,15 @@ public:
 	void End()override;
 	
 private:
-	
+
+	void PUnitGenerate();
+	void EscortDamageCalc(int _damage);
+
 	cFPS m_fps;
 	cCamera m_camera;
 	cUnitMgr m_PUnit;
-	void PUnitGenerate();
-
 	cMapMgr m_mapMgr;
+	cEscortTarget m_escort;
 	//cMap m_map;
 };
 

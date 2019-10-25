@@ -1,9 +1,7 @@
 #include "GameMgr.h"
 
 cGameMgr::cGameMgr(ISceneChanger* _scene) : cBaseScene(_scene) {
-	//cMap *map = new cMap(100, 200, 800 / 2, 450 / 2, 1);
-	//m_map = *map;
-	//delete(map);
+
 }
 
 void cGameMgr::Init() {
@@ -11,11 +9,16 @@ void cGameMgr::Init() {
 
 void cGameMgr::Update() {
 	m_fps.Update();
-	m_camera.Update();
 	m_mapMgr.Update();
 	m_PUnit.Update();
+	m_escort.Update();
+	m_camera.Update();
 	
 	PUnitGenerate();
+
+	if (GET_KEY_PRESS(KEY_INPUT_E) == 1) {
+		EscortDamageCalc(50);
+	}
 #ifdef GAMEMGR_DEBUG
 
 	//タイトルへ
@@ -48,16 +51,22 @@ void cGameMgr::Draw() {
 	DrawFormatString(0, 0, WH, "ゲーム画面");
 	//DrawBox(100,100,600,600,GR,TRUE);
 #endif // GAMEMGR_DEBUG
-
-	m_camera.Draw();
 	m_mapMgr.Draw();
 	m_PUnit.Draw();
+	m_escort.Draw();
+	m_camera.Draw();
 	
 }
 
 void cGameMgr::End() {
 }
 
+void cGameMgr::EscortDamageCalc(int _damage) {
+	//HPが無くなったらリザルトへ
+	if (m_escort.DamageCalc(_damage) == false) {
+		m_sceneChanger->ChangeScene(E_SCENE_RESULT);
+	}
+}
 void cGameMgr::PUnitGenerate() {
 
 	if (MOUSE_PRESS(LEFT_CLICK) == 1 && CheckHitKey(KEY_INPUT_S) >= 1)
