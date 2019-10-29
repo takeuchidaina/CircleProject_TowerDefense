@@ -1,39 +1,47 @@
 #include "GameMgr.h"
 
 cGameMgr::cGameMgr(ISceneChanger* _scene) : cBaseScene(_scene) {
-	//cMap *map = new cMap(100, 200, 800 / 2, 450 / 2, 1);
-	//m_map = *map;
-	//delete(map);
+	Init();
 }
 
 void cGameMgr::Init() {
+	cTime* ptime = new cTime(TIME_LIMIT);
+	m_time = *ptime;
+	m_img = LoadGraph("../resource/img/GameBG.png");
 }
 
 void cGameMgr::Update() {
 	m_fps.Update();
-	m_camera.Update();
 	m_mapMgr.Update();
 	m_PUnit.Update();
-	m_EUnit.Update();
-	
-	PUnitGenerate();
-	EUnitGenerate();
-#ifdef GAMEMGR_DEBUG
 
-	//ƒ^ƒCƒgƒ‹‚Ö
+	m_EUnit.Update();
+	m_escort.Update();
+	m_camera.Update();
+	m_time.Update();
+  
+  PUnitGenerate();
+	EUnitGenerate();
+
+#ifdef GAMEMGR_DEBUG
+	if (GET_KEY_PRESS(KEY_INPUT_E) == 1) {
+		EscortDamageCalc(50);
+	}
+	//ã‚¿ã‚¤ãƒˆãƒ«ã¸
 	if (GET_KEY_PRESS(KEY_INPUT_T) == 1) {
 		m_sceneChanger->ChangeScene(E_SCENE_TITLE);
 	}
-	//ƒƒjƒ…[‚Ö
+	//ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã¸
 	if (GET_KEY_PRESS(KEY_INPUT_M) == 1) {
 		m_sceneChanger->ChangeScene(E_SCENE_MENU);
 	}
-	//ƒQ[ƒ€‚Ö
+	//ã‚²ãƒ¼ãƒ ã¸
 	if (GET_KEY_PRESS(KEY_INPUT_G) == 1) {
 		m_sceneChanger->ChangeScene(E_SCENE_GAME);
 	}
-	//ƒŠƒUƒ‹ƒg‚Ö
+	//ãƒªã‚¶ãƒ«ãƒˆã¸
 	if (GET_KEY_PRESS(KEY_INPUT_R) == 1) {
+		
 		m_sceneChanger->ChangeScene(E_SCENE_RESULT);
 	}
 
@@ -43,22 +51,39 @@ void cGameMgr::Update() {
 
 void cGameMgr::Draw() {
 
-	cBaseScene::Draw();
 	m_fps.Draw();
+  m_mapMgr.Draw();
+	m_PUnit.Draw();
+	m_escort.Draw();
+	m_camera.Draw();
+	m_time.Draw();
+  m_EUnit.Draw();
+	DrawBillboard3D(VGet(0.0f,0.0f,0.0f), 0.5, 0.5, 1280, 0, m_img, FALSE);
 
 #ifdef GAMEMGR_DEBUG
-	DrawFormatString(0, 0, WH, "ƒQ[ƒ€‰æ–Ê");
+	DrawFormatString(0, 0, WH, "ã‚²ãƒ¼ãƒ ç”»é¢");
 	//DrawBox(100,100,600,600,GR,TRUE);
 #endif // GAMEMGR_DEBUG
 
-	m_camera.Draw();
-	m_mapMgr.Draw();
-	m_PUnit.Draw();
-	m_EUnit.Draw();
-	
+
 }
 
 void cGameMgr::End() {
+}
+
+void cGameMgr::EscortDamageCalc(int _damage) {
+	//HPãŒç„¡ããªã£ãŸã‚‰ãƒªã‚¶ãƒ«ãƒˆã¸
+	if (m_escort.DamageCalc(_damage) == false) {
+		//resultDefSuccess = false;
+		m_sceneChanger->ChangeScene(E_SCENE_RESULT);
+	}
+}
+
+void cGameMgr::DefSuccessJudge() {
+	if (m_time.GetSecond() < 0) {
+		//resultDefSuccess = true;
+		m_sceneChanger->ChangeScene(E_SCENE_RESULT);
+	}
 }
 
 void cGameMgr::PUnitGenerate() {
@@ -69,7 +94,7 @@ void cGameMgr::PUnitGenerate() {
 		if (tmp != -1)
 		{
 			m_PUnit.Add_PSord(MOUSE_V.x, m_mapMgr.Get_Ground(tmp) + UNIT_HEIGHT / 2, tmp);
-			DEBUG_LOG("Œ•oŒ»");
+			DEBUG_LOG("å‰£å‡ºç¾");
 		}
 	}
 	else if (MOUSE_PRESS(LEFT_CLICK) == 1 && CheckHitKey(KEY_INPUT_A) >= 1)
@@ -110,7 +135,7 @@ void cGameMgr::EUnitGenerate() {
 		if (tmp != -1)
 		{
 			m_EUnit.Add_ESord(MOUSE_V.x, m_mapMgr.Get_Ground(tmp) + UNIT_HEIGHT / 2, tmp);
-			DEBUG_LOG("Œ•ƒGƒlƒ~[oŒ»");
+			DEBUG_LOG("å‰£ã‚¨ãƒãƒŸãƒ¼å‡ºç¾");
 		}
 	}
 
@@ -121,7 +146,7 @@ void cGameMgr::EUnitGenerate() {
 		{
 			m_EUnit.Add_EArcher(MOUSE_V.x, m_mapMgr.Get_Ground(tmp) + UNIT_HEIGHT / 2, tmp);
 			//enemy.Set_NextEnemyPos(cMouse::Instance()->GetEnemyNum(), tmp, MOUSE_V.x);
-			DEBUG_LOG("‹|ƒGƒlƒ~[oŒ»");
+			DEBUG_LOG("å¼“ã‚¨ãƒãƒŸãƒ¼å‡ºç¾");
 		}
 	}
 
@@ -142,7 +167,7 @@ void cGameMgr::EUnitGenerate() {
 		if (0 <= tmp)
 		{
 			cMouse::Instance()->SetEnemyNum(tmp);
-			DEBUG_LOG("ƒGƒlƒ~[ƒiƒ“ƒo[Ši”[");
+			DEBUG_LOG("ã‚¨ãƒãƒŸãƒ¼ãƒŠãƒ³ãƒãƒ¼æ ¼ç´");
 			//cBaseUnit::m_pos.x -= m_speed;
 		}
 		//enemy.Set_NextEnemyPos(eMove);

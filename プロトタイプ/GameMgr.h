@@ -13,6 +13,9 @@
 #include "UnitMgr.h"
 #include "MapMgr.h"
 #include "Map.h"
+#include "EscortTarget.h"
+#include "TimeLimit.h"
+//#include "Result.h"
 
 #ifndef _INCLUDE_GAMEMGR_
 #define _INCLUDE_GAMEMGR_
@@ -28,7 +31,11 @@ public:
 	void End()override;
 	
 private:
-	
+
+	void PUnitGenerate();
+	void EscortDamageCalc(int _damage);
+	void DefSuccessJudge();
+
 	cFPS m_fps;
 	cCamera m_camera;
 
@@ -37,9 +44,12 @@ private:
 
 	cUnitMgr m_EUnit;
 	void EUnitGenerate();
-
+  
 	cMapMgr m_mapMgr;
-	//cMap m_map;
+	cEscortTarget m_escort;
+	cTime m_time;
+	int m_img;
+	const int TIME_LIMIT = 120;	//•b
 };
 
 #endif // !_INCLUDE_GAMEMGR_

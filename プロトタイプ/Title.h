@@ -48,7 +48,7 @@ private:
 	// ‰æ‘œ‚ÌŽí—Þ
 	typedef enum {
 		E_BACK_GROUND,
-		E_LOGO,
+		//E_LOGO,
 		E_IMAGE_MAX,
 	}eImage;
 

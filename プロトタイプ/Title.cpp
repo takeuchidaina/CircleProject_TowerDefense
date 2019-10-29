@@ -8,8 +8,8 @@ void cTitle::Init() {
 	nowSelect = 0;
 
 	//ÉÅÉjÉÖÅ[ÇÃèâä˙âª
-	m_menu[E_TITLE_MENU] = { {120,500,520,600,"../resource/img/TitleStartButton.png" },E_SCENE_MENU };
-	m_menu[E_TITLE_END] = { {760,500,1160,600,"../resource/img/TitleEndButton.png" }, E_SCENE_END };
+	m_menu[E_TITLE_MENU] = { {120,500,420,600,"../resource/img/TitleStartButton.png" },E_SCENE_GAME };
+	m_menu[E_TITLE_END] = { {420,500,720,600,"../resource/img/TitleEndButton.png" }, E_SCENE_END };
 	for (int i = 0; i < E_TITLE_MAX; i++) {
 		m_btn[i].Init(m_menu[i].image.ux, m_menu[i].image.uy,
 						 m_menu[i].image.dx, m_menu[i].image.dy,
@@ -17,8 +17,8 @@ void cTitle::Init() {
 	}
 
 	//âÊëúÇÃèâä˙âª
-	m_image[E_BACK_GROUND] = { 0,0,1280,960,"../resource/img/TitleBackGround.jpg"};
-	m_image[E_LOGO] = { 50,0,1330,960,"../resource/img/TitleLogo.png"};
+	m_image[E_BACK_GROUND] = { 0,0,1280,960,"../resource/img/TitleBG.png"};
+	//m_image[E_LOGO] = { 50,0,1330,960,"../resource/img/TitleLogo.png"};
 	for (int i = 0; i < E_IMAGE_MAX;i++) {
 		m_image[i].handle = LoadGraph(m_image[i].filePath.c_str());
 		if (m_image[i].handle == NULL) {
