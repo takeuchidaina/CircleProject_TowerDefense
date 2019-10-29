@@ -50,15 +50,15 @@ void cGameMgr::Update() {
 }
 
 void cGameMgr::Draw() {
+	DrawBillboard3D(VGet(0.0f, 0.0f, 0.0f), 0.5, 0.5, 1280, 0, m_img, FALSE);
 
 	m_fps.Draw();
-  m_mapMgr.Draw();
+    m_mapMgr.Draw();
 	m_PUnit.Draw();
 	m_escort.Draw();
 	m_camera.Draw();
 	m_time.Draw();
-  m_EUnit.Draw();
-	DrawBillboard3D(VGet(0.0f,0.0f,0.0f), 0.5, 0.5, 1280, 0, m_img, FALSE);
+    m_EUnit.Draw();
 
 #ifdef GAMEMGR_DEBUG
 	DrawFormatString(0, 0, WH, "ゲーム画面");
@@ -93,7 +93,8 @@ void cGameMgr::PUnitGenerate() {
 		int tmp = m_mapMgr.CheckInto(MOUSE_V.x, MOUSE_V.y);
 		if (tmp != -1)
 		{
-			m_PUnit.Add_PSord(MOUSE_V.x, m_mapMgr.Get_Ground(tmp) + UNIT_HEIGHT / 2, tmp);
+			//m_PUnit.Add_PSord(MOUSE_V.x, m_mapMgr.Get_Ground(tmp) + UNIT_HEIGHT / 2, tmp);
+			m_PUnit.Add_PSord(MOUSE_V.x, m_mapMgr.Get_Ground(tmp) + UNIT_HEIGHT / 2);
 			DEBUG_LOG("剣出現");
 		}
 	}
@@ -102,8 +103,8 @@ void cGameMgr::PUnitGenerate() {
 		int tmp = m_mapMgr.CheckInto(MOUSE_V.x, MOUSE_V.y);
 		if (tmp != -1)
 		{
-			m_PUnit.Add_PArcher(MOUSE_V.x, m_mapMgr.Get_Ground(tmp) + UNIT_HEIGHT / 2, tmp);
-
+			//m_PUnit.Add_PArcher(MOUSE_V.x, m_mapMgr.Get_Ground(tmp) + UNIT_HEIGHT / 2, tmp);
+			m_PUnit.Add_PArcher(MOUSE_V.x, m_mapMgr.Get_Ground(tmp) + UNIT_HEIGHT / 2);
 		}
 	}
 	else if (MOUSE_PRESS(LEFT_CLICK) == 1 && cMouse::Instance()->GetPlayerNum() >= 0 && CheckHitKeyAll != 0)
@@ -167,8 +168,6 @@ void cGameMgr::EUnitGenerate() {
 		if (0 <= tmp)
 		{
 			cMouse::Instance()->SetEnemyNum(tmp);
-			DEBUG_LOG("エネミーナンバー格納");
-			//cBaseUnit::m_pos.x -= m_speed;
 		}
 		//enemy.Set_NextEnemyPos(eMove);
 	}

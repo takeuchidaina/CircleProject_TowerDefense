@@ -44,7 +44,7 @@ public:
 		m_selectMarkImg = LoadGraph("../resource/img/PlayerSelect.png");
 		if (-1 == m_selectMarkImg)
 		{
-			ErrBox("画像読み込み失敗");
+			//ErrBox("画像読み込み失敗");
 		}
 	}
 
@@ -56,13 +56,6 @@ public:
 	void Update();
 	void Draw();
 	
-	void Add_PSord(double _x, double _y,int _room)
-	{
-		player.emplace_back(new cPSord(_x, _y, _room, m_num));
-		m_num++;
-		//cLog::Instance()->DebugLog("剣士を生成");
-		//DEBUG_LOG("剣士を生成");
-	}
 
 	/*********************************************************************
 	関数名：void Add_PSord(double _x, double _y)
@@ -70,10 +63,11 @@ public:
 	引数：座標
 	戻り値：なし
 	*********************************************************************/
-	void Add_PSord(double _x, double _y){
-  	player.emplace_back(new cPSord(_x, _y, 1, m_num));
+	void Add_PSord(double _x, double _y)
+	{
+  		player.emplace_back(new cPSord(_x, _y, 1, m_num));
 		m_num++;
-  }
+	}
 	/*********************************************************************
 	関数名：void Add_PArcher(double _x, double _y)
 	概要：弓兵？の生成
@@ -94,8 +88,6 @@ public:
 		m_num++;
 		DEBUG_LOG("AddESord来たよ");
 		//Set_State(eMove);
-		//cLog::Instance()->DebugLog("剣士を生成");
-		//DEBUG_LOG("剣士を生成");
 	}
 
 	void Add_EArcher(double _x, double _y, int _room)
@@ -173,12 +165,8 @@ public:
 			return -1;
 		}
 
-
-
 		return 0;
 	}
-
-	
 
 	/*********************************************************************
 	関数名：int CheckPlayerClick(VECTOR _pos);
@@ -204,13 +192,12 @@ public:
 				player[i]->Set_NextMove(_nextRoom, _nextX);
 				player[i]->Set_State(eMove);
 			}
-			//DEBUG_LOG("次の座標セット");
+			DEBUG_LOG("次の座標セット");
 		}		
 	}
 
-	void SelectUI(int _num);
+	void SelectUI(int _num);	//-1	// 触れてるか	//mouse X
 
-	//-1		// 触れてるか	//mouse X
 	void Set_NextEnemyPos(int _enemyNum, int _nextRoom, double _nextX)
 	{
 		enemy[_enemyNum]->Set_NextMove(_nextRoom, _nextX);
