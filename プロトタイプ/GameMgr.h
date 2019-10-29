@@ -38,12 +38,18 @@ private:
 
 	cFPS m_fps;
 	cCamera m_camera;
+
 	cUnitMgr m_PUnit;
+	void PUnitGenerate();
+
+	cUnitMgr m_EUnit;
+	void EUnitGenerate();
+  
 	cMapMgr m_mapMgr;
 	cEscortTarget m_escort;
 	cTime m_time;
 	int m_img;
-	const int TIME_LIMIT = 120;	//•b
+	const int TIME_LIMIT = 120;	//â€¢b
 };
 
 #endif // !_INCLUDE_GAMEMGR_

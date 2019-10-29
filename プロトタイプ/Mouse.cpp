@@ -6,6 +6,7 @@ cMouse::cMouse(){
 	m_y = 0;
 	m_wheel = 0;
 	m_playerNum = -1;
+	m_enemyNum = -1;
 	//buttonPressCnt[KEY_NUM] = { 0 };
 	//buttonReleaseCnt[KEY_NUM] = { 0 };
 }
@@ -184,4 +185,19 @@ void cMouse::SetPlayerNum(int _num)
 int cMouse::GetPlayerNum()
 {
 	return m_playerNum;
+}
+
+/************************************************
+
+エネミーナンバー格納
+
+************************************************/
+void cMouse::SetEnemyNum(int _num)
+{
+	m_enemyNum = _num;
+}
+
+int cMouse::GetEnemyNum()
+{
+	return m_enemyNum;
 }
