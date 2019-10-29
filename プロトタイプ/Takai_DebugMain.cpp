@@ -47,6 +47,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		fps.Update();
 		fps.Draw();
 
+		// プレイヤー生成
 		if (MOUSE_PRESS(LEFT_CLICK) == 1 && CheckHitKey(KEY_INPUT_S) >= 1)
 		{
 			if (-1 != map.CheckInto(MOUSE_V.x, MOUSE_V.y))
@@ -64,6 +65,16 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			}
 		}
 
+		if (MOUSE_PRESS(LEFT_CLICK) == 1 && CheckHitKey(KEY_INPUT_E) >= 1)
+		{
+			if (-1 != map.CheckInto(MOUSE_V.x, MOUSE_V.y))
+			{
+				player.Add_ESord(MOUSE_V.x, map.Get_Ground() + UNIT_HEIGHT / 2);
+
+			}
+		}
+
+		// プレイヤー移動
 		if (MOUSE_PRESS(LEFT_CLICK) == 1 && cMouse::Instance()->GetPlayerNum() >= 0 && CheckHitKeyAll != 0)
 		{
 			int tmp = map.CheckInto(MOUSE_V.x, MOUSE_V.y);
@@ -74,6 +85,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			}
 		}
 
+		// プレイヤー選択
 		if (MOUSE_PRESS(LEFT_CLICK) == 1)
 		{
 			int tmp = 0;
@@ -88,6 +100,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 		map.Draw();
 		
+		if (cMouse::Instance()->GetPlayerNum() >= 0)
+		{
+			//player.SelectUI(cMouse::Instance()->GetPlayerNum());
+		}
 		
 		player.Update();
 		player.Draw();

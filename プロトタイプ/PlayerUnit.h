@@ -20,28 +20,12 @@
 class cPlayerUnit : public cBaseUnit
 {
 protected:
-	int m_number;
-	//cEnemyUnit* target;	// �_���G���j�b�g
 
 public:
 
 	cPlayerUnit() : cBaseUnit()
 	{
 		
-	}
-
-	/*void Update() {}
-	void Draw() {}*/
-
-	int Get_Num()
-	{
-		return m_num;
-	}
-
-	void Set_NextMove(int _nextRoom, double _nextX)
-	{
-		m_nextMove.sNextRoom = _nextRoom;
-		m_nextMove.sNextX = _nextX;
 	}
 
 };

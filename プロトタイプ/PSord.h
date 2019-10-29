@@ -33,9 +33,8 @@ public:
 		m_speed = 0.25;
 		m_atkCoolTime = 3;
 		m_imgNum = 0;
-		m_moveCnt = 0;
-		m_direction = U_RIGHT;
-		//target = NULL;
+		m_atkR = UNIT_WIDTH;
+		m_atkCoolTime = 64;
 
 		if (0 != LoadDivGraph("../resource/img/player.png", 6, 3, 2, 64, 64, m_imgtbl))
 		{
@@ -46,10 +45,7 @@ public:
 	~cPSord()
 	{
 		// âÊëúçÌèú
-		for (int i = 0; i < 6; i++)
-		{
-			DeleteGraph(m_imgtbl[i]);
-		}
+		
 	}
 
 	/*void Update()
@@ -66,22 +62,5 @@ public:
 		return m_pos;
 	}
 
-	/* TODO;
-	virtual void Set_Target(vector<cEnemyUnit>* _enemy)
-	{
-		double distance;
-
-		for (int i = 0; i < _enemy->size(); i++)
-		{
-			if (room == _enemy[i].Get_room() && distance > fabs(x - _enemy[i].Get_X()))
-			{
-				target = _enemy[i];
-			}
-		}
-	}
-	*/
-
-private:
-	virtual void Attack() {}
 };
 #endif // !_INCLUDE_PSORD_
