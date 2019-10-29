@@ -35,7 +35,7 @@ void cUnitMgr::Update()
 
 		case eAttack:	// UŒ‚’†
 			//DEBUG_LOG("UŒ‚’†");
-      enemy[i]->Attack();
+			enemy[i]->Attack();
 			break;
 
 		case eMove:		// ˆÚ“®’†
@@ -58,12 +58,8 @@ void cUnitMgr::Draw()
 	for (int i = 0; i < enemy.size(); i++)
 	{
 		enemy[i]->Draw();
-	}a
-
-	for (int i = 0; i < enemy.size(); i++)
-	{
-		enemy[i]->Draw();
 	}
+
 #ifdef UNIT_MGR_DEBUG
 	DrawFormatString(100, 100, GetColor(255, 0, 0), "ƒ†ƒjƒbƒg”F%d", player.size());
 	//DrawFormatString(100, 150, GetColor(255, 0, 0), "ƒ†ƒjƒbƒge”F%d", enemy.size());
@@ -110,7 +106,7 @@ int cUnitMgr::CheckEnemyClick(VECTOR _pos)
 void cUnitMgr::SelectUI(int _num)
 {
 	double sx = player[_num]->Get_Pos().x;
-	double sy = player[_num]->Get_Pos().y + UNIT_HEIGHT / 2 + 13;
+	double sy = (player[_num]->Get_Pos().y + UNIT_HEIGHT / 2 + 13);
 
 	DrawBillboard3D(VGet(sx, sy, 0.0f), 0.5f, 0.5f, 18.0f, 0.0f, m_selectMarkImg, TRUE);
 }

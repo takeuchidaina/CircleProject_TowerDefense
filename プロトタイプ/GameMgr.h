@@ -32,24 +32,22 @@ public:
 	
 private:
 
-	void PUnitGenerate();
 	void EscortDamageCalc(int _damage);
 	void DefSuccessJudge();
 
 	cFPS m_fps;
 	cCamera m_camera;
-
-	cUnitMgr m_PUnit;
-	void PUnitGenerate();
-
-	cUnitMgr m_EUnit;
-	void EUnitGenerate();
-  
 	cMapMgr m_mapMgr;
 	cEscortTarget m_escort;
 	cTime m_time;
+
+	cUnitMgr m_PUnit;
+	void PUnitGenerate();
+	cUnitMgr m_EUnit;
+	void EUnitGenerate();
+
 	int m_img;
-	const int TIME_LIMIT = 120;	//•b
+	const int TIME_LIMIT = 120;
 };
 
 #endif // !_INCLUDE_GAMEMGR_
