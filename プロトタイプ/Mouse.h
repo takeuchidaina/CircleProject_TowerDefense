@@ -41,6 +41,7 @@
 
 #define LEFT_CLICK 0
 #define RIGHT_CLICK 1
+#define MIDDLE_CLICK 2
 
 class cMouse : public cSingleton<cMouse> {
 
@@ -100,6 +101,7 @@ public:
 	int GetWheel();
 
 	int GetPlayerNum();
+	int GetEnemyNum();
 
 #pragma endregion
 
@@ -134,6 +136,13 @@ public:
 	戻り値：なし
 	******************************************************/
 	void SetPlayerNum(int _num);
+	/*****************************************************
+	名前　：void SetEnemyNum(int _num);
+	概要　：エネミーナンバーの格納
+	引数　：int _num:格納するエネミーナンバー
+	戻り値：なし
+	******************************************************/
+	void SetEnemyNum(int _num);
 
 #pragma endregion
 
@@ -146,6 +155,7 @@ private:
 	const int WHEEL_LIMIT_UP = 7;
 	const int WHEEL_LIMIT_DOWN = 0;
 	int m_playerNum;	// プレイヤーナンバーの格納用
+	int m_enemyNum;	// エネミーナンバーの格納用
 
 	/*****************************************************
 	名前　：IsAvailableCode(int _keyCode)

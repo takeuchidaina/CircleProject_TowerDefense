@@ -14,6 +14,7 @@ protected:
 	int img;
 
 public:
+	cMap() {};
 	cMap(double _x, double _y, double _width, double _height, int _num);
 
 	virtual void Update();

@@ -6,6 +6,7 @@ cMouse::cMouse(){
 	m_y = 0;
 	m_wheel = 0;
 	m_playerNum = -1;
+	m_enemyNum = -1;
 	//buttonPressCnt[KEY_NUM] = { 0 };
 	//buttonReleaseCnt[KEY_NUM] = { 0 };
 }
@@ -44,10 +45,6 @@ void cMouse::Update() {
 
 	/*ホイール*/
 	m_wheel += GetMouseWheelRotVol();
-	if (m_wheel <= 0)
-	{
-		m_wheel = 0;
-	}
 
 }
 
@@ -62,8 +59,8 @@ void cMouse::Draw() {
 	// マウスの座標の表示
 	DrawFormatString(1150, 660, WH, "x:%d y:%d", m_x, m_y);
 	// クリックされているカウントの表示
-	DrawFormatString(1150, 680, WH, "左:%d 右:%d",
-		m_buttonPressCnt[LEFT_CLICK], m_buttonPressCnt[RIGHT_CLICK]);
+	DrawFormatString(1150, 620, WH, "左:%d 右:%d 中:%d",
+		m_buttonPressCnt[LEFT_CLICK], m_buttonPressCnt[RIGHT_CLICK], m_buttonPressCnt[MIDDLE_CLICK]);
 	// 回転量を表示
 	DrawFormatString(1150, 700, GetColor(255, 255, 255), "ホイール:%d", m_wheel);
 #endif // DEBUG
@@ -188,4 +185,19 @@ void cMouse::SetPlayerNum(int _num)
 int cMouse::GetPlayerNum()
 {
 	return m_playerNum;
+}
+
+/************************************************
+
+エネミーナンバー格納
+
+************************************************/
+void cMouse::SetEnemyNum(int _num)
+{
+	m_enemyNum = _num;
+}
+
+int cMouse::GetEnemyNum()
+{
+	return m_enemyNum;
 }

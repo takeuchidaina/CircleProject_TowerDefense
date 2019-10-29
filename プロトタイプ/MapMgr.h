@@ -1,5 +1,4 @@
 #pragma once
-using namespace std;
 #include <iostream>
 #include <vector>
 #include <fstream>
@@ -8,17 +7,20 @@ using namespace std;
 
 #include "DxLib.h"
 #include "BaseTask.h"
+#include "CSVLoad.h"
 #include "Map.h"
 
-/*******************QlƒTƒCƒg****************************
-https://qiita.com/takoyaki3/items/269060a916a66d9c411a		csv“Ç‚İ‚İ
+using namespace std;
+
+/*******************å‚è€ƒã‚µã‚¤ãƒˆ****************************
+https://qiita.com/takoyaki3/items/269060a916a66d9c411a		csvèª­ã¿è¾¼ã¿
 *********************************************************/
 
 /**********************************************************
- substrcæ‚èo‚·’·‚³‚ÍÈ—ª‚·‚é‚±‚Æ‚ª‚Å‚«A‚»‚Ìê‡‚Íw’è‚µ‚½ˆÊ’u‚©‚çÅŒã‚Ü‚Å‚Ì
-		 •”•ª•¶š—ñ‚ğæ“¾‚Å‚«‚Ü‚·B
+ substrâ€¦å–ã‚Šå‡ºã™é•·ã•ã¯çœç•¥ã™ã‚‹ã“ã¨ãŒã§ãã€ãã®å ´åˆã¯æŒ‡å®šã—ãŸä½ç½®ã‹ã‚‰æœ€å¾Œã¾ã§ã®
+		 éƒ¨åˆ†æ–‡å­—åˆ—ã‚’å–å¾—ã§ãã¾ã™ã€‚
 
-	—á)	 •Ï”.substr(ŠJnˆÊ’u, æ‚èo‚·’·‚³);
+	ä¾‹)	 å¤‰æ•°.substr(é–‹å§‹ä½ç½®, å–ã‚Šå‡ºã™é•·ã•);
 *********************************************************/
 
 
@@ -28,36 +30,24 @@ https://qiita.com/takoyaki3/items/269060a916a66d9c411a		csv“Ç‚İ‚İ
 #define _MAP_STATUS_ 7
 
 class cMapMgr : public cBaseTask {
-private:
-	//deque<deque<string>> csvfname;
-	string comma; //‹æØ‚è‚Æ‚È‚éƒJƒ“ƒ}B
-	cMapMgr();
 
 public:
-	vector<int> cMap;		// cMap‚ÌéŒ¾
+	vector<cMap>map;		// cMapã®å®£è¨€
+	vector<vector<double>> tmpMap; //ä»®æ ¼ç´
 
-	bool MapLood(/*string _line*/);				// ƒ}ƒbƒv‚ğƒ[ƒh‚·‚éŠÖ”
-	string fileName;
-	//string w (int _x, int _y);
-	int AsciiToInt(int _x, int _y);		    // string‚Ì•¶š—ñ‚ğint‚É‚µ‚Ä‚é
-	int CsvSizeY();							// csvƒtƒ@ƒCƒ‹‚Ìs‚ğæ“¾
-	int CsvSizeX(int _x);					// æ“¾‚µ‚½s‚ğw’è‚µ‚Ä—ñ‚ğæ“¾
-	
+	string fileName;			//ãƒ•ã‚¡ã‚¤ãƒ«ãƒãƒ¼ãƒ 
+	int mapnum;					// éƒ¨å±‹æ•°
 
-	// MAP‚ÌƒI[ƒvƒ“‚Ég‚¤•Ï”‚½‚¿
-	char MapBase[256];						// (MAP/MAP_)‚Ü‚Å‚ğ“ü‚ê‚é
-	char MapHandle[256];					//	Œ‹‰Ê“I‚ÉŠJ‚­•Ï”
-	char MapNum[256];						// •”‰®”‚ÆMap‚Ìƒiƒ“ƒo[
-	int MapFlag = 1;						// MapNum‚É‘ã“ü‘O‚Ì”š	
-
-	void SetComma(string _c) { comma = _c; }
-
-	cMapMgr() {comma = ','; }
-	//cMapMgr(string _fname) { comma = ','; MapLood(_fname); }
+	cMapMgr();
+	~cMapMgr();
 
 	virtual void Init();
 	virtual void Update();
 	virtual void Draw();
+
+	double Get_Ground(int _num);
+	int CheckInto(double _x, double _y);
+	int GetMapSize();
 };
 
 #endif _INCLUDE_MAPMGR_

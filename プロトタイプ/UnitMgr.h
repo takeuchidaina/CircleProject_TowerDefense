@@ -3,24 +3,27 @@
 #include "DxLib.h"
 #include "DebugList.h"
 #include "PlayerUnit.h"
+#include "EnemyUnit.h"
 #include "Constant.h"
 #include "PSord.h"
 #include "PArcher.h"
 #include "PDefense.h"
+#include "ESord.h"
+#include "EArcher.h"
 #include "Mouse.h"
 #include <vector>
 #include "Log.h"
 using namespace std;
 
 /********************************************************
-œŠT—v
-@ƒ†ƒjƒbƒg‘S‘Ì‚Ì§ŒäE’‡‰î
+â—æ¦‚è¦
+ã€€ãƒ¦ãƒ‹ãƒƒãƒˆå…¨ä½“ã®åˆ¶å¾¡ãƒ»ä»²ä»‹
 
-œì¬Ò
-@ûüˆä—²‘¾˜Y
+â—ä½œæˆè€…
+ã€€é«™äº•éš†å¤ªéƒ
 
-œXV“ú
-@
+â—æ›´æ–°æ—¥
+ã€€
 ********************************************************/
 
 #ifndef _INCLUED_UNIT_MGR_
@@ -28,10 +31,9 @@ using namespace std;
 
 class cUnitMgr : public cBaseTask
 {
-	vector<cPlayerUnit*> player;	// ƒvƒŒƒCƒ„[
+	vector<cPlayerUnit*> player;	// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼
 	vector<cEnemyUnit*> enemy;
-	int m_num;	// ƒiƒ“ƒo[
-
+	int m_num;	// ãƒŠãƒ³ãƒãƒ¼
 	int m_selectMarkImg;
 
 public:
@@ -42,7 +44,7 @@ public:
 		m_selectMarkImg = LoadGraph("../resource/img/PlayerSelect.png");
 		if (-1 == m_selectMarkImg)
 		{
-			ErrBox("‰æ‘œ“Ç‚İ‚İ¸”s");
+			ErrBox("ç”»åƒèª­ã¿è¾¼ã¿å¤±æ•—");
 		}
 	}
 
@@ -53,28 +55,52 @@ public:
 
 	void Update();
 	void Draw();
-
-	/*********************************************************************
-	ŠÖ”–¼Fvoid Add_PSord(double _x, double _y)
-	ŠT—vFŒ•m‚Ì¶¬
-	ˆø”FÀ•W
-	–ß‚è’lF‚È‚µ
-	*********************************************************************/
-	void Add_PSord(double _x, double _y)
+	
+	void Add_PSord(double _x, double _y,int _room)
 	{
-		player.emplace_back(new cPSord(_x, _y, 1, m_num));
+		player.emplace_back(new cPSord(_x, _y, _room, m_num));
 		m_num++;
+		//cLog::Instance()->DebugLog("å‰£å£«ã‚’ç”Ÿæˆ");
+		//DEBUG_LOG("å‰£å£«ã‚’ç”Ÿæˆ");
 	}
 
 	/*********************************************************************
-	ŠÖ”–¼Fvoid Add_PArcher(double _x, double _y)
-	ŠT—vF‹|•ºH‚Ì¶¬
-	ˆø”FÀ•W
-	–ß‚è’lF‚È‚µ
+	é–¢æ•°åï¼švoid Add_PSord(double _x, double _y)
+	æ¦‚è¦ï¼šå‰£å£«ã®ç”Ÿæˆ
+	å¼•æ•°ï¼šåº§æ¨™
+	æˆ»ã‚Šå€¤ï¼šãªã—
+	*********************************************************************/
+	void Add_PSord(double _x, double _y){
+  	player.emplace_back(new cPSord(_x, _y, 1, m_num));
+		m_num++;
+  }
+	/*********************************************************************
+	é–¢æ•°åï¼švoid Add_PArcher(double _x, double _y)
+	æ¦‚è¦ï¼šå¼“å…µï¼Ÿã®ç”Ÿæˆ
+	å¼•æ•°ï¼šåº§æ¨™
+	æˆ»ã‚Šå€¤ï¼šãªã—
 	*********************************************************************/
 	void Add_PArcher(double _x, double _y)
 	{
 		player.emplace_back(new cPArcher(_x, _y, 1, m_num));
+		m_num++;
+	}
+
+	/**************************** ã‚¨ãƒãƒŸãƒ¼ ************************/
+	
+	void Add_ESord(double _x, double _y, int _room)
+	{
+		enemy.emplace_back(new cESord(_x, _y, _room, m_num));
+		m_num++;
+		DEBUG_LOG("AddESordæ¥ãŸã‚ˆ");
+		//Set_State(eMove);
+		//cLog::Instance()->DebugLog("å‰£å£«ã‚’ç”Ÿæˆ");
+		//DEBUG_LOG("å‰£å£«ã‚’ç”Ÿæˆ");
+	}
+
+	void Add_EArcher(double _x, double _y, int _room)
+	{
+		enemy.emplace_back(new cEArcher(_x, _y, _room, m_num));
 		m_num++;
 	}
 
@@ -92,15 +118,15 @@ public:
 			// Enemy
 			for (int e = 0; e < enemy.size(); e++)
 			{
-				// “¯‚¶•”‰®‚©‚Ç‚¤‚©
+				// åŒã˜éƒ¨å±‹ã‹ã©ã†ã‹
 				if (player[p]->Get_NowRoom() == enemy[e]->Get_NowRoom())
 				{
-					//DEBUG_LOG("“¯‚¶•”‰®");
-					// ‚¨Œİ‚¢í“¬’†‚Å‚È‚¢‚©
+					//DEBUG_LOG("åŒã˜éƒ¨å±‹");
+					// ãŠäº’ã„æˆ¦é—˜ä¸­ã§ãªã„ã‹
 					if (player[p]->Get_State() != eAttack && enemy[e]->Get_State() != eAttack)
 					{
 						/* Player */
-						// Œü‚«
+						// å‘ã
 						/*if (player[p]->Get_Direction() == U_RIGHT)
 						{
 							if (player[p]->Get_Pos().x <= enemy[e]->Get_Pos().x && player[p]->Get_Pos().x + player[p]->Get_atkR() >= enemy[e]->Get_Pos().x)
@@ -155,18 +181,19 @@ public:
 	
 
 	/*********************************************************************
-	ŠÖ”–¼Fint CheckPlayerClick(VECTOR _pos);
-	ŠT—vFƒvƒŒƒCƒ„[‚Æ‚Ì“–‚½‚è”»’è
-	ˆø”FVECTOR:À•W
-	–ß‚è’lFint:“–‚½‚Á‚½ƒvƒŒƒCƒ„[‚Ìƒiƒ“ƒo[ -1:ŠO‚ê
+	é–¢æ•°åï¼šint CheckPlayerClick(VECTOR _pos);
+	æ¦‚è¦ï¼šãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã¨ã®å½“ãŸã‚Šåˆ¤å®š
+	å¼•æ•°ï¼šVECTOR:åº§æ¨™
+	æˆ»ã‚Šå€¤ï¼šint:å½“ãŸã£ãŸãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ãƒŠãƒ³ãƒãƒ¼ -1:å¤–ã‚Œ
 	*********************************************************************/
 	int CheckPlayerClick(VECTOR _pos);
+	int CheckEnemyClick(VECTOR _pos);
 
 	/*********************************************************************
-	ŠÖ”–¼Fvoid Set_NextPlayerPos(int _playerNum, int _nextRoom, double _nextX)
-	ŠT—vFŸ‚Ìsæ‚ğƒZƒbƒg
-	ˆø”Fint:ˆÚ“®‚³‚¹‚éƒiƒ“ƒo[, int:ˆÚ“®æ‚Ì•”‰®”Ô†, double:ˆÚ“®æ‚ÌÀ•W
-	–ß‚è’lF‚È‚µ
+	é–¢æ•°åï¼švoid Set_NextPlayerPos(int _playerNum, int _nextRoom, double _nextX)
+	æ¦‚è¦ï¼šæ¬¡ã®è¡Œå…ˆã‚’ã‚»ãƒƒãƒˆ
+	å¼•æ•°ï¼šint:ç§»å‹•ã•ã›ã‚‹ãƒŠãƒ³ãƒãƒ¼, int:ç§»å‹•å…ˆã®éƒ¨å±‹ç•ªå·, double:ç§»å‹•å…ˆã®åº§æ¨™
+	æˆ»ã‚Šå€¤ï¼šãªã—
 	*********************************************************************/
 	void Set_NextPlayerPos(int _playerNum, int _nextRoom, double _nextX)
 	{
@@ -177,11 +204,19 @@ public:
 				player[i]->Set_NextMove(_nextRoom, _nextX);
 				player[i]->Set_State(eMove);
 			}
-			//DEBUG_LOG("Ÿ‚ÌÀ•WƒZƒbƒg");
+			//DEBUG_LOG("æ¬¡ã®åº§æ¨™ã‚»ãƒƒãƒˆ");
 		}		
 	}
 
 	void SelectUI(int _num);
+
+	//-1		// è§¦ã‚Œã¦ã‚‹ã‹	//mouse X
+	void Set_NextEnemyPos(int _enemyNum, int _nextRoom, double _nextX)
+	{
+		enemy[_enemyNum]->Set_NextMove(_nextRoom, _nextX);
+		enemy[_enemyNum]->Set_State(eMove);
+		DEBUG_LOG("æ•µã®ç§»å‹•å…ˆã‚»ãƒƒãƒˆ");
+	}
 };
 
 #endif  // !_INCLUDE_UNIT_MGR_

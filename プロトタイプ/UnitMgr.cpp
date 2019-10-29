@@ -7,15 +7,15 @@ void cUnitMgr::Update()
 	{
 		switch (player[i]->Get_State())
 		{
-		case eIdle:		// 待機
+		case eIdle:		// 窶佚停ｹ@
 
 			break;
 
-		case eAttack:	// 攻撃中
-			//DEBUG_LOG("プレイヤー攻撃中");
+		case eAttack:	// ﾂ攻ﾅ停壺吮
+			//DEBUG_LOG("ﾆ致ﾆ椎槌辰ﾆ停楪ーﾂ攻ﾅ停壺吮");
 			break;
 
-		case eMove:		// 移動中
+		case eMove:		// ﾋ�ﾃ壺慊ｮ窶吮
 			player[i]->Move();
 			break;
 
@@ -29,15 +29,16 @@ void cUnitMgr::Update()
 	{
 		switch (enemy[i]->Get_State())
 		{
-		case eIdle:		// 待機
+		case eIdle:		// 窶佚停ｹ@
 
 			break;
 
-		case eAttack:	// 攻撃中
-			//DEBUG_LOG("攻撃中");
+		case eAttack:	// ﾂ攻ﾅ停壺吮
+			//DEBUG_LOG("ﾂ攻ﾅ停壺吮");
+      enemy[i]->Attack();
 			break;
 
-		case eMove:		// 移動中
+		case eMove:		// ﾋ�ﾃ壺慊ｮ窶吮
 			enemy[i]->Move();
 			break;
 
@@ -46,9 +47,6 @@ void cUnitMgr::Update()
 		}
 		//enemy[i]->AttackStart();
 	}
-
-	
-
 }
 
 void cUnitMgr::Draw()
@@ -57,14 +55,18 @@ void cUnitMgr::Draw()
 	{
 		player[i]->Draw();
 	}
+	for (int i = 0; i < enemy.size(); i++)
+	{
+		enemy[i]->Draw();
+	}a
 
 	for (int i = 0; i < enemy.size(); i++)
 	{
 		enemy[i]->Draw();
 	}
 #ifdef UNIT_MGR_DEBUG
-	DrawFormatString(100, 100, GetColor(255, 0, 0), "ユニット数：%d", player.size());
-	//DrawFormatString(100, 150, GetColor(255, 0, 0), "ユニットe数：%d", enemy.size());
+	DrawFormatString(100, 100, GetColor(255, 0, 0), "ﾆ停ﾆ男ﾆ鍛ﾆ暖ﾂ絶敖：%d", player.size());
+	//DrawFormatString(100, 150, GetColor(255, 0, 0), "ﾆ停ﾆ男ﾆ鍛ﾆ暖eﾂ絶敖：%d", enemy.size());
 #endif // UNIT_MGR_DEBUG
 }
 
@@ -85,7 +87,23 @@ int cUnitMgr::CheckPlayerClick(VECTOR _pos)
 		}
 		
 	}
+	return -1;
+}
 
+int cUnitMgr::CheckEnemyClick(VECTOR _pos)
+{
+	for (int i = 0; i < enemy.size(); i++)
+	{
+		VECTOR e_pos = enemy[i]->Get_Pos();
+
+		if ((e_pos.x - UNIT_WIDTH / 2) <= _pos.x && (e_pos.x + UNIT_WIDTH / 2) >= _pos.x)
+		{
+			if ((e_pos.y - UNIT_HEIGHT / 2) <= _pos.y && (e_pos.y + UNIT_HEIGHT / 2) >= _pos.y)
+			{
+				return enemy[i]->Get_Num();
+			}
+		}
+	}
 	return -1;
 }
 
