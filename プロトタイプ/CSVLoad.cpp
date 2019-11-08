@@ -58,6 +58,7 @@ vector<vector<double>> CSVLoad(string& _filename) {
 		roomNum++;
 
 		vec.push_back(tmpData);
+		tmpData.clear();
 
 	}
 
