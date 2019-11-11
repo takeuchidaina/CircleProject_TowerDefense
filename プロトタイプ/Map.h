@@ -15,7 +15,8 @@ using namespace std;
 
 struct sDoor {
 	sDoor* destination;
-	double x, y, width, height;
+	VECTOR pos;
+	double width, height;
 	int desMap, desDoor;
 };
 
@@ -23,14 +24,16 @@ class cMap:public cBaseTask {
 
 private:
 	//double m_x, m_y;			//左下座標
+
+	VECTOR m_pos;				//x,y,z(z=0.0f) VECTORはDxLibで定義されている
 	double m_width, m_height;	//幅高さ
 	int m_maxUnit;				//部屋にいられる最大ユニット数
 	int m_roomNum;				//部屋番号
 	vector<sDoor> m_door;		//ドアのvector配列
 
-	int img;
+	int mapimg;
+	int doorimg;
 
-	VECTOR m_pos;
 
 public:
 
