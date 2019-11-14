@@ -2,6 +2,7 @@
 #include <math.h>
 #include "BaseUnit.h"
 #include "UnitMgr.h"
+#include "MapMgr.h"
 
 #ifndef _INCLUDE_ENEMY_UNIT_
 #define _INCLUDE_ENEMY_UNIT_
@@ -22,6 +23,7 @@ class cEnemyUnit : public cBaseUnit {
 protected:
 		int m_number;
 		cPlayerUnit *target;				// 狙うプレイヤーユニット
+		vector<int>mapStack;		//
 public:
 	/*
 	cEnemyUnit() : cBaseUnit() {
@@ -77,6 +79,17 @@ public:
 				m_imgNum = 0;
 			}
 			m_moveCnt = 0;
+		}
+	}
+	/*
+	void Set_MapSize() {
+		mapStack = cMapMgr::GetMapSize;
+	}
+	*/
+
+	void MapNavigation() {
+		for (int i; i < mapSize(); i++) {
+			mapStack.push_back(0);
 		}
 	}
 

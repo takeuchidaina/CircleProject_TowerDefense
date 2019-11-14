@@ -35,7 +35,7 @@ class cUnitMgr : public cBaseTask
 	vector<cEnemyUnit*> enemy;
 	int m_num;	// ナンバー
 	int m_selectMarkImg;
-
+	int m_mapStack;		// TODOマップの数を格納
 public:
 	cUnitMgr()
 	{
