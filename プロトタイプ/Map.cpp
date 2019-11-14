@@ -11,8 +11,9 @@ cMap::cMap(double _x, double _y, double _w, double _h, int _maxUnit, int _roomNu
 	m_roomNum = _roomNum;
 	m_door = _door;
 
-	img= LoadGraph("../resource/img/Wall.png");
-	if (img == NULL) {
+	mapimg= LoadGraph("../resource/img/Wall.png");
+	doorimg = LoadGraph("../resource/img/Door.png");
+	if (mapimg == NULL) {
 		DrawString(50, 50, "画像失敗", GetColor(255,0,255));
 	}
 }
@@ -26,11 +27,15 @@ void cMap::Update() {
 }
 
 void cMap::Draw() {
-	//とりあえず箱
-	DrawBillboard3D(m_pos,0.5,0.5,m_width,0,img,FALSE);
+	//DrawBillboard3D( VECTOR Pos, float cx, float cy, float Size, float Angle, int GrHandle, int TransFlag );
+	DrawBillboard3D(m_pos,0,0,m_width,0,mapimg,FALSE);
+	
+	//ドア描画 コメントアウトなう
+	/*
 	for (int i = 0; i < m_door.size(); i++) {
-		DrawBox(m_door[i].x, m_door[i].y, m_door[i].x + m_door[i].width + 1, m_door[i].y + m_door[i].height + 1, BL, TRUE);
+		DrawBillboard3D(m_door[i].pos, 0, 0, 100, 0, doorimg, FALSE);
 	}
+	*/
 
 }
 
