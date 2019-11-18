@@ -48,6 +48,7 @@ public:
 	double Get_Ground(int _num);
 	int CheckInto(double _x, double _y);
 	int GetMapSize();
+	vector<vector<int>> GetMapDes();
 };
 
 #endif _INCLUDE_MAPMGR_
