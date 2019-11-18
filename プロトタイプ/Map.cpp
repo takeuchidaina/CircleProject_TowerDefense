@@ -1,7 +1,9 @@
 #include "Map.h"
 
 //コンストラクタ、初期化
-cMap::cMap(double _x, double _y, double _w, double _h, int _maxUnit, int _roomNum, vector<sDoor>& _door) {
+/*
+cMap::cMap(double _x, double _y, double _w, double _h, 
+	int _maxUnit, int _roomNum, vector<sDoor>& _door) {
 	m_pos.x = _x;
 	m_pos.y = _y;
 	m_pos.z = 0.0f;
@@ -15,6 +17,26 @@ cMap::cMap(double _x, double _y, double _w, double _h, int _maxUnit, int _roomNu
 	doorimg = LoadGraph("../resource/img/Door.png");
 	if (mapimg == NULL) {
 		DrawString(50, 50, "画像失敗", GetColor(255,0,255));
+	}
+}
+*/
+
+//ドアなし用
+cMap::cMap(double _x, double _y, double _w, double _h,
+	int _maxUnit, int _roomNum, vector<int>& _des) {
+	m_pos.x = _x;
+	m_pos.y = _y;
+	m_pos.z = 0.0f;
+	m_width = _w;
+	m_height = _w / 4 * 3;
+	m_maxUnit = _maxUnit;
+	m_roomNum = _roomNum;
+	m_des = _des;
+
+	mapimg = LoadGraph("../resource/img/Wall.png");
+	doorimg = LoadGraph("../resource/img/Door.png");
+	if (mapimg == NULL) {
+		DrawString(50, 50, "画像失敗", GetColor(255, 0, 255));
 	}
 }
 

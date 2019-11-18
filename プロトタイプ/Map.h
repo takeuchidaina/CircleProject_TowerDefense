@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <vector>
 #include "DxLib.h"
 #include "BaseTask.h"
@@ -31,13 +30,21 @@ private:
 	int m_roomNum;				//部屋番号
 	vector<sDoor> m_door;		//ドアのvector配列
 
+	vector<int> m_des;	//ドアなしverの移動先格納vec変数
+
 	int mapimg;
 	int doorimg;
 
 
 public:
 
-	cMap(double _x, double _y, double _w, double _h, int _maxUnit, int _roomNum, vector<sDoor>& _door);//ドア配列を参照渡し
+	cMap(double _x, double _y, double _w, double _h,
+		int _maxUnit, int _roomNum, vector<sDoor>& _door);//参照渡し使用
+
+	//ドアなしver
+	cMap(double _x, double _y, double _w, double _h,
+		int _maxUnit, int _roomNum, vector<int>& _des);
+
 	virtual ~cMap() {}
 	virtual void Init();
 	virtual void Update();
@@ -49,14 +56,10 @@ public:
 	void SetDestination(int i, sDoor* _des) { m_door[i].destination = _des; }
 
 	bool CheckInto(double, double);
-	double Get_Ground()
-	{
-		return m_pos.y - (m_height / 2);
-	}
-	int GetRoomNum() {
-		return m_roomNum;
-	}
+	double Get_Ground() { return m_pos.y - (m_height / 2); }
+	int GetRoomNum() { return m_roomNum; }
 
+	vector<int> GetMapDes() { return m_des; }
 
 };
 
