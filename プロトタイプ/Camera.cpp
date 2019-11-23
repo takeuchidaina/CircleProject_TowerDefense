@@ -13,12 +13,12 @@ cCamera::~cCamera()
 void cCamera::Init() {
 
 	//カメラの座標・注視点
-	m_camera.pos.x = 0.0;
-	m_camera.pos.y = 0.0;
-	m_camera.pos.z = -800.0;
-	m_camera.target.x = 0.0;
-	m_camera.target.y = 0.0;
-	m_camera.target.z = 0.0;
+	m_camera.pos.x = 0.0f;
+	m_camera.pos.y = 0.0f;
+	m_camera.pos.z = -800.0f;
+	m_camera.target.x = 0.0f;
+	m_camera.target.y = 0.0f;
+	m_camera.target.z = 0.0f;
 
 	//拡大縮小
 	MOUSE_WHEEL_INIT;
@@ -76,7 +76,7 @@ void cCamera::CameraScale() {
 	}
 }
 
-//移動
+//移動量を計算
 void cCamera::CameraMove() {
 
 	//ホイールが押された地点を記録
@@ -96,50 +96,52 @@ void cCamera::CameraMove() {
 //カメラの移動制御
 void cCamera::CameraDrawControl() {
 
-	if (m_camera.pos.x <= 0.0 + (ZOOM_SCALE * m_zoomCnt)) {
-		m_camera.pos.x = 0.0 + (ZOOM_SCALE * m_zoomCnt);
-		m_camera.target.x = m_camera.pos.x;
-	}
-	if (m_camera.pos.y >= 0.0 - (ZOOM_SCALE * m_zoomCnt)) {
-		m_camera.pos.y = 0.0 - (ZOOM_SCALE * m_zoomCnt);
-		m_camera.target.y = m_camera.pos.y;
-	}
-	if (m_camera.pos.x <= WINDOW_WIDTH + (ZOOM_SCALE * m_zoomCnt)) {
-		m_camera.pos.x = WINDOW_WIDTH + (ZOOM_SCALE * m_zoomCnt);
-		m_camera.target.x = m_camera.pos.x;
-	}
-	if (m_camera.pos.y <= WINDOW_HEIGHT - (ZOOM_SCALE * m_zoomCnt)) {
-		m_camera.pos.y = WINDOW_HEIGHT - (ZOOM_SCALE * m_zoomCnt);
-		m_camera.target.y = m_camera.pos.y;
-	}
+// 11は誤差の修正
 
+	//左
+	if (m_camera.pos.x < 0.0f - ((ZOOM_SCALE - 11.0f) * (float)m_zoomCnt)) {
+		m_camera.pos.x = 0.0f - ((ZOOM_SCALE - 11.0f) * (float)m_zoomCnt);
+		m_camera.target.x = m_camera.pos.x;
+	}
+	//右
+	else if (m_camera.pos.x > 0.0f + ((ZOOM_SCALE - 11.0f) * (float)m_zoomCnt)) {
+		m_camera.pos.x = 0.0f + ((ZOOM_SCALE - 11.0f) * (float)m_zoomCnt);
+		m_camera.target.x = m_camera.pos.x;
+	}
+	//上
+	if (m_camera.pos.y > 0.0f + ((ZOOM_SCALE / 2.0f) * (float)m_zoomCnt)) {
+		m_camera.pos.y = 0.0f + ((ZOOM_SCALE / 2.0f) * (float)m_zoomCnt);
+		m_camera.target.y = m_camera.pos.y;
+	}
+	//下
+	else if (m_camera.pos.y < 0.0f - ((ZOOM_SCALE / 2.0f) * (float)m_zoomCnt)) {
+		m_camera.pos.y = 0.0f - ((ZOOM_SCALE / 2.0f) * (float)m_zoomCnt);
+		m_camera.target.y = m_camera.pos.y;
+	}
 }
 
-void cCamera::CameraMoveX(double _moveAmount) {
+//移動
+void cCamera::CameraMoveX(float _moveAmount) {
 	m_camera.target.x += _moveAmount;
 	m_camera.pos.x = m_camera.target.x;
-}
 
-void cCamera::CameraMoveY(double _moveAmount) {
+	CameraDrawControl();
+}
+void cCamera::CameraMoveY(float _moveAmount) {
 	m_camera.target.y += _moveAmount;
 	m_camera.pos.y = m_camera.target.y;
+
+	CameraDrawControl();
 }
 
 void cCamera::Draw() {
 
 #ifdef CAMERA_DEBUG
-	DrawFormatString(300, 360, BL, "m_zoomCnt : %d", m_zoomCnt);
 
 	//座標表示
-	DrawFormatString(300, 300, BL, "target x:%d y:%d\n pos x:%d y:%d", m_camera.target.x, m_camera.target.y, m_camera.pos.x, m_camera.pos.y);
+	DrawFormatString(300, 300, BL, "target x:%f y:%f\npos x:%f y:%f", m_camera.target.x, m_camera.target.y, m_camera.pos.x, m_camera.pos.y);
 	DrawCircle(m_camera.target.x, m_camera.target.y, 10, RD, TRUE);
 	DrawCircle(m_camera.pos.x, m_camera.pos.y, 10, BL, FALSE);
-
-	//画面フレーム
-	DrawLine3D(VGet(-640.0f, -360.0f, m_camera.target.z), VGet(640.0f, -360.0f, m_camera.target.z), GetColor(255, 255, 255));
-	DrawLine3D(VGet(-640.0f, -360.0f, m_camera.target.z), VGet(-640.0f, 360.0f, m_camera.target.z), GetColor(255, 255, 255));
-	DrawLine3D(VGet(640.0f, 360.0f, m_camera.target.z), VGet(-640.0f, 360.0f, m_camera.target.z), GetColor(255, 255, 255));
-	DrawLine3D(VGet(640.0f, 360.0f, m_camera.target.z), VGet(640.0f, -360.0f, m_camera.target.z), GetColor(255, 255, 255));
 
 	// ３Ｄの線分を描画する
 	DrawLine3D(
