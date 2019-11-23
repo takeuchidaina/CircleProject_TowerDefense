@@ -6,6 +6,7 @@
 #include "BaseTask.h"
 #include "Mouse.h"
 #include "Keyboard.h"
+#include "Constant.h"
 
 #ifndef _INCLUED_CAMERA_
 #define _INCLUED_CAMERA_
@@ -22,6 +23,7 @@ public:
 	virtual void End();
 
 	double m_zoom;							//拡大率
+	int m_zoomCnt;
 	const double ZOOM_LIMIT_UP = 719.5;		//カメラの最大縮小値 1280x720が丁度表示される
 	const double ZOOM_LIMIT_DOWN = 300.0;	//カメラの最小拡大値
 	const double ZOOM_SCALE = 100.0;		//拡大縮小の移動値
@@ -41,6 +43,12 @@ private:
 	bool m_wheelClick;
 	sCameraInfo m_camera;
 	int m_img;
+
+	void CameraScale();
+	void CameraMove();
+	void CameraMoveX(double _moveAmount);
+	void CameraMoveY(double _moveAmount);
+	void CameraDrawControl();
 };
 
 #endif // !_INCLUED_CAMERA_
