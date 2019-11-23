@@ -13,17 +13,13 @@ cCamera::~cCamera()
 void cCamera::Init() {
 
 	//カメラの座標・注視点
-	m_camera.pos.x = 0.0f;
-	m_camera.pos.y = 0.0f;
-	m_camera.pos.z = -800.0f;
-	m_camera.target.x = 0.0f;
-	m_camera.target.y = 0.0f;
-	m_camera.target.z = 0.0f;
+	m_camera.pos = VGet(0.0f,0.0f,-800.0f);
+	m_camera.target = VGet(0.0f, 0.0f, 0.0f);
 
 	//拡大縮小
-	MOUSE_WHEEL_INIT;
-	m_wheeled = MOUSE_WHEEL;
-	m_zoom = ZOOM_LIMIT_UP;
+	MOUSE_WHEEL_INIT;			//マウスホイールの回した回数値を初期化
+	m_wheeled = MOUSE_WHEEL;	//マウスホイールの回した回数を取得
+	m_zoom = ZOOM_LIMIT_UP;		//カメラを一番拡大した状態へ
 	m_zoomCnt = 0;
 
 	//移動
@@ -73,6 +69,12 @@ void cCamera::CameraScale() {
 
 		m_wheeled = MOUSE_WHEEL;
 		SetupCamera_Ortho(m_zoom);		//カメラの距離を変更
+
+		//拡大した状態で移動し縮小をすると背景ではないものが映ってしまう為、移動
+		if (m_zoomCnt != -1) {
+			CameraMoveX(-(ZOOM_SCALE - ZOOM_ADJUSTMENT));
+			CameraMoveX((ZOOM_SCALE - ZOOM_ADJUSTMENT));	//カメラを中央に寄せる
+		}
 	}
 }
 
@@ -96,16 +98,14 @@ void cCamera::CameraMove() {
 //カメラの移動制御
 void cCamera::CameraDrawControl() {
 
-// 11は誤差の修正
-
 	//左
-	if (m_camera.pos.x < 0.0f - ((ZOOM_SCALE - 11.0f) * (float)m_zoomCnt)) {
-		m_camera.pos.x = 0.0f - ((ZOOM_SCALE - 11.0f) * (float)m_zoomCnt);
+	if (m_camera.pos.x < 0.0f - ((ZOOM_SCALE - ZOOM_ADJUSTMENT) * (float)m_zoomCnt)) {
+		m_camera.pos.x = 0.0f - ((ZOOM_SCALE - ZOOM_ADJUSTMENT) * (float)m_zoomCnt);
 		m_camera.target.x = m_camera.pos.x;
 	}
 	//右
-	else if (m_camera.pos.x > 0.0f + ((ZOOM_SCALE - 11.0f) * (float)m_zoomCnt)) {
-		m_camera.pos.x = 0.0f + ((ZOOM_SCALE - 11.0f) * (float)m_zoomCnt);
+	else if (m_camera.pos.x > 0.0f + ((ZOOM_SCALE - ZOOM_ADJUSTMENT) * (float)m_zoomCnt)) {
+		m_camera.pos.x = 0.0f + ((ZOOM_SCALE - ZOOM_ADJUSTMENT) * (float)m_zoomCnt);
 		m_camera.target.x = m_camera.pos.x;
 	}
 	//上
@@ -125,13 +125,13 @@ void cCamera::CameraMoveX(float _moveAmount) {
 	m_camera.target.x += _moveAmount;
 	m_camera.pos.x = m_camera.target.x;
 
-	CameraDrawControl();
+	CameraDrawControl();	//カメラが背景を越していないかチェック
 }
 void cCamera::CameraMoveY(float _moveAmount) {
 	m_camera.target.y += _moveAmount;
 	m_camera.pos.y = m_camera.target.y;
 
-	CameraDrawControl();
+	CameraDrawControl();	//カメラが背景を越していないかチェック
 }
 
 void cCamera::Draw() {
@@ -139,9 +139,9 @@ void cCamera::Draw() {
 #ifdef CAMERA_DEBUG
 
 	//座標表示
-	DrawFormatString(300, 300, BL, "target x:%f y:%f\npos x:%f y:%f", m_camera.target.x, m_camera.target.y, m_camera.pos.x, m_camera.pos.y);
-	DrawCircle(m_camera.target.x, m_camera.target.y, 10, RD, TRUE);
-	DrawCircle(m_camera.pos.x, m_camera.pos.y, 10, BL, FALSE);
+	//DrawFormatString(300, 300, BL, "target x:%f y:%f\npos x:%f y:%f", m_camera.target.x, m_camera.target.y, m_camera.pos.x, m_camera.pos.y);
+	//DrawCircle(m_camera.target.x, m_camera.target.y, 10, RD, TRUE);
+	//DrawCircle(m_camera.pos.x, m_camera.pos.y, 10, BL, FALSE);
 
 	// ３Ｄの線分を描画する
 	DrawLine3D(
