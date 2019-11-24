@@ -7,7 +7,7 @@
 戻り値：無し　※エラーが出た際にはエラーボックスが出る
 ******************************************************/
 void FileCheck(int _fileName) {
-	if (_fileName == NULL) {
+	if (_fileName == -1 || _fileName == NULL) {
 		ErrBox("ヌルポ");
 	}
 }
