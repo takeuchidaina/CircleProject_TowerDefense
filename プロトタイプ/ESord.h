@@ -44,40 +44,11 @@ public:
 		}
 	}
 
-	~cESord() {
-		// ‰æ‘œíœ
-		for (int i = 0; i < 6; i++)
-		{
-			DeleteGraph(m_imgtbl[i]);
-		}
-	}
-	/*
-	void Update()
-	{
-
-	}
-	void Draw()
-	{
-		int imgNum = m_moveAnime[m_imgNum];
-		if (m_direction == U_RIGHT)
-		{
-			imgNum += 3;
-		}
-
-		DrawBillboard3D(m_pos, 0.5f, 0.5f, 64, 0.0f, m_imgtbl[imgNum], TRUE);
-
-		//DrawFormatString(100, 400, RD, "%d", imgNum);
-	}
-	*/
+	~cESord() {}
 
 	VECTOR GetPos()
 	{
 		return m_pos;
-	}
-
-private:
-	virtual void Attack() {
-	
 	}
 };
 #endif // !_INCLUDE_ESORD_
