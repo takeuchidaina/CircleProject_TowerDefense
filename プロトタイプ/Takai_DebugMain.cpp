@@ -47,24 +47,25 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		fps.Update();
 		fps.Draw();
 
-		// プレイヤー生成
+		// PSord 生成
 		if (MOUSE_PRESS(LEFT_CLICK) == 1 && CheckHitKey(KEY_INPUT_S) >= 1)
 		{
 			if (-1 != map.CheckInto(MOUSE_V.x, MOUSE_V.y))
 			{
-				player.Add_PSord(MOUSE_V.x, map.Get_Ground()+UNIT_HEIGHT/2);
+				player.Add_PSord(MOUSE_V.x, map.Get_Ground()+UNIT_HEIGHT/2, 1);
 
 			}
 		}
+		// PArcher 生成
 		if (MOUSE_PRESS(LEFT_CLICK) == 1 && CheckHitKey(KEY_INPUT_A) >= 1)
 		{
 			if (-1 != map.CheckInto(MOUSE_V.x, MOUSE_V.y))
 			{
-				player.Add_PArcher(MOUSE_V.x, map.Get_Ground() + UNIT_HEIGHT / 2);
+				player.Add_PArcher(MOUSE_V.x, map.Get_Ground() + UNIT_HEIGHT / 2, 1);
 
 			}
 		}
-
+		// ESord 生成(デバッグ用)
 		if (MOUSE_PRESS(LEFT_CLICK) == 1 && CheckHitKey(KEY_INPUT_E) >= 1)
 		{
 			if (-1 != map.CheckInto(MOUSE_V.x, MOUSE_V.y))
@@ -100,6 +101,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 		map.Draw();
 		
+		// プレイヤーUnitが選択されているとき
 		if (cMouse::Instance()->GetPlayerNum() >= 0)
 		{
 			//player.SelectUI(cMouse::Instance()->GetPlayerNum());

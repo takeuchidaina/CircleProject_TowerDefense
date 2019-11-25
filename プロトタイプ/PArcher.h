@@ -39,10 +39,7 @@ public:
 		}
 	}
 
-	~cPArcher()
-	{
-		
-	}
+	~cPArcher(){}
 
 };
 #endif // !_INCLUDE_P_ARCHER_
