@@ -17,8 +17,7 @@ void cMapMgr::Init(){
 	int tmpMaxUnit=0,tmpRoomNum=0;
 	vector<sDoor> tmpDoor(4);
 
-	//ドアなしver用,
-	vector<int> tmpDesMap; 
+	vector<int> tmpDesMap(4); //ドアなしver用
 
 	for (int i = 0; i < tmpMap.size(); i++) {
 		for (int j = 0; j < tmpMap[i].size(); j++) {
@@ -33,25 +32,25 @@ void cMapMgr::Init(){
 			case 6:tmpDoor[0].pos.x = tmpMap[i][j];		break;
 			case 7:tmpDoor[0].pos.y = tmpMap[i][j];		break;
 			case 8:tmpDoor[0].desMap = tmpMap[i][j];
-				if (tmpMap[i][j] != 0)tmpDesMap.push_back(tmpMap[i][j]);			break;
+				tmpDesMap[0] = tmpMap[i][j];			break;
 			case 9:tmpDoor[0].desDoor = tmpMap[i][j];	break;
 
 			case 10:tmpDoor[1].pos.x = tmpMap[i][j];	break;
 			case 11:tmpDoor[1].pos.y = tmpMap[i][j];	break;
 			case 12:tmpDoor[1].desMap = tmpMap[i][j];
-				if (tmpMap[i][j] != 0)tmpDesMap.push_back(tmpMap[i][j]);			break;
+				tmpDesMap[1] = tmpMap[i][j];			break;
 			case 13:tmpDoor[1].desDoor = tmpMap[i][j];	break;
 
 			case 14:tmpDoor[2].pos.x = tmpMap[i][j];	break;
 			case 15:tmpDoor[2].pos.y = tmpMap[i][j];	break;
 			case 16:tmpDoor[2].desMap = tmpMap[i][j];
-				if (tmpMap[i][j] != 0)tmpDesMap.push_back(tmpMap[i][j]);			break;
+				tmpDesMap[2] = tmpMap[i][j];			break;
 			case 17:tmpDoor[2].desDoor = tmpMap[i][j];	break;
 
 			case 18:tmpDoor[3].pos.x = tmpMap[i][j];	break;
 			case 19:tmpDoor[3].pos.y = tmpMap[i][j];	break;
 			case 20:tmpDoor[3].desMap = tmpMap[i][j];	
-				if (tmpMap[i][j] != 0)tmpDesMap.push_back(tmpMap[i][j]);			break;
+				tmpDesMap[3] = tmpMap[i][j];			break;
 			case 21:tmpDoor[3].desDoor = tmpMap[i][j];	break;
 
 			default:break;
@@ -68,16 +67,16 @@ void cMapMgr::Init(){
 		}
 		*/
 
+		//ドアなしver
+		if (tmpDesMap[i] == 0) tmpDesMap.pop_back();
+
 		//cMap tmp(tmpX, tmpY, tmpW, tmpH, tmpMaxUnit, tmpRoomNum, tmpDoor);
 
 		//ドアなし用
 		cMap tmp(tmpX, tmpY, tmpW, tmpH, tmpMaxUnit, tmpRoomNum, tmpDesMap);
-		tmpDesMap.clear();
 
 		map.push_back(tmp);
 	}
-
-	vector<vector<int>> tmp = GetMapDes();
 }
 
 void cMapMgr::Update(){
