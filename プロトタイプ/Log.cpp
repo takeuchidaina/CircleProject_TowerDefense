@@ -16,6 +16,7 @@ cLog::~cLog()
 
 void cLog::Update()
 {
+
 	while (m_message.size() > m_maxLogs)
 	{
 		m_message.pop_back();
@@ -33,8 +34,16 @@ void cLog::Draw()
 	}
 }
 
-void cLog::DebugLog(string _message)
+void cLog::DebugLog(const char* _format, ...)
 {
+	char messageSize[256];
+	char* message = messageSize;
+	va_list ap;
+
+	va_start(ap, _format);
+	vsnprintf(message, 255, _format, ap);
+	va_end(ap);
+
 	m_count++;
-	m_message.insert(m_message.begin(), to_string(m_count) + "ÅF" + _message);
+	m_message.insert(m_message.begin(), to_string(m_count) + "ÅF" + message);
 }
