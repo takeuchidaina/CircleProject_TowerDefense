@@ -1,8 +1,11 @@
 ﻿#pragma once
 #include <math.h>
 #include "BaseUnit.h"
-#include "UnitMgr.h"
+//#include "UnitMgr.h"
 #include "MapMgr.h"
+//#include "PlayerUnit.h"
+
+//using namespace std;
 
 #ifndef _INCLUDE_ENEMY_UNIT_
 #define _INCLUDE_ENEMY_UNIT_
@@ -21,77 +24,27 @@
 class cEnemyUnit : public cBaseUnit {
 
 protected:
-		int m_number;
-		cPlayerUnit *target;				// 狙うプレイヤーユニット
-		vector<int>mapStack;		//
-public:
-	/*
-	cEnemyUnit() : cBaseUnit() {
-
-	}
-	~cEnemyUnit();	
 	
-	void NextRoom();				  // 次に向かう部屋の選択
-	void TargetSelect(_cPlayerUnit*){}	// 射程範囲 引数:調べるプレイヤーのアドレス
-	virtual void Update();			  // 計算処理
- 	virtual void Draw();			  // 描画処理
-    */
-	void Attack() 
-	{
-		//;
-	}
 
-	int Get_Num()
-	{
-		return m_num;
-	}
+public:
 
-	void Set_NextMove(int _nextRoom, double _nextX)
-	{
-		m_nextMove.sNextRoom = _nextRoom;
-		m_nextMove.sNextX = _nextX;
-	}
+	cEnemyUnit() : cBaseUnit(){}
 
-	void enemyMove() {
-		DEBUG_LOG("enemyMove来たよ");
-		if (m_room == m_nextMove.sNextRoom)
-		{
-			if (m_direction = U_LEFT) {
+	cMapMgr GetMapDes();				
 
-				m_pos.x -= m_speed;
-			}
-			// プレイヤーと対面したら
-			/*
-			cUnitMgr::Set_Hit(//m_pos.x, m_pos.y, 64, 64, m_pos.x, m_pos.y, 64, 64));
+	int m_number;
+	//cPlayerUnit* target;				// 狙うプレイヤーユニット
+	vector<vector<int>> mapStack;		// Map番号を入れる
 
-				DEBUG_LOG("重なったああああ");
-				m_state = eAttack;
-				m_imgNum = 0;
-			*/
-		}
-		// アニメーション
-		m_moveCnt++;
-		if (m_moveCnt >= 46)
-		{
-			m_imgNum++;
-			if (m_imgNum >= 4)
-			{
-				m_imgNum = 0;
-			}
-			m_moveCnt = 0;
-		}
-	}
-	/*
-	void Set_MapSize() {
-		mapStack = cMapMgr::GetMapSize;
-	}
-	*/
+	//cEnemyUnit() : cBaseUnit(){}
 
-	void MapNavigation() {
-		for (int i; i < mapSize(); i++) {
-			mapStack.push_back(0);
-		}
-	}
+	virtual void Init();
+	virtual void Update();
+	virtual void Draw();
 
+	int Get_Num();
+	void EnemyMove();
+	void Set_MapDate();
+	void MapNavigation();		// Mapのルート検索関数
 };
-#endif  //_INCLUDE_ENEMY_UNIT_
+#endif // _INCLUDE_ENEMY_UNIT_
