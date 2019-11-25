@@ -33,6 +33,7 @@ private:
 	double m_x, m_y;
 	vector<string> m_message;
 	int m_maxLogs;
+	int count;
 
 public:
 	void Update();
