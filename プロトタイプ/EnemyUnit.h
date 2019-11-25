@@ -29,6 +29,7 @@ protected:
 public:
 
 	cEnemyUnit() : cBaseUnit(){}
+	virtual ~cEnemyUnit() {}
 
 	cMapMgr GetMapDes();				
 
@@ -38,13 +39,14 @@ public:
 
 	//cEnemyUnit() : cBaseUnit(){}
 
+
 	virtual void Init();
 	virtual void Update();
 	virtual void Draw();
 
 	int Get_Num();
+	int Set_MapSize(int _i);
 	void EnemyMove();
-	void Set_MapDate();
 	void MapNavigation();		// Mapのルート検索関数
 };
 #endif // _INCLUDE_ENEMY_UNIT_

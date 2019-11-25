@@ -26,6 +26,7 @@ void cEnemyUnit::Set_NextMove(int _nextRoom, double _nextX) {
 }
 */
 
+/*
 void cEnemyUnit::EnemyMove() {
 	DEBUG_LOG("enemyMove来たよ");
 	if (m_room == m_nextMove.sNextRoom)
@@ -36,7 +37,11 @@ void cEnemyUnit::EnemyMove() {
 		}
 	}
 }
+*/
 
+void Set_MapSize(int _i) {
+	return;
+}
 // マップの番後のセット関数　田島が作った2重Vectorを代入
 // mapDate-マップ番号
 // TODO
