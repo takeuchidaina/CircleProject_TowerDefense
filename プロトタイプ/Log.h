@@ -5,6 +5,8 @@
 #include <string>
 #include "ColorListh.h"
 #include "Constant.h"
+#include <stdarg.h>
+
 using namespace std;
 
 #define DEBUG_LOG(_message) cLog::Instance()->DebugLog(_message);
@@ -33,7 +35,7 @@ private:
 	double m_x, m_y;
 	vector<string> m_message;
 	int m_maxLogs;
-	int count;
+	int m_count;
 
 public:
 	void Update();

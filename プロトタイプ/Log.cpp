@@ -6,7 +6,7 @@ cLog::cLog()
 	m_y = 20;
 	m_maxLogs = 5;
 
-	count = 0;
+	m_count = 0;
 }
 
 cLog::~cLog()
@@ -35,6 +35,6 @@ void cLog::Draw()
 
 void cLog::DebugLog(string _message)
 {
-	count++;
-	m_message.insert(m_message.begin(), count + "ÅF" + _message);
+	m_count++;
+	m_message.insert(m_message.begin(), to_string(m_count) + "ÅF" + _message);
 }
