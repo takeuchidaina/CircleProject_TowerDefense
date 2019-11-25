@@ -29,7 +29,7 @@ public:
 		m_num = _num;
 		m_room = _room;
 		m_hp = 50;
-		m_atk = 50;
+		m_atk = 5;
 		m_speed = 0.25;
 		m_atkCoolTime = 3;
 		m_imgNum = 0;
@@ -40,26 +40,38 @@ public:
 		{
 			ErrBox("‰æ‘œ“Ç‚İ‚İ¸”s");
 		}
+
+
+		/*if ((m_effectImage = LoadGraph("../resource/img/SordEffect.png")) != 0)
+		{
+			ErrBox("‰æ‘œ“Ç‚İ‚İ¸”s");
+		}*/
 	}
 
-	~cPSord()
-	{
-		// ‰æ‘œíœ
-		
-	}
+	~cPSord(){}
 
-	/*void Update()
+	virtual void AttackAnime()
 	{
-		
-	}
-	void Draw()
-	{
-		
-	}*/
 
-	VECTOR GetPos()
-	{
-		return m_pos;
+		if (m_effectAnimeCnt <= 60)
+		{
+			if (m_direction == U_LEFT)
+			{
+				
+				DrawBillboard3D(VGet(m_pos.x - UNIT_WIDTH, m_pos.y, 0.0f), 0.5f, 0.5f, 64, 0.0f, m_effectImage, TRUE);
+			}
+			else
+			{
+				DrawBillboard3D(VGet(m_pos.x + UNIT_WIDTH, m_pos.y, 0.0f), 0.5f, 0.5f, 64, 10.0f, m_effectImage, TRUE);
+			}
+		}
+		else
+		{
+			m_effectAnimeCnt = 0;
+			m_effectFlg = false;
+		}
+
+		m_effectAnimeCnt++;
 	}
 
 };

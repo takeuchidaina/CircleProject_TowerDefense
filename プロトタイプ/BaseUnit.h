@@ -6,8 +6,6 @@
 #include "Log.h"
 using namespace std;
 
-//template <typename _T>
-
 #ifndef _INCLUDE_BASE_UNIT_
 #define _INCLUDE_BASE_UNIT_
 
@@ -41,6 +39,9 @@ protected:
 	int m_direction;		// ユニットの向き　1(U_RIGHT):右 -1(U_LEFT):左
 	int m_moveCnt;			// アニメーション用カウント
 	int m_moveAnime[4] = { 1, 0, 1, 2};	// アニメーション配列
+	int m_effectImage;		// Effect用
+	int m_effectAnimeCnt;	// Effectアニメーションカウント
+	bool m_effectFlg;		// Effect再生フラグ
 	sNextMove m_nextMove;	// 次に向かう場所
 
 	int m_imgNum;			// アニメーションナンバー
@@ -48,45 +49,13 @@ protected:
 	
 public:
 
-	void Update()
-	{
-		
-	}
+	void Update();
 
-	void Draw()
-	{
-		int imgNum = m_moveAnime[m_imgNum];
+	void Draw();
 
-		// 右を向いている場合は画像配列番号に3足す
-		if (m_direction == U_RIGHT)
-		{
-			imgNum += 3;
-		}
+	cBaseUnit();
 
-		DrawBillboard3D(m_pos, 0.5f, 0.5f, 64, 0.0f, m_imgtbl[imgNum], TRUE);
-	}
-
-	cBaseUnit()
-	{
-		m_condition = eNone;
-		m_nextMove.sNextRoom = -1;
-		m_nextMove.sNextX = NULL;
-		m_isOnActive = true;
-		m_state = eIdle;
-		m_direction = U_RIGHT;
-		m_targetNum = -1;
-		m_atkCnt = m_atkCoolTime;
-		m_moveCnt = 0;
-
-	}
-
-	~cBaseUnit()
-	{
-		for (int i = 0; i < 6; i++)
-		{
-			DeleteGraph(m_imgtbl[i]);
-		}
-	}
+	~cBaseUnit();
 
 	/*********************************************************************
 	関数名：void Move()
@@ -94,95 +63,115 @@ public:
 	引数：なし
 	戻り値：なし
 	*********************************************************************/
-	void Move()
-	{
-		// 現在地と行先が同じの場合
-		if (m_room == m_nextMove.sNextRoom)
-		{
-			// 行先が右側
-			if (m_pos.x <= m_nextMove.sNextX)
-			{
-				m_direction = U_RIGHT;
-			}
-			else // 左側
-			{
-				m_direction = U_LEFT;
-			}
+	void Move();
 
-			// 右へ
-			if (m_direction == U_RIGHT)
-			{
-				m_pos.x += m_speed;
-			}
-			else // 左へ
-			{
-				m_pos.x -= m_speed;
-			}
+	/*********************************************************************
+	関数名：bool Attack()
+	概要：攻撃タイミング制御
+	引数：なし
+	戻り値：なし
+	*********************************************************************/
+	bool Attack();
 
-			// 指定された座標についたらIdle状態へ
-			if (m_pos.x <= m_nextMove.sNextX + m_speed && m_nextMove.sNextX - m_speed <= m_pos.x)
-			{
-				m_state = eIdle;
-				m_imgNum = 0;
-			}
+	/*********************************************************************
+	関数名：void AttackStart()
+	概要：targetが決まったら、Stateを攻撃モードに
+	引数：なし
+	戻り値：なし
+	*********************************************************************/
+	void AttackStart();
 
-		}
+	/*********************************************************************
+	関数名：void Defense(int _atkPoint, int _atkNum)
+	概要：攻撃判定を受け取る
+	引数：int:ダメージ量, int:攻撃するUnitのナンバー
+	戻り値：なし
+	*********************************************************************/
+	void Defense(int _atkPoint, int _atkNum);
 
-		// 移動中の画像配列計算
-		m_moveCnt++;
-		if (m_moveCnt >= 46)
-		{
-			m_imgNum++;
-			if (m_imgNum >= 4)
-			{
-				m_imgNum = 0;
-			}
-			m_moveCnt = 0;
-		}
+	/*********************************************************************
+	関数名：virtual void AttackAnime()
+	概要：攻撃用アニメーション
+	引数：なし
+	戻り値：なし
+	*********************************************************************/
+	virtual void AttackAnime()
+	{}
 
-	}
+	/************************************    Get    *****************************************/
 
-	void Attack()
-	{
-		m_atkCnt--;
-		if (m_atkCnt <= 0)
-		{
-			m_atkCnt = 0;
-		}
-	}
-
+	// 向き
 	int Get_Direction()
 	{
 		return m_direction;
 	}
 
+	// 攻撃範囲
 	double Get_atkR()
 	{
 		return m_atkR;
 	}
 
+	// 現在の部屋番号
 	int Get_NowRoom()
 	{
 		return m_room;
 	}
 
-	void AttackStart()
-	{
-		if (m_targetNum != -1)
-		{
-			m_state = eAttack;
-		}
-	}
-
+	// 攻撃タイミングカウント
 	int Get_AtkCnt()
 	{
 		return m_atkCnt;
 	}
 
+	// 火力
+	int Get_AtkPoint()
+	{
+		return m_atk;
+	}
+
+	// 現在のターゲットナンバー
+	int Get_TargetNum()
+	{
+		return m_targetNum;
+	}
+
+	// 体力
+	int Get_Hp()
+	{
+		return m_hp;
+	}
+
+	// 現在座標
+	VECTOR Get_Pos()
+	{
+		return m_pos;
+	}
+
+	// 現在のステート
+	int Get_State()
+	{
+		return m_state;
+	}
+
+	// Effect描画フラグ
+	bool Get_EffectFlg()
+	{
+		return m_effectFlg;
+	}
+
+	// Unitナンバー
+	int Get_Num()
+	{
+		return m_num;
+	}
+
+	/************************************    Set    *****************************************/
+
 	/*********************************************************************
-	関数名：void Set_NextRoom(int)
-	概要：次に向かう部屋をセット
-	引数：_nextRoom:次に向かう部屋番号
+	関数名：void Set_NextMove(int _nextRoom, double _nextX)
+	概要：移動先セット
+	引数：int:移動先の部屋番号, double:移動先のx座標
 	戻り値：なし
 	*********************************************************************/
 	void Set_NextMove(int _nextRoom, double _nextX)
@@ -192,54 +181,26 @@ public:
 	}
 
 	/*********************************************************************
-	関数名：VECTOR Get_Pos()
-	概要：現在地の取得
-	引数：なし
-	戻り値：VECTOR m_pos:現在地
+	関数名：void Set_Target(int _num)
+	概要：ターゲットのセット
+	引数：ターゲットにするUnitナンバー
+	戻り値：なし
 	*********************************************************************/
-	VECTOR Get_Pos()
-	{
-		return m_pos;
-	}
-
-	/*********************************************************************
-	関数名：int Get_State()
-	概要：現在の状態取得
-	引数：なし
-	戻り値：int m_state:状態 eIdleなど
-	*********************************************************************/
-	int Get_State()
-	{
-		return m_state;
-	}
-
 	void Set_Target(int _num)
 	{
 		m_targetNum = _num;
 	}
 
 	/*********************************************************************
-	関数名：int Set_State()
-	概要：状態の変更
-	引数：eState _state:変更したい状態 Idleなど
+	関数名：void Set_State(eState _state)
+	概要：ステートの変更
+	引数：eState:ステート
+	　　　Constant.h 参照
 	戻り値：なし
 	*********************************************************************/
 	void Set_State(eState _state)
 	{
 		m_state = _state;
-	}
-
-
-
-	/*********************************************************************
-	関数名：int Get_Num()
-	概要：ナンバー取得
-	引数：なし
-	戻り値：int:ナンバー
-	*********************************************************************/
-	int Get_Num()
-	{
-		return m_num;
 	}
 };
 

@@ -23,10 +23,7 @@ protected:
 
 public:
 
-	cPlayerUnit() : cBaseUnit()
-	{
-		
-	}
+	cPlayerUnit() : cBaseUnit(){}
 
 };
 #endif // !_INCLUDE_PLAYER_UNIT_
