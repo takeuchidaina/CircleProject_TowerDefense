@@ -25,27 +25,21 @@ class cEnemyUnit : public cBaseUnit {
 
 protected:
 	
-
 public:
 
-	cEnemyUnit() : cBaseUnit(){}
-	virtual ~cEnemyUnit() {}
-
-	cMapMgr GetMapDes();				
+	cEnemyUnit() : cBaseUnit() {}
+	virtual ~cEnemyUnit() {}				
 
 	int m_number;
 	//cPlayerUnit* target;				// 狙うプレイヤーユニット
 	vector<vector<int>> mapStack;		// Map番号を入れる
-
-	//cEnemyUnit() : cBaseUnit(){}
-
 
 	virtual void Init();
 	virtual void Update();
 	virtual void Draw();
 
 	int Get_Num();
-	int Set_MapSize(int _i);
+	void Set_MapSize();
 	void EnemyMove();
 	void MapNavigation();		// Mapのルート検索関数
 };
