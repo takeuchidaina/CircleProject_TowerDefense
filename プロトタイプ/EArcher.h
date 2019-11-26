@@ -41,7 +41,7 @@ public:
 		}
 	}
 
-	~cEArcher() {}
+	virtual ~cEArcher() {}
 };
 
 #endif // !_INCLUDE_ESORD_

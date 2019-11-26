@@ -20,12 +20,13 @@ int cEnemyUnit::Get_Num() {
 	return m_num;
 }
 /*
-void cEnemyUnit::Set_NextMove(int _nextRoom, double _nextX) {
+void cEnemyUnit::Set_NextEnemyPos(int _enemyNum,  int _nextRoom, double _nextX) {
 	m_nextMove.sNextRoom = _nextRoom;
 	m_nextMove.sNextX = _nextX;
 }
 */
 
+/*
 void cEnemyUnit::EnemyMove() {
 	DEBUG_LOG("enemyMove来たよ");
 	if (m_room == m_nextMove.sNextRoom)
@@ -36,10 +37,21 @@ void cEnemyUnit::EnemyMove() {
 		}
 	}
 }
+*/
 
 // マップの番後のセット関数　田島が作った2重Vectorを代入
 // mapDate-マップ番号
+
+void Set_MapSize() {
+	
+}
+
 // TODO
+
+void Set_NextEnemyPos() {
+
+}
+
 // vector<vector<int>> mapStack(vector<vector<int>>& _mapDate) {
 	
 //}
