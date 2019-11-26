@@ -56,11 +56,19 @@ public:
 	void SetDestination(int i, sDoor* _des) { m_door[i].destination = _des; }
 
 	bool CheckInto(double, double);
-	double Get_Ground() { return m_pos.y - (m_height / 2); }
+	double Get_Ground() { return m_pos.y; }
 	int GetRoomNum() { return m_roomNum; }
 
 	vector<int> GetMapDes() { return m_des; }
-
+	
+	// 髙井追加
+	/**************************************************************************
+	関数：int GetRoomSize()
+	説明：部屋のPlayerUnitが入る数を渡す
+	引数：なし
+	戻り値：int:部屋のPlayerUnitが入る数
+	**************************************************************************/
+	int GetRoomSize();
 };
 
 #endif _MAP_INCLUDE_
