@@ -16,6 +16,7 @@
 #include "EscortTarget.h"
 #include "TimeLimit.h"
 //#include "Result.h"
+#include "Log.h"
 
 #ifndef _INCLUDE_GAMEMGR_
 #define _INCLUDE_GAMEMGR_

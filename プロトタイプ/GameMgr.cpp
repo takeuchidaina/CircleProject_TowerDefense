@@ -8,6 +8,8 @@ void cGameMgr::Init() {
 	cTime* ptime = new cTime(TIME_LIMIT);
 	m_time = *ptime;
 	m_img = LoadGraph("../resource/img/GameBG.png");
+
+	m_PUnit.Set_MapData(m_mapMgr.GetRoomSize());
 }
 
 void cGameMgr::Update() {
@@ -23,6 +25,8 @@ void cGameMgr::Update() {
   
   PUnitGenerate();
 	EUnitGenerate();
+
+	cLog::Instance()->Update();
 
 #ifdef GAMEMGR_DEBUG
 	if (GET_KEY_PRESS(KEY_INPUT_E) == 1) {
@@ -62,6 +66,8 @@ void cGameMgr::Draw() {
     m_EUnit.Draw();
 	m_log.Draw();
 
+	cLog::Instance()->Draw();
+
 #ifdef GAMEMGR_DEBUG
 	DrawFormatString(0, 0, WH, "ゲーム画面");
 	//DrawBox(100,100,600,600,GR,TRUE);
@@ -97,7 +103,8 @@ void cGameMgr::PUnitGenerate() {
 		{
 			m_PUnit.Add_PSord(MOUSE_V.x, m_mapMgr.Get_Ground(tmp) + UNIT_HEIGHT / 2, tmp);
 			//m_PUnit.Add_PSord(MOUSE_V.x, m_mapMgr.Get_Ground(tmp) + UNIT_HEIGHT / 2);
-			DEBUG_LOG("剣出現");
+			//DEBUG_LOG("剣出現");
+
 		}
 	}
 	else if (MOUSE_PRESS(LEFT_CLICK) == 1 && CheckHitKey(KEY_INPUT_A) >= 1)
