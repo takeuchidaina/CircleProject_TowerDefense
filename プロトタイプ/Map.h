@@ -56,7 +56,7 @@ public:
 	void SetDestination(int i, sDoor* _des) { m_door[i].destination = _des; }
 
 	bool CheckInto(double, double);
-	double Get_Ground() { return m_pos.y - (m_height / 2); }
+	double Get_Ground() { return m_pos.y; }
 	int GetRoomNum() { return m_roomNum; }
 
 	vector<int> GetMapDes() { return m_des; }
