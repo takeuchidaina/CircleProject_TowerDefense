@@ -120,6 +120,18 @@ vector<vector<int>> cMapMgr::GetMapDes(){
 	return tmpDes;
 }
 
+vector<int> cMapMgr::GetRoomSize()
+{
+	vector<int> roomSize;
+
+	for (int i = 0; i < map.size(); i++)
+	{
+		roomSize.push_back(map[i].GetRoomSize());
+	}
+
+	return roomSize;
+}
+
 ////////////////マップ.csvベース
 //Map					         Door01	 destinetion	Door02  destinetion
 //x	y	width	height	maxUnit	 x	y	 map  door		x	y	map  door
