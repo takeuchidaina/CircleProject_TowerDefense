@@ -49,6 +49,15 @@ public:
 	int CheckInto(double _x, double _y);
 	int GetMapSize();
 	vector<vector<int>> GetMapDes();
+
+	// 髙井追加
+	/**************************************************************************
+	関数：vector<int> GetRoomSize()
+	説明：部屋ごとのPlayerUnitが入る数を渡す
+	引数：なし
+	戻り値：vector<int>:部屋ごとのPlayerUnitが入る数
+	**************************************************************************/
+	vector<int> GetRoomSize();
 };
 
 #endif _INCLUDE_MAPMGR_
