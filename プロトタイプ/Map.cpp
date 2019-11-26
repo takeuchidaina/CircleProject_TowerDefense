@@ -63,10 +63,10 @@ void cMap::Draw() {
 
 bool cMap::CheckInto(double _x, double _y)
 {
-	if (m_pos.x - (m_width / 2) <= _x - (UNIT_WIDTH / 2) && m_pos.x + (m_width / 2) >= _x + (UNIT_WIDTH / 2))
+	if (m_pos.x <= _x - (UNIT_WIDTH / 2) && m_pos.x + m_width >= _x + (UNIT_WIDTH / 2))
 	{
 		// ‰æ‘œ‚Ì•\¦‚Í’†S‚©‚ç
-		if (m_pos.y - (m_height / 2) <= _y && m_pos.y + (m_height / 2) >= _y)
+		if (m_pos.y <= _y && m_pos.y + m_height >= _y)
 		{
 			return true;
 		}
@@ -74,4 +74,9 @@ bool cMap::CheckInto(double _x, double _y)
 
 	return false;
 
+}
+
+int cMap::GetRoomSize()
+{
+	return m_maxUnit;
 }

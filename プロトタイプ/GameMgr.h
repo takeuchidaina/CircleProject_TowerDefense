@@ -41,6 +41,8 @@ private:
 	cMapMgr m_mapMgr;
 	cEscortTarget m_escort;
 	cTime m_time;
+	cLog m_log;
+	
 
 	cUnitMgr m_PUnit;
 	void PUnitGenerate();

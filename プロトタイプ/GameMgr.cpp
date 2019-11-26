@@ -21,6 +21,7 @@ void cGameMgr::Update() {
 	m_escort.Update();
 	m_camera.Update();
 	m_time.Update();
+	m_log.Update();
   
   PUnitGenerate();
 	EUnitGenerate();
@@ -63,6 +64,7 @@ void cGameMgr::Draw() {
 	m_camera.Draw();
 	m_time.Draw();
     m_EUnit.Draw();
+	m_log.Draw();
 
 	cLog::Instance()->Draw();
 
@@ -102,6 +104,7 @@ void cGameMgr::PUnitGenerate() {
 			m_PUnit.Add_PSord(MOUSE_V.x, m_mapMgr.Get_Ground(tmp) + UNIT_HEIGHT / 2, tmp);
 			//m_PUnit.Add_PSord(MOUSE_V.x, m_mapMgr.Get_Ground(tmp) + UNIT_HEIGHT / 2);
 			//DEBUG_LOG("剣出現");
+
 		}
 	}
 	else if (MOUSE_PRESS(LEFT_CLICK) == 1 && CheckHitKey(KEY_INPUT_A) >= 1)

@@ -44,7 +44,7 @@ public:
 		}
 	}
 
-	~cESord() {}
+	virtual ~cESord() {}
 
 	VECTOR GetPos()
 	{
