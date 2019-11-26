@@ -75,3 +75,8 @@ bool cMap::CheckInto(double _x, double _y)
 	return false;
 
 }
+
+int cMap::GetRoomSize()
+{
+	return m_maxUnit;
+}
