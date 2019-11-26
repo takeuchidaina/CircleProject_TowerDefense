@@ -39,30 +39,6 @@ void cEnemyUnit::EnemyMove() {
 }
 */
 
-// マップの番後のセット関数　田島が作った2重Vectorを代入
-// mapDate-マップ番号
-
-void Set_MapSize() {
-	
-}
-
-// TODO
-
-void Set_NextEnemyPos() {
-
-}
-
-// vector<vector<int>> mapStack(vector<vector<int>>& _mapDate) {
-	
-//}
-
-// Mapのルート検索関数
-void cEnemyUnit::MapNavigation() {
-	/*
-	for (int i; i < mapStack(); i++) {
-	mapStack.push_back();
-	*/
-}
 
 void cEnemyUnit::Update() {
 
