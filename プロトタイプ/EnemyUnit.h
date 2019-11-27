@@ -32,15 +32,15 @@ public:
 
 	int m_number;
 	//cPlayerUnit* target;				// 狙うプレイヤーユニット
-	vector<vector<int>> mapStack;		// Map番号を入れる
+	//vector<vector<int>> mapStack;		// Map番号を入れる
 
 	virtual void Init();
 	virtual void Update();
 	virtual void Draw();
 
 	int Get_Num();
-	void Set_MapSize();
-	void EnemyMove();
+	//void Set_MapSize();
+	//void EnemyMove();
 	void MapNavigation();		// Mapのルート検索関数
 };
 #endif // _INCLUDE_ENEMY_UNIT_
