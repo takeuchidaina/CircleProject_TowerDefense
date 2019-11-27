@@ -33,7 +33,14 @@ void cTitle::Update() {
 	if (MOUSE_PRESS(LEFT_CLICK) == 1) {
 		for (int i = 0; i < E_TITLE_MAX;i++) {
 			if (m_btn[i].ButtonClick() == TRUE) {
-				m_sceneChanger->ChangeScene((eScene)m_menu[i].menu);
+
+				//TODO:if elseif‚ÅI—¹”»’f‚¹‚¸‚ÉChangeScene‚¾‚¯‚Åˆ—‚ðs‚¤
+				if (m_menu[i].menu == E_SCENE_GAME) {
+					m_sceneChanger->ChangeScene((eScene)m_menu[i].menu);
+				}
+				else if (m_menu[i].menu == E_SCENE_END) {
+					DxLib_End();
+				}
 			}
 		}
 	}

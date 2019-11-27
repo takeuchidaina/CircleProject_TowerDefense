@@ -4,6 +4,7 @@
 #define _INCLUEDE_HIT_
 #include "DxLib.h"
 #include <math.h>
+#include "Mouse.h"
 
 class cHit
 {
@@ -18,7 +19,7 @@ public:
 			_x2:オブジェ2のx　_y2:オブジェ2のy
 	戻り値：二点間の距離
 	******************************************************/
-	int TwoPoint(double _x1, double _y1, double _x2, double _y2);
+	double TwoPoint(double _x1, double _y1, double _x2, double _y2);
 
 	/*****************************************************
 	名前　：int Rect(double _x1, double _y1, double _w1, double _h1,
@@ -30,8 +31,17 @@ public:
 			_w2:オブジェ1の横幅　_h2:オブジェ1の高さ
 	戻り値：TRUE:当たった　FALSE:当たっていない
 	******************************************************/
-	int Rect(double _x1, double _y1, double _w1, double _h1,
+	bool Rect(double _x1, double _y1, double _w1, double _h1,
 		double _x2, double _y2, double _w2, double _h2);
+
+	/*****************************************************
+	名前　：int TwoPoint(double _x1, double _y1, double _x2, double _y2);
+	概要　：四角の上にマウスがあるかを判断
+	引数　：オブジェクトの左上(x1,y1)
+			オブジェクトの右下(x2,y2)
+	戻り値：TRUE:当たった　FALSE:当たっていない
+	******************************************************/
+	bool RectOnClick(double _x1,double _y1,double _x2,double _y2);
 
 private:
 
