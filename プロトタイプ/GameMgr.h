@@ -15,6 +15,7 @@
 #include "Map.h"
 #include "EscortTarget.h"
 #include "TimeLimit.h"
+#include "Sound.h"
 //#include "Result.h"
 #include "Log.h"
 
@@ -41,13 +42,13 @@ private:
 	cMapMgr m_mapMgr;
 	cEscortTarget m_escort;
 	cTime m_time;
-	cLog m_log;
-	
 
 	cUnitMgr m_PUnit;
 	void PUnitGenerate();
 	cUnitMgr m_EUnit;
 	void EUnitGenerate();
+
+	cSound m_sound;
 
 	int m_img;
 	const int TIME_LIMIT = 120;
