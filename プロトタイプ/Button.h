@@ -7,6 +7,7 @@
 #include "Mouse.h"
 #include "Keyboard.h"
 #include "Hit.h"
+#include "ErrorCheck.h"
 
 #ifndef _INCLUED_BUTTON_
 #define _INCLUED_BUTTON_

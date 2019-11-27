@@ -46,6 +46,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		sceneMgr.Draw();
 		
 	}
+	sceneMgr.End();
 
 	// èIóπ
 	DxLib_End();

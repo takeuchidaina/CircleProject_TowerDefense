@@ -27,16 +27,13 @@ void cButton::Init(double _ux, double _uy, double _dx, double _dy, const char* _
 
 	//‰æ‘œ‘ã“ü
 	m_image = LoadGraph(_filePath);
-	if (m_image == NULL) {
-		//error
-	}
+	FileCheck(m_image);
 }
 
 //ƒNƒŠƒbƒN‚³‚ê‚Ä‚¢‚é‚©‚Ç‚¤‚©
 bool cButton::ButtonClick() {
 
-	if(m_hit.Rect(m_ux,m_uy,(m_dx-m_ux),(m_dy-m_uy),
-				  MOUSE_X,MOUSE_Y,(MOUSE_X+1.0),(MOUSE_Y+1.0)) == TRUE) {
+	if(m_hit.RectOnClick(m_ux,m_uy,m_dx,m_dy) == TRUE) {
 		return TRUE;
 	}
 	else {
