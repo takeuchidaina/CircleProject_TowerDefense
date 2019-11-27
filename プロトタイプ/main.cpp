@@ -4,6 +4,7 @@
 #include "Mouse.h"
 #include "Keyboard.h"
 #include "FPS.h"
+#include "Log.h"
 
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
@@ -39,11 +40,15 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		cMouse::Instance()->Draw();
 		cKeyboard::Instance()->Update();
 		cKeyboard::Instance()->Draw();
+
 		//fps.Update();
 		//fps.Draw();
 
 		sceneMgr.Update();
 		sceneMgr.Draw();
+
+		cLog::Instance()->Update();
+		cLog::Instance()->Draw();
 		
 	}
 	sceneMgr.End();
