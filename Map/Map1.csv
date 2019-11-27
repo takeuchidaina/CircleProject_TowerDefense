@@ -1,3 +1,5 @@
-/Map,,,,,Door01,,destination,,Door02,,destination,,Door03,,destination,,Door04,,destination,
-/x,y,width,height,maxUnit,x,y,map,door,x,y,map,door,x,y,map,door,x,y,map,door
-5,5,200,150,2,1,2,5,6,,,,,,,,,,,,
+/Map,,,,,//1=true,,Door01,,destination,,Door02,,destination,,Door03,,destination,,Door04,,destination,
+/x,y,width,height,maxUnit,startFlg,defenseFlg,x,y,map,door,x,y,map,door,x,y,map,door,x,y,map,door
+-500,5,200,30,2,1,0,,,1,,,,-1,,,,-1,,,,-1,
+-50,-20,200,100,2,0,0,,,0,,,,2,,,,-1,,,,-1,
+400,50,200,,4,0,1,,,1,,,,-1,,,,-1,,,,-1,
