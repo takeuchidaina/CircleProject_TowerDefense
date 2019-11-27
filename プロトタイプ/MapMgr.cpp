@@ -15,7 +15,7 @@ void cMapMgr::Init(){
 
 	double tmpX=0.0, tmpY=0.0, tmpW=0.0, tmpH=0.0;
 	int tmpMaxUnit=0,tmpRoomNum=0;
-	bool tmpStartMapFlg = 0, tmpDefenseMapFlg = 0;
+	bool tmpStartMapFlg = FALSE, tmpDefenseMapFlg = FALSE;
 	vector<sDoor> tmpDoor(4);
 
 	//ドアなしver用,

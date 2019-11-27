@@ -1,4 +1,5 @@
 #include "Map.h"
+#include "ErrorCheck.h"
 
 //コンストラクタ、初期化
 /*
@@ -35,11 +36,10 @@ cMap::cMap(double _x, double _y, double _w, double _h,
 	m_startMapFlg = _startMapFlg;
 	m_DefenseMapFlg = _DefenseMapFlg;
 
-	mapimg = LoadGraph("../resource/img/Wall.png");
-	doorimg = LoadGraph("../resource/img/Door.png");
-	if (mapimg == NULL) {
-		DrawString(50, 50, "画像失敗", GetColor(255, 0, 255));
-	}
+	mapImg = LoadGraph("../resource/img/Wall.png");
+	doorImg = LoadGraph("../resource/img/Door.png");
+	if (mapImg == NULL) FileCheck(mapImg);
+	if (doorImg == NULL) FileCheck(doorImg);
 }
 
 void cMap::Init() {
@@ -52,7 +52,7 @@ void cMap::Update() {
 
 void cMap::Draw() {
 	//DrawBillboard3D( VECTOR Pos, float cx, float cy, float Size, float Angle, int GrHandle, int TransFlag );
-	DrawBillboard3D(m_pos,0,0,m_width,0,mapimg,FALSE);
+	DrawBillboard3D(m_pos,0,0,m_width,0,mapImg,FALSE);
 	
 	//ドア描画 コメントアウトなう
 	/*
