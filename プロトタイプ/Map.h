@@ -29,6 +29,8 @@ private:
 	int m_maxUnit;				//部屋にいられる最大ユニット数
 	int m_roomNum;				//部屋番号
 	vector<sDoor> m_door;		//ドアのvector配列
+	bool m_startMapFlg;			//開始地点フラグ
+	bool m_DefenseMapFlg;		//防衛地点フラグ
 
 	vector<int> m_des;	//ドアなしverの移動先格納vec変数
 
@@ -39,11 +41,11 @@ private:
 public:
 
 	cMap(double _x, double _y, double _w, double _h,
-		int _maxUnit, int _roomNum, vector<sDoor>& _door);//参照渡し使用
+		int _maxUnit, int _roomNum, vector<sDoor>& _door, bool m_startMapFlg, bool m_DefenseMapFlg);//参照渡し使用
 
 	//ドアなしver
 	cMap(double _x, double _y, double _w, double _h,
-		int _maxUnit, int _roomNum, vector<int>& _des);
+		int _maxUnit, int _roomNum, vector<int>& _des, bool m_startMapFlg, bool m_DefenseMapFlg);
 
 	virtual ~cMap() {}
 	virtual void Init();

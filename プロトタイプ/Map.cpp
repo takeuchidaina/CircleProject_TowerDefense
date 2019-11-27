@@ -23,7 +23,7 @@ cMap::cMap(double _x, double _y, double _w, double _h,
 
 //ƒhƒA‚È‚µ—p
 cMap::cMap(double _x, double _y, double _w, double _h,
-	int _maxUnit, int _roomNum, vector<int>& _des) {
+	int _maxUnit, int _roomNum, vector<int>& _des, bool _startMapFlg, bool _DefenseMapFlg) {
 	m_pos.x = _x;
 	m_pos.y = _y;
 	m_pos.z = 0.0f;
@@ -32,6 +32,8 @@ cMap::cMap(double _x, double _y, double _w, double _h,
 	m_maxUnit = _maxUnit;
 	m_roomNum = _roomNum;
 	m_des = _des;
+	m_startMapFlg = _startMapFlg;
+	m_DefenseMapFlg = _DefenseMapFlg;
 
 	mapimg = LoadGraph("../resource/img/Wall.png");
 	doorimg = LoadGraph("../resource/img/Door.png");
