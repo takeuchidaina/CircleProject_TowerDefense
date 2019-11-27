@@ -124,16 +124,17 @@ vector<vector<int>> cMapMgr::GetMapDes(){
 	return tmpDes;
 }
 
-vector<int> cMapMgr::GetRoomSize()
+vector<sMapData> cMapMgr::GetMapData()
 {
-	vector<int> roomSize;
+	vector<sMapData> mapData;
 
 	for (int i = 0; i < map.size(); i++)
 	{
-		roomSize.push_back(map[i].GetRoomSize());
+		sMapData tmp = { map[i].GetPos(), map[i].GetWidth(), map[i].GetHeight(), map[i].GetRoomSize() };
+		mapData.push_back(tmp);
 	}
 
-	return roomSize;
+	return mapData;
 }
 
 ////////////////マップ.csvベース

@@ -52,12 +52,12 @@ public:
 
 	// 髙井追加
 	/**************************************************************************
-	関数：vector<int> GetRoomSize()
-	説明：部屋ごとのPlayerUnitが入る数を渡す
+	関数：vector<sMapData> GetMapData()
+	説明：マップデータ渡す
 	引数：なし
-	戻り値：vector<int>:部屋ごとのPlayerUnitが入る数
+	戻り値：vector<sMapData>:マップデータ
 	**************************************************************************/
-	vector<int> GetRoomSize();
+	vector<sMapData> GetMapData();
 };
 
 #endif _INCLUDE_MAPMGR_
