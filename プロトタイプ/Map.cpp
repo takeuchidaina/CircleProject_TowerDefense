@@ -82,3 +82,18 @@ int cMap::GetRoomSize()
 {
 	return m_maxUnit;
 }
+
+VECTOR cMap::GetPos()
+{
+	return m_pos;
+}
+
+double cMap::GetWidth()
+{
+	return m_width;
+}
+
+double cMap::GetHeight()
+{
+	return m_height;
+}
