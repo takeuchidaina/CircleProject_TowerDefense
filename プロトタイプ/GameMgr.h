@@ -17,7 +17,7 @@
 #include "TimeLimit.h"
 #include "Sound.h"
 //#include "Result.h"
-#include "Log.h"
+#include "ErrorCheck.h"
 
 #ifndef _INCLUDE_GAMEMGR_
 #define _INCLUDE_GAMEMGR_
@@ -43,10 +43,8 @@ private:
 	cEscortTarget m_escort;
 	cTime m_time;
 
-	cUnitMgr m_PUnit;
-	void PUnitGenerate();
-	cUnitMgr m_EUnit;
-	void EUnitGenerate();
+	cUnitMgr m_unitMgr;
+	void UnitGenerate();
 
 	cSound m_sound;
 
