@@ -36,8 +36,14 @@ class cUnitMgr : public cBaseTask
 	int m_num;	// ナンバー
 	int m_selectMarkImg;
 	int m_mapStack;					// マップの数格納
-	vector<vector<int>> roomPlayer;
-	vector<vector<int>> roomEnemy;
+	vector<vector<int>> m_roomPlayer;
+	vector<vector<int>> m_roomEnemy;
+
+	vector<sMapData> m_mapData;
+
+	// 仮
+	float m_mapWidth;
+	float m_mapHiight;
 
 public:
 	cUnitMgr();
@@ -53,10 +59,14 @@ public:
 	引数：座標
 	戻り値：なし
 	*********************************************************************/
-	void Add_PSord(double _x, double _y, int _room)
+	int Add_PSord(double _x, double _y, int _room)
 	{
-  		player.emplace_back(new cPSord(_x, _y, 1, m_num));
+		if (m_roomPlayer[_room].size() >= m_mapData[_room].roomSize) return 0;
+  		player.emplace_back(new cPSord(_x, _y, _room, m_num));
+		DEBUG_LOG("playerSize:%d", player.size());
 		m_num++;
+
+		return 0;
 	}
 	/*********************************************************************
 	関数名：void Add_PArcher(double _x, double _y, int _room)
@@ -64,10 +74,13 @@ public:
 	引数：座標
 	戻り値：なし
 	*********************************************************************/
-	void Add_PArcher(double _x, double _y, int _room)
+	int Add_PArcher(double _x, double _y, int _room)
 	{
-		player.emplace_back(new cPArcher(_x, _y, 1, m_num));
+		if (m_roomPlayer[_room].size() >= m_mapData[_room].roomSize) return 0;
+		player.emplace_back(new cPArcher(_x, _y, _room, m_num));
 		m_num++;
+
+		return 0;
 	}
 
 	/**************************** エネミー ************************/
@@ -92,6 +105,49 @@ public:
 		m_num++;
 	}
 
+	void RoomDraw()
+	{
+		for (int i = 0; i < m_roomPlayer.size(); i++)
+		{
+			for (int j = 0; j < m_roomPlayer[i].size(); j++)
+			{
+				int playerNum = m_roomPlayer[i][j];
+
+				int arreyNum = PlayerArreySearch(playerNum);
+
+
+				float x = 0;
+				float width = m_mapData[i].width - m_mapData[i].pos.x;
+				int wPos = (m_mapData[i].roomSize + 1) - j;
+
+				x = width / 2 / (m_mapData[i].roomSize+3) * wPos;
+				x += m_mapData[i].pos.x;
+
+				float y = 0;
+				float height = m_mapData[i].height - m_mapData[i].pos.y;
+				int hPos = (m_mapData[i].roomSize + 1) - j;
+
+				y = height / 2 / (m_mapData[i].roomSize+1) * hPos;
+				y += m_mapData[i].pos.y;
+
+				player[arreyNum]->Set_Pos(VGet(x, y, -(j/10)));
+
+				//int num = m_mapData[i].roomSize - j;
+
+				player[arreyNum]->Draw();
+			}
+		}
+	}
+
+	/*********************************************************************
+	関数名：bool CheckUnitAdd(int _roomNum)
+	概要：引数の部屋にUnitが入れるか調べる
+	引数：int:入りたい部屋番号
+	戻り値：true:入れる
+			false:入れない
+	*********************************************************************/
+	bool CheckUnitAdd(int _roomNum);
+
 	/*********************************************************************
 	関数名：void TargetSelect()
 	概要：ターゲットの検索
@@ -99,6 +155,14 @@ public:
 	戻り値：なし
 	*********************************************************************/
 	void TargetSelect();
+
+	/*********************************************************************
+	関数名：void InRoomUnit()
+	概要：部屋ごとにUnitを整理
+	引数：なし
+	戻り値：なし
+	*********************************************************************/
+	void InRoomUnit();
 
 	/*********************************************************************
 	関数名：int AttackRelay(int _atkP, int _difNum, int _atkNum)
@@ -134,6 +198,11 @@ public:
 
 	// だいご追加
 	int CheckEnemyClick(VECTOR _pos);
+
+	void Set_MapData(vector<sMapData> _mapData)
+	{
+		m_mapData = _mapData;
+	}
 
 	/*********************************************************************
 	関数名：void Set_NextPlayerPos(int _playerNum, int _nextRoom, double _nextX)

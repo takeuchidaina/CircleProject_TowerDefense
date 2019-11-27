@@ -20,8 +20,8 @@ class cPArcher : public cPlayerUnit
 public:
 	cPArcher(double _x, double _y, int _room, int _num) : cPlayerUnit()
 	{
-		m_pos.x = _x;
-		m_pos.y = _y;
+		m_pos.x = 0;
+		m_pos.y = 0;
 		m_pos.z = 0.0f;
 		m_num = _num;
 		m_room = _room;
