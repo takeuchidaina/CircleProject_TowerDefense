@@ -21,10 +21,10 @@ void cMapNavigate::Draw() {
 }
 
 void cMapNavigate::Get_MapDate(vector<vector<int>> _MapDate) {
-	mapStack = _MapDate;		// Map‚ÌŒq‚ª‚è‚ğ‘ã“ü
+	mapStack = _MapDate;		// Mapã®ç¹‹ãŒã‚Šã‚’ä»£å…¥
 }
 
-// Map‚ª‚Â‚È‚ª‚Á‚Ä‚¢‚é‚©		‚¢‚ç‚È‚¢‚©‚à
+// MapãŒã¤ãªãŒã£ã¦ã„ã‚‹ã‹		ã„ã‚‰ãªã„ã‹ã‚‚
 /*
 int cMapNavigate::InspectMove(int _x, int _y, int _range) {
 	_range++;
@@ -45,7 +45,7 @@ int cMapNavigate::InspectMove(int _x, int _y, int _range) {
 		} else {return;}
 
 		/////////////////////////////////
-			if ((mapStack[_y + mapStack[i]][_x + mapStack[j]] >= 0 || mapStack[_y + mapStack[i]][_x + mapStack[j]] == ƒS[ƒ‹) &&
+			if ((mapStack[_y + mapStack[i]][_x + mapStack[j]] >= 0 || mapStack[_y + mapStack[i]][_x + mapStack[j]] == ã‚´ãƒ¼ãƒ«) &&
 				(tmpMapStack[_y + mapStack[i]][_x + mapStack[j]] > _renge || tmpMapStack[_y + mapStack[i]][_x + mapStack[j]] >= 0)) {
 
 				tmpMapStack[_y + mapStack[i]][_x + mapStack[j]] = _renge;
@@ -58,8 +58,8 @@ int cMapNavigate::InspectMove(int _x, int _y, int _range) {
 }
 */
 
-// ƒ‹[ƒgŒŸõ
-// ŠÈˆÕ”Å								1			2
+// ãƒ«ãƒ¼ãƒˆæ¤œç´¢
+// ç°¡æ˜“ç‰ˆ								1			2
 int cMapNavigate::MapNavigation(int _start, int _goal) {
 	int cnt = 0;
 	for (int j = 0; j < mapStack.size(); j++) {
@@ -68,7 +68,7 @@ int cMapNavigate::MapNavigation(int _start, int _goal) {
 			return;			
 		}
 		else if (mapStack[_start][j] == _goal) {
-			tbl.push_back(cnt);		// strat‚Ü‚Å‚Ì“¹‚Ì‚è‚ğ“ü‚ê‚é
+			tbl.push_back(cnt);		// stratã¾ã§ã®é“ã®ã‚Šã‚’å…¥ã‚Œã‚‹
 		}
 		else if (mapStack[_start][j] != _start || mapStack[_start][j] != _goal) {
 			MapNavigation(_start + 1, _goal);
@@ -78,31 +78,33 @@ int cMapNavigate::MapNavigation(int _start, int _goal) {
 }
 
 /*
-// _start=o”­	_goal=s‚«æ
+// _start=å‡ºç™º	_goal=è¡Œãå…ˆ
 bool cMapNavigate::isMapNavigation(int _start, int _goal) {
+/*
 	int cnt = 0;
 		for (int j = 0; j < mapStack[_start].size(); j++) {
 					
-			// o”­==_start, s‚«æ==_start	‚È‚ç
+			// å‡ºç™º==_start, è¡Œãå…ˆ==_start	ãªã‚‰
 			if (mapStack[_start][j] == _start) {	
-				return false;						//‚Â‚È‚ª‚ç‚È‚¢‚©‚çfalse‚Å•Ô‚·
+				return false;						//ã¤ãªãŒã‚‰ãªã„ã‹ã‚‰falseã§è¿”ã™
 			}
 
-			// goal‚É‚Â‚¢‚½‚ç
+			// goalã«ã¤ã„ãŸã‚‰
 			if(mapStack[_start][j] == _goal) {		
-				cnt++;								//“¹‚Ì‚è‚ğƒJƒEƒ“ƒg
-				tbl.push_back(cnt);				// strat‚Ü‚Å‚Ì“¹‚Ì‚è‚ğ“ü‚ê‚é
+				cnt++;								//é“ã®ã‚Šã‚’ã‚«ã‚¦ãƒ³ãƒˆ
+				tbl.push_back(cnt);				// stratã¾ã§ã®é“ã®ã‚Šã‚’å…¥ã‚Œã‚‹
 				return true;
 			}
 
-			// _start‚Å‚à_goal‚Å‚à‚È‚¢
+			// _startã§ã‚‚_goalã§ã‚‚ãªã„
 			if (mapStack[_start][j] != _start || mapStack[_start][j] != _goal) {		
-				cnt++;								//“¹‚Ì‚è‚ğƒJƒEƒ“ƒg
+				cnt++;								//é“ã®ã‚Šã‚’ã‚«ã‚¦ãƒ³ãƒˆ
 				mapStack[_start][j + 1];	
-				tbl.push_back(cnt);					// strat‚Ü‚Å‚Ì“¹‚Ì‚è‚ğ“ü‚ê‚é
-				isMapNavigation(_start + 1, _goal);	// ‰ñ‹AŠÖ”
+				tbl.push_back(cnt);					// stratã¾ã§ã®é“ã®ã‚Šã‚’å…¥ã‚Œã‚‹
+				isMapNavigation(_start + 1, _goal);	// å›å¸°é–¢æ•°
 			}
 		}
+*/
 	return 0;
 }
 */
