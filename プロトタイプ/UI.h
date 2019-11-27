@@ -10,7 +10,11 @@ class cUI : public cBaseTask
 {
 public:
 	cUI();
-	~cUI();
+	virtual ~cUI();
+	virtual void Init();
+	virtual void Update();
+	virtual void Draw();
+	virtual void End();
 
 private:
 
