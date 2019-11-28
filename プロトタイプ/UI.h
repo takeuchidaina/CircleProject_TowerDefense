@@ -8,6 +8,7 @@
 #include "BaseTask.h"
 #include "string.h"
 #include "ErrorCheck.h"
+#include "Map.h"
 
 using namespace std;
 
@@ -42,8 +43,9 @@ private:
 	}sUI;
 
 	sUI m_UI[E_UI_LENGTH];
-	int playerCnt[3];
-	int maxPlayer;
+	int m_playerCnt[3];
+	int m_sumPlayerCnt;
+	int m_maxPlayer;
 
 };
 
