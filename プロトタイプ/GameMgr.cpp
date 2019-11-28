@@ -10,7 +10,7 @@ void cGameMgr::Init() {
 	m_img = LoadGraph("../resource/img/GameBG.png");
 	FileCheck(m_img);
 
-	//m_unitMgr.Set_MapData(m_mapMgr.GetMapData());
+	m_unitMgr.Set_MapData(m_mapMgr.GetMapData());
 }
 
 void cGameMgr::Update() {
@@ -113,6 +113,14 @@ void cGameMgr::UnitGenerate() {
 			//m_PUnit.Add_PArcher(MOUSE_V.x, m_mapMgr.Get_Ground(clickRoom) + UNIT_HEIGHT / 2);
 		}
 	}
+	else if (MOUSE_PRESS(LEFT_CLICK) == 1 && CheckHitKey(KEY_INPUT_D) >= 1)
+	{
+		if (clickRoom != -1)
+		{
+			m_unitMgr.Add_PDefense(MOUSE_V.x, m_mapMgr.Get_Ground(clickRoom) + UNIT_HEIGHT / 2, clickRoom);
+			//m_PUnit.Add_PArcher(MOUSE_V.x, m_mapMgr.Get_Ground(clickRoom) + UNIT_HEIGHT / 2);
+		}
+	}
 	else if (MOUSE_PRESS(LEFT_CLICK) == 1 && cMouse::Instance()->GetPlayerNum() >= 0 && CheckHitKeyAll != 0)
 	{
 		int clickRoom = m_mapMgr.CheckInto(MOUSE_V.x, MOUSE_V.y);
@@ -139,7 +147,7 @@ void cGameMgr::UnitGenerate() {
 		if (clickRoom != -1)
 		{
 			m_unitMgr.Add_ESord(MOUSE_V.x, m_mapMgr.Get_Ground(clickRoom) + UNIT_HEIGHT / 2, clickRoom);
-			DEBUG_LOG("剣エネミー出現");
+			//DEBUG_LOG("剣エネミー出現");
 		}
 	}
 	else if (MOUSE_PRESS(RIGHT_CLICK) == 1 && CheckHitKey(KEY_INPUT_A) >= 1)
@@ -148,7 +156,16 @@ void cGameMgr::UnitGenerate() {
 		{
 			m_unitMgr.Add_EArcher(MOUSE_V.x, m_mapMgr.Get_Ground(clickRoom) + UNIT_HEIGHT / 2, clickRoom);
 			//enemy.Set_NextEnemyPos(cMouse::Instance()->GetEnemyNum(), clickRoom, MOUSE_V.x);
-			DEBUG_LOG("弓エネミー出現");
+			//DEBUG_LOG("弓エネミー出現");
+		}
+	}
+	else if (MOUSE_PRESS(RIGHT_CLICK) == 1 && CheckHitKey(KEY_INPUT_D) >= 1)
+	{
+		if (clickRoom != -1)
+		{
+			m_unitMgr.Add_EDefense(MOUSE_V.x, m_mapMgr.Get_Ground(clickRoom) + UNIT_HEIGHT / 2, clickRoom);
+			//enemy.Set_NextEnemyPos(cMouse::Instance()->GetEnemyNum(), clickRoom, MOUSE_V.x);
+			//DEBUG_LOG("弓エネミー出現");
 		}
 	}
 	else if (MOUSE_PRESS(RIGHT_CLICK) == 1 && cMouse::Instance()->GetEnemyNum() >= 0 && CheckHitKeyAll != 0)
