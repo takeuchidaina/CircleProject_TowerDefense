@@ -106,4 +106,5 @@ bool cMapNavigate::isMapNavigation(int _start, int _goal) {
 		}
 	return 0;
 	*/
+	return 0;
 }
