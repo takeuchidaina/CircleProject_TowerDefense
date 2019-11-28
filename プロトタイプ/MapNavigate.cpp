@@ -65,7 +65,7 @@ int cMapNavigate::MapNavigation(int _start, int _goal) {
 	for (int j = 0; j < mapStack.size(); j++) {
 		cnt++;
 		if (mapStack[_start][j] == _start) {
-			return;			
+			return 0;			
 		}
 		else if (mapStack[_start][j] == _goal) {
 			tbl.push_back(cnt);		// stratまでの道のりを入れる
@@ -77,7 +77,7 @@ int cMapNavigate::MapNavigation(int _start, int _goal) {
 	return cnt;
 }
 
-/*
+
 // _start=出発	_goal=行き先
 bool cMapNavigate::isMapNavigation(int _start, int _goal) {
 /*
@@ -104,7 +104,6 @@ bool cMapNavigate::isMapNavigation(int _start, int _goal) {
 				isMapNavigation(_start + 1, _goal);	// 回帰関数
 			}
 		}
-*/
 	return 0;
+	*/
 }
-*/
