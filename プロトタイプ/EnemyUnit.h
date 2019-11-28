@@ -35,8 +35,8 @@ public:
 	//vector<vector<int>> mapStack;		// Map番号を入れる
 
 	virtual void Init();
-	virtual void Update();
-	virtual void Draw();
+	//virtual void Update();
+	//virtual void Draw();
 
 	int Get_Num();
 	//void Set_MapSize();

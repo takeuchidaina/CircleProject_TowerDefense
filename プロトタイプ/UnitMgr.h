@@ -10,6 +10,7 @@
 #include "PDefense.h"
 #include "ESord.h"
 #include "EArcher.h"
+#include "EDefense.h"
 #include "Mouse.h"
 #include <vector>
 #include "Log.h"
@@ -40,6 +41,8 @@ class cUnitMgr : public cBaseTask
 	vector<vector<int>> m_roomEnemy;
 
 	vector<sMapData> m_mapData;
+
+	DATEDATA m_date;
 
 public:
 	cUnitMgr();
@@ -79,26 +82,43 @@ public:
 		return 0;
 	}
 
+	int Add_PDefense(double _x, double _y, int _room)
+	{
+		if (m_roomPlayer[_room].size() >= m_mapData[_room].roomSize) return 0;
+		player.emplace_back(new cPDefense(_x, _y, _room, m_num));
+		m_num++;
+
+		return 0;
+	}
+
 	/**************************** エネミー ************************/
 	
-	void Add_ESord(double _x, double _y, int _room)
+	int Add_ESord(double _x, double _y, int _room)
 	{
+		if (m_roomEnemy[_room].size() >= m_mapData[_room].roomSize) return 0;
 		enemy.emplace_back(new cESord(_x, _y, _room, m_num));
 		m_num++;
 		DEBUG_LOG("AddESord来たよ");
 		//Set_State(eMove);
+		return 0;
 	}
 
-	void Add_EArcher(double _x, double _y, int _room)
+	int Add_EArcher(double _x, double _y, int _room)
 	{
+		if (m_roomEnemy[_room].size() >= m_mapData[_room].roomSize) return 0;
 		enemy.emplace_back(new cEArcher(_x, _y, _room, m_num));
 		m_num++;
+
+		return 0;
 	}
 
-	void Add_ESord(double _x, double _y)
+	int Add_EDefense(double _x, double _y, int _room)
 	{
-		enemy.emplace_back(new cPDefense(_x, _y,  1, m_num));
+		if (m_roomEnemy[_room].size() >= m_mapData[_room].roomSize) return 0;
+		enemy.emplace_back(new cEDefense(_x, _y,  _room, m_num));
 		m_num++;
+
+		return 0;
 	}
 
 	/*********************************************************************
