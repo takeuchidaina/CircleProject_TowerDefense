@@ -5,6 +5,10 @@ cUnitMgr::cUnitMgr()
 	m_num = 0;
 	m_mapStack = 3;
 
+	GetDateTime(&m_date);
+	int tmpDate = m_date.Day + m_date.Hour + m_date.Min + m_date.Mon + m_date.Sec + m_date.Year;
+	SRand(tmpDate);
+
 	m_selectMarkImg = LoadGraph("../resource/img/PlayerSelect.png");
 	if (-1 == m_selectMarkImg)
 	{
@@ -122,19 +126,19 @@ void cUnitMgr::RoomDraw()
 			if (player[arreyNum]->Get_State() != E_MOVE)
 			{
 
-				float x = 0;
-				float width = m_mapData[i].width - m_mapData[i].pos.x;
-				int wPos = (m_mapData[i].roomSize + 1) - j;
+				int num = m_mapData[i].roomSize - 1 - j;
 
-				x = width / 2 / (m_mapData[i].roomSize + 3) * wPos;
-				x += m_mapData[i].pos.x;
+				float x = m_mapData[i].pos.x;
+				float wPos = m_mapData[i].width / 2 / (m_mapData[i].roomSize + 3) * num;
 
-				float y = 0;
-				float height = m_mapData[i].height - m_mapData[i].pos.y;
-				int hPos = (m_mapData[i].roomSize + 1) - j;
+				x += wPos + 30;
 
-				y = height / 2 / (m_mapData[i].roomSize + 1) * hPos;
-				y += m_mapData[i].pos.y;
+
+				float y = m_mapData[i].pos.y;
+
+				float hPos = m_mapData[i].height / 2 / (m_mapData[i].roomSize + 1) * num;
+
+				y += hPos + 40;
 
 				player[arreyNum]->Set_Pos(VGet(x, y, -(j / 10)));
 
@@ -154,19 +158,19 @@ void cUnitMgr::RoomDraw()
 			if (enemy[arreyNum]->Get_State() != E_MOVE)
 			{
 
-				float x = 0;
-				float width = m_mapData[i].width - m_mapData[i].pos.x;
-				int wPos = (m_mapData[i].roomSize + 1);
+				int num = m_mapData[i].roomSize - 1 - j;
 
-				x = width / 2 * 1 / (m_mapData[i].roomSize + 3) * wPos;
-				x += m_mapData[i].pos.x;
+				float x = m_mapData[i].pos.x + m_mapData[i].width;
+				float wPos = m_mapData[i].width / 2 / (m_mapData[i].roomSize + 3) * num;
 
-				float y = 0;
-				float height = m_mapData[i].height - m_mapData[i].pos.y;
-				int hPos = (m_mapData[i].roomSize + 1) - j;
+				x -= wPos + 30;
 
-				y = height / 2 / (m_mapData[i].roomSize + 1) * hPos;
-				y += m_mapData[i].pos.y;
+
+				float y = m_mapData[i].pos.y;
+
+				float hPos = m_mapData[i].height / 2 / (m_mapData[i].roomSize + 1) * num;
+
+				y += hPos + 40;
 
 				enemy[arreyNum]->Set_Pos(VGet(x, y, -(j / 10)));
 
@@ -181,53 +185,63 @@ void cUnitMgr::TargetSelect()
 	// Player
 	for (int p = 0; p < player.size(); p++)
 	{
+		vector<int> eNum;
 		// Enemy
 		for (int e = 0; e < enemy.size(); e++)
 		{
 			// 同じ部屋かどうか
 			if (player[p]->Get_NowRoom() == enemy[e]->Get_NowRoom())
 			{
+				if (player[p]->Get_State() == E_IDLE && enemy[e]->Get_State() != E_MOVE)
+				{
+					eNum.push_back(enemy[e]->Get_Num());
+				}
 				//DEBUG_LOG("同じ部屋");
 				// お互い戦闘中でないか
-				if (player[p]->Get_State() != E_ATTACK && enemy[e]->Get_State() != E_ATTACK)
-				{
-					/* Player */
-					// 向き
-					if (player[p]->Get_Direction() == U_RIGHT)
-					{
-						if (player[p]->Get_Pos().x <= enemy[e]->Get_Pos().x && player[p]->Get_Pos().x + player[p]->Get_atkR() >= enemy[e]->Get_Pos().x)
-						{
-							player[p]->Set_Target(enemy[e]->Get_Num());
-							player[p]->Set_State(E_ATTACK);
-						}
-					}
-					else
-					{
-						if (player[p]->Get_Pos().x >= enemy[e]->Get_Pos().x && player[p]->Get_Pos().x - player[p]->Get_atkR() <= enemy[e]->Get_Pos().x)
-						{
-							player[p]->Set_Target(enemy[e]->Get_Num());
-							player[p]->Set_State(E_ATTACK);
-						}
-					}
-					/* Enemy */
-					if (enemy[e]->Get_Direction() == U_RIGHT)
-					{
-						if (enemy[e]->Get_Pos().x <= player[p]->Get_Pos().x && enemy[e]->Get_Pos().x + enemy[e]->Get_atkR() >= player[p]->Get_Pos().x)
-						{
-							enemy[e]->Set_Target(player[p]->Get_Num());
-							enemy[e]->Set_State(E_ATTACK);
-						}
-					}
-					else
-					{
-						if (enemy[e]->Get_Pos().x >= player[p]->Get_Pos().x && enemy[e]->Get_Pos().x - enemy[e]->Get_atkR() <= player[p]->Get_Pos().x)
-						{
-							enemy[e]->Set_Target(player[p]->Get_Num());
-							enemy[e]->Set_State(E_ATTACK);
-						}
-					}
-				}
+				//if (player[p]->Get_State() != E_ATTACK && enemy[e]->Get_State() != E_ATTACK)
+				//{
+				//	/* Player */
+				//	// 向き
+				//	if (player[p]->Get_Direction() == U_RIGHT)
+				//	{
+				//		if (player[p]->Get_Pos().x <= enemy[e]->Get_Pos().x && player[p]->Get_Pos().x + player[p]->Get_atkR() >= enemy[e]->Get_Pos().x)
+				//		{
+				//			player[p]->Set_Target(enemy[e]->Get_Num());
+				//			player[p]->Set_State(E_ATTACK);
+				//		}
+				//	}
+				//	else
+				//	{
+				//		if (player[p]->Get_Pos().x >= enemy[e]->Get_Pos().x && player[p]->Get_Pos().x - player[p]->Get_atkR() <= enemy[e]->Get_Pos().x)
+				//		{
+				//			player[p]->Set_Target(enemy[e]->Get_Num());
+				//			player[p]->Set_State(E_ATTACK);
+				//		}
+				//	}
+				//	/* Enemy */
+				//	if (enemy[e]->Get_Direction() == U_RIGHT)
+				//	{
+				//		if (enemy[e]->Get_Pos().x <= player[p]->Get_Pos().x && enemy[e]->Get_Pos().x + enemy[e]->Get_atkR() >= player[p]->Get_Pos().x)
+				//		{
+				//			enemy[e]->Set_Target(player[p]->Get_Num());
+				//			enemy[e]->Set_State(E_ATTACK);
+				//		}
+				//	}
+				//	else
+				//	{
+				//		if (enemy[e]->Get_Pos().x >= player[p]->Get_Pos().x && enemy[e]->Get_Pos().x - enemy[e]->Get_atkR() <= player[p]->Get_Pos().x)
+				//		{
+				//			enemy[e]->Set_Target(player[p]->Get_Num());
+				//			enemy[e]->Set_State(E_ATTACK);
+				//		}
+				//	}
+				//}
 			}
+		}
+		if (eNum.size() > 0)
+		{
+			int num = GetRand(eNum.size() - 1);
+			player[p]->Set_Target(eNum[num]);
 		}
 	}
 }

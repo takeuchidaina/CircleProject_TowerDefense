@@ -40,10 +40,10 @@ void cEnemyUnit::EnemyMove() {
 */
 
 
-void cEnemyUnit::Update() {
-
-}
-
-void cEnemyUnit::Draw() {
-
-}
+//void cEnemyUnit::Update() {
+//
+//}
+//
+//void cEnemyUnit::Draw() {
+//
+//}

@@ -38,7 +38,7 @@ public:
 		m_direction = U_LEFT;
 		//target = NULL;
 
-		if (0 != LoadDivGraph("../resource/img/Shield.png", 6, 3, 2, 64, 64, m_imgtbl))
+		if (0 != LoadDivGraph("../resource/img/44c9055827b63161.png", 6, 3, 2, 64, 64, m_imgtbl))
 		{
 			ErrBox("‰æ‘œ“Ç‚İ‚İ¸”s");
 		}
