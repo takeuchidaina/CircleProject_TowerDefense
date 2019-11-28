@@ -35,7 +35,7 @@ public:
 		m_direction = U_LEFT;
 		//target = NULL;
 
-		if (0 != LoadDivGraph("../resource/img/3.png", 6, 3, 2, 64, 64, m_imgtbl))
+		if (0 != LoadDivGraph("../resource/img/EArchar.png", 6, 3, 2, 64, 64, m_imgtbl))
 		{
 			ErrBox("‰æ‘œ“Ç‚İ‚İ¸”s");
 		}
