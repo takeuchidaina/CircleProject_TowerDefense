@@ -20,6 +20,7 @@ void cGameMgr::Update() {
 	m_escort.Update();
 	m_camera.Update();
 	m_time.Update();
+	m_UI.Update();
 
     UnitGenerate();		//ユニット生成
 
@@ -60,6 +61,7 @@ void cGameMgr::Draw() {
 	m_escort.Draw();
 	m_camera.Draw();
 	m_time.Draw();
+	m_UI.Draw();
 
 
 #ifdef GAMEMGR_DEBUG

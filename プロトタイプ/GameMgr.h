@@ -18,6 +18,7 @@
 #include "Sound.h"
 //#include "Result.h"
 #include "ErrorCheck.h"
+#include "UI.h"
 
 #ifndef _INCLUDE_GAMEMGR_
 #define _INCLUDE_GAMEMGR_
@@ -42,6 +43,7 @@ private:
 	cMapMgr m_mapMgr;
 	cEscortTarget m_escort;
 	cTime m_time;
+	cUI m_UI;
 
 	cUnitMgr m_unitMgr;
 	void UnitGenerate();
