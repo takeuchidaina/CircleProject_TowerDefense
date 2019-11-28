@@ -119,9 +119,13 @@ void cBaseUnit::AttackStart()
 void cBaseUnit::Defense(int _atkPoint, int _atkNum)
 {
 	m_hp -= _atkPoint;
-	if (m_targetNum == -1)
+	/*if (m_targetNum == -1)
 	{
 		m_targetNum = _atkNum;
 		m_effectFlg = true;
-	}
+
+
+	}*/
+
+	DEBUG_LOG("ナンバー%dは%dのダメージを受けた　残りHP:%d", m_num, _atkPoint, m_hp);
 }
