@@ -1,14 +1,12 @@
 #pragma once
 #include "DxLib.h"
 #include "WinBox.h"
-#include "EnemyUnit.h"
+#include "PlayerUnit.h"
 
-// ‰¼‚ÅEnemy‚Æ‚µ‚Äˆµ‚Á‚Ä‚¢‚é
-
-class cPDefense :public cEnemyUnit
+class cPDefense :public cPlayerUnit
 {
 public:
-	cPDefense(double _x, double _y, int _room, int _num) : cEnemyUnit()
+	cPDefense(double _x, double _y, int _room, int _num) : cPlayerUnit()
 	{
 		m_pos.x = _x;
 		m_pos.y = _y;
