@@ -34,8 +34,8 @@ private:
 
 	vector<int> m_des;	//ƒhƒA‚È‚µver‚ÌˆÚ“®æŠi”[vec•Ï”
 
-	int mapImg;
-	int doorImg;
+	int m_mapImg;
+	int m_doorImg;
 
 
 public:

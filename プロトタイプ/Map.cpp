@@ -37,9 +37,9 @@ cMap::cMap(double _x, double _y, double _w, double _h,
 	m_DefenseMapFlg = _DefenseMapFlg;
 
 	m_mapImg = LoadGraph("../resource/img/Wall.png");
-	m_doorImg = LoadGraph("../resource/img/Door.png");
+	//m_doorImg = LoadGraph("../resource/img/Door.png");
 	FileCheck(m_mapImg);
-	FileCheck(m_doorImg);
+	//FileCheck(m_doorImg);
 }
 
 void cMap::Init() {
