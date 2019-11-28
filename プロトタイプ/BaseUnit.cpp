@@ -6,7 +6,7 @@ cBaseUnit::cBaseUnit()
 	m_nextMove.sNextRoom = -1;
 	m_nextMove.sNextX = NULL;
 	m_isOnActive = true;
-	m_state = eIdle;
+	m_state = E_IDLE;
 	m_direction = U_RIGHT;
 	m_targetNum = -1;
 	m_atkCnt = m_atkCoolTime;
@@ -71,7 +71,7 @@ void cBaseUnit::Move()
 		// éwíËÇ≥ÇÍÇΩç¿ïWÇ…Ç¬Ç¢ÇΩÇÁIdleèÛë‘Ç÷
 		if (m_pos.x <= m_nextMove.sNextX + m_speed && m_nextMove.sNextX - m_speed <= m_pos.x)
 		{
-			m_state = eIdle;
+			m_state = E_IDLE;
 			m_imgNum = 0;
 		}
 
@@ -112,7 +112,7 @@ void cBaseUnit::AttackStart()
 {
 	if (m_targetNum != -1)
 	{
-		m_state = eAttack;
+		m_state = E_ATTACK;
 	}
 }
 

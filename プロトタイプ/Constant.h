@@ -1,4 +1,6 @@
 #pragma once
+#include "DxLib.h"
+#include <vector>
 
 #define WINDOW_WIDTH 1280	// Window•
 #define WINDOW_HEIGHT 720	// Window‚‚³
@@ -32,15 +34,16 @@ typedef enum
 
 typedef enum
 {
-	eSord,		// Œ•m
-	eArcher,	// ‹|•º
+	E_SORD,		// Œ•m
+	E_ARCHAR,	// ‹|•º
+	E_DEFENSE	// ‚
 }eUnitType;
 
 typedef enum
 {
-	eIdle,		// ‘Ò‹@’†
-	eAttack,	// UŒ‚’†
-	eMove,		// ˆÚ“®’†
+	E_IDLE,		// ‘Ò‹@’†
+	E_ATTACK,	// UŒ‚’†
+	E_MOVE		// ˆÚ“®’†
 }eState;
 
 typedef struct
@@ -48,3 +51,11 @@ typedef struct
 	int sNextRoom;
 	double sNextX;
 }sNextMove;
+
+typedef struct
+{
+	VECTOR pos;
+	double width;
+	double height;
+	int roomSize;
+}sMapData;
