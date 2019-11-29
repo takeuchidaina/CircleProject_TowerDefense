@@ -5,13 +5,31 @@ cResult::cResult(ISceneChanger* _scene) : cBaseScene(_scene) {
 }
 
 void cResult::Init() {
+	FILE* fp;
+
+	errno_t err; // errno_t型(int型)
+	err = fopen_s(&fp, "../result.txt", "r"); // ファイルを開く。失敗するとエラーコードを返す。
+	if (err != 0) {
+
+	}
+
+	char result[256];
+	if (fgets(result, 256, fp) != NULL){
+		if (result[0] == 'w') {
+			m_image = LoadGraph("../resource/img/seikou.png");
+		}
+		else {
+			m_image = LoadGraph("../resource/img/sippai.png");
+		}
+	}
+
+	fclose(fp);
 }
 
 void cResult::Update() {
-	DrawFormatString(0, 0, RD, "GAME CLEAR");
-
+	
 #ifdef RESULT_DEBUG
-
+	DrawFormatString(0, 0, RD, "GAME CLEAR");
 	//タイトルへ
 	if (GET_KEY_PRESS(KEY_INPUT_T) == 1) {
 		m_sceneChanger->ChangeScene(E_SCENE_TITLE);
@@ -35,13 +53,14 @@ void cResult::Update() {
 
 void cResult::Draw() {
 
-	DrawFormatString(500, 400, RD, "GAME CLEAR");
+	DrawGraph(0, -130,m_image,FALSE);
 #ifdef RESULT_DEBUG
+	DrawFormatString(500, 400, RD, "GAME CLEAR");
 	DrawFormatString(0, 0, WH, "リザルト画面");
 #endif // RESULT_DEBUG
 
 }
 
 void cResult::End() {
-
+	DeleteGraph(m_image);
 }
