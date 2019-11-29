@@ -41,6 +41,8 @@ class cUnitMgr : public cBaseTask
 	vector<vector<int>> m_roomPlayer;
 	vector<vector<int>> m_roomEnemy;
 
+	sTypeCnt m_typeCnt;	//タイプ別のカウント
+
 	vector<sMapData> m_mapData;
 
 	DATEDATA m_date;
@@ -63,7 +65,7 @@ public:
 	*********************************************************************/
 	int Add_PSord(double _x, double _y, int _room)
 	{
-		if (m_roomPlayer[_room].size() >= m_mapData[_room].roomSize) return 0;
+		if (m_roomPlayer[_room].size() >= m_mapData[_room].roomSize) return -1;
   		player.emplace_back(new cPSord(_x, _y, _room, m_num));
 		DEBUG_LOG("playerSize:%d", player.size());
 		m_num++;
@@ -78,7 +80,7 @@ public:
 	*********************************************************************/
 	int Add_PArcher(double _x, double _y, int _room)
 	{
-		if (m_roomPlayer[_room].size() >= m_mapData[_room].roomSize) return 0;
+		if (m_roomPlayer[_room].size() >= m_mapData[_room].roomSize) return -1;
 		player.emplace_back(new cPArcher(_x, _y, _room, m_num));
 		m_num++;
 
@@ -87,7 +89,7 @@ public:
 
 	int Add_PDefense(double _x, double _y, int _room)
 	{
-		if (m_roomPlayer[_room].size() >= m_mapData[_room].roomSize) return 0;
+		if (m_roomPlayer[_room].size() >= m_mapData[_room].roomSize) return -1;
 		player.emplace_back(new cPDefense(_x, _y, _room, m_num));
 		m_num++;
 
@@ -271,6 +273,35 @@ public:
 
 	// だいご追加
 	int CheckEnemyClick(VECTOR _pos);
+
+	sTypeCnt Get_TypeCnt()
+	{
+		m_typeCnt.sord = 0;
+		m_typeCnt.archar = 0;
+		m_typeCnt.defense = 0;
+
+		for (int i = 0; i < player.size(); i++)
+		{
+			switch (player[i]->Get_Type())
+			{
+			case E_SORD:
+				m_typeCnt.sord++;
+				break;
+
+			case E_ARCHAR:
+				m_typeCnt.archar++;
+				break;
+
+			case E_DEFENSE:
+				m_typeCnt.defense++;
+				break;
+			default:
+				break;
+			}
+		}
+
+		return m_typeCnt;
+	}
 
 	void Set_MapData(vector<sMapData> _mapData)
 	{

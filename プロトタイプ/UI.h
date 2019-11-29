@@ -25,6 +25,8 @@ public:
 	virtual void End();
 
 	void SetUnitData(sUnitData _unitData);
+	void SetPlayerCount(int _type);
+
 
 private:
 

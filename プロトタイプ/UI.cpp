@@ -39,14 +39,14 @@ void cUI::Init() {
 		FileCheck(m_UI[i].image);
 	}
 
-	m_maxPlayer = 15;	//MapMgr‚©GameMgr‚©‚çæ“¾
+	m_maxPlayer = 15;	//MapMgrã‹GameMgrã‹ã‚‰å–å¾—
 	m_playerCnt[0] = 0;m_playerCnt[1] = 0;m_playerCnt[2] = 0;
 
 }
 
 void cUI::Update() {
 	for (int i = 0; i < sizeof(m_maxPlayer); i++) {
-		//m_playerCnt[i] = ƒvƒŒƒCƒ„[‚Ì”;
+		//m_playerCnt[i] = ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®æ•°;
 	}
 	m_sumPlayerCnt = m_playerCnt[0] + m_playerCnt[1] + m_playerCnt[2];
 }
@@ -57,9 +57,9 @@ void cUI::Draw() {
 		DrawExtendGraph(m_UI[i].ux, m_UI[i].uy, m_UI[i].dx, m_UI[i].dy, m_UI[i].image, TRUE);
 	}
 
-	DrawFormatString(m_UI[E_CHAR_SORD].ux + 60, m_UI[E_CHAR_SORD].uy + 10, BK, "~ %d", m_unitData.typeCnt.sord);
-	DrawFormatString(m_UI[E_CHAR_ARCHER].ux + 60, m_UI[E_CHAR_ARCHER].uy + 10, BK, "~ %d", m_unitData.typeCnt.archar);
-	DrawFormatString(m_UI[E_CHAR_SHIELD].ux + 60, m_UI[E_CHAR_SHIELD].uy + 10, BK, "~ %d", m_unitData.typeCnt.defense);
+	DrawFormatString(m_UI[E_CHAR_SORD].ux + 60, m_UI[E_CHAR_SORD].uy + 10, BK, "Ã— %d", m_unitData.typeCnt.sord);
+	DrawFormatString(m_UI[E_CHAR_ARCHER].ux + 60, m_UI[E_CHAR_ARCHER].uy + 10, BK, "Ã— %d", m_unitData.typeCnt.archar);
+	DrawFormatString(m_UI[E_CHAR_SHIELD].ux + 60, m_UI[E_CHAR_SHIELD].uy + 10, BK, "Ã— %d", m_unitData.typeCnt.defense);
 	DrawFormatString(m_UI[E_BG_SUM].ux+10, m_UI[E_BG_SUM].uy + 15,BK,"%d / %d",m_unitData.playerCnt,m_unitData.maxPlayer);
 
 }
@@ -75,3 +75,8 @@ void cUI::SetUnitData(sUnitData _unitData)
 {
 	m_unitData = _unitData;
 }
+
+void cUI::SetPlayerCount(int _type) {
+	m_playerCnt[_type]++;
+}
+
