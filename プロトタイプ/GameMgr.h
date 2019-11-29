@@ -40,7 +40,7 @@ public:
 	
 private:
 
-	void EscortDamageCalc(int _damage);
+	void EscortDamageCalc();
 	void DefSuccessJudge();
 
 	cFPS m_fps;

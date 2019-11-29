@@ -45,6 +45,8 @@ class cUnitMgr : public cBaseTask
 
 	DATEDATA m_date;
 
+	int m_escortCnt;	// 護衛対象の数
+
 public:
 	cUnitMgr();
 	~cUnitMgr();
@@ -194,6 +196,16 @@ public:
 	戻り値：なし
 	*********************************************************************/
 	int AttackRelay(int _atkP, int _difNum, int _atkNum);
+
+	bool EscortDie()
+	{
+		if (player[0]->Get_Hp() <= 0)
+		{
+			return false;
+		}
+
+		return true;
+	}
 
 	void UnitDie()
 	{
