@@ -62,12 +62,14 @@ private:
 	sBG m_Cloud[2];
 	const float CLOUD_SPEED = 0.25f;
 	const int TIME_LIMIT = 120;
+
+	void MoveBackGround();
+
 	int SpawnCnt = 0;			// 一定数まで行ったらスポーン
 	int SpawnType = 0;			// スポーンするタイプを決めるランダム
 	int MoveCnt = 0;			// 一定数まで行ったら移動
 	int MoveType = 0;			// moveするTypeを決めるランダム
 
-	void MoveBackGround();
 };
 
 #endif // !_INCLUDE_GAMEMGR_

@@ -38,6 +38,9 @@ void cGameMgr::Update() {
     UnitGenerate();		//ユニット生成
 
 	MoveBackGround();
+	SpawnCnt++;			// 一定数まで行ったらスポーン
+	SpawnType = GetRand(2);	// スポーンするタイプを決めるランダム
+	MoveType = GetRand(2);	// moveするTypeを決めるランダム
 	
 	SpawnCnt++;		// 一定数まで行ったらスポーン
 	SpawnType = GetRand(2);	// スポーンするタイプを決めるランダム
@@ -240,5 +243,5 @@ void cGameMgr::UnitGenerate() {
 		}
 		//enemy.Set_NextEnemyPos(eMove);
 	}
-	
+	*/
 }

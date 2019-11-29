@@ -60,6 +60,7 @@ public:
 	bool CheckInto(double, double);
 	double Get_Ground() { return m_pos.y; }
 	int GetRoomNum() { return m_roomNum; }
+	int GetStartFlg() { if (m_startMapFlg == true)return true; }
 
 	vector<int> GetMapDes() { return m_des; }
 	

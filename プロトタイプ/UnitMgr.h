@@ -93,7 +93,7 @@ public:
 	}
 
 	/**************************** エネミー ************************/
-	
+	/*		クリック生成関数 ESord	変更前
 	int Add_ESord(double _x, double _y, int _room)
 	{
 		if (m_roomEnemy[_room].size() >= m_mapData[_room].roomSize) return 0;
@@ -103,7 +103,7 @@ public:
 		//Set_State(eMove);
 		return 0;
 	}
-
+	// EArcher
 	int Add_EArcher(double _x, double _y, int _room)
 	{
 		if (m_roomEnemy[_room].size() >= m_mapData[_room].roomSize) return 0;
@@ -112,11 +112,41 @@ public:
 
 		return 0;
 	}
-
+	// EDefense
 	int Add_EDefense(double _x, double _y, int _room)
 	{
 		if (m_roomEnemy[_room].size() >= m_mapData[_room].roomSize) return 0;
 		enemy.emplace_back(new cEDefense(_x, _y,  _room, m_num));
+		m_num++;
+
+		return 0;
+	}
+	*/
+
+	// ランダム生成		変更後
+	// ESord
+	int Add_ESord(double _x, double _y)
+	{
+		if (m_roomEnemy[2].size() >= m_mapData[2].roomSize) return 0;
+		enemy.emplace_back(new cESord(_x, _y, 2, m_num));
+		m_num++;
+		//DEBUG_LOG("ESord Create");
+		return 0;
+	}
+	// EArcher
+	int Add_EArcher(double _x, double _y)
+	{
+		if (m_roomEnemy[2].size() >= m_mapData[2].roomSize) return 0;
+		enemy.emplace_back(new cEArcher(_x, _y, 2, m_num));
+		m_num++;
+
+		return 0;
+	}
+	// EDefense
+	int Add_EDefense(double _x, double _y)
+	{
+		if (m_roomEnemy[2].size() >= m_mapData[2].roomSize) return 0;
+		enemy.emplace_back(new cEDefense(_x, _y, 2, m_num));
 		m_num++;
 
 		return 0;

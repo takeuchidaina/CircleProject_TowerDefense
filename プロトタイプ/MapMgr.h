@@ -52,6 +52,7 @@ public:
 	int CheckInto(double _x, double _y);
 	int GetMapSize();
 	vector<vector<int>> GetMapDes();
+	int GetStartRoomNum();
 
 	// 髙井追加
 	/**************************************************************************
