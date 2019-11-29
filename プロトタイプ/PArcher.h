@@ -46,6 +46,11 @@ public:
 
 	virtual ~cPArcher(){}
 
+	virtual void AttackSE()
+	{
+		cSound::Instance()->PlaySE(cSound::Instance()->E_SE_ARROW);
+	}
+
 	//virtual void AttackAnime();
 
 };

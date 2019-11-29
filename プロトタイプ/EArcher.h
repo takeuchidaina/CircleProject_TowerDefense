@@ -48,6 +48,11 @@ public:
 	}
 
 	virtual ~cEArcher() {}
+
+	virtual void AttackSE()
+	{
+		cSound::Instance()->PlaySE(cSound::Instance()->E_SE_ARROW);
+	}
 };
 
 #endif // !_INCLUDE_ESORD_

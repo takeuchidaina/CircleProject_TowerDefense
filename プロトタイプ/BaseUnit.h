@@ -2,6 +2,7 @@
 
 #include "BaseTask.h"
 #include "Constant.h"
+#include "Sound.h"
 #include <vector>
 #include "Log.h"
 using namespace std;
@@ -82,6 +83,8 @@ public:
 	戻り値：true:攻撃	false:リチャージ
 	*********************************************************************/
 	bool Attack();
+
+	virtual void AttackSE() {}
 
 	/*********************************************************************
 	関数名：void AttackStart()
