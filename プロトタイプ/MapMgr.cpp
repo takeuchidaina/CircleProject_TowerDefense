@@ -36,25 +36,25 @@ void cMapMgr::Init(){
 			case 8:tmpDoor[0].pos.x = tmpMap[i][j];		break;
 			case 9:tmpDoor[0].pos.y = tmpMap[i][j];		break;
 			case 10:tmpDoor[0].desMap = tmpMap[i][j];
-				if (tmpMap[i][j] != 0)tmpDesMap.push_back(tmpMap[i][j]);			break;
+				if (tmpMap[i][j] != -1)tmpDesMap.push_back(tmpMap[i][j]);			break;
 			case 11:tmpDoor[0].desDoor = tmpMap[i][j];	break;
 
 			case 12:tmpDoor[1].pos.x = tmpMap[i][j];	break;
 			case 13:tmpDoor[1].pos.y = tmpMap[i][j];	break;
 			case 14:tmpDoor[1].desMap = tmpMap[i][j];
-				if (tmpMap[i][j] != 0)tmpDesMap.push_back(tmpMap[i][j]);			break;
+				if (tmpMap[i][j] != -1)tmpDesMap.push_back(tmpMap[i][j]);			break;
 			case 15:tmpDoor[1].desDoor = tmpMap[i][j];	break;
 
 			case 16:tmpDoor[2].pos.x = tmpMap[i][j];	break;
 			case 17:tmpDoor[2].pos.y = tmpMap[i][j];	break;
 			case 18:tmpDoor[2].desMap = tmpMap[i][j];
-				if (tmpMap[i][j] != 0)tmpDesMap.push_back(tmpMap[i][j]);			break;
+				if (tmpMap[i][j] != -1)tmpDesMap.push_back(tmpMap[i][j]);			break;
 			case 19:tmpDoor[2].desDoor = tmpMap[i][j];	break;
 
 			case 20:tmpDoor[3].pos.x = tmpMap[i][j];	break;
 			case 21:tmpDoor[3].pos.y = tmpMap[i][j];	break;
 			case 22:tmpDoor[3].desMap = tmpMap[i][j];	
-				if (tmpMap[i][j] != 0)tmpDesMap.push_back(tmpMap[i][j]);			break;
+				if (tmpMap[i][j] != -1)tmpDesMap.push_back(tmpMap[i][j]);			break;
 			case 23:tmpDoor[3].desDoor = tmpMap[i][j];	break;
 
 			default:break;
@@ -80,7 +80,17 @@ void cMapMgr::Init(){
 		map.push_back(tmp);
 	}
 
+	//敵開始地点の生成、部屋をつなぐ線を生成する用の処理
 	vector<vector<int>> tmp = GetMapDes();
+	FLOAT2 tmpFLOAT2;
+	for (int i = 0; i < tmp.size(); i++) {
+		for (int j = 0; j < tmp[i].size(); j++) {
+			tmpFLOAT2.u = i;
+			tmpFLOAT2.v = tmp[i][j];
+			LinePos.push_back(tmpFLOAT2);
+		}
+	}
+
 }
 
 void cMapMgr::Update(){
@@ -90,6 +100,16 @@ void cMapMgr::Update(){
 }
 
 void cMapMgr::Draw(){
+
+	//部屋をつなぐ線の描写
+	for (int i = 0; i < LinePos.size(); i++) {
+		VECTOR tmp1 = map[LinePos[i].u].GetPos();
+		VECTOR tmp2 = map[LinePos[i].v].GetPos();
+		DrawLine(tmp1.x,tmp1.y,tmp2.x,tmp2.y ,BLACKNESS);
+	}
+
+
+	//部屋の描写
 	for (int i = 0; i < map.size(); i++) {
 		map[i].Draw();
 	}
