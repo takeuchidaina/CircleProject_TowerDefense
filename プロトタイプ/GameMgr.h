@@ -23,6 +23,9 @@
 #ifndef _INCLUDE_GAMEMGR_
 #define _INCLUDE_GAMEMGR_
 
+#define SPAWN_CNT 400
+#define MOVE_CNT 100
+
 class cGameMgr : public cBaseScene{
 
 public:
@@ -50,6 +53,10 @@ private:
 
 	int m_img;
 	const int TIME_LIMIT = 120;
+	int SpawnCnt = 0;			// 一定数まで行ったらスポーン
+	int SpawnType = 0;			// スポーンするタイプを決めるランダム
+	int MoveCnt = 0;			// 一定数まで行ったら移動
+	int MoveType = 0;			// moveするTypeを決めるランダム
 };
 
 #endif // !_INCLUDE_GAMEMGR_
