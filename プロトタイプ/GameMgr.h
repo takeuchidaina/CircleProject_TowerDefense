@@ -48,8 +48,19 @@ private:
 	cUnitMgr m_unitMgr;
 	void UnitGenerate();
 
-	int m_img;
+	int m_Ship;
+	int m_BG;
+
+	typedef struct {
+		VECTOR pos;
+		int image;
+	}sBG;
+
+	sBG m_Cloud[2];
+	const float CLOUD_SPEED = 0.25f;
 	const int TIME_LIMIT = 120;
+
+	void MoveBackGround();
 };
 
 #endif // !_INCLUDE_GAMEMGR_
