@@ -51,17 +51,18 @@ private:
 	cUnitMgr m_unitMgr;
 	void UnitGenerate();
 
-	int m_Ship;
+	int m_ship;
 	int m_BG;
+	int m_wave;
 
 	typedef struct {
 		VECTOR pos;
 		int image;
 	}sBG;
 
-	sBG m_Cloud[2];
+	sBG m_cloud[2];
 	const float CLOUD_SPEED = 0.25f;
-	const int TIME_LIMIT = 120;
+	const int TIME_LIMIT = 60;
 
 	void MoveBackGround();
 

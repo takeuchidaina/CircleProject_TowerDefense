@@ -2,6 +2,7 @@
 
 #include "DxLib.h"
 #include "BaseTask.h"
+#include "ColorListh.h"
 
 class cTime : public cBaseTask
 {
@@ -16,7 +17,7 @@ public:
 	virtual void End();
 
 	int GetSecond() {
-		return m_second;
+		return m_timeCnt;
 	}
 
 private:
@@ -25,6 +26,7 @@ private:
 	int m_startTime;
 	int m_timeCnt;
 	int m_timeLimit;
+	int m_color;
 
 };
 

@@ -5,18 +5,20 @@ cGameMgr::cGameMgr(ISceneChanger* _scene) : cBaseScene(_scene) {
 }
 
 void cGameMgr::Init() {
-	cTime* ptime = new cTime(TIME_LIMIT);
+	cTime* ptime = new cTime(5);
 	m_time = *ptime;
 	m_BG = LoadGraph("../resource/img/Sea.jpg");
 	FileCheck(m_BG);
-	m_Ship = LoadGraph("../resource/img/Ship.png");
-	FileCheck(m_Ship);
-	m_Cloud[0].pos = VGet(0.0f,0.0f,0.0f);
-	m_Cloud[0].image = LoadGraph("../resource/img/BG_Cloud.png");
-	FileCheck(m_Cloud[0].image);
-	m_Cloud[1].pos = VGet(1870.0f, 0.0f, 0.0f);
-	m_Cloud[1].image = LoadGraph("../resource/img/BG_Cloud.png");
-	FileCheck(m_Cloud[1].image);
+	m_wave = LoadGraph("../resource/img/wave.png");
+	FileCheck(m_wave);
+	m_ship = LoadGraph("../resource/img/Ship.png");
+	FileCheck(m_ship);
+	m_cloud[0].pos = VGet(0.0f,0.0f,0.0f);
+	m_cloud[0].image = LoadGraph("../resource/img/BG_Cloud.png");
+	FileCheck(m_cloud[0].image);
+	m_cloud[1].pos = VGet(1870.0f, 0.0f, 0.0f);
+	m_cloud[1].image = LoadGraph("../resource/img/BG_Cloud.png");
+	FileCheck(m_cloud[1].image);
 
 	m_unitMgr.Set_MapData(m_mapMgr.GetMapData());
 
@@ -36,7 +38,7 @@ void cGameMgr::Update() {
 	m_UI.Update();
 
     UnitGenerate();		//ユニット生成
-
+	DefSuccessJudge();
 	MoveBackGround();
 	SpawnCnt++;			// 一定数まで行ったらスポーン
 	SpawnType = GetRand(2);	// スポーンするタイプを決めるランダム
@@ -74,11 +76,12 @@ void cGameMgr::Update() {
 
 void cGameMgr::Draw() {
 	DrawBillboard3D(VGet(0.0f, 0.0f, 0.0f), 0.5, 0.5, 1280, 0, m_BG, TRUE);
-	DrawBillboard3D(VGet(m_Cloud[0].pos.x, m_Cloud[0].pos.y, m_Cloud[0].pos.z),
-													0.5, 0.5, 1870, 0, m_Cloud[0].image, TRUE);
-	DrawBillboard3D(VGet(m_Cloud[1].pos.x, m_Cloud[1].pos.y, m_Cloud[1].pos.z),
-													0.5, 0.5, 1870, 0, m_Cloud[1].image, TRUE);
-	DrawBillboard3D(VGet(0.0f, 0.0f, 0.0f), 0.5, 0.5, 1280, 0, m_Ship, TRUE);
+	DrawBillboard3D(VGet(m_cloud[0].pos.x, m_cloud[0].pos.y, m_cloud[0].pos.z),
+													0.5, 0.5, 1870, 0, m_cloud[0].image, TRUE);
+	DrawBillboard3D(VGet(m_cloud[1].pos.x, m_cloud[1].pos.y, m_cloud[1].pos.z),
+													0.5, 0.5, 1870, 0, m_cloud[1].image, TRUE);
+	DrawBillboard3D(VGet(0.0f, 0.0f, 0.0f), 0.5, 0.5, 1280, 0, m_ship, TRUE);
+	DrawBillboard3D(VGet(-30.0f, -10.0f, 0.0f), 0.5, 0.5, 1280, 0, m_wave, TRUE);
 
 	m_fps.Draw();
     m_mapMgr.Draw();
@@ -109,20 +112,21 @@ void cGameMgr::EscortDamageCalc(int _damage) {
 }
 
 void cGameMgr::DefSuccessJudge() {
-	if (m_time.GetSecond() < 0) {
-		//resultDefSuccess = true;
+	if (m_time.GetSecond() <= 1) {
+		cSound::Instance()->StopSound(cSound::Instance()->E_BGM_BATTLE);
+		cSound::Instance()->StopSound(cSound::Instance()->E_BGM_SEA);
 		m_sceneChanger->ChangeScene(E_SCENE_RESULT);
 	}
 }
 
 void cGameMgr::MoveBackGround() {
-	m_Cloud[0].pos.x -= CLOUD_SPEED;
-	m_Cloud[1].pos.x -= CLOUD_SPEED;
-	if (m_Cloud[0].pos.x <= -1870.0f) {
-		m_Cloud[0].pos.x = m_Cloud[1].pos.x + 1870.0f;
+	m_cloud[0].pos.x -= CLOUD_SPEED;
+	m_cloud[1].pos.x -= CLOUD_SPEED;
+	if (m_cloud[0].pos.x <= -1870.0f) {
+		m_cloud[0].pos.x = m_cloud[1].pos.x + 1870.0f;
 	}
-	else if (m_Cloud[1].pos.x <= -1870.0f) {
-		m_Cloud[1].pos.x = m_Cloud[0].pos.x + 1870.0f;
+	else if (m_cloud[1].pos.x <= -1870.0f) {
+		m_cloud[1].pos.x = m_cloud[0].pos.x + 1870.0f;
 	}
 }
 
