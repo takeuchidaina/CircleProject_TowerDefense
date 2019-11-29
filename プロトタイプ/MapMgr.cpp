@@ -126,7 +126,7 @@ void cMapMgr::Draw(){
 	for (int i = 0; i < map.size(); i++) {
 		map[i].Draw();
 	}
-	DrawFormatString(300,400,RD,"roomNum:%d",map[0].GetRoomNum());
+	//DrawFormatString(300,400,RD,"roomNum:%d",map[0].GetRoomNum());
 
 }
 
