@@ -31,7 +31,7 @@ using namespace std;
 #ifndef _INCLUED_UNIT_MGR_
 #define _INCLUED_UNIT_MGR_
 
-#define MOVE_CNT 500
+#define MOVE_CNT 400
 
 class cUnitMgr : public cBaseTask
 {
