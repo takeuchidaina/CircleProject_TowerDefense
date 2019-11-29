@@ -39,6 +39,9 @@ void cGameMgr::Update() {
 
 	MoveBackGround();
 	
+	SpawnCnt++;		// 一定数まで行ったらスポーン
+	SpawnType = GetRand(2);	// スポーンするタイプを決めるランダム
+	MoveType = GetRand(2);	// moveするTypeを決めるランダム
 
 #ifdef GAMEMGR_DEBUG
 	if (GET_KEY_PRESS(KEY_INPUT_E) == 1) {
@@ -173,7 +176,24 @@ void cGameMgr::UnitGenerate() {
 		}
 	}
 
-	//Enemy
+	// Enemyのランダム生成
+	if (SpawnCnt == SPAWN_CNT) {
+		switch (SpawnType) {
+		case 0:	m_unitMgr.Add_ESord(MOUSE_V.x, m_mapMgr.Get_Ground(clickRoom) + UNIT_HEIGHT / 2);
+			SpawnCnt = 0;
+			break;
+		case 1:	m_unitMgr.Add_EArcher(MOUSE_V.x, m_mapMgr.Get_Ground(clickRoom) + UNIT_HEIGHT / 2);
+			SpawnCnt = 0;
+			break;
+		case 2:	m_unitMgr.Add_EDefense(MOUSE_V.x, m_mapMgr.Get_Ground(clickRoom) + UNIT_HEIGHT / 2);
+			SpawnCnt = 0;
+			break;
+		}
+	}
+
+
+	/*
+	//Enemy		クリック生成 ESord
 	if (MOUSE_PRESS(RIGHT_CLICK) == 1 && CheckHitKey(KEY_INPUT_S) >= 1)
 	{
 		if (clickRoom != -1)
@@ -182,6 +202,7 @@ void cGameMgr::UnitGenerate() {
 			//DEBUG_LOG("剣エネミー出現");
 		}
 	}
+	// クリック生成 EArcher
 	else if (MOUSE_PRESS(RIGHT_CLICK) == 1 && CheckHitKey(KEY_INPUT_A) >= 1)
 	{
 		if (clickRoom != -1)
@@ -191,6 +212,7 @@ void cGameMgr::UnitGenerate() {
 			//DEBUG_LOG("弓エネミー出現");
 		}
 	}
+	// クリック生成 EDefense
 	else if (MOUSE_PRESS(RIGHT_CLICK) == 1 && CheckHitKey(KEY_INPUT_D) >= 1)
 	{
 		if (clickRoom != -1)
@@ -218,4 +240,5 @@ void cGameMgr::UnitGenerate() {
 		}
 		//enemy.Set_NextEnemyPos(eMove);
 	}
+	
 }
