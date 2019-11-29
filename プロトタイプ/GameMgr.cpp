@@ -7,13 +7,23 @@ cGameMgr::cGameMgr(ISceneChanger* _scene) : cBaseScene(_scene) {
 void cGameMgr::Init() {
 	cTime* ptime = new cTime(TIME_LIMIT);
 	m_time = *ptime;
-	m_img = LoadGraph("../resource/img/GameBG.png");
-	FileCheck(m_img);
+	m_BG = LoadGraph("../resource/img/Sea.jpg");
+	FileCheck(m_BG);
+	m_Ship = LoadGraph("../resource/img/Ship.png");
+	FileCheck(m_Ship);
+	m_Cloud[0].pos = VGet(0.0f,0.0f,0.0f);
+	m_Cloud[0].image = LoadGraph("../resource/img/BG_Cloud.png");
+	FileCheck(m_Cloud[0].image);
+	m_Cloud[1].pos = VGet(1870.0f, 0.0f, 0.0f);
+	m_Cloud[1].image = LoadGraph("../resource/img/BG_Cloud.png");
+	FileCheck(m_Cloud[1].image);
 
 	m_unitMgr.Set_MapData(m_mapMgr.GetMapData());
 
 	cSound::Instance()->PlayBGM(
-		cSound::Instance()->E_BGM_TITLE, cSound::Instance()->E_PLAY_LOOP,TRUE);
+		cSound::Instance()->E_BGM_BATTLE, cSound::Instance()->E_PLAY_LOOP,TRUE);
+	cSound::Instance()->PlayBGM(
+		cSound::Instance()->E_BGM_SEA, cSound::Instance()->E_PLAY_LOOP, TRUE);
 }
 
 void cGameMgr::Update() {
@@ -27,10 +37,14 @@ void cGameMgr::Update() {
 
     UnitGenerate();		//ユニット生成
 
+	MoveBackGround();
 	SpawnCnt++;			// 一定数まで行ったらスポーン
 	SpawnType = GetRand(2);	// スポーンするタイプを決めるランダム
 	MoveType = GetRand(2);	// moveするTypeを決めるランダム
 	
+	SpawnCnt++;		// 一定数まで行ったらスポーン
+	SpawnType = GetRand(2);	// スポーンするタイプを決めるランダム
+	MoveType = GetRand(2);	// moveするTypeを決めるランダム
 
 #ifdef GAMEMGR_DEBUG
 	if (GET_KEY_PRESS(KEY_INPUT_E) == 1) {
@@ -59,7 +73,12 @@ void cGameMgr::Update() {
 }
 
 void cGameMgr::Draw() {
-	DrawBillboard3D(VGet(0.0f, 0.0f, 0.0f), 0.5, 0.5, 1280, 0, m_img, FALSE);
+	DrawBillboard3D(VGet(0.0f, 0.0f, 0.0f), 0.5, 0.5, 1280, 0, m_BG, TRUE);
+	DrawBillboard3D(VGet(m_Cloud[0].pos.x, m_Cloud[0].pos.y, m_Cloud[0].pos.z),
+													0.5, 0.5, 1870, 0, m_Cloud[0].image, TRUE);
+	DrawBillboard3D(VGet(m_Cloud[1].pos.x, m_Cloud[1].pos.y, m_Cloud[1].pos.z),
+													0.5, 0.5, 1870, 0, m_Cloud[1].image, TRUE);
+	DrawBillboard3D(VGet(0.0f, 0.0f, 0.0f), 0.5, 0.5, 1280, 0, m_Ship, TRUE);
 
 	m_fps.Draw();
     m_mapMgr.Draw();
@@ -93,6 +112,17 @@ void cGameMgr::DefSuccessJudge() {
 	if (m_time.GetSecond() < 0) {
 		//resultDefSuccess = true;
 		m_sceneChanger->ChangeScene(E_SCENE_RESULT);
+	}
+}
+
+void cGameMgr::MoveBackGround() {
+	m_Cloud[0].pos.x -= CLOUD_SPEED;
+	m_Cloud[1].pos.x -= CLOUD_SPEED;
+	if (m_Cloud[0].pos.x <= -1870.0f) {
+		m_Cloud[0].pos.x = m_Cloud[1].pos.x + 1870.0f;
+	}
+	else if (m_Cloud[1].pos.x <= -1870.0f) {
+		m_Cloud[1].pos.x = m_Cloud[0].pos.x + 1870.0f;
 	}
 }
 

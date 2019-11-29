@@ -51,12 +51,25 @@ private:
 	cUnitMgr m_unitMgr;
 	void UnitGenerate();
 
-	int m_img;
+	int m_Ship;
+	int m_BG;
+
+	typedef struct {
+		VECTOR pos;
+		int image;
+	}sBG;
+
+	sBG m_Cloud[2];
+	const float CLOUD_SPEED = 0.25f;
 	const int TIME_LIMIT = 120;
-	int SpawnCnt = 0;			// ˆê’è”‚Ü‚Ås‚Á‚½‚çƒXƒ|[ƒ“
-	int SpawnType = 0;			// ƒXƒ|[ƒ“‚·‚éƒ^ƒCƒv‚ğŒˆ‚ß‚éƒ‰ƒ“ƒ_ƒ€
-	int MoveCnt = 0;			// ˆê’è”‚Ü‚Ås‚Á‚½‚çˆÚ“®
-	int MoveType = 0;			// move‚·‚éType‚ğŒˆ‚ß‚éƒ‰ƒ“ƒ_ƒ€
+
+	void MoveBackGround();
+
+	int SpawnCnt = 0;			// ä¸€å®šæ•°ã¾ã§è¡Œã£ãŸã‚‰ã‚¹ãƒãƒ¼ãƒ³
+	int SpawnType = 0;			// ã‚¹ãƒãƒ¼ãƒ³ã™ã‚‹ã‚¿ã‚¤ãƒ—ã‚’æ±ºã‚ã‚‹ãƒ©ãƒ³ãƒ€ãƒ 
+	int MoveCnt = 0;			// ä¸€å®šæ•°ã¾ã§è¡Œã£ãŸã‚‰ç§»å‹•
+	int MoveType = 0;			// moveã™ã‚‹Typeã‚’æ±ºã‚ã‚‹ãƒ©ãƒ³ãƒ€ãƒ 
+
 };
 
 #endif // !_INCLUDE_GAMEMGR_
