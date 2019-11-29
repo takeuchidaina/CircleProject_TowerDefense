@@ -473,22 +473,26 @@ void cUnitMgr::SelectUI(int _num)
 }
 
 void cUnitMgr::UnitMove() {
-	
+
 	// Unitの移動
 	//if (CheckUnitAdd(m_baseUnit.Get_NowRoom() - 1) == true) {		// 行き先の部屋に行けたら
-		if (m_moveCnt >= MOVE_CNT) {		// m_moveCntが一定になったら
-			for (int i = 0; i < enemy.size(); i++) {
-				if (enemy[i]->Get_NowRoom() != 0) {
+	if (m_moveCnt >= MOVE_CNT) {		// m_moveCntが一定になったら
+		for (int i = 0; i < enemy.size(); i++) {
+
+			int next = enemy[i]->Get_NowRoom() - 1;
+
+			if (enemy[i]->Get_NowRoom() != 0) {
 				//if (m_baseUnit.Get_NowRoom() == 1) {	// 現在地と行先が同じの場合
 
-				int next = enemy[i]->Get_NowRoom() - 1;
 				int cnt = m_roomEnemy[next].size();
 				int max = m_mapData[next].roomSize;
 
 				if (cnt < max)
 				{
+					//if (m_stayCnt >= STEY_CNT) {
 					enemy[i]->Set_Room(next);
-					break;
+					//break;
+				//}
 				}
 				//Set_NextEnemyPos(EnemyArreySearch(enemy[i]->Get_Num()), enemy[i]->Get_NowRoom() - 1, enemy[i]->Get_NowRoom() - 1);
 				m_moveCnt = 0;
@@ -502,9 +506,9 @@ void cUnitMgr::UnitMove() {
 				}
 				*/
 				//}
-				}
 			}
 		}
+	}
 	//}
-	
+
 }
