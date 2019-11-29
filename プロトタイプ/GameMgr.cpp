@@ -11,6 +11,9 @@ void cGameMgr::Init() {
 	FileCheck(m_img);
 
 	m_unitMgr.Set_MapData(m_mapMgr.GetMapData());
+
+	cSound::Instance()->PlayBGM(
+		cSound::Instance()->E_BGM_TITLE, cSound::Instance()->E_PLAY_LOOP);
 }
 
 void cGameMgr::Update() {

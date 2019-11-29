@@ -8,13 +8,15 @@
 #include "Keyboard.h"
 #include "string.h"
 #include "WinBox.h"
+#include "Singleton.h"
 
 using namespace std;
 
-class cSound : cBaseTask
+class cSound : public cBaseTask,public cSingleton<cSound>
 {
 public:
 	cSound();
+	friend cSingleton<cSound>;
 	virtual ~cSound();
 
 	virtual void Init();

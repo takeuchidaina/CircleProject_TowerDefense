@@ -10,6 +10,9 @@
 #include "Mouse.h"
 #include "Button.h"
 #include <string.h>
+#include "Sound.h"
+#include "ErrorCheck.h"
+#include "SceneMgr.h"
 
 using namespace std;         //  名前空間指定
 
@@ -75,5 +78,7 @@ private:
 
 	sImage m_image[E_IMAGE_MAX];	//ボタン以外の画像
 	cButton m_btn[E_TITLE_MAX];		//ボタン
+
+	
 	
 };

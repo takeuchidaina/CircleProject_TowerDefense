@@ -21,10 +21,11 @@ void cTitle::Init() {
 	//m_image[E_LOGO] = { 50,0,1330,960,"../resource/img/TitleLogo.png"};
 	for (int i = 0; i < E_IMAGE_MAX;i++) {
 		m_image[i].handle = LoadGraph(m_image[i].filePath.c_str());
-		if (m_image[i].handle == NULL) {
-			//error
-		}
+		FileCheck(m_image[i].handle);
 	}
+
+	cSound::Instance()->PlayBGM(
+		cSound::Instance()->E_BGM_TITLE, cSound::Instance()->E_PLAY_LOOP);
 }
 
 void cTitle::Update() {
@@ -37,8 +38,13 @@ void cTitle::Update() {
 				//TODO:if elseif‚ÅI—¹”»’f‚¹‚¸‚ÉChangeScene‚¾‚¯‚Åˆ—‚ðs‚¤
 				if (m_menu[i].menu == E_SCENE_GAME) {
 					m_sceneChanger->ChangeScene((eScene)m_menu[i].menu);
+					cSound::Instance()->PlaySE(cSound::Instance()->E_SE_SELECT);
+					cSound::Instance()->StopSound(cSound::Instance()->E_BGM_TITLE);
 				}
 				else if (m_menu[i].menu == E_SCENE_END) {
+					cSound::Instance()->PlaySE(cSound::Instance()->E_SE_CANSEL);
+					cSound::Instance()->StopSound(cSound::Instance()->E_BGM_TITLE);
+					cSound::Instance()->End();
 					DxLib_End();
 				}
 			}
