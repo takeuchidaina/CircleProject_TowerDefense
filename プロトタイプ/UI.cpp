@@ -57,9 +57,9 @@ void cUI::Draw() {
 		DrawExtendGraph(m_UI[i].ux, m_UI[i].uy, m_UI[i].dx, m_UI[i].dy, m_UI[i].image, TRUE);
 	}
 
-	DrawFormatString(m_UI[E_CHAR_SORD].ux + 60, m_UI[E_CHAR_SORD].uy + 10, BK, "× %d", m_unitData.typeCnt.sord);
-	DrawFormatString(m_UI[E_CHAR_ARCHER].ux + 60, m_UI[E_CHAR_ARCHER].uy + 10, BK, "× %d", m_unitData.typeCnt.archar);
-	DrawFormatString(m_UI[E_CHAR_SHIELD].ux + 60, m_UI[E_CHAR_SHIELD].uy + 10, BK, "× %d", m_unitData.typeCnt.defense);
+	DrawFormatString(m_UI[E_CHAR_SORD].ux + 60, m_UI[E_CHAR_SORD].uy + 10, BK, "X %d", m_unitData.typeCnt.sord);
+	DrawFormatString(m_UI[E_CHAR_ARCHER].ux + 60, m_UI[E_CHAR_ARCHER].uy + 10, BK, "X %d", m_unitData.typeCnt.archar);
+	DrawFormatString(m_UI[E_CHAR_SHIELD].ux + 60, m_UI[E_CHAR_SHIELD].uy + 10, BK, "X %d", m_unitData.typeCnt.defense);
 	DrawFormatString(m_UI[E_BG_SUM].ux+10, m_UI[E_BG_SUM].uy + 15,BK,"%d / %d",m_unitData.playerCnt,m_unitData.maxPlayer);
 
 }
