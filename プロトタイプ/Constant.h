@@ -60,3 +60,17 @@ typedef struct
 	double height;
 	int roomSize;
 }sMapData;
+
+typedef struct
+{
+	int sord;
+	int archar;
+	int defense;
+}sTypeCnt;
+
+typedef struct
+{
+	sTypeCnt typeCnt;
+	int maxPlayer;
+	int playerCnt;
+}sUnitData;
