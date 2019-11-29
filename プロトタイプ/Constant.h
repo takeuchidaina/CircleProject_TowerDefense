@@ -36,7 +36,8 @@ typedef enum
 {
 	E_SORD,		// Œ•m
 	E_ARCHAR,	// ‹|•º
-	E_DEFENSE	// ‚
+	E_DEFENSE,	// ‚
+	E_ESCORT	// Œì‰q‘ÎÛ
 }eUnitType;
 
 typedef enum

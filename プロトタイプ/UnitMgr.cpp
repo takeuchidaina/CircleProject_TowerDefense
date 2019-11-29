@@ -20,6 +20,9 @@ cUnitMgr::cUnitMgr()
 		m_roomPlayer.push_back(vector<int>());
 		m_roomEnemy.push_back(vector<int>());
 	}
+
+	//player.emplace_back(new cEscortTarget(0, m_num));
+	//m_num++;
 }
 
 cUnitMgr::~cUnitMgr()
@@ -49,10 +52,7 @@ void cUnitMgr::Update()
 				TargetSelect(i, 1);
 				AttackRelay(player[i]->Get_AtkPoint(), player[i]->Get_TargetNum(), player[i]->Get_Num());
 			}
-			/*if (player[i]->Get_EffectFlg() == true)
-			{
-				player[i]->AttackAnime();
-			}*/
+			
 			break;
 
 		case E_MOVE:
@@ -64,7 +64,7 @@ void cUnitMgr::Update()
 		}
 		player[i]->AttackStart();
 
-		DrawFormatString(200, 400, RD, "player:%d", player[0]->Get_Hp());
+		//DrawFormatString(200, 400, RD, "player:%d", player[0]->Get_Hp());
 	}
 
 	for (int i = 0; i < enemy.size(); i++)
@@ -96,7 +96,7 @@ void cUnitMgr::Update()
 		enemy[i]->AttackStart();
 
 		//enemy[i]->Set_MapSize(4);
-		DrawFormatString(200, 450, RD, "enemy:%d", enemy[0]->Get_Hp());
+		//DrawFormatString(200, 450, RD, "enemy:%d", enemy[0]->Get_Hp());
 	}
 
 	NoTarget();
@@ -110,12 +110,23 @@ void cUnitMgr::Draw()
 	{
 		if (player[i]->Get_EffectFlg() == true)
 		{
-			player[i]->AttackAnime();
+			int num = EnemyArreySearch(player[i]->Get_TargetNum());
+			if (num >= 0)
+			{
+				player[i]->AttackAnime(enemy[num]->Get_Pos());
+			}
 		}
 	}
 	for (int i = 0; i < enemy.size(); i++)
 	{
-		//enemy[i]->Draw();
+		if (enemy[i]->Get_EffectFlg() == true)
+		{
+			int num = PlayerArreySearch(enemy[i]->Get_TargetNum());
+			if (num >= 0)
+			{
+				enemy[i]->AttackAnime(player[num]->Get_Pos());
+			}
+		}
 	}
 
 #ifdef UNIT_MGR_DEBUG

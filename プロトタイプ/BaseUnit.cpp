@@ -13,6 +13,12 @@ cBaseUnit::cBaseUnit()
 	m_moveCnt = 0;
 	m_effectFlg = false;
 	m_effectAnimeCnt = 0;
+	m_Defense = 0;
+	
+	for (int i = 0; i < 2; i++)
+	{
+		m_effectImage[i] = MakeGraph(64, 64);
+	}
 }
 
 cBaseUnit::~cBaseUnit()
@@ -21,7 +27,11 @@ cBaseUnit::~cBaseUnit()
 	{
 		DeleteGraph(m_imgtbl[i]);
 	}
-	DeleteGraph(m_effectImage);
+
+	for (int i = 0; i < 2; i++)
+	{
+		DeleteGraph(m_effectImage[i]);
+	}
 }
 
 void cBaseUnit::Update()
@@ -116,9 +126,32 @@ void cBaseUnit::AttackStart()
 	}
 }
 
+void cBaseUnit::AttackAnime(VECTOR _targetPos)
+{
+	if (m_effectAnimeCnt <= 60)
+	{
+		if (m_direction == U_LEFT)
+		{
+
+			DrawBillboard3D(_targetPos, 0.5f, 0.5f, 64, 0.0f, m_effectImage[1], TRUE);
+		}
+		else
+		{
+			DrawBillboard3D(_targetPos, 0.5f, 0.5f, 64, 0.0f, m_effectImage[0], TRUE);
+		}
+	}
+	else
+	{
+		m_effectAnimeCnt = 0;
+		m_effectFlg = false;
+	}
+
+	m_effectAnimeCnt++;
+}
+
 void cBaseUnit::Defense(int _atkPoint, int _atkNum)
 {
-	m_hp -= _atkPoint;
+	m_hp -= _atkPoint - m_Defense;
 	/*if (m_targetNum == -1)
 	{
 		m_targetNum = _atkNum;

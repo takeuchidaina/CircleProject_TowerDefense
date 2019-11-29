@@ -25,6 +25,7 @@ class cBaseUnit : public cBaseTask
 protected:
 	VECTOR m_pos;			// 座標
 	int m_num;				// ユニット番号
+	int m_Type;				// ユニットタイプ
 	int m_targetNum;		// 攻撃対象の番号
 	int m_hp;				// HP
 	int m_room;				// 現在いる部屋番号
@@ -34,12 +35,13 @@ protected:
 	int m_atkCoolTime;		// 次の攻撃までの時間
 	int m_atkCnt;			// 攻撃までのカウント
 	double m_atkR;			// 射程範囲
+	int m_Defense;			// 防御
 	bool m_isOnActive;		// 生存フラグ
 	int m_state;			// 現在の状態
 	int m_direction;		// ユニットの向き　1(U_RIGHT):右 -1(U_LEFT):左
 	int m_moveCnt;			// アニメーション用カウント
 	int m_moveAnime[4] = { 1, 0, 1, 2};	// アニメーション配列
-	int m_effectImage;		// Effect用
+	int m_effectImage[2];	// Effect用
 	int m_effectAnimeCnt;	// Effectアニメーションカウント
 	bool m_effectFlg;		// Effect再生フラグ
 	sNextMove m_nextMove;	// 次に向かう場所
@@ -51,7 +53,7 @@ public:
 
 	void Update();
 
-	void Draw();
+ 	virtual void Draw();
 
 	cBaseUnit();
 
@@ -103,8 +105,7 @@ public:
 	引数：なし
 	戻り値：なし
 	*********************************************************************/
-	virtual void AttackAnime()
-	{}
+	void AttackAnime(VECTOR _targetPos);
 
 	/************************************    Get    *****************************************/
 

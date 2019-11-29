@@ -11,6 +11,7 @@
 #include "ESord.h"
 #include "EArcher.h"
 #include "EDefense.h"
+#include "EscortTarget.h"
 #include "Mouse.h"
 #include <vector>
 #include "Log.h"
