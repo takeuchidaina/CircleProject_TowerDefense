@@ -225,6 +225,11 @@ public:
 	{
 		m_pos = _pos;
 	}
+
+	void Set_Room(int _room)
+	{
+		m_room = _room;
+	}
 };
 
 #endif // !_INCLUDE_BASE_UNIT_
