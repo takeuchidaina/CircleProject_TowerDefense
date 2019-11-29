@@ -42,9 +42,7 @@ void cGameMgr::Update() {
 	SpawnType = GetRand(2);	// スポーンするタイプを決めるランダム
 	MoveType = GetRand(2);	// moveするTypeを決めるランダム
 	
-	SpawnCnt++;		// 一定数まで行ったらスポーン
-	SpawnType = GetRand(2);	// スポーンするタイプを決めるランダム
-	MoveType = GetRand(2);	// moveするTypeを決めるランダム
+	EscortDamageCalc();
 
 #ifdef GAMEMGR_DEBUG
 	if (GET_KEY_PRESS(KEY_INPUT_E) == 1) {
@@ -100,9 +98,10 @@ void cGameMgr::Draw() {
 void cGameMgr::End() {
 }
 
-void cGameMgr::EscortDamageCalc(int _damage) {
+void cGameMgr::EscortDamageCalc() {
 	//HPが無くなったらリザルトへ
 	if (m_unitMgr.EscortDie() == false) {
+		//ErrBox("負け");
 		//resultDefSuccess = false;
 		m_sceneChanger->ChangeScene(E_SCENE_RESULT);
 	}
