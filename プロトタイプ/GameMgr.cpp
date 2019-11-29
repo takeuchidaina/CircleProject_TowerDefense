@@ -38,9 +38,9 @@ void cGameMgr::Update() {
     UnitGenerate();		//ユニット生成
 
 	MoveBackGround();
-	SpawnCnt++;			// 一定数まで行ったらスポーン
-	SpawnType = GetRand(2);	// スポーンするタイプを決めるランダム
-	MoveType = GetRand(2);	// moveするTypeを決めるランダム
+	m_spawnCnt++;			// 一定数まで行ったらスポーン
+	m_spawnType = GetRand(2);	// スポーンするタイプを決めるランダム
+	
 	
 	EscortDamageCalc();
 
@@ -179,16 +179,16 @@ void cGameMgr::UnitGenerate() {
 	}
 
 	// Enemyのランダム生成
-	if (SpawnCnt == SPAWN_CNT) {
-		switch (SpawnType) {
-		case 0:	m_unitMgr.Add_ESord(MOUSE_V.x, m_mapMgr.Get_Ground(clickRoom) + UNIT_HEIGHT / 2);
-			SpawnCnt = 0;
+	if (m_spawnCnt == SPAWN_CNT) {
+		switch (m_spawnType) {
+		case 0:	m_unitMgr.Add_ESord(m_mapMgr.GetStartRoomNum(), m_mapMgr.Get_Ground(2) + UNIT_HEIGHT / 2);
+			m_spawnCnt = 0;
 			break;
-		case 1:	m_unitMgr.Add_EArcher(MOUSE_V.x, m_mapMgr.Get_Ground(clickRoom) + UNIT_HEIGHT / 2);
-			SpawnCnt = 0;
+		case 1:	m_unitMgr.Add_EArcher(m_mapMgr.GetStartRoomNum(), m_mapMgr.Get_Ground(2) + UNIT_HEIGHT / 2);
+			m_spawnCnt = 0;
 			break;
-		case 2:	m_unitMgr.Add_EDefense(MOUSE_V.x, m_mapMgr.Get_Ground(clickRoom) + UNIT_HEIGHT / 2);
-			SpawnCnt = 0;
+		case 2:	m_unitMgr.Add_EDefense(m_mapMgr.GetStartRoomNum(), m_mapMgr.Get_Ground(2) + UNIT_HEIGHT / 2);
+			m_spawnCnt = 0;
 			break;
 		}
 	}

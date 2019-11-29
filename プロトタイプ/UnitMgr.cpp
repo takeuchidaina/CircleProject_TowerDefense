@@ -31,6 +31,9 @@ cUnitMgr::~cUnitMgr()
 
 void cUnitMgr::Update()
 {
+	m_moveCnt++;				// 一定数まで行ったらmove
+	m_moveType = GetRand(2);	// moveするTypeを決めるランダム
+
 	if (m_escortCnt <= 0)
 	{
 		player.emplace_back(new cEscortTarget(0, m_num));
@@ -41,6 +44,7 @@ void cUnitMgr::Update()
 	}
 	UnitDie();
 	InRoomUnit();
+	//UnitMove();
 	//TargetSelect();
 	for (int i = 0; i < player.size(); i++)
 	{
@@ -94,9 +98,8 @@ void cUnitMgr::Update()
 			break;
 
 		case E_MOVE:
-			enemy[i]->Move();
+			UnitMove();
 			break;
-
 		default:
 			break;
 		}
@@ -112,6 +115,7 @@ void cUnitMgr::Update()
 void cUnitMgr::Draw()
 {
 	RoomDraw();
+	UnitMove();
 
 	for (int i = 0; i < player.size(); i++)
 	{
@@ -451,7 +455,7 @@ void cUnitMgr::Set_NextPlayerPos(int _playerNum, int _nextRoom, double _nextX)
 	}
 }
 
-void cUnitMgr::Set_NextEnemyPos(int _enemyNum, int _nextRoom, double _nextX)
+void cUnitMgr::Set_NextEnemyPos(int _enemyNum, int _nextRoom, int _nextX)
 {
 	enemy[_enemyNum]->Set_NextMove(_nextRoom, _nextX);
 	enemy[_enemyNum]->Set_State(E_MOVE);
@@ -464,4 +468,29 @@ void cUnitMgr::SelectUI(int _num)
 	double sy = (player[_num]->Get_Pos().y + UNIT_HEIGHT / 2 + 13);
 
 	DrawBillboard3D(VGet(sx, sy, 0.0f), 0.5f, 0.5f, 18.0f, 0.0f, m_selectMarkImg, TRUE);
+}
+
+void cUnitMgr::UnitMove() {
+	
+	// Unitの移動
+	//if (CheckUnitAdd(m_baseUnit.Get_NowRoom() - 1) == true) {		// 行き先の部屋に行けたら
+		if (m_moveCnt >= MOVE_CNT) {		// m_moveCntが一定になったら
+			if (m_baseUnit.Get_NowRoom() < 0) { return; }
+			//if (m_baseUnit.Get_NowRoom() == 1) {	// 現在地と行先が同じの場合
+				for (int i = 0; i < enemy.size(); i++) {
+					Set_NextEnemyPos(enemy[i]->Get_Num(), m_baseUnit.Get_NowRoom() - 1, m_baseUnit.Get_NowRoom() - 1);
+					m_moveCnt = 0;
+				}
+				/*
+				// 指定された座標についたらIdle状態へ
+				if (m_pos.x <= m_nextMove.sNextX + m_speed && m_nextMove.sNextX - m_speed <= m_pos.x)
+				{
+					m_state = E_IDLE;
+					m_imgNum = 0;
+				}
+				*/
+			//}
+		}
+	//}
+	
 }

@@ -31,6 +31,8 @@ using namespace std;
 #ifndef _INCLUED_UNIT_MGR_
 #define _INCLUED_UNIT_MGR_
 
+#define MOVE_CNT 50
+
 class cUnitMgr : public cBaseTask
 {
 	vector<cPlayerUnit*> player;	// プレイヤー
@@ -38,12 +40,17 @@ class cUnitMgr : public cBaseTask
 	int m_num;	// ナンバー
 	int m_selectMarkImg;
 	int m_mapStack;					// マップの数格納
+
+	int m_moveCnt = 0;				// 一定数まで行ったら移動
+	int m_moveType = 0;				// moveするTypeを決めるランダム
+
 	vector<vector<int>> m_roomPlayer;
 	vector<vector<int>> m_roomEnemy;
 
 	vector<sMapData> m_mapData;
 
 	DATEDATA m_date;
+	cBaseUnit m_baseUnit;
 
 	int m_escortCnt;	// 護衛対象の数
 
@@ -293,8 +300,21 @@ public:
 	*********************************************************************/
 	void SelectUI(int _num);	//-1	// 触れてるか	//mouse X
 
+	/*********************************************************************
+	関数名：void Set_NextEnemyPos(int _enemyNum, int _nextRoom, double _nextX)
+	概要：次の行先をセット
+	引数：int:移動させるナンバー, int:移動先の部屋番号, int:移動先の座標
+	戻り値：なし
+	*********************************************************************/
 	// だいご追加
-	void Set_NextEnemyPos(int _enemyNum, int _nextRoom, double _nextX);
+	void Set_NextEnemyPos(int _enemyNum, int _nextRoom, int _nextX);
+	/*********************************************************************
+	関数名：void UnitMove()
+	概要：移動処理
+	引数：なし
+	戻り値：なし
+	*********************************************************************/
+	void UnitMove();
 };
 
 #endif  // !_INCLUDE_UNIT_MGR_
