@@ -50,7 +50,7 @@ void cSound::Update() {
 //SEÇçƒê∂
 void cSound::PlaySE(eSE _se) {
 	if (CheckValidArgument(_se) == TRUE) {
-		PlaySoundMem(m_SE[_se], E_PLAY_BACK);
+		PlaySoundMem(m_SE[_se], DX_PLAYTYPE_NORMAL);
 	}
 }
 void cSound::PlaySE(eSE _se, ePlayType _type) {

@@ -1,7 +1,6 @@
 ﻿#pragma once
 #include <math.h>
 #include "BaseUnit.h"
-#include "UnitMgr.h"
 #include "MapMgr.h"
 //#include "PlayerUnit.h"
 

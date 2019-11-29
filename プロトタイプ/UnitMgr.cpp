@@ -480,7 +480,7 @@ void cUnitMgr::UnitMove() {
 			if (m_baseUnit.Get_NowRoom() < 0) { return; }
 			//if (m_baseUnit.Get_NowRoom() == 1) {	// 現在地と行先が同じの場合
 				for (int i = 0; i < enemy.size(); i++) {
-					Set_NextEnemyPos(enemy[i]->Get_Num(), m_baseUnit.Get_NowRoom() - 1, m_baseUnit.Get_NowRoom() - 1);
+					Set_NextEnemyPos(EnemyArreySearch( enemy[i]->Get_Num()), m_baseUnit.Get_NowRoom() - 1, m_baseUnit.Get_NowRoom() - 1);
 					m_moveCnt = 0;
 				}
 				/*
