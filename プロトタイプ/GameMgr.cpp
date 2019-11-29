@@ -7,13 +7,23 @@ cGameMgr::cGameMgr(ISceneChanger* _scene) : cBaseScene(_scene) {
 void cGameMgr::Init() {
 	cTime* ptime = new cTime(TIME_LIMIT);
 	m_time = *ptime;
-	m_img = LoadGraph("../resource/img/GameBG.png");
-	FileCheck(m_img);
+	m_BG = LoadGraph("../resource/img/Sea.jpg");
+	FileCheck(m_BG);
+	m_ship = LoadGraph("../resource/img/Ship.png");
+	FileCheck(m_ship);
+	m_cloud[0].pos = VGet(0.0f, 0.0f, 0.0f);
+	m_cloud[0].image = LoadGraph("../resource/img/BG_Cloud.png");
+	FileCheck(m_cloud[0].image);
+	m_cloud[1].pos = VGet(1870.0f, 0.0f, 0.0f);
+	m_cloud[1].image = LoadGraph("../resource/img/BG_Cloud.png");
+	FileCheck(m_cloud[1].image);
 
 	m_unitMgr.Set_MapData(m_mapMgr.GetMapData());
 
 	cSound::Instance()->PlayBGM(
-		cSound::Instance()->E_BGM_TITLE, cSound::Instance()->E_PLAY_LOOP,TRUE);
+		cSound::Instance()->E_BGM_BATTLE, cSound::Instance()->E_PLAY_LOOP, TRUE);
+	cSound::Instance()->PlayBGM(
+		cSound::Instance()->E_BGM_SEA, cSound::Instance()->E_PLAY_LOOP, TRUE);
 
 	m_maxPlayer = 30;
 	m_PlayerCnt = 0;
@@ -66,11 +76,10 @@ void cGameMgr::Draw() {
 
 	DrawBillboard3D(VGet(0.0f, 0.0f, 0.0f), 0.5, 0.5, 1280, 0, m_BG, TRUE);
 	DrawBillboard3D(VGet(m_cloud[0].pos.x, m_cloud[0].pos.y, m_cloud[0].pos.z),
-													0.5, 0.5, 1903, 0, m_cloud[0].image, TRUE);
+										0.5, 0.5, 1870, 0, m_cloud[0].image, TRUE);
 	DrawBillboard3D(VGet(m_cloud[1].pos.x, m_cloud[1].pos.y, m_cloud[1].pos.z),
-													0.5, 0.5, 1903, 0, m_cloud[1].image, TRUE);
+										0.5, 0.5, 1870, 0, m_cloud[1].image, TRUE);
 	DrawBillboard3D(VGet(0.0f, 0.0f, 0.0f), 0.5, 0.5, 1280, 0, m_ship, TRUE);
-	DrawBillboard3D(VGet(-30.0f, -10.0f, 0.0f), 0.5, 0.5, 1280, 0, m_wave, TRUE);
 
 	m_fps.Draw();
     m_mapMgr.Draw();
@@ -129,6 +138,17 @@ void cGameMgr::DefSuccessJudge() {
 	}
 }
 
+void cGameMgr::MoveBackGround() {
+	m_cloud[0].pos.x -= CLOUD_SPEED;
+	m_cloud[1].pos.x -= CLOUD_SPEED;
+	if (m_cloud[0].pos.x <= -1870.0f) {
+		m_cloud[0].pos.x = m_cloud[1].pos.x + 1870.0f;
+	}
+	else if (m_cloud[1].pos.x <= -1870.0f) {
+		m_cloud[1].pos.x = m_cloud[0].pos.x + 1870.0f;
+	}
+}
+
 void cGameMgr::UnitGenerate() {
 	int clickRoom = 0;
 
@@ -146,7 +166,7 @@ void cGameMgr::UnitGenerate() {
 				if (m_unitMgr.Add_PSord(MOUSE_V.x, m_mapMgr.Get_Ground(clickRoom) + UNIT_HEIGHT / 2, clickRoom) == 0)
 				{
 					m_PlayerCnt++;
-          m_UI.SetPlayerCount(0);
+					m_UI.SetPlayerCount(0);
 				}
 				//m_PUnit.Add_PSord(MOUSE_V.x, m_mapMgr.Get_Ground(tmp) + UNIT_HEIGHT / 2);
 				//DEBUG_LOG("剣出現");
@@ -159,7 +179,7 @@ void cGameMgr::UnitGenerate() {
 				if (m_unitMgr.Add_PArcher(MOUSE_V.x, m_mapMgr.Get_Ground(clickRoom) + UNIT_HEIGHT / 2, clickRoom) == 0)
 				{
 					m_PlayerCnt++;
-          m_UI.SetPlayerCount(1);
+					m_UI.SetPlayerCount(1);
 				}
 				//m_PUnit.Add_PArcher(MOUSE_V.x, m_mapMgr.Get_Ground(clickRoom) + UNIT_HEIGHT / 2);
 			}
@@ -171,7 +191,7 @@ void cGameMgr::UnitGenerate() {
 				if (m_unitMgr.Add_PDefense(MOUSE_V.x, m_mapMgr.Get_Ground(clickRoom) + UNIT_HEIGHT / 2, clickRoom) == 0)
 				{
 					m_PlayerCnt++;
-          m_UI.SetPlayerCount(2);
+					m_UI.SetPlayerCount(2);
 				}
 				//m_PUnit.Add_PArcher(MOUSE_V.x, m_mapMgr.Get_Ground(clickRoom) + UNIT_HEIGHT / 2);
 			}
