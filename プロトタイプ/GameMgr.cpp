@@ -49,6 +49,12 @@ void cGameMgr::Update() {
 	
 	EscortDamageCalc();
 
+	if (GET_KEY_PRESS(KEY_INPUT_P) > 1 && GET_KEY_PRESS(KEY_INPUT_LSHIFT) > 1) {
+		cSound::Instance()->StopSound(cSound::Instance()->E_BGM_BATTLE);
+		cSound::Instance()->StopSound(cSound::Instance()->E_BGM_SEA);
+		m_sceneChanger->ChangeScene(E_SCENE_TITLE);
+	}
+
 #ifdef GAMEMGR_DEBUG
 	if (GET_KEY_PRESS(KEY_INPUT_E) == 1) {
 		EscortDamageCalc(50);
