@@ -25,7 +25,7 @@ void cTitle::Init() {
 	}
 
 	cSound::Instance()->PlayBGM(
-		cSound::Instance()->E_BGM_TITLE, cSound::Instance()->E_PLAY_LOOP);
+		cSound::Instance()->E_BGM_TITLE, cSound::Instance()->E_PLAY_LOOP,TRUE);
 }
 
 void cTitle::Update() {
@@ -44,6 +44,7 @@ void cTitle::Update() {
 				else if (m_menu[i].menu == E_SCENE_END) {
 					cSound::Instance()->PlaySE(cSound::Instance()->E_SE_CANSEL);
 					cSound::Instance()->StopSound(cSound::Instance()->E_BGM_TITLE);
+					WaitTimer(300);
 					cSound::Instance()->End();
 					DxLib_End();
 				}

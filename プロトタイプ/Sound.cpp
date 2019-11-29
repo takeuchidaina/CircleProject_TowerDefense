@@ -72,7 +72,7 @@ void cSound::PlayBGM(eBGM _bgm, ePlayType _type) {
 }
 void cSound::PlayBGM(eBGM _bgm, ePlayType _type,bool _topPos) {
 	if (CheckValidArgument(_bgm) == TRUE) {
-		PlaySoundMem(m_BGM[_bgm], _type, _topPos);
+		PlaySoundMem(m_BGM[_bgm], DX_PLAYTYPE_LOOP, _topPos);
 	}
 }
 
