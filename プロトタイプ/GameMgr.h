@@ -23,8 +23,7 @@
 #ifndef _INCLUDE_GAMEMGR_
 #define _INCLUDE_GAMEMGR_
 
-#define SPAWN_CNT 400
-#define MOVE_CNT 100
+#define SPAWN_CNT 100
 
 class cGameMgr : public cBaseScene{
 
@@ -64,15 +63,21 @@ private:
 
 	sBG m_cloud[2];
 	const float CLOUD_SPEED = 0.25f;
-	const int TIME_LIMIT = 60;
-	int SpawnCnt = 0;			// ˆê’è”‚Ü‚Ås‚Á‚½‚çƒXƒ|[ƒ“
-	int SpawnType = 0;			// ƒXƒ|[ƒ“‚·‚éƒ^ƒCƒv‚ğŒˆ‚ß‚éƒ‰ƒ“ƒ_ƒ€
-	int MoveCnt = 0;			// ˆê’è”‚Ü‚Ås‚Á‚½‚çˆÚ“®
-	int MoveType = 0;			// move‚·‚éType‚ğŒˆ‚ß‚éƒ‰ƒ“ƒ_ƒ€
 
-	int m_maxPlayer;			// Unit¶¬ƒRƒXƒg
-	int m_PlayerCnt;			// PlayerUnit‘S‘Ì‚ÌƒJƒEƒ“ƒg
-	sTypeCnt m_unitCnt;			// ƒ^ƒCƒv•Ê‚Ì”
+	void MoveBackGround();
+
+	int m_spawnCnt = 0;			// è³è³å£½ç„šç¸ºï½¾ç¸ºï½§é™¦å¾Œâ–²ç¸ºæº˜ï½‰ç¹§ï½¹ç¹æ˜´ï¿½ç¹ï½³
+	int m_spawnType = 0;			// ç¹§ï½¹ç¹æ˜´ï¿½ç¹ï½³ç¸ºå¶ï½‹ç¹§ï½¿ç¹§ï½¤ç¹åŠ±ï½’è±ï½ºç¹§âˆšï½‹ç¹ï½©ç¹ï½³ç¹ç¹
+
+	const int TIME_LIMIT = 60;
+	int SpawnCnt = 0;			// ä¸€å®šæ•°ã¾ã§è¡Œã£ãŸã‚‰ã‚¹ãƒãƒ¼ãƒ³
+	int SpawnType = 0;			// ã‚¹ãƒãƒ¼ãƒ³ã™ã‚‹ã‚¿ã‚¤ãƒ—ã‚’æ±ºã‚ã‚‹ãƒ©ãƒ³ãƒ€ãƒ 
+	int MoveCnt = 0;			// ä¸€å®šæ•°ã¾ã§è¡Œã£ãŸã‚‰ç§»å‹•
+	int MoveType = 0;			// moveã™ã‚‹Typeã‚’æ±ºã‚ã‚‹ãƒ©ãƒ³ãƒ€ãƒ 
+
+	int m_maxPlayer;			// Unitç”Ÿæˆã‚³ã‚¹ãƒˆ
+	int m_PlayerCnt;			// PlayerUnitå…¨ä½“ã®ã‚«ã‚¦ãƒ³ãƒˆ
+	sTypeCnt m_unitCnt;			// ã‚¿ã‚¤ãƒ—åˆ¥ã®æ•°
 
 };
 
