@@ -36,7 +36,7 @@ cMap::cMap(double _x, double _y, double _w, double _h,
 	m_startMapFlg = _startMapFlg;
 	m_DefenseMapFlg = _DefenseMapFlg;
 
-	m_mapImg = LoadGraph("../resource/img/Wall.png");
+	m_mapImg = LoadGraph("../resource/img/RoomImage.jpg");
 	//m_doorImg = LoadGraph("../resource/img/Door.png");
 	FileCheck(m_mapImg);
 	//FileCheck(m_doorImg);
