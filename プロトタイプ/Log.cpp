@@ -45,5 +45,5 @@ void cLog::DebugLog(const char* _format, ...)
 	va_end(ap);
 
 	m_count++;
-	m_message.insert(m_message.begin(), to_string(m_count) + "F" + message);
+	//m_message.insert(m_message.begin(), to_string(m_count) + "F" + message);
 }
