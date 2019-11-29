@@ -23,6 +23,8 @@ public:
 	virtual void Draw();
 	virtual void End();
 
+	void SetPlayerCount(int _type);
+
 private:
 
 	typedef enum {

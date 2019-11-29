@@ -70,3 +70,7 @@ void cUI::End() {
 	}
 	
 }
+
+void cUI::SetPlayerCount(int _type) {
+	m_playerCnt[_type]++;
+}
