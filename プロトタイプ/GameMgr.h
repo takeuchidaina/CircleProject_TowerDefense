@@ -64,10 +64,8 @@ private:
 	sBG m_cloud[2];
 	const float CLOUD_SPEED = 0.25f;
 
-	void MoveBackGround();
-
-	int m_spawnCnt = 0;			// 荳螳壽焚縺ｾ縺ｧ陦後▲縺溘ｉ繧ｹ繝昴�繝ｳ
-	int m_spawnType = 0;			// 繧ｹ繝昴�繝ｳ縺吶ｋ繧ｿ繧､繝励ｒ豎ｺ繧√ｋ繝ｩ繝ｳ繝繝
+	int m_spawnCnt = 0;			// 
+	int m_spawnType = 0;			// 
 
 	const int TIME_LIMIT = 60;
 	int SpawnCnt = 0;			// 一定数まで行ったらスポーン
