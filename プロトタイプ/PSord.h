@@ -35,6 +35,7 @@ public:
 		m_imgNum = 0;
 		m_atkR = UNIT_WIDTH;
 		m_atkCoolTime = 64;
+		m_Type = E_SORD;
 
 		if (0 != LoadDivGraph("../resource/img/player.png", 6, 3, 2, 64, 64, m_imgtbl))
 		{

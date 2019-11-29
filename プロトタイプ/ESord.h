@@ -37,6 +37,7 @@ public:
 		m_moveCnt = 0;
 		m_direction = U_LEFT;
 		//target = NULL;
+		m_Type = E_SORD;
 
 		if (0 != LoadDivGraph("../resource/img/ESord.png", 6, 3, 2, 64, 64, m_imgtbl))
 		{
