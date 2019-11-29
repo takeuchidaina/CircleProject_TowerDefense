@@ -22,8 +22,10 @@ void cGameMgr::Init() {
 
 	m_unitMgr.Set_MapData(m_mapMgr.GetMapData());
 
+	cSound::Instance()->StopSound(cSound::Instance()->E_BGM_TITLE);
+
 	cSound::Instance()->PlayBGM(
-		cSound::Instance()->E_BGM_BATTLE, cSound::Instance()->E_PLAY_LOOP, TRUE);
+		cSound::Instance()->E_BGM_BATTLE, cSound::Instance()->E_PLAY_LOOP, FALSE);
 	cSound::Instance()->PlayBGM(
 		cSound::Instance()->E_BGM_SEA, cSound::Instance()->E_PLAY_LOOP, TRUE);
 
