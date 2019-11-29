@@ -28,7 +28,7 @@ public:
 
 private:
 
-#ifndef TITLE_DEBUG
+#ifdef TITLE_DEBUG
 	// メニュー項目一覧
 	typedef enum {
 		E_TITLE_MENU,
@@ -39,7 +39,7 @@ private:
 	}eTitle;
 #endif // TITLE_DEBUG
 
-#ifdef TITLE_DEBUG
+#ifndef TITLE_DEBUG
 	// メニュー項目一覧
 	typedef enum {
 		E_TITLE_MENU,

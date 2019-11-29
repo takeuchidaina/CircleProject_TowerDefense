@@ -15,9 +15,9 @@ void cUI::Init() {
 	int bgSizeX = 130;
 	int bgSizeY = 42;
 	int charSize = 32;
-	m_UI[E_CHAR_SORD]   = { 10, 10, 62, 42,"../resource/img/UI_Sord.png",0 };
-	m_UI[E_CHAR_ARCHER] = { 10, 52, 62, 84,"../resource/img/UI_Archer.png",0 };
-	m_UI[E_CHAR_SHIELD] = { 10, 94, 62, 126,"../resource/img/UI_Shield.png",0 };
+	m_UI[E_CHAR_SORD]   = { 10, 10, 42, 42,"../resource/img/UI_Sord.png",0 };
+	m_UI[E_CHAR_ARCHER] = { 10, 52, 42, 84,"../resource/img/UI_Archer.png",0 };
+	m_UI[E_CHAR_SHIELD] = { 10, 94, 42, 126,"../resource/img/UI_Shield.png",0 };
 
 	int tyousei = 5;
 	m_UI[E_BG_SORD] = { m_UI[E_CHAR_SORD].ux - tyousei, m_UI[E_CHAR_SORD].uy - tyousei,
