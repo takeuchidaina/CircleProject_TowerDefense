@@ -29,11 +29,12 @@ public:
 		m_hp = 50;
 		m_atk = 3;
 		m_speed = 0.25;
-		m_atkCoolTime = 3;
+		m_atkCoolTime = 5;
 		m_imgNum = 0;
 		m_moveCnt = 0;
 		m_direction = U_LEFT;
 		//target = NULL;
+		m_Type = E_ARCHAR;
 
 		if (0 != LoadDivGraph("../resource/img/EArchar.png", 6, 3, 2, 64, 64, m_imgtbl))
 		{

@@ -21,8 +21,7 @@ cUnitMgr::cUnitMgr()
 		m_roomEnemy.push_back(vector<int>());
 	}
 
-	//player.emplace_back(new cEscortTarget(0, m_num));
-	//m_num++;
+	m_escortCnt = 0;
 }
 
 cUnitMgr::~cUnitMgr()
@@ -32,6 +31,14 @@ cUnitMgr::~cUnitMgr()
 
 void cUnitMgr::Update()
 {
+	if (m_escortCnt <= 0)
+	{
+		player.emplace_back(new cEscortTarget(0, m_num));
+		m_escortCnt++;
+		m_num++;
+
+		DEBUG_LOG("player.size:%d", player.size());
+	}
 	UnitDie();
 	InRoomUnit();
 	//TargetSelect();
@@ -213,6 +220,12 @@ void cUnitMgr::TargetSelect(int _arrayNum, int _unit)
 		{
 			int num = EnemyArreySearch(m_roomEnemy[room][i]);
 
+			if (enemy[num]->Get_Type() == E_DEFENSE && enemy[num]->Get_State() != E_MOVE)
+			{
+				vNum.push_back(num);
+				break;
+			}
+
 			if (enemy[num]->Get_State() != E_MOVE)
 			{
 				vNum.push_back(num);
@@ -234,6 +247,18 @@ void cUnitMgr::TargetSelect(int _arrayNum, int _unit)
 		for (int i = 0; i < m_roomPlayer[room].size(); i++)
 		{
 			int num = PlayerArreySearch(m_roomPlayer[room][i]);
+
+			if (player[num]->Get_Type() == E_DEFENSE && player[num]->Get_State() != E_MOVE)
+			{
+				vNum.push_back(num);
+				break;
+			}
+
+			if (player[num]->Get_Type() == E_ESCORT && player[num]->Get_State() != E_MOVE)
+			{
+				vNum.push_back(num);
+				break;
+			}
 
 			if (player[num]->Get_State() != E_MOVE)
 			{

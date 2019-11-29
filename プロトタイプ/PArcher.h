@@ -32,6 +32,7 @@ public:
 		m_imgNum = 0;
 		m_atkR = 300;
 		m_atkCoolTime = 64;
+		m_Type = E_ARCHAR;
 
 		if (0 != LoadDivGraph("../resource/img/Archar.png", 6, 3, 2, 64, 64, m_imgtbl))
 		{

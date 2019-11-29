@@ -2,6 +2,7 @@
 #include "BaseTask.h"
 #include "BaseUnit.h"
 #include "PlayerUnit.h"
+#include "WinBox.h"
 
 #ifndef _INCLUED_ESCORTTARGET_
 #define _INCLUED_ESCORTTARGET_
@@ -23,26 +24,27 @@ public:
 		m_imgNum = 0;
 		m_atkR = UNIT_WIDTH;
 		m_atkCoolTime = 64;
+		m_Type = E_ESCORT;
 
-		m_img = LoadGraph("../resource/img/sample.png");
+		m_img = LoadGraph("../resource/img/EscortTarget.png");
 		if (m_img == NULL) {
-			DrawString(50, 50, "画像失敗", GetColor(255, 0, 255));
+			ErrBox("宝箱画像読み込み失敗");
 		}
 	}
 	virtual ~cEscortTarget();
 
 	virtual void Init();
 	virtual void Update();
-	//void Draw();
+	virtual void Draw();
 	virtual void End();
 
 	//ダメージ計算 true:HPがある　false:HPがない
 	bool DamageCalc(int _damage);
 
 private:
-	int m_hp;		//HP
-	int m_room;		//部屋
-	VECTOR m_pos;	//座標
+	//int m_hp;		//HP
+	//int m_room;		//部屋
+	//VECTOR m_pos;	//座標
 	int m_img;		//画像
 
 };

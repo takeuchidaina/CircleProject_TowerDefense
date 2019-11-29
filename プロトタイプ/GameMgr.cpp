@@ -83,10 +83,10 @@ void cGameMgr::End() {
 
 void cGameMgr::EscortDamageCalc(int _damage) {
 	//HPが無くなったらリザルトへ
-	//if (m_escort.DamageCalc(_damage) == false) {
-	//	//resultDefSuccess = false;
-	//	m_sceneChanger->ChangeScene(E_SCENE_RESULT);
-	//}
+	if (m_unitMgr.EscortDie() == false) {
+		//resultDefSuccess = false;
+		m_sceneChanger->ChangeScene(E_SCENE_RESULT);
+	}
 }
 
 void cGameMgr::DefSuccessJudge() {

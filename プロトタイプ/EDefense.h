@@ -21,6 +21,7 @@ public:
 		m_atkR = UNIT_WIDTH;
 		m_atkCoolTime = 64;
 		m_direction = U_LEFT;
+		m_Type = E_DEFENSE;
 
 		if (0 != LoadDivGraph("../resource/img/EShield.png", 6, 3, 2, 64, 64, m_imgtbl))
 		{
