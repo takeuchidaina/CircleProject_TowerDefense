@@ -13,7 +13,7 @@ void cGameMgr::Init() {
 	m_unitMgr.Set_MapData(m_mapMgr.GetMapData());
 
 	cSound::Instance()->PlayBGM(
-		cSound::Instance()->E_BGM_TITLE, cSound::Instance()->E_PLAY_LOOP);
+		cSound::Instance()->E_BGM_TITLE, cSound::Instance()->E_PLAY_LOOP,TRUE);
 }
 
 void cGameMgr::Update() {
