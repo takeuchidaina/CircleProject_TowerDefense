@@ -55,6 +55,7 @@ private:
 
 	int m_ship;
 	int m_BG;
+	int m_wave;
 
 	typedef struct {
 		VECTOR pos;
