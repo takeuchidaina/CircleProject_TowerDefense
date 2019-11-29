@@ -13,7 +13,7 @@
 #include "UnitMgr.h"
 #include "MapMgr.h"
 #include "Map.h"
-#include "EscortTarget.h"
+//#include "EscortTarget.h"
 #include "TimeLimit.h"
 #include "Sound.h"
 //#include "Result.h"
@@ -40,7 +40,7 @@ private:
 	cFPS m_fps;
 	cCamera m_camera;
 	cMapMgr m_mapMgr;
-	cEscortTarget m_escort;
+	//cEscortTarget m_escort;
 	cTime m_time;
 
 	cUnitMgr m_unitMgr;

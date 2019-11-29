@@ -17,7 +17,7 @@ void cGameMgr::Update() {
 	m_fps.Update();
 	m_mapMgr.Update();
 	m_unitMgr.Update();
-	m_escort.Update();
+	//m_escort.Update();
 	m_camera.Update();
 	m_time.Update();
 
@@ -57,7 +57,7 @@ void cGameMgr::Draw() {
 	m_fps.Draw();
     m_mapMgr.Draw();
 	m_unitMgr.Draw();
-	m_escort.Draw();
+	//m_escort.Draw();
 	m_camera.Draw();
 	m_time.Draw();
 
@@ -75,10 +75,10 @@ void cGameMgr::End() {
 
 void cGameMgr::EscortDamageCalc(int _damage) {
 	//HPが無くなったらリザルトへ
-	if (m_escort.DamageCalc(_damage) == false) {
-		//resultDefSuccess = false;
-		m_sceneChanger->ChangeScene(E_SCENE_RESULT);
-	}
+	//if (m_escort.DamageCalc(_damage) == false) {
+	//	//resultDefSuccess = false;
+	//	m_sceneChanger->ChangeScene(E_SCENE_RESULT);
+	//}
 }
 
 void cGameMgr::DefSuccessJudge() {

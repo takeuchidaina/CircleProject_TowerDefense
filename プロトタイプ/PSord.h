@@ -42,37 +42,13 @@ public:
 		}
 
 
-		/*if ((m_effectImage = LoadGraph("../resource/img/SordEffect.png")) != 0)
+		if (LoadDivGraph("../resource/img/SordEffect.png", 2, 2, 1, 64, 64, m_effectImage) != 0)
 		{
-			ErrBox("‰æ‘œ“Ç‚İ‚İ¸”s");
-		}*/
+			ErrBox("effect‰æ‘œ“Ç‚İ‚İ¸”s");
+		}
 	}
 
 	virtual ~cPSord(){}
-
-	virtual void AttackAnime()
-	{
-
-		if (m_effectAnimeCnt <= 60)
-		{
-			if (m_direction == U_LEFT)
-			{
-				
-				DrawBillboard3D(VGet(m_pos.x - UNIT_WIDTH, m_pos.y, 0.0f), 0.5f, 0.5f, 64, 0.0f, m_effectImage, TRUE);
-			}
-			else
-			{
-				DrawBillboard3D(VGet(m_pos.x + UNIT_WIDTH, m_pos.y, 0.0f), 0.5f, 0.5f, 64, 10.0f, m_effectImage, TRUE);
-			}
-		}
-		else
-		{
-			m_effectAnimeCnt = 0;
-			m_effectFlg = false;
-		}
-
-		m_effectAnimeCnt++;
-	}
 
 };
 #endif // !_INCLUDE_PSORD_

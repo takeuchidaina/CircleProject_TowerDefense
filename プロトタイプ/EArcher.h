@@ -27,7 +27,7 @@ public:
 		m_num = _num;
 		m_room = _room;
 		m_hp = 50;
-		m_atk = 50;
+		m_atk = 3;
 		m_speed = 0.25;
 		m_atkCoolTime = 3;
 		m_imgNum = 0;
@@ -38,6 +38,11 @@ public:
 		if (0 != LoadDivGraph("../resource/img/EArchar.png", 6, 3, 2, 64, 64, m_imgtbl))
 		{
 			ErrBox("‰æ‘œ“Ç‚İ‚İ¸”s");
+		}
+
+		if (LoadDivGraph("../resource/img/ArcharEffect.png", 2, 2, 1, 64, 64, m_effectImage) != 0)
+		{
+			ErrBox("effect‰æ‘œ“Ç‚İ‚İ¸”s");
 		}
 	}
 
