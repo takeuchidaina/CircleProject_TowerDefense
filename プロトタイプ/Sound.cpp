@@ -21,9 +21,9 @@ void cSound::Init() {
 	for (int i = 0; i < E_SE_LENGTH;i++) {
 		m_SE[i] = LoadSoundMem(m_SEPath[i].c_str());	//音源読み込み
 		FileCheck(m_SE[i]);								//ロード成功かチェック
-		ChangeVolumeSoundMem(255 % 70, m_SE[i]);		//音量調節
+		ChangeVolumeSoundMem(255 % 50, m_SE[i]);		//音量調節
 	}
-
+	ChangeVolumeSoundMem(255 % 90, m_SE[E_BGM_SEA]);
 	//BGM
 	m_BGMPath[E_BGM_SEA]    = { "../resource/Sound/BGM/Sea.wav" };
 	m_BGMPath[E_BGM_TITLE]  = { "../resource/Sound/BGM/Title.wav" };
