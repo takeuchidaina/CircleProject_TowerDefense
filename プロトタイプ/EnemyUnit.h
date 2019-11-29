@@ -23,11 +23,14 @@
 class cEnemyUnit : public cBaseUnit {
 
 protected:
+
 	
 public:
 
 	cEnemyUnit() : cBaseUnit() {}
-	virtual ~cEnemyUnit() {}				
+	virtual ~cEnemyUnit() {}		
+
+	int m_moveCnt;
 
 	int m_number;
 	//cPlayerUnit* target;				// 狙うプレイヤーユニット
