@@ -29,18 +29,24 @@ cUnitMgr::~cUnitMgr()
 
 void cUnitMgr::Update()
 {
+	UnitDie();
 	InRoomUnit();
-	TargetSelect();
+	//TargetSelect();
 	for (int i = 0; i < player.size(); i++)
 	{
 		switch (player[i]->Get_State())
 		{
 		case E_IDLE:
+			if (player[i]->Attack() == true)
+			{
+				TargetSelect(i, 1);
+			}
 			break;
 
 		case E_ATTACK:
 			if (player[i]->Attack() == true)
 			{
+				TargetSelect(i, 1);
 				AttackRelay(player[i]->Get_AtkPoint(), player[i]->Get_TargetNum(), player[i]->Get_Num());
 			}
 			/*if (player[i]->Get_EffectFlg() == true)
@@ -66,12 +72,16 @@ void cUnitMgr::Update()
 		switch (enemy[i]->Get_State())
 		{
 		case E_IDLE:
-
+			if (enemy[i]->Attack() == true)
+			{
+				TargetSelect(i, -1);
+			}
 			break;
 
 		case E_ATTACK:
 			if (enemy[i]->Attack() == true)
 			{
+				TargetSelect(i, -1);
 				AttackRelay(enemy[i]->Get_AtkPoint(), enemy[i]->Get_TargetNum(), enemy[i]->Get_Num());
 			}
 			break;
@@ -83,12 +93,13 @@ void cUnitMgr::Update()
 		default:
 			break;
 		}
-		//enemy[i]->AttackStart();
+		enemy[i]->AttackStart();
 
 		//enemy[i]->Set_MapSize(4);
 		DrawFormatString(200, 450, RD, "enemy:%d", enemy[0]->Get_Hp());
 	}
 
+	NoTarget();
 }
 
 void cUnitMgr::Draw()
@@ -180,6 +191,52 @@ void cUnitMgr::RoomDraw()
 	}
 }
 
+void cUnitMgr::TargetSelect(int _arrayNum, int _unit)
+{
+	if (_unit == 1)	// Player
+	{
+		int room = player[_arrayNum]->Get_NowRoom();
+		vector<int> vNum;
+
+		for (int i = 0; i < m_roomEnemy[room].size(); i++)
+		{
+			int num = EnemyArreySearch(m_roomEnemy[room][i]);
+
+			if (enemy[num]->Get_State() != E_MOVE)
+			{
+				vNum.push_back(num);
+			}
+		}
+		if (vNum.size() > 0)
+		{
+			int tNum = GetRand(vNum.size() -1);
+			player[_arrayNum]->Set_Target(enemy[vNum[tNum]]->Get_Num());
+
+			DEBUG_LOG("player[%d].Target:%d",_arrayNum , EnemyArreySearch(player[_arrayNum]->Get_TargetNum()));
+		}
+	}
+	else // Enemy
+	{
+		int room = enemy[_arrayNum]->Get_NowRoom();
+		vector<int> vNum;
+
+		for (int i = 0; i < m_roomPlayer[room].size(); i++)
+		{
+			int num = PlayerArreySearch(m_roomPlayer[room][i]);
+
+			if (player[num]->Get_State() != E_MOVE)
+			{
+				vNum.push_back(num);
+			}
+		}
+		if (vNum.size() > 0)
+		{
+			int tNum = GetRand(vNum.size() - 1);
+			enemy[_arrayNum]->Set_Target(player[vNum[tNum]]->Get_Num());
+		}
+	}
+}
+
 void cUnitMgr::TargetSelect()
 {
 	// Player
@@ -197,45 +254,45 @@ void cUnitMgr::TargetSelect()
 					eNum.push_back(enemy[e]->Get_Num());
 				}
 				//DEBUG_LOG("同じ部屋");
-				// お互い戦闘中でないか
-				//if (player[p]->Get_State() != E_ATTACK && enemy[e]->Get_State() != E_ATTACK)
-				//{
-				//	/* Player */
-				//	// 向き
-				//	if (player[p]->Get_Direction() == U_RIGHT)
-				//	{
-				//		if (player[p]->Get_Pos().x <= enemy[e]->Get_Pos().x && player[p]->Get_Pos().x + player[p]->Get_atkR() >= enemy[e]->Get_Pos().x)
-				//		{
-				//			player[p]->Set_Target(enemy[e]->Get_Num());
-				//			player[p]->Set_State(E_ATTACK);
-				//		}
-				//	}
-				//	else
-				//	{
-				//		if (player[p]->Get_Pos().x >= enemy[e]->Get_Pos().x && player[p]->Get_Pos().x - player[p]->Get_atkR() <= enemy[e]->Get_Pos().x)
-				//		{
-				//			player[p]->Set_Target(enemy[e]->Get_Num());
-				//			player[p]->Set_State(E_ATTACK);
-				//		}
-				//	}
-				//	/* Enemy */
-				//	if (enemy[e]->Get_Direction() == U_RIGHT)
-				//	{
-				//		if (enemy[e]->Get_Pos().x <= player[p]->Get_Pos().x && enemy[e]->Get_Pos().x + enemy[e]->Get_atkR() >= player[p]->Get_Pos().x)
-				//		{
-				//			enemy[e]->Set_Target(player[p]->Get_Num());
-				//			enemy[e]->Set_State(E_ATTACK);
-				//		}
-				//	}
-				//	else
-				//	{
-				//		if (enemy[e]->Get_Pos().x >= player[p]->Get_Pos().x && enemy[e]->Get_Pos().x - enemy[e]->Get_atkR() <= player[p]->Get_Pos().x)
-				//		{
-				//			enemy[e]->Set_Target(player[p]->Get_Num());
-				//			enemy[e]->Set_State(E_ATTACK);
-				//		}
-				//	}
-				//}
+				 //お互い戦闘中でないか
+				if (player[p]->Get_State() != E_ATTACK && enemy[e]->Get_State() != E_ATTACK)
+				{
+					/* Player */
+					// 向き
+					if (player[p]->Get_Direction() == U_RIGHT)
+					{
+						if (player[p]->Get_Pos().x <= enemy[e]->Get_Pos().x && player[p]->Get_Pos().x + player[p]->Get_atkR() >= enemy[e]->Get_Pos().x)
+						{
+							player[p]->Set_Target(enemy[e]->Get_Num());
+							player[p]->Set_State(E_ATTACK);
+						}
+					}
+					else
+					{
+						if (player[p]->Get_Pos().x >= enemy[e]->Get_Pos().x && player[p]->Get_Pos().x - player[p]->Get_atkR() <= enemy[e]->Get_Pos().x)
+						{
+							player[p]->Set_Target(enemy[e]->Get_Num());
+							player[p]->Set_State(E_ATTACK);
+						}
+					}
+					/* Enemy */
+					if (enemy[e]->Get_Direction() == U_RIGHT)
+					{
+						if (enemy[e]->Get_Pos().x <= player[p]->Get_Pos().x && enemy[e]->Get_Pos().x + enemy[e]->Get_atkR() >= player[p]->Get_Pos().x)
+						{
+							enemy[e]->Set_Target(player[p]->Get_Num());
+							enemy[e]->Set_State(E_ATTACK);
+						}
+					}
+					else
+					{
+						if (enemy[e]->Get_Pos().x >= player[p]->Get_Pos().x && enemy[e]->Get_Pos().x - enemy[e]->Get_atkR() <= player[p]->Get_Pos().x)
+						{
+							enemy[e]->Set_Target(player[p]->Get_Num());
+							enemy[e]->Set_State(E_ATTACK);
+						}
+					}
+				}
 			}
 		}
 		if (eNum.size() > 0)

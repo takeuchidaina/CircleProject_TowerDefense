@@ -146,6 +146,8 @@ public:
 	*********************************************************************/
 	void TargetSelect();
 
+	void TargetSelect(int _arrayNum, int _unit);
+
 	/*********************************************************************
 	関数名：void InRoomUnit()
 	概要：部屋ごとにUnitを整理
@@ -161,6 +163,44 @@ public:
 	戻り値：なし
 	*********************************************************************/
 	int AttackRelay(int _atkP, int _difNum, int _atkNum);
+
+	void UnitDie()
+	{
+		for (int i = 0; i < player.size(); i++)
+		{
+			if (player[i]->Get_Hp() <= 0)
+			{
+				player.erase(player.begin() + i);
+				DEBUG_LOG("player[%d].Die:%d", i, player.size());
+			}
+		}
+		for (int i = 0; i < enemy.size(); i++)
+		{
+			if (enemy[i]->Get_Hp() <= 0)
+			{
+				enemy.erase(enemy.begin() + i);
+				DEBUG_LOG("enemy[%d].Die:%d", i, enemy.size());
+			}
+		}
+	}
+
+	void NoTarget()
+	{
+		for (int i = 0; i < player.size(); i++)
+		{
+			if (player[i]->Get_TargetNum() < 0)
+			{
+				player[i]->Set_State(E_IDLE);
+			}
+		}
+		for (int i = 0; i < enemy.size(); i++)
+		{
+			if (enemy[i]->Get_TargetNum() < 0)
+			{
+				enemy[i]->Set_State(E_IDLE);
+			}
+		}
+	}
 
 	/*********************************************************************
 	関数名：int PlayerArreySearch(int _num)
