@@ -30,9 +30,9 @@ public:
 		m_num = _num;
 		m_room = _room;
 		m_hp = 50;
-		m_atk = 5;
+		m_atk = 20;
 		m_speed = 0.25;
-		m_atkCoolTime = 3;
+		m_atkCoolTime = 8;
 		m_imgNum = 0;
 		m_moveCnt = 0;
 		m_direction = U_LEFT;
