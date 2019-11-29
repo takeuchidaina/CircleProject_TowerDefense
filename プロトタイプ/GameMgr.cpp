@@ -75,9 +75,9 @@ void cGameMgr::Update() {
 void cGameMgr::Draw() {
 	DrawBillboard3D(VGet(0.0f, 0.0f, 0.0f), 0.5, 0.5, 1280, 0, m_BG, TRUE);
 	DrawBillboard3D(VGet(m_cloud[0].pos.x, m_cloud[0].pos.y, m_cloud[0].pos.z),
-													0.5, 0.5, 1870, 0, m_cloud[0].image, TRUE);
+													0.5, 0.5, 1903, 0, m_cloud[0].image, TRUE);
 	DrawBillboard3D(VGet(m_cloud[1].pos.x, m_cloud[1].pos.y, m_cloud[1].pos.z),
-													0.5, 0.5, 1870, 0, m_cloud[1].image, TRUE);
+													0.5, 0.5, 1903, 0, m_cloud[1].image, TRUE);
 	DrawBillboard3D(VGet(0.0f, 0.0f, 0.0f), 0.5, 0.5, 1280, 0, m_ship, TRUE);
 	DrawBillboard3D(VGet(-30.0f, -10.0f, 0.0f), 0.5, 0.5, 1280, 0, m_wave, TRUE);
 
@@ -107,7 +107,7 @@ void cGameMgr::ResultSave(bool _result) {
 	errno_t err; // errno_t型(int型)
 	err = fopen_s(&fp, "../result.txt", "w"); // ファイルを開く。失敗するとエラーコードを返す。
 	if (err != 0) {
-		
+		DEBUG_LOG("file not open");
 	}
 
 	if (_result == TRUE) {
@@ -124,8 +124,9 @@ void cGameMgr::EscortDamageCalc() {
 
 	//HPが無くなったらリザルトへ
 	if (m_unitMgr.EscortDie() == false) {
-		//ErrBox("負け");
-		//resultDefSuccess = false;
+		cSound::Instance()->StopSound(cSound::Instance()->E_BGM_BATTLE);
+		cSound::Instance()->StopSound(cSound::Instance()->E_BGM_SEA);
+		ResultSave(FALSE);
 		m_sceneChanger->ChangeScene(E_SCENE_RESULT);
 	}
 }
@@ -162,7 +163,9 @@ void cGameMgr::UnitGenerate() {
 	{
 		if (clickRoom != -1)
 		{
-			m_unitMgr.Add_PSord(MOUSE_V.x, m_mapMgr.Get_Ground(clickRoom) + UNIT_HEIGHT / 2, clickRoom);
+			if (m_unitMgr.Add_PSord(MOUSE_V.x, m_mapMgr.Get_Ground(clickRoom) + UNIT_HEIGHT / 2, clickRoom) != -1) {
+				m_UI.SetPlayerCount(0);
+			}
 			//m_PUnit.Add_PSord(MOUSE_V.x, m_mapMgr.Get_Ground(tmp) + UNIT_HEIGHT / 2);
 			//DEBUG_LOG("剣出現");
 		}
@@ -171,7 +174,9 @@ void cGameMgr::UnitGenerate() {
 	{
 		if (clickRoom != -1)
 		{
-			m_unitMgr.Add_PArcher(MOUSE_V.x, m_mapMgr.Get_Ground(clickRoom) + UNIT_HEIGHT / 2, clickRoom);
+			if (m_unitMgr.Add_PArcher(MOUSE_V.x, m_mapMgr.Get_Ground(clickRoom) + UNIT_HEIGHT / 2, clickRoom) != -1) {
+				m_UI.SetPlayerCount(1);
+			}
 			//m_PUnit.Add_PArcher(MOUSE_V.x, m_mapMgr.Get_Ground(clickRoom) + UNIT_HEIGHT / 2);
 		}
 	}
@@ -179,7 +184,9 @@ void cGameMgr::UnitGenerate() {
 	{
 		if (clickRoom != -1)
 		{
-			m_unitMgr.Add_PDefense(MOUSE_V.x, m_mapMgr.Get_Ground(clickRoom) + UNIT_HEIGHT / 2, clickRoom);
+			if (m_unitMgr.Add_PDefense(MOUSE_V.x, m_mapMgr.Get_Ground(clickRoom) + UNIT_HEIGHT / 2, clickRoom) != -1) {
+				m_UI.SetPlayerCount(2);
+			}
 			//m_PUnit.Add_PArcher(MOUSE_V.x, m_mapMgr.Get_Ground(clickRoom) + UNIT_HEIGHT / 2);
 		}
 	}
