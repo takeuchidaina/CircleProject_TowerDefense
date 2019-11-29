@@ -51,5 +51,10 @@ public:
 
 	virtual ~cPSord(){}
 
+	virtual void AttackSE()
+	{
+		cSound::Instance()->PlaySE(cSound::Instance()->E_SE_SWORD);
+	}
+
 };
 #endif // !_INCLUDE_PSORD_

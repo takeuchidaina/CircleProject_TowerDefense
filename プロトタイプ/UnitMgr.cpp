@@ -58,6 +58,7 @@ void cUnitMgr::Update()
 			{
 				TargetSelect(i, 1);
 				AttackRelay(player[i]->Get_AtkPoint(), player[i]->Get_TargetNum(), player[i]->Get_Num());
+				player[i]->AttackSE();
 			}
 			
 			break;
@@ -90,6 +91,7 @@ void cUnitMgr::Update()
 			{
 				TargetSelect(i, -1);
 				AttackRelay(enemy[i]->Get_AtkPoint(), enemy[i]->Get_TargetNum(), enemy[i]->Get_Num());
+				enemy[i]->AttackSE();
 			}
 			break;
 

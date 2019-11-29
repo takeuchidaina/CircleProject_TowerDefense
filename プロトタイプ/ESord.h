@@ -52,6 +52,11 @@ public:
 
 	virtual ~cESord() {}
 
+	virtual void AttackSE()
+	{
+		cSound::Instance()->PlaySE(cSound::Instance()->E_SE_SWORD);
+	}
+
 	VECTOR GetPos()
 	{
 		return m_pos;
