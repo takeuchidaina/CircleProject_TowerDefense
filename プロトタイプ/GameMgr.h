@@ -48,8 +48,6 @@ private:
 	cUnitMgr m_unitMgr;
 	void UnitGenerate();
 
-	cSound m_sound;
-
 	int m_img;
 	const int TIME_LIMIT = 120;
 };

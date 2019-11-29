@@ -5,6 +5,7 @@
 #include "Keyboard.h"
 #include "FPS.h"
 #include "Log.h"
+#include "Sound.h"
 
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
@@ -52,6 +53,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		
 	}
 	sceneMgr.End();
+	cSound::Instance()->End();
 
 	// I—¹
 	DxLib_End();
