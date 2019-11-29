@@ -38,6 +38,8 @@ public:
 	virtual void Draw();
 	virtual void End();
 
+	virtual void AttackSE() {}
+
 	//ダメージ計算 true:HPがある　false:HPがない
 	bool DamageCalc(int _damage);
 

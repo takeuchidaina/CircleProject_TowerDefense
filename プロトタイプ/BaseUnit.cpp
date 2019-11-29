@@ -14,6 +14,7 @@ cBaseUnit::cBaseUnit()
 	m_effectFlg = false;
 	m_effectAnimeCnt = 0;
 	m_Defense = 0;
+
 	
 	for (int i = 0; i < 2; i++)
 	{

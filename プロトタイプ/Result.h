@@ -20,5 +20,5 @@ public:
 	void End()override;
 
 private:
-
+	int m_image;
 };

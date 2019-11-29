@@ -15,9 +15,9 @@ void cUI::Init() {
 	int bgSizeX = 130;
 	int bgSizeY = 42;
 	int charSize = 32;
-	m_UI[E_CHAR_SORD]   = { 10, 10, 42, 42,"../resource/img/UI_Sord.png",0 };
-	m_UI[E_CHAR_ARCHER] = { 10, 52, 42, 84,"../resource/img/UI_Archer.png",0 };
-	m_UI[E_CHAR_SHIELD] = { 10, 94, 42, 126,"../resource/img/UI_Shield.png",0 };
+	m_UI[E_CHAR_SORD]   = { 10, 10, 62, 42,"../resource/img/UI_Sord.png",0 };
+	m_UI[E_CHAR_ARCHER] = { 10, 52, 62, 84,"../resource/img/UI_Archer.png",0 };
+	m_UI[E_CHAR_SHIELD] = { 10, 94, 62, 126,"../resource/img/UI_Shield.png",0 };
 
 	int tyousei = 5;
 	m_UI[E_BG_SORD] = { m_UI[E_CHAR_SORD].ux - tyousei, m_UI[E_CHAR_SORD].uy - tyousei,
@@ -39,14 +39,14 @@ void cUI::Init() {
 		FileCheck(m_UI[i].image);
 	}
 
-	m_maxPlayer = 15;	//MapMgrÇ©GameMgrÇ©ÇÁéÊìæ
+	m_maxPlayer = 15;	//MapMgr„ÅãGameMgr„Åã„ÇâÂèñÂæó
 	m_playerCnt[0] = 0;m_playerCnt[1] = 0;m_playerCnt[2] = 0;
 
 }
 
 void cUI::Update() {
 	for (int i = 0; i < sizeof(m_maxPlayer); i++) {
-		//m_playerCnt[i] = ÉvÉåÉCÉÑÅ[ÇÃêî;
+		//m_playerCnt[i] = „Éó„É¨„Ç§„É§„Éº„ÅÆÊï∞;
 	}
 	m_sumPlayerCnt = m_playerCnt[0] + m_playerCnt[1] + m_playerCnt[2];
 }
@@ -57,10 +57,10 @@ void cUI::Draw() {
 		DrawExtendGraph(m_UI[i].ux, m_UI[i].uy, m_UI[i].dx, m_UI[i].dy, m_UI[i].image, TRUE);
 	}
 
-	DrawFormatString(m_UI[E_CHAR_SORD].ux + 60, m_UI[E_CHAR_SORD].uy + 10, BK, "Å~ %d", m_playerCnt[0]);
-	DrawFormatString(m_UI[E_CHAR_ARCHER].ux + 60, m_UI[E_CHAR_ARCHER].uy + 10, BK, "Å~ %d", m_playerCnt[1]);
-	DrawFormatString(m_UI[E_CHAR_SHIELD].ux + 60, m_UI[E_CHAR_SHIELD].uy + 10, BK, "Å~ %d", m_playerCnt[2]);
-	DrawFormatString(m_UI[E_BG_SUM].ux+10, m_UI[E_BG_SUM].uy + 15,BK,"%d / %d",m_sumPlayerCnt,m_maxPlayer);
+	DrawFormatString(m_UI[E_CHAR_SORD].ux + 60, m_UI[E_CHAR_SORD].uy + 10, BK, "X %d", m_unitData.typeCnt.sord);
+	DrawFormatString(m_UI[E_CHAR_ARCHER].ux + 60, m_UI[E_CHAR_ARCHER].uy + 10, BK, "X %d", m_unitData.typeCnt.archar);
+	DrawFormatString(m_UI[E_CHAR_SHIELD].ux + 60, m_UI[E_CHAR_SHIELD].uy + 10, BK, "X %d", m_unitData.typeCnt.defense);
+	DrawFormatString(m_UI[E_BG_SUM].ux+10, m_UI[E_BG_SUM].uy + 15,BK,"%d / %d",m_unitData.playerCnt,m_unitData.maxPlayer);
 
 }
 
@@ -70,3 +70,13 @@ void cUI::End() {
 	}
 	
 }
+
+void cUI::SetUnitData(sUnitData _unitData)
+{
+	m_unitData = _unitData;
+}
+
+void cUI::SetPlayerCount(int _type) {
+	m_playerCnt[_type]++;
+}
+

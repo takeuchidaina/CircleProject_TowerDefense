@@ -9,6 +9,7 @@
 #include "string.h"
 #include "ErrorCheck.h"
 #include "Map.h"
+#include "Constant.h"
 
 using namespace std;
 
@@ -22,6 +23,10 @@ public:
 	virtual void Update();
 	virtual void Draw();
 	virtual void End();
+
+	void SetUnitData(sUnitData _unitData);
+	void SetPlayerCount(int _type);
+
 
 private:
 
@@ -46,6 +51,8 @@ private:
 	int m_playerCnt[3];
 	int m_sumPlayerCnt;
 	int m_maxPlayer;
+
+	sUnitData m_unitData;
 
 };
 
