@@ -8,8 +8,8 @@ void cTitle::Init() {
 	nowSelect = 0;
 
 	//ÉÅÉjÉÖÅ[ÇÃèâä˙âª
-	m_menu[E_TITLE_MENU] = { {120,500,420,600,"../resource/img/TitleStartButton.png" },E_SCENE_GAME };
-	m_menu[E_TITLE_END] = { {420,500,720,600,"../resource/img/TitleEndButton.png" }, E_SCENE_END };
+	m_menu[E_TITLE_MENU] = { {120,600,420,700,"../resource/img/TitleStartButton.png" },E_SCENE_GAME };
+	m_menu[E_TITLE_END] = { {420,600,720,700,"../resource/img/TitleEndButton.png" }, E_SCENE_END };
 	for (int i = 0; i < E_TITLE_MAX; i++) {
 		m_btn[i].Init(m_menu[i].image.ux, m_menu[i].image.uy,
 						 m_menu[i].image.dx, m_menu[i].image.dy,
