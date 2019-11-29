@@ -16,7 +16,7 @@ void cGameMgr::Init() {
 	m_cloud[0].pos = VGet(0.0f, 0.0f, 0.0f);
 	m_cloud[0].image = LoadGraph("../resource/img/BG_Cloud.png");
 	FileCheck(m_cloud[0].image);
-	m_cloud[1].pos = VGet(-1903.0f, 0.0f, 0.0f);
+	m_cloud[1].pos = VGet(-1870.0f, 0.0f, 0.0f);
 	m_cloud[1].image = LoadGraph("../resource/img/BG_Cloud.png");
 	FileCheck(m_cloud[1].image);
 
@@ -27,7 +27,7 @@ void cGameMgr::Init() {
 	cSound::Instance()->PlayBGM(
 		cSound::Instance()->E_BGM_SEA, cSound::Instance()->E_PLAY_LOOP, TRUE);
 
-	m_maxPlayer = 30;
+	m_maxPlayer = 15;
 	m_PlayerCnt = 0;
 }
 
@@ -80,9 +80,9 @@ void cGameMgr::Draw() {
 	DrawBillboard3D(VGet(0.0f, 0.0f, 0.0f), 0.5, 0.5, 1280, 0, m_BG, TRUE);
 
 	DrawBillboard3D(VGet(m_cloud[0].pos.x, m_cloud[0].pos.y, m_cloud[0].pos.z),
-										0.5, 0.5, 1870, 0, m_cloud[0].image, TRUE);
+										0.5, 0.5, 1903, 0, m_cloud[0].image, TRUE);
 	DrawBillboard3D(VGet(m_cloud[1].pos.x, m_cloud[1].pos.y, m_cloud[1].pos.z),
-										0.5, 0.5, 1870, 0, m_cloud[1].image, TRUE);
+										0.5, 0.5, 1903, 0, m_cloud[1].image, TRUE);
 
 	DrawBillboard3D(VGet(0.0f, 0.0f, 0.0f), 0.5, 0.5, 1280, 0, m_ship, TRUE);
 	DrawBillboard3D(VGet(-10.0f, -20.0f, 0.0f), 0.5, 0.5, 1280, 0, m_wave, TRUE);
