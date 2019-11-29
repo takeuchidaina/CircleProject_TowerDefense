@@ -37,9 +37,9 @@ void cTitle::Update() {
 
 				//TODO:if elseif‚ÅI—¹”»’f‚¹‚¸‚ÉChangeScene‚¾‚¯‚Åˆ—‚ðs‚¤
 				if (m_menu[i].menu == E_SCENE_GAME) {
-					m_sceneChanger->ChangeScene((eScene)m_menu[i].menu);
 					cSound::Instance()->PlaySE(cSound::Instance()->E_SE_SELECT);
 					cSound::Instance()->StopSound(cSound::Instance()->E_BGM_TITLE);
+					m_sceneChanger->ChangeScene((eScene)m_menu[i].menu);
 				}
 				else if (m_menu[i].menu == E_SCENE_END) {
 					cSound::Instance()->PlaySE(cSound::Instance()->E_SE_CANSEL);
