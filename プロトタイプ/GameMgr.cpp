@@ -5,7 +5,7 @@ cGameMgr::cGameMgr(ISceneChanger* _scene) : cBaseScene(_scene) {
 }
 
 void cGameMgr::Init() {
-	cTime* ptime = new cTime(5);
+	cTime* ptime = new cTime(TIME_LIMIT);
 	m_time = *ptime;
 	m_BG = LoadGraph("../resource/img/Sea.jpg");
 	FileCheck(m_BG);
@@ -103,6 +103,25 @@ void cGameMgr::Draw() {
 void cGameMgr::End() {
 }
 
+void cGameMgr::ResultSave(bool _result) {
+	FILE* fp;
+
+	errno_t err; // errno_t型(int型)
+	err = fopen_s(&fp, "../result.txt", "w"); // ファイルを開く。失敗するとエラーコードを返す。
+	if (err != 0) {
+		
+	}
+
+	if (_result == TRUE) {
+		fprintf(fp, "win");
+	}
+	else {
+		fprintf(fp, "lose");
+	}
+
+	fclose(fp);
+}
+
 void cGameMgr::EscortDamageCalc(int _damage) {
 	//HPが無くなったらリザルトへ
 	//if (m_escort.DamageCalc(_damage) == false) {
@@ -115,6 +134,7 @@ void cGameMgr::DefSuccessJudge() {
 	if (m_time.GetSecond() <= 1) {
 		cSound::Instance()->StopSound(cSound::Instance()->E_BGM_BATTLE);
 		cSound::Instance()->StopSound(cSound::Instance()->E_BGM_SEA);
+		ResultSave(TRUE);
 		m_sceneChanger->ChangeScene(E_SCENE_RESULT);
 	}
 }

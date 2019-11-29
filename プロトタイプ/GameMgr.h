@@ -20,6 +20,8 @@
 #include "ErrorCheck.h"
 #include "UI.h"
 
+#pragma warning(disable : 4996)
+
 #ifndef _INCLUDE_GAMEMGR_
 #define _INCLUDE_GAMEMGR_
 
@@ -65,6 +67,7 @@ private:
 	const int TIME_LIMIT = 60;
 
 	void MoveBackGround();
+	void ResultSave(bool _result);
 
 	int SpawnCnt = 0;			// 一定数まで行ったらスポーン
 	int SpawnType = 0;			// スポーンするタイプを決めるランダム
