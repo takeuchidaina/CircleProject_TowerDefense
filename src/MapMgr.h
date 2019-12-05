@@ -42,8 +42,8 @@ public:
 	vector<FLOAT2> LinePos;		//線を結ぶ部屋の組み合わせを格納
 
 	cMapMgr();
-
 	virtual ~cMapMgr();
+  
 	virtual void Init();
 	virtual void Update();
 	virtual void Draw();
