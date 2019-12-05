@@ -1,7 +1,7 @@
 #include "MapMgr.h"
 
-cMapMgr::cMapMgr(){
-	fileName = "../resource/Map/Map1.csv";
+cMapMgr::cMapMgr(int num){
+	fileName = "../resource/Map/Map"+ to_string(num) +".csv";
 	Init();
 
 }

@@ -1,4 +1,8 @@
 #include "CSVLoad.h"
+
+//最初に読み飛ばす行数
+#define ADJUST 2
+
 vector<vector<double>> CSVLoad(string& _filename) {
 
 	ifstream ifs;
@@ -13,55 +17,32 @@ vector<vector<double>> CSVLoad(string& _filename) {
 
 	vector<double> tmpData;
 	char del = ',';
-	int roomNum = 0;
+	int Num = 0;
 
-	if (ifs.fail()) {        // エラー処理     ifsをつけるのはファイルを開くのを失敗したかどうか
+	if (ifs.fail()) {//エラー処理、ifsをつけるのはファイルを開くのを失敗したかどうか
 		cerr << "ファイルオープン失敗" << endl;
 		exit(-1);
 	}
-
-	/*getline(ifs, line);//1行空読み(なぞ)
-	getline(ifs, line);//1行空読み
-	getline(ifs, line);//1行空読み*/
-
-	/*while (!ifs.eof()) {        // ファイルストリームが終わるまで回る
-
-		getline(ifs, line);     // 1行読み込む
-
-		tmpStr = split(line, del);//読み込んだ行を','で分解
-
-		for (int i = 0; i < tmpStr.size(); i++) {
-			double num = atof(tmpStr[i].c_str());        // stringをintに変換
-			tmpData.push_back(num);		//vecの最後に挿入
-		}
-
-		tmpData.insert(tmpData.begin(),roomNum);//配列の先頭に部屋番号を挿入
-		roomNum++;
-
-		vec.push_back(tmpData);
-
-	}*/
 
 	while (getline(ifs, line)) {
 		tmpStr.push_back(line);
 	}
 
-	for (int i = 2; i < tmpStr.size(); i++) {
-		tmpStrVec = split(tmpStr[i], del);
+	for (int i = ADJUST; i < tmpStr.size(); i++) {
+		tmpStrVec = split(tmpStr[i], del);					//1行読み込んでカンマで分解
 
 		for (int i = 0; i < tmpStrVec.size(); i++) {
-			double num = atof(tmpStrVec[i].c_str());        // stringをintに変換
-			tmpData.push_back(num);		//vecの最後に挿入
+			double num = atof(tmpStrVec[i].c_str());        //stringをintに変換
+			tmpData.push_back(num);							//vecの最後に挿入
 		}
 
-		tmpData.insert(tmpData.begin(), roomNum);//配列の先頭に部屋番号を挿入
-		roomNum++;
+		tmpData.insert(tmpData.begin(), Num);				//配列の先頭に番号を挿入
+		Num++;
 
-		vec.push_back(tmpData);
-		tmpData.clear();
+		vec.push_back(tmpData);								//まとめたデータをvecの末尾に挿入
+		tmpData.clear();									//初期化
 
 	}
-
 
 	ifs.close();
 
