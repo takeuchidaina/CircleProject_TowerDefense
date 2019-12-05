@@ -41,9 +41,9 @@ public:
 	VECTOR enemyStartPos;		//敵の開始地点
 	vector<FLOAT2> LinePos;		//線を結ぶ部屋の組み合わせを格納
 
-	cMapMgr(int);
-	~cMapMgr();
+	cMapMgr();
 
+	virtual ~cMapMgr();
 	virtual void Init();
 	virtual void Update();
 	virtual void Draw();
