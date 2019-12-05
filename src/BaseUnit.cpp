@@ -37,7 +37,8 @@ cBaseUnit::~cBaseUnit()
 
 void cBaseUnit::Update()
 {
-
+	m_moveStartCnt++;				// 一定数まで行ったらmove
+	m_moveType = GetRand(2);	// moveするTypeを決めるランダム
 }
 
 void cBaseUnit::Draw()
@@ -162,4 +163,43 @@ void cBaseUnit::Defense(int _atkPoint, int _atkNum)
 	}*/
 
 	DEBUG_LOG("ナンバー%dは%dのダメージを受けた　残りHP:%d", m_num, _atkPoint, m_hp);
+}
+
+void cBaseUnit::UnitMove(int _player, int _enemy) {
+	/*
+	// Unitの移動
+	if (m_moveStartCnt >= MOVE_CNT) {		// m_moveCntが一定になったら
+		for (int i = 0; i < m_enemy.size(); i++) {
+
+			int next = enemy[i]->Get_NowRoom() - 1;
+
+			if (enemy[i]->Get_NowRoom() != 0) {
+
+				int cnt = tmpRoomEnemy[next].size();
+				int max = m_mapData[next].roomSize;
+
+				if (cnt < max)
+				{
+					//if (m_stayCnt >= STEY_CNT) {
+					enemy[i]->Set_Room(next);
+					//break;
+				//}
+				}
+				//Set_NextEnemyPos(EnemyArreySearch(enemy[i]->Get_Num()), enemy[i]->Get_NowRoom() - 1, enemy[i]->Get_NowRoom() - 1);
+				m_moveStartCnt = 0;
+
+				
+				// 指定された座標についたらIdle状態へ
+				//if (m_pos.x <= m_nextMove.sNextX + m_speed && m_nextMove.sNextX - m_speed <= m_pos.x)
+				//{
+				//	m_state = E_IDLE;
+				//	m_imgNum = 0;
+				//}
+				
+			
+			}
+		}
+	}
+	*/
+		
 }
