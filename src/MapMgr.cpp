@@ -1,7 +1,13 @@
 #include "MapMgr.h"
 
-cMapMgr::cMapMgr(int num){
-	fileName = "../resource/Map/Map"+ to_string(num) +".csv";
+cMapMgr::cMapMgr(){
+
+	ifstream ifs("../StageSelect.txt");
+	string str;
+	if (ifs.fail())std::cerr << "Failed to open file." << std::endl;
+	getline(ifs, str);
+	fileName = "../resource/Map/Map" + str + ".csv";
+
 	Init();
 
 }
@@ -9,7 +15,7 @@ cMapMgr::~cMapMgr(){
 	;
 }
 
-void cMapMgr::Init(){	
+void cMapMgr::Init(){
 
 	tmpMap=CSVLoad(fileName);
 
