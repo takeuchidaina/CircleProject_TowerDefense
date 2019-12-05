@@ -10,6 +10,7 @@ using namespace std;
 #ifndef _INCLUDE_BASE_UNIT_
 #define _INCLUDE_BASE_UNIT_
 
+#define MOVE_CNT 400		// 移動するまでのカウント
 /********************************************************
 ●概要
 　Unitのベースクラス
@@ -49,6 +50,14 @@ protected:
 
 	int m_imgNum;			// アニメーションナンバー
 	int m_imgtbl[6];		// 画像配列
+
+	int m_moveStartCnt = 0;				// 一定数まで行ったら移動
+	int m_moveType = 0;				// moveするTypeを決めるランダム
+
+	//vector<cPlayerUnit*> m_player;	// PlayerのvectorSet
+	//vector<cEnemyUnit*> m_enemy;	// EnemyのvectorをSet
+	//vector<vector<int>> tmpRoomPlayer;	// 部屋間のPlayerUnit数
+	//vector<vector<int>> tmpRoomEnemy;	// 部屋間のEnemyUnit数
 	
 public:
 
@@ -230,6 +239,22 @@ public:
 	{
 		m_room = _room;
 	}
+	/*
+	void Set_tmp(vector<vector<int>>_m_roomPlayer, vector<vector<int>>_m_roomEnemy) {
+		m_player = _player;
+		m_enemy = _enemy;
+		tmpRoomPlayer = _m_roomPlayer;
+		tmpRoomEnemy = _m_roomEnemy;
+	}
+	*/
+	/*********************************************************************
+	関数名：void UnitMove(eState _state)
+	概要：ステートの変更
+	引数：
+	戻り値：なし
+	*********************************************************************/
+	void UnitMove(int _player, int _enemy);
+
 };
 
 #endif // !_INCLUDE_BASE_UNIT_
