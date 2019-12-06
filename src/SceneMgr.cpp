@@ -3,7 +3,7 @@
 cSceneMgr::cSceneMgr() : m_nextScene(E_SCENE_NONE){
 
 	//m_scene = (cBaseScene*) new cGameMgr(this);
-	m_scene = (cBaseScene*) new cTitle(this);
+	m_scene = (cBaseScene*) new cMenu(this);
 
 }
 
