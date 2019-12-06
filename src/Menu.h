@@ -8,6 +8,7 @@
 #include "ISceneChanger.h"
 #include "Keyboard.h"
 #include "Mouse.h"
+#include "Log.h"
 
 class cMenu : public cBaseScene {
 
@@ -20,5 +21,6 @@ public:
 	void End()override;
 
 private:
+	int m_stageSelect;
 
 };
