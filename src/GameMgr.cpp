@@ -57,6 +57,13 @@ void cGameMgr::Update() {
 
 	case E_CUTSCENE:
 		break;
+
+	case E_POSE:
+		//ゲームに戻る
+		//設定
+		m_setting.Update();
+		//ゲームを終了
+		break;
 	}
 
 	m_fps.Update();
@@ -71,26 +78,17 @@ void cGameMgr::Update() {
 	m_spawnType = GetRand(2);	// スポーンするタイプを決めるランダム
 
 #ifdef GAMEMGR_DEBUG
-	if (GET_KEY_PRESS(KEY_INPUT_E) == 1) {
-		EscortDamageCalc(50);
-	}
+	if (GET_KEY_PRESS(KEY_INPUT_ESCAPE) == 1 && m_gameState != E_POSE) {m_gameState = E_POSE;}
+	if (GET_KEY_PRESS(KEY_INPUT_B) == 1 && m_gameState != E_BATTLE) {m_gameState = E_BATTLE;}
+
 	//タイトルへ
-	if (GET_KEY_PRESS(KEY_INPUT_T) == 1) {
-		m_sceneChanger->ChangeScene(E_SCENE_TITLE);
-	}
+	if (GET_KEY_PRESS(KEY_INPUT_T) == 1) {m_sceneChanger->ChangeScene(E_SCENE_TITLE);}
 	//メニューへ
-	if (GET_KEY_PRESS(KEY_INPUT_M) == 1) {
-		m_sceneChanger->ChangeScene(E_SCENE_MENU);
-	}
+	if (GET_KEY_PRESS(KEY_INPUT_M) == 1) {m_sceneChanger->ChangeScene(E_SCENE_MENU);}
 	//ゲームへ
-	if (GET_KEY_PRESS(KEY_INPUT_G) == 1) {
-		m_sceneChanger->ChangeScene(E_SCENE_GAME);
-	}
+	if (GET_KEY_PRESS(KEY_INPUT_G) == 1) {m_sceneChanger->ChangeScene(E_SCENE_GAME);}
 	//リザルトへ
-	if (GET_KEY_PRESS(KEY_INPUT_R) == 1) {
-		
-		m_sceneChanger->ChangeScene(E_SCENE_RESULT);
-	}
+	if (GET_KEY_PRESS(KEY_INPUT_R) == 1) {m_sceneChanger->ChangeScene(E_SCENE_RESULT);}
 
 #endif // GAMEMGR_DEBUG
 
@@ -119,6 +117,13 @@ void cGameMgr::Draw() {
 		break;
 
 	case E_CUTSCENE:
+		break;
+
+	case E_POSE:
+		//ゲームに戻る
+		//設定
+		m_setting.Draw();
+		//ゲームを終了する
 		break;
 	}
 
@@ -173,8 +178,10 @@ void cGameMgr::DefSuccessJudge() {
 }
 
 void cGameMgr::MoveBackGround() {
+	//移動
 	m_cloud[0].pos.x += CLOUD_SPEED;
 	m_cloud[1].pos.x += CLOUD_SPEED;
+	//画面外処理、スクロール設定
 	if (m_cloud[0].pos.x >= 1870.0f) {
 		m_cloud[0].pos.x = m_cloud[1].pos.x - 1870.0f;
 	}
@@ -190,63 +197,44 @@ void cGameMgr::UnitGenerate() {
 		clickRoom = m_mapMgr.CheckInto(MOUSE_V.x, MOUSE_V.y);
 	}
 
-	if (m_maxPlayer > m_PlayerCnt)	// コスト制限
-	{
+	if (m_maxPlayer > m_PlayerCnt){			// コスト制限
 		//Player
-		if (MOUSE_PRESS(LEFT_CLICK) == 1 && CheckHitKey(KEY_INPUT_S) >= 1)
-		{
-			if (clickRoom != -1)
-			{
-				if (m_unitMgr.Add_PSord(MOUSE_V.x, m_mapMgr.Get_Ground(clickRoom) + UNIT_HEIGHT / 2, clickRoom) == 0)
-				{
+		if (MOUSE_PRESS(LEFT_CLICK) == 1 && CheckHitKey(KEY_INPUT_S) >= 1){
+			if (clickRoom != -1){
+				if (m_unitMgr.Add_PSord(MOUSE_V.x, m_mapMgr.Get_Ground(clickRoom) + UNIT_HEIGHT / 2, clickRoom) == 0){
 					m_PlayerCnt++;
 					m_UI.SetPlayerCount(0);
 				}
-				//m_PUnit.Add_PSord(MOUSE_V.x, m_mapMgr.Get_Ground(tmp) + UNIT_HEIGHT / 2);
-				//DEBUG_LOG("剣出現");
 			}
 		}
-		else if (MOUSE_PRESS(LEFT_CLICK) == 1 && CheckHitKey(KEY_INPUT_A) >= 1)
-		{
-			if (clickRoom != -1)
-			{
-				if (m_unitMgr.Add_PArcher(MOUSE_V.x, m_mapMgr.Get_Ground(clickRoom) + UNIT_HEIGHT / 2, clickRoom) == 0)
-				{
+		else if (MOUSE_PRESS(LEFT_CLICK) == 1 && CheckHitKey(KEY_INPUT_A) >= 1){
+			if (clickRoom != -1){
+				if (m_unitMgr.Add_PArcher(MOUSE_V.x, m_mapMgr.Get_Ground(clickRoom) + UNIT_HEIGHT / 2, clickRoom) == 0){
 					m_PlayerCnt++;
 					m_UI.SetPlayerCount(1);
 				}
-				//m_PUnit.Add_PArcher(MOUSE_V.x, m_mapMgr.Get_Ground(clickRoom) + UNIT_HEIGHT / 2);
 			}
 		}
-		else if (MOUSE_PRESS(LEFT_CLICK) == 1 && CheckHitKey(KEY_INPUT_D) >= 1)
-		{
-			if (clickRoom != -1)
-			{
-				if (m_unitMgr.Add_PDefense(MOUSE_V.x, m_mapMgr.Get_Ground(clickRoom) + UNIT_HEIGHT / 2, clickRoom) == 0)
-				{
+		else if (MOUSE_PRESS(LEFT_CLICK) == 1 && CheckHitKey(KEY_INPUT_D) >= 1){
+			if (clickRoom != -1){
+				if (m_unitMgr.Add_PDefense(MOUSE_V.x, m_mapMgr.Get_Ground(clickRoom) + UNIT_HEIGHT / 2, clickRoom) == 0){
 					m_PlayerCnt++;
 					m_UI.SetPlayerCount(2);
 				}
-				//m_PUnit.Add_PArcher(MOUSE_V.x, m_mapMgr.Get_Ground(clickRoom) + UNIT_HEIGHT / 2);
 			}
 		}
 	}
-	else if (MOUSE_PRESS(LEFT_CLICK) == 1 && cMouse::Instance()->GetPlayerNum() >= 0 && CheckHitKeyAll != 0)
-	{
+	else if (MOUSE_PRESS(LEFT_CLICK) == 1 && cMouse::Instance()->GetPlayerNum() >= 0 && CheckHitKeyAll != 0){
 		int clickRoom = m_mapMgr.CheckInto(MOUSE_V.x, MOUSE_V.y);
-		if (clickRoom != -1)
-		{
+		if (clickRoom != -1){
 			m_unitMgr.Set_NextPlayerPos(cMouse::Instance()->GetPlayerNum(), clickRoom, MOUSE_V.x);
 			cMouse::Instance()->SetPlayerNum(-1);
 		}
 	}
-	else if (MOUSE_PRESS(LEFT_CLICK) == 1)
-	{
+	else if (MOUSE_PRESS(LEFT_CLICK) == 1){
 		int selectPlayer = 0;
-
 		clickRoom = m_unitMgr.CheckPlayerClick(MOUSE_V);
-		if (0 <= selectPlayer)
-		{
+		if (0 <= selectPlayer){
 			cMouse::Instance()->SetPlayerNum(selectPlayer);
 		}
 	}

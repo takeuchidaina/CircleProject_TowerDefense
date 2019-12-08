@@ -17,6 +17,7 @@
 #include "Sound.h"
 #include "ErrorCheck.h"
 #include "UI.h"
+#include "Setting.h"
 
 #ifndef _INCLUDE_GAMEMGR_
 #define _INCLUDE_GAMEMGR_
@@ -43,6 +44,7 @@ private:
 	cMapMgr m_mapMgr;
 	cTime m_time;
 	cUI m_UI;
+	cSetting m_setting;
 
 	cUnitMgr m_unitMgr;
 	void UnitGenerate();
@@ -80,6 +82,7 @@ private:
 		E_BATTLE,		//戦闘
 		E_EVENT,		//イベント
 		E_CUTSCENE,		//カットシーン
+		E_POSE,			//ポーズ
 	}eGameState;
 	eGameState m_gameState;
 
