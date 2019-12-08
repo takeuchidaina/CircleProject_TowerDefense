@@ -5,8 +5,11 @@ cGameMgr::cGameMgr(ISceneChanger* _scene) : cBaseScene(_scene) {
 }
 
 void cGameMgr::Init() {
+	//時間
 	cTime* ptime = new cTime(TIME_LIMIT);
 	m_time = *ptime;
+
+	//画像
 	m_wave = LoadGraph("../resource/img/wave.png");
 	FileCheck(m_wave);
 	m_BG = LoadGraph("../resource/img/Sea.jpg");
@@ -22,8 +25,8 @@ void cGameMgr::Init() {
 
 	m_unitMgr.Set_MapData(m_mapMgr.GetMapData());
 
+	//BGM
 	cSound::Instance()->StopSound(cSound::Instance()->E_BGM_TITLE);
-
 	cSound::Instance()->PlayBGM(
 		cSound::Instance()->E_BGM_BATTLE, cSound::Instance()->E_PLAY_LOOP, FALSE);
 	cSound::Instance()->PlayBGM(
@@ -31,31 +34,41 @@ void cGameMgr::Init() {
 
 	m_maxPlayer = 15;
 	m_PlayerCnt = 0;
+
+	m_gameState = E_BATTLE;
 }
 
 void cGameMgr::Update() {
+
+	switch (m_gameState)
+	{
+	case E_PREPARATION:
+		break;
+
+	case E_BATTLE:
+		UnitGenerate();		//ユニット生成
+		DefSuccessJudge();
+		//EscortDamageCalc();
+		m_time.Update();
+		break;
+
+	case E_EVENT:
+		break;
+
+	case E_CUTSCENE:
+		break;
+	}
+
 	m_fps.Update();
 	m_mapMgr.Update();
 	m_unitMgr.Update();
-	//m_escort.Update();
 	m_camera.Update();
-	m_time.Update();
+	
 	m_UI.Update();
-
-    UnitGenerate();		//ユニット生成
-	DefSuccessJudge();
-
 	MoveBackGround();
+
 	m_spawnCnt++;			// 一定数まで行ったらスポーン
 	m_spawnType = GetRand(2);	// スポーンするタイプを決めるランダム
-	
-	EscortDamageCalc();
-
-	if (GET_KEY_PRESS(KEY_INPUT_P) > 1 && GET_KEY_PRESS(KEY_INPUT_LSHIFT) > 1) {
-		cSound::Instance()->StopSound(cSound::Instance()->E_BGM_BATTLE);
-		cSound::Instance()->StopSound(cSound::Instance()->E_BGM_SEA);
-		m_sceneChanger->ChangeScene(E_SCENE_TITLE);
-	}
 
 #ifdef GAMEMGR_DEBUG
 	if (GET_KEY_PRESS(KEY_INPUT_E) == 1) {
@@ -85,32 +98,37 @@ void cGameMgr::Update() {
 
 void cGameMgr::Draw() {
 
-	DrawBillboard3D(VGet(0.0f, 0.0f, 0.0f), 0.5, 0.5, 1280, 0, m_BG, TRUE);
-
+	DrawBillboard3D(VGet(0.0f, 0.0f, 0.0f), 0.5, 0.5, 1280, 0, m_BG, TRUE);				//背景
 	DrawBillboard3D(VGet(m_cloud[0].pos.x, m_cloud[0].pos.y, m_cloud[0].pos.z),
-										0.5, 0.5, 1903, 0, m_cloud[0].image, TRUE);
+		0.5, 0.5, 1903, 0, m_cloud[0].image, TRUE);		//雲(初期画面内)
 	DrawBillboard3D(VGet(m_cloud[1].pos.x, m_cloud[1].pos.y, m_cloud[1].pos.z),
-										0.5, 0.5, 1903, 0, m_cloud[1].image, TRUE);
+		0.5, 0.5, 1903, 0, m_cloud[1].image, TRUE);		//雲(後続)
+	DrawBillboard3D(VGet(0.0f, 0.0f, 0.0f), 0.5, 0.5, 1280, 0, m_ship, TRUE);			//船
+	DrawBillboard3D(VGet(-10.0f, -20.0f, 0.0f), 0.5, 0.5, 1280, 0, m_wave, TRUE);		//波
 
-	DrawBillboard3D(VGet(0.0f, 0.0f, 0.0f), 0.5, 0.5, 1280, 0, m_ship, TRUE);
-	DrawBillboard3D(VGet(-10.0f, -20.0f, 0.0f), 0.5, 0.5, 1280, 0, m_wave, TRUE);
+	switch (m_gameState)
+	{
+	case E_PREPARATION:
+		break;
+
+	case E_BATTLE:
+		m_time.Draw();
+		break;
+
+	case E_EVENT:
+		break;
+
+	case E_CUTSCENE:
+		break;
+	}
 
 	m_fps.Draw();
     m_mapMgr.Draw();
 	m_unitMgr.Draw();
-	//m_escort.Draw();
 	m_camera.Draw();
-	m_time.Draw();
 
 	UnitData();
 	m_UI.Draw();
-
-
-#ifdef GAMEMGR_DEBUG
-	DrawFormatString(0, 0, WH, "ゲーム画面");
-	//DrawBox(100,100,600,600,GR,TRUE);
-#endif // GAMEMGR_DEBUG
-
 
 }
 

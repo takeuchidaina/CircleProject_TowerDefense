@@ -13,10 +13,8 @@
 #include "UnitMgr.h"
 #include "MapMgr.h"
 #include "Map.h"
-//#include "EscortTarget.h"
 #include "TimeLimit.h"
 #include "Sound.h"
-//#include "Result.h"
 #include "ErrorCheck.h"
 #include "UI.h"
 
@@ -43,7 +41,6 @@ private:
 	cFPS m_fps;
 	cCamera m_camera;
 	cMapMgr m_mapMgr;
-	//cEscortTarget m_escort;
 	cTime m_time;
 	cUI m_UI;
 
@@ -66,7 +63,7 @@ private:
 	const float CLOUD_SPEED = 0.25f;
 
 	int m_spawnCnt = 0;			// 
-	int m_spawnType = 0;			// 
+	int m_spawnType = 0;		// 
 
 	const int TIME_LIMIT = 60;
 	int SpawnCnt = 0;			// 一定数まで行ったらスポーン
@@ -77,6 +74,14 @@ private:
 	int m_maxPlayer;			// Unit生成コスト
 	int m_PlayerCnt;			// PlayerUnit全体のカウント
 	sTypeCnt m_unitCnt;			// タイプ別の数
+
+	typedef enum {
+		E_PREPARATION,	//準備
+		E_BATTLE,		//戦闘
+		E_EVENT,		//イベント
+		E_CUTSCENE,		//カットシーン
+	}eGameState;
+	eGameState m_gameState;
 
 };
 

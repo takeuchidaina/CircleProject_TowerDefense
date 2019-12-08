@@ -4,7 +4,7 @@ cTime::cTime(int _sec)		//ˆø”:•b
 {
 	m_startTime = GetNowCount();
 	m_second = 0;
-	m_timeCnt = 0;
+	m_timeCnt = _sec;
 	m_timeLimit = _sec;
 	m_color = WH;
 }
