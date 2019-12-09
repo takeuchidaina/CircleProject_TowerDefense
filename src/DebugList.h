@@ -28,7 +28,7 @@
 ※アイウエオ順になるようにしてください
 ********************************************************/
 #define FPS_DEBUG			// FPS
-#define CAMERA_DEBUG		// カメラ
+//#define CAMERA_DEBUG		// カメラ
 #define KEYBOARD_DEBUG		// キーボード
 #define GAMEMGR_DEBUG		// ゲームマネージャー
 #define SCENE_MGR_DEBUG		// シーンマネージャー

@@ -138,11 +138,6 @@ void cCamera::Draw() {
 
 #ifdef CAMERA_DEBUG
 
-	//À•W•\¦
-	//DrawFormatString(300, 300, BL, "target x:%f y:%f\npos x:%f y:%f", m_camera.target.x, m_camera.target.y, m_camera.pos.x, m_camera.pos.y);
-	//DrawCircle(m_camera.target.x, m_camera.target.y, 10, RD, TRUE);
-	//DrawCircle(m_camera.pos.x, m_camera.pos.y, 10, BL, FALSE);
-
 	// ‚R‚c‚Ìü•ª‚ğ•`‰æ‚·‚é
 	DrawLine3D(
 		VGet(0, 0, 0),// VECTOR Pos1
