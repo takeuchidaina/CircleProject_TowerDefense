@@ -15,6 +15,8 @@
 #include "Mouse.h"
 #include <vector>
 #include "Log.h"
+#include "MapNavigate.h"
+
 using namespace std;
 
 /********************************************************
@@ -52,7 +54,7 @@ class cUnitMgr : public cBaseTask
 	vector<sMapData> m_mapData;
 
 	DATEDATA m_date;
-	cBaseUnit m_baseUnit;
+	cMapNavigate m_mapNavigate;
 
 	int m_escortCnt;	// 護衛対象の数
 

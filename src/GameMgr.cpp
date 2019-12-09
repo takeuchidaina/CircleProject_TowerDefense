@@ -36,6 +36,8 @@ void cGameMgr::Init() {
 	m_PlayerCnt = 0;
 
 	m_gameState = E_BATTLE;
+
+	m_mapNavigate.Get_MapDate(m_mapMgr.GetMapDes());
 }
 
 void cGameMgr::Update() {
