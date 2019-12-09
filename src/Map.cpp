@@ -24,7 +24,7 @@ cMap::cMap(double _x, double _y, double _w, double _h,
 
 //ドアなし用
 cMap::cMap(double _x, double _y, double _w, double _h,
-	int _maxUnit, int _roomNum, vector<int>& _des, bool _startMapFlg, bool _DefenseMapFlg) {
+	int _maxUnit, int _roomNum, vector<int>& _des, bool _startMapFlg, bool _DefenseMapFlg,int _mapDays) {
 	m_pos.x = _x;
 	m_pos.y = _y;
 	m_pos.z = 0.0f;
