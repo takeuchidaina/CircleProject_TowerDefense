@@ -12,6 +12,8 @@ cSound::~cSound()
 
 void cSound::Init() {
 
+	m_volume[0] = { 0 };
+
 	//SE
 	m_SEPath[E_SE_SELECT] = { "../resource/Sound/SE/Select.wav" };
 	m_SEPath[E_SE_CANSEL] = { "../resource/Sound/SE/Cansel.wav" };
@@ -21,9 +23,7 @@ void cSound::Init() {
 	for (int i = 0; i < E_SE_LENGTH;i++) {
 		m_SE[i] = LoadSoundMem(m_SEPath[i].c_str());	//音源読み込み
 		FileCheck(m_SE[i]);								//ロード成功かチェック
-		ChangeVolumeSoundMem(255%50, m_SE[i]);		//音量調節
 	}
-	ChangeVolumeSoundMem(255%40, m_SE[E_BGM_SEA]);
 	//BGM
 	m_BGMPath[E_BGM_SEA]    = { "../resource/Sound/BGM/Sea.wav" };
 	m_BGMPath[E_BGM_TITLE]  = { "../resource/Sound/BGM/Title.wav" };
@@ -33,8 +33,9 @@ void cSound::Init() {
 	for (int i = 0; i < E_BGM_LENGTH; i++) {
 		m_BGM[i] = LoadSoundMem(m_BGMPath[i].c_str());	//音源読み込み
 		FileCheck(m_BGM[i]);							//ロード成功かチェック
-		ChangeVolumeSoundMem(255, m_BGM[i]);				//音量調節
 	}
+
+	ChangeSoundVolume();
 }
 
 void cSound::Update() {
@@ -125,6 +126,30 @@ bool cSound::CheckValidArgument(eBGM _bgm) {
 		return FALSE;	//有効範囲外
 	}
 }
+
+//音量設定適用
+void cSound::ChangeSoundVolume() {
+	
+	string volume[E_VOL_LENGTH];
+	ifstream ifs("../Data/Setting.txt");
+	if (ifs.fail()) { DEBUG_LOG("設定ファイル読み込み失敗"); }
+
+	for (int i = 0; i < E_VOL_LENGTH; i++) {
+		getline(ifs, volume[i]);
+		m_volume[i] = stoi(volume[i]);
+	}
+
+	ifs.close();
+
+	for (int i = 0; i < E_SE_LENGTH;i++) {
+		ChangeVolumeSoundMem((255 / 100) * m_volume[E_SOUND_SE],m_SE[i]);
+	}
+	for (int i = 0; i < E_BGM_LENGTH; i++) {
+		ChangeVolumeSoundMem((255 /100) * m_volume[E_SOUND_BGM], m_BGM[i]);
+	}
+
+}
+
 
 void cSound::End() {
 	InitSoundMem();		//音を全て削除

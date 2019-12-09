@@ -9,6 +9,8 @@
 #include "string.h"
 #include "WinBox.h"
 #include "Singleton.h"
+#include <fstream>
+#include "Log.h"
 
 using namespace std;
 
@@ -23,6 +25,13 @@ public:
 	virtual void Update();
 	virtual void Draw() {}
 	virtual void End();
+
+	typedef enum {
+		E_SOUND_ENVIRONMENTAL,	//環境音
+		E_SOUND_BGM,			//BGM
+		E_SOUND_SE,				//SE
+		E_VOL_LENGTH
+	}eVolSetting;
 
 	//SE
 	typedef enum{
@@ -52,6 +61,15 @@ public:
 	}ePlayType;
 
 #pragma region 関数
+
+	/*****************************************************
+	名前　：void ChangeSoundVolume();
+	概要　：
+	引数　：
+	戻り値：
+	補足　
+	******************************************************/
+	void ChangeSoundVolume();
 
 	/*****************************************************
 	名前　：void PlaySE(eSE _se);
@@ -147,7 +165,7 @@ private:
 	int m_BGM[E_BGM_LENGTH];			//BGMのサウンドハンドル
 
 	/*****************************************************
-	名前　：void StopSound(eBGM _bgm);
+	名前　：bool CheckValidArgument(eSE _se);
 	概要　：SEの引数が存在するかを調べる
 	引数　：eSE _se:調べたい値
 	戻り値：(TRUE)有効範囲内　(FALSE)有効範囲外
@@ -156,13 +174,18 @@ private:
 	bool CheckValidArgument(eSE _se);
 
 	/*****************************************************
-	名前　：void StopSound(eBGM _bgm);
+	名前　：bool CheckValidArgument(eBGM _bgm);
 	概要　：BGMの引数が存在するかを調べる
 	引数　：eBGM _bgm:調べたい値
 	戻り値：(TRUE)有効範囲内　(FALSE)有効範囲外
 	補足　：オーバーロード有
 	******************************************************/
 	bool CheckValidArgument(eBGM _bgm);
+
+
+
+	int m_volume[E_VOL_LENGTH];
+
 };
 
 

@@ -50,6 +50,7 @@ void cSetting::Update() {
 		
 		ofs.close();
 
+		cSound::Instance()->ChangeSoundVolume();
 		//TODO:enum”Ô–Ú‚¾‚¯‘‚«Š·‚¦‚é
 	}
 	

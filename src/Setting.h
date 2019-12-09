@@ -6,6 +6,7 @@
 #include "BaseTask.h"
 #include <fstream>
 #include "Log.h"
+#include "Sound.h"
 using namespace std;
 
 class cSetting : public cBaseTask
@@ -19,14 +20,14 @@ public:
 	virtual void Draw();
 	virtual void End();
 
-private:
-
 	typedef enum {
 		E_SOUND_ENVIRONMENTAL,	//ŠÂ‹«‰¹
 		E_SOUND_BGM,			//BGM
 		E_SOUND_SE,				//SE
 		E_VOL_LENGTH
 	}eVolSetting;
+
+private:
 
 	int m_volume[E_VOL_LENGTH];
 

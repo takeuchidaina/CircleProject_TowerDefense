@@ -43,12 +43,14 @@ void cGameMgr::Update() {
 	switch (m_gameState)
 	{
 	case E_PREPARATION:
+		m_unitMgr.Update();
 		break;
 
 	case E_BATTLE:
 		UnitGenerate();		//ユニット生成
 		DefSuccessJudge();
-		//EscortDamageCalc();
+		m_unitMgr.Update();
+		EscortDamageCalc();
 		m_time.Update();
 		break;
 
@@ -68,7 +70,7 @@ void cGameMgr::Update() {
 
 	m_fps.Update();
 	m_mapMgr.Update();
-	m_unitMgr.Update();
+	
 	m_camera.Update();
 	
 	m_UI.Update();
