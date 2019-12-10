@@ -3,7 +3,7 @@
 cUnitMgr::cUnitMgr()
 {
 	m_num = 0;
-	m_mapStack = 4;
+	m_mapStack = ;
 
 	GetDateTime(&m_date);
 	int tmpDate = m_date.Day + m_date.Hour + m_date.Min + m_date.Mon + m_date.Sec + m_date.Year;
