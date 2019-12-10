@@ -10,11 +10,11 @@ cMapNavigate::~cMapNavigate() {
 
 void cMapNavigate::Init() {
 	//mapStack = _i;
-	int tmpRand = GetRand(mapStack.size()+1);
+	//tmpRand = GetRand(mapStack.size() + 1);
 }
 
 void cMapNavigate::Update() {
-
+	tmpRand = GetRand(mapStack.size() + 1);
 }
 
 void cMapNavigate::Draw() {
@@ -80,15 +80,16 @@ int cMapNavigate::MapNavigation(int _start, int _goal) {
 }
 */
 
-// _start=出発	_goal=行き先
-bool cMapNavigate::isMapNavigation(int _start, int _goal) {
-
+// _start=出発	_goal=行き先		  2				3
+int cMapNavigate::MapNavigation(int _start, int _goal) {
+	/*
 	int cnt = 0;
+	_goal = tmpRand;
 		for (int j = 0; j < mapStack[_start].size(); j++) {
 					
 			// 出発==_start, 行き先==_start	なら
 			if (mapStack[_start][j] == _start) {	
-				return false;						//つながらないからfalseで返す
+				return 0;						//つながらないからfalseで返す
 			}
 
 			// _startでも_goalでもない
@@ -96,15 +97,16 @@ bool cMapNavigate::isMapNavigation(int _start, int _goal) {
 				cnt++;								//道のりをカウント
 				mapStack[_start][j + 1];
 				tbl.push_back(cnt);					// stratまでの道のりを入れる
-				isMapNavigation(_start + 1, _goal);	// 回帰関数
+				MapNavigation(_start + 1, _goal);	// 回帰関数
 			}
 
 			// goalについたら
 			if(mapStack[_start][j] == _goal) {		
 				cnt++;								//道のりをカウント
 				tbl.push_back(cnt);				// stratまでの道のりを入れる
-				return true;
+				return tbl.size();
 			}
 		}
-	return 0;
+		*/
+	return tbl.size();
 }

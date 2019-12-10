@@ -3,7 +3,7 @@
 cUnitMgr::cUnitMgr()
 {
 	m_num = 0;
-	m_mapStack = 3;
+	m_mapStack = ;
 
 	GetDateTime(&m_date);
 	int tmpDate = m_date.Day + m_date.Hour + m_date.Min + m_date.Mon + m_date.Sec + m_date.Year;
@@ -474,41 +474,28 @@ void cUnitMgr::SelectUI(int _num)
 
 void cUnitMgr::UnitMove() {
 
+	int tmpRand=0;
 	// Unitの移動
-	//if (CheckUnitAdd(m_baseUnit.Get_NowRoom() - 1) == true) {		// 行き先の部屋に行けたら
 	if (m_moveCnt >= MOVE_CNT) {		// m_moveCntが一定になったら
 		for (int i = 0; i < enemy.size(); i++) {
+
+			m_mapNavigate.MapNavigation(enemy[i]->Get_NowRoom(), tmpRand);
+
 
 			int next = enemy[i]->Get_NowRoom() - 1;
 
 			if (enemy[i]->Get_NowRoom() != 0) {
-				//if (m_baseUnit.Get_NowRoom() == 1) {	// 現在地と行先が同じの場合
 
 				int cnt = m_roomEnemy[next].size();
 				int max = m_mapData[next].roomSize;
 
 				if (cnt < max)
 				{
-					//if (m_stayCnt >= STEY_CNT) {
 					enemy[i]->Set_Room(next);
-					//break;
-				//}
 				}
-				//Set_NextEnemyPos(EnemyArreySearch(enemy[i]->Get_Num()), enemy[i]->Get_NowRoom() - 1, enemy[i]->Get_NowRoom() - 1);
 				m_moveCnt = 0;
-
-				/*
-				// 指定された座標についたらIdle状態へ
-				if (m_pos.x <= m_nextMove.sNextX + m_speed && m_nextMove.sNextX - m_speed <= m_pos.x)
-				{
-					m_state = E_IDLE;
-					m_imgNum = 0;
-				}
-				*/
-				//}
 			}
 		}
 	}
-	//}
 
 }

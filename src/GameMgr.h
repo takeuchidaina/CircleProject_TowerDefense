@@ -18,6 +18,7 @@
 #include "ErrorCheck.h"
 #include "UI.h"
 #include "Setting.h"
+#include "MapNavigate.h"
 
 #ifndef _INCLUDE_GAMEMGR_
 #define _INCLUDE_GAMEMGR_
@@ -45,8 +46,9 @@ private:
 	cTime m_time;
 	cUI m_UI;
 	cSetting m_setting;
-
 	cUnitMgr m_unitMgr;
+	cMapNavigate m_mapNavigate;
+
 	void UnitGenerate();
 	void UnitData();
 	void MoveBackGround();
