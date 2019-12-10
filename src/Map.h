@@ -45,7 +45,7 @@ public:
 
 	//ƒhƒA‚È‚µver
 	cMap(double _x, double _y, double _w, double _h,
-		int _maxUnit, int _roomNum, vector<int>& _des, bool m_startMapFlg, bool m_DefenseMapFlg);
+		int _maxUnit, int _roomNum, vector<int>& _des, bool m_startMapFlg, bool m_DefenseMapFlg, int _mapDays);
 
 	virtual ~cMap() {}
 	virtual void Init();

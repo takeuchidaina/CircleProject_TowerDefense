@@ -38,6 +38,8 @@ public:
 	string fileName;			//ファイルネーム
 	int mapnum;					// 部屋数
 
+	int mapDays;				//何日間のマップか
+
 	VECTOR enemyStartPos;		//敵の開始地点
 	vector<FLOAT2> LinePos;		//線を結ぶ部屋の組み合わせを格納
 
@@ -53,7 +55,7 @@ public:
 	int GetMapSize();
 	vector<vector<int>> GetMapDes();
 	int GetStartRoomNum();
-
+	int GetMapDays() { return mapDays; }
 	// 髙井追加
 	/**************************************************************************
 	関数：vector<sMapData> GetMapData()
