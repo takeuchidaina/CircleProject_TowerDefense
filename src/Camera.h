@@ -33,8 +33,8 @@ private:
 	sCameraInfo m_camera;	//座標・注視点の情報(x,y,z)
 
 	//移動
-	double m_wheelPosX;		//マウスホイールでクリックした場所 x
-	double m_wheelPosY;		//マウスホイールでクリックした場所 y
+	float m_wheelPosX;		//マウスホイールでクリックした場所 x
+	float m_wheelPosY;		//マウスホイールでクリックした場所 y
 	bool m_wheelClick;		//マウスホイールでクリックしているか　TRUE:している FALSE:していない
 
 	//拡大縮小
@@ -43,7 +43,7 @@ private:
 	float m_zoom;		//カメラの距離
 	const float ZOOM_LIMIT_UP = 719.5f;		//カメラの最大縮小値 1280x720が丁度表示される
 	const float ZOOM_LIMIT_DOWN = 300.0f;	//カメラの最小拡大値
-	const float ZOOM_SCALE = 100.0f;		//拡大縮小のカメラ移動値
+	const float ZOOM_SCALE = 100.0f;		//拡大縮小の1スクロールに対するカメラの移動値
 	const float ZOOM_ADJUSTMENT = 11.0f;	//縮小のカメラ誤差調整用数値
 #pragma endregion
 
