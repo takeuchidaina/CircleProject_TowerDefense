@@ -1,5 +1,7 @@
 #include "MapNavigate.h"
 
+vector<vector<int>> mapStack;		// 受け取る変数
+
 cMapNavigate::cMapNavigate() {
 	Init();
 }
@@ -9,104 +11,56 @@ cMapNavigate::~cMapNavigate() {
 }
 
 void cMapNavigate::Init() {
-	//mapStack = _i;
-	//tmpRand = GetRand(mapStack.size() + 1);
+	//tmpRand = GetRand(mapStack.size());
 }
 
 void cMapNavigate::Update() {
-	tmpRand = GetRand(mapStack.size() + 1);
+	
 }
 
 void cMapNavigate::Draw() {
 
 }
 
-void cMapNavigate::Get_MapDate(vector<vector<int>> _MapDate) {
+void cMapNavigate::Set_MapDate(vector<vector<int>> _MapDate) {
 	mapStack = _MapDate;		// Mapの繋がりを代入
+	tmpRand = GetRand(mapStack.size()-1);
 }
 
-// Mapがつながっているか		いらないかも
-/*
-int cMapNavigate::InspectMove(int _x, int _y, int _range) {
-	_range++;
-	
-	//int yy = 0, xx = 0;
-	for (int i = 0; i < mapStack.size(); i++) {
-		for (int j = 0; j < mapStack[i].size(); j++) {
-
-		////////////////////////////
-		if(mapStack[i].size == 0){
-			return;
-		} else if(mapStack[i].size == 1){
-
-		} else if(mapStack[i].size == 2){
-
-		} else if(mapStack[i].size == 3){
-
-		} else {return;}
-
-		/////////////////////////////////
-			if ((mapStack[_y + mapStack[i]][_x + mapStack[j]] >= 0 || mapStack[_y + mapStack[i]][_x + mapStack[j]] == ゴール) &&
-				(tmpMapStack[_y + mapStack[i]][_x + mapStack[j]] > _renge || tmpMapStack[_y + mapStack[i]][_x + mapStack[j]] >= 0)) {
-
-				tmpMapStack[_y + mapStack[i]][_x + mapStack[j]] = _renge;
-				InspectMove(_x + mapStack[j], _y + mapStack[i]);
-			}
-		}
-	}
-	
-	return 0;
-}
-*/
-
-/*
-// ルート検索
-// 簡易版								1			2
+// _start=出発	_goal=行き先		  2			  0
 int cMapNavigate::MapNavigation(int _start, int _goal) {
+	
 	int cnt = 0;
-	for (int j = 0; j < mapStack.size(); j++) {
-		cnt++;
-		if (mapStack[_start][j] == _start) {
-			return 0;			
-		}
-		else if (mapStack[_start][j] == _goal) {
-			tbl.push_back(cnt);		// stratまでの道のりを入れる
-		}
-		else if (mapStack[_start][j] != _start || mapStack[_start][j] != _goal) {
-			MapNavigation(_start + 1, _goal);
-		}
-	}
-	return cnt;
-}
-*/
+	//_goal = tmpRand;	// 行きたいマップ番号
+	_goal = 0;	// 0が護衛対象のテイ
 
-// _start=出発	_goal=行き先		  2				3
-int cMapNavigate::MapNavigation(int _start, int _goal) {
-	/*
-	int cnt = 0;
-	_goal = tmpRand;
+		// 今いるマップに繋がっているマップの数だけループ　
 		for (int j = 0; j < mapStack[_start].size(); j++) {
-					
+
+			// mapStackのjのどっちかが欲しい
+			//tbl.push_back(mapStack[_start][GetRand(mapStack[_start].size()-1)]);
+			///tbl = mapStack[_start][GetRand(mapStack[_start].size() - 1)];
+
+		
 			// 出発==_start, 行き先==_start	なら
 			if (mapStack[_start][j] == _start) {	
-				return 0;						//つながらないからfalseで返す
+				return _start;						//つながらないから返す
 			}
 
 			// _startでも_goalでもない
-			if (mapStack[_start][j] != _start || mapStack[_start][j] != _goal) {
-				cnt++;								//道のりをカウント
-				mapStack[_start][j + 1];
-				tbl.push_back(cnt);					// stratまでの道のりを入れる
-				MapNavigation(_start + 1, _goal);	// 回帰関数
+			if (mapStack[_start][j] != _start && mapStack[_start][j] != _goal) {
+				cnt++;								// 何部屋移動したか
+				//tbl.push_back(mapStack[_start][GetRand(mapStack[_start].size()-1)]);		 			// stratまでの道のりを入れる
+				tbl = mapStack[_start][GetRand(mapStack[_start].size() - 1)];
+				//MapNavigation(_start + 1, _goal);	// 回帰関数
+				return tbl;
 			}
 
-			// goalについたら
+			// goalに行ける
 			if(mapStack[_start][j] == _goal) {		
-				cnt++;								//道のりをカウント
-				tbl.push_back(cnt);				// stratまでの道のりを入れる
-				return tbl.size();
+				cnt++;								// 何部屋移動したか
+				tbl=_goal;				// stratまでの道のりを入れる
+				return tbl;
 			}
 		}
-		*/
-	return tbl.size();
 }

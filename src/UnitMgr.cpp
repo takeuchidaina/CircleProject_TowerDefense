@@ -3,7 +3,7 @@
 cUnitMgr::cUnitMgr()
 {
 	m_num = 0;
-	m_mapStack = ;
+	m_mapStack = 7;
 
 	GetDateTime(&m_date);
 	int tmpDate = m_date.Day + m_date.Hour + m_date.Min + m_date.Mon + m_date.Sec + m_date.Year;
@@ -475,27 +475,31 @@ void cUnitMgr::SelectUI(int _num)
 void cUnitMgr::UnitMove() {
 
 	int tmpRand=0;
+	int tmptbl=0;
 	// Unitの移動
 	if (m_moveCnt >= MOVE_CNT) {		// m_moveCntが一定になったら
 		for (int i = 0; i < enemy.size(); i++) {
 
-			m_mapNavigate.MapNavigation(enemy[i]->Get_NowRoom(), tmpRand);
+			// MapNavigation関数のreturnを代入
+			tmptbl = m_mapNavigate.MapNavigation(enemy[i]->Get_NowRoom(), tmpRand);
+			
+			// int next = m_mapNavigate.MapNavigation(enemy[i]->Get_NowRoom(), tmpRand);//enemy[i]->Get_NowRoom() - 1;		// 今いる部屋の-1
+			 //int next = enemy[i]->Get_NowRoom() - 1;
 
 
-			int next = enemy[i]->Get_NowRoom() - 1;
+			if (enemy[i]->Get_NowRoom() != 0) {		// 今の部屋が0じゃなかったら
 
-			if (enemy[i]->Get_NowRoom() != 0) {
+				int cnt = m_roomEnemy[tmptbl].size();		// 次行きたい部屋のエネミーの要素数
+				int max = m_mapData[tmptbl].roomSize;		// 次行きたい部屋のエネミーの数制限
 
-				int cnt = m_roomEnemy[next].size();
-				int max = m_mapData[next].roomSize;
-
-				if (cnt < max)
+				if (cnt >= max) {
+					return;
+				} else if (cnt < max)		// 次行きたい部屋に空きがあったら
 				{
-					enemy[i]->Set_Room(next);
+					enemy[i]->Set_Room(tmptbl);
 				}
 				m_moveCnt = 0;
 			}
 		}
 	}
-
 }

@@ -37,7 +37,7 @@ void cGameMgr::Init() {
 
 	m_gameState = E_BATTLE;
 
-	m_mapNavigate.Get_MapDate(m_mapMgr.GetMapDes());
+	m_mapNavigate.Set_MapDate(m_mapMgr.GetMapDes());
 }
 
 void cGameMgr::Update() {
@@ -248,15 +248,16 @@ void cGameMgr::UnitGenerate() {
 	// Enemyのランダム生成
 	if (m_spawnCnt == SPAWN_CNT) {
 		switch (m_spawnType) {
-		case 0:	m_unitMgr.Add_ESord(m_mapMgr.GetStartRoomNum(), m_mapMgr.Get_Ground(2) + UNIT_HEIGHT / 2);
+		case 0:	m_unitMgr.Add_ESord(m_mapMgr.GetStartRoomNum(), m_mapMgr.Get_Ground(5) + UNIT_HEIGHT / 2);
 			m_spawnCnt = 0;
 			break;
-		case 1:	m_unitMgr.Add_EArcher(m_mapMgr.GetStartRoomNum(), m_mapMgr.Get_Ground(2) + UNIT_HEIGHT / 2);
+		case 1:	m_unitMgr.Add_EArcher(m_mapMgr.GetStartRoomNum(), m_mapMgr.Get_Ground(5) + UNIT_HEIGHT / 2);
 			m_spawnCnt = 0;
 			break;
-		case 2:	m_unitMgr.Add_EDefense(m_mapMgr.GetStartRoomNum(), m_mapMgr.Get_Ground(2) + UNIT_HEIGHT / 2);
+		case 2:	m_unitMgr.Add_EDefense(m_mapMgr.GetStartRoomNum(), m_mapMgr.Get_Ground(5) + UNIT_HEIGHT / 2);
 			m_spawnCnt = 0;
 			break;
+			// TODO なぜかマップnumber2にリスポーンする謎
 		}
 	}
 
