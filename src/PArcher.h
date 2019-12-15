@@ -48,7 +48,7 @@ public:
 
 	virtual void AttackSE()
 	{
-		cSound::Instance()->PlaySE(cSound::Instance()->E_SE_ARROW);
+		cSound::Instance()->PlaySE(cSound::Instance()->E_SE_SHEILD);
 	}
 
 	//virtual void AttackAnime();
