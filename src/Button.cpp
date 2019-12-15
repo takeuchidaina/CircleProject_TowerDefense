@@ -60,7 +60,8 @@ void cButton::Draw() {
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);		//”¼“§–¾‚ðƒIƒt
 
 		SetFontSize(m_fontSize);
-		DrawFormatString(m_rect.left + m_fontSize, m_rect.top + m_fontSize, WH, m_text);
+		DrawFormatString(m_rect.left + m_fontSize,
+			m_rect.top + ((m_rect.bottom - m_rect.top) / 2) - m_fontSize / 2, WH, m_text);
 	}
 
 }

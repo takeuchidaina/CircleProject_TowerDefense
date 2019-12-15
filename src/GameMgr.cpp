@@ -42,6 +42,8 @@ void cGameMgr::Init() {
 
 void cGameMgr::Update() {
 
+	if (GET_KEY_PRESS(KEY_INPUT_ESCAPE) == 1) { m_gameState = E_POSE; }
+
 	switch (m_gameState)
 	{
 	case E_PREPARATION:
@@ -66,6 +68,9 @@ void cGameMgr::Update() {
 		//ゲームに戻る
 		//設定
 		m_setting.Update();
+		if (m_setting.GetEndSetting() == TRUE) {
+			m_gameState = E_BATTLE;
+		}
 		//ゲームを終了
 		break;
 	}
@@ -82,8 +87,6 @@ void cGameMgr::Update() {
 	m_spawnType = GetRand(2);	// スポーンするタイプを決めるランダム
 
 #ifdef GAMEMGR_DEBUG
-	if (GET_KEY_PRESS(KEY_INPUT_ESCAPE) == 1 && m_gameState != E_POSE) {m_gameState = E_POSE;}
-	if (GET_KEY_PRESS(KEY_INPUT_B) == 1 && m_gameState != E_BATTLE) {m_gameState = E_BATTLE;}
 
 	//タイトルへ
 	if (GET_KEY_PRESS(KEY_INPUT_T) == 1) {m_sceneChanger->ChangeScene(E_SCENE_TITLE);}

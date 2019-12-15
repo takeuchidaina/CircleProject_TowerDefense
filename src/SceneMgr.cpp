@@ -3,7 +3,7 @@
 cSceneMgr::cSceneMgr() : m_nextScene(E_SCENE_NONE){
 
 	//m_scene = (cBaseScene*) new cGameMgr(this);
-	m_scene = (cBaseScene*) new cMenu(this);
+	m_scene = (cBaseScene*) new cTitle(this);
 
 }
 
@@ -32,9 +32,6 @@ void cSceneMgr::Update() {
 			break;
 		case E_SCENE_RESULT:
 			m_scene = (cBaseScene*) new cResult(this);
-			break;
-		case E_SCENE_END:
-			DxLib_End();
 			break;
 		}
 
