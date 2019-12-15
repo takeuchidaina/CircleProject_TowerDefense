@@ -22,14 +22,14 @@ public:
 	virtual ~cSound();
 
 	virtual void Init();
-	virtual void Update();
+	virtual void Update(){}
 	virtual void Draw() {}
 	virtual void End();
 
 	typedef enum {
-		E_SOUND_ENVIRONMENTAL,	//環境音
-		E_SOUND_BGM,			//BGM
-		E_SOUND_SE,				//SE
+		E_VOL_EVM,		//環境音
+		E_VOL_BGM,		//BGM
+		E_VOL_SE,		//SE
 		E_VOL_LENGTH
 	}eVolSetting;
 
@@ -37,21 +37,27 @@ public:
 	typedef enum{
 		E_SE_SELECT,	//決定
 		E_SE_CANSEL,	//キャンセル
-		E_SE_SWORD,		//剣士　攻撃
-		E_SE_ARROW,		//弓　攻撃
+		E_SE_SWORD,		//剣　攻撃
+		E_SE_SHEILD,	//盾　防御
 		E_SE_BULLET,	//銃　攻撃
-		E_SE_LENGTH,	//enumのサイズ
+		E_SE_LENGTH
 	}eSE;
 
 	//BGM
 	typedef enum{
-		E_BGM_SEA,		//海
 		E_BGM_TITLE,	//タイトル
 		E_BGM_BATTLE,	//バトル
 		E_BGM_WIN,		//リザルト　勝利
 		E_BGM_LOSE,		//リザルト　敗北
-		E_BGM_LENGTH,	//enumのサイズ
+		E_BGM_LENGTH
 	}eBGM;
+
+	//EVM	(environment:環境)
+	typedef enum {
+		E_EVM_SEA_ROUGH,	//荒波
+		E_EVM_SEA_RIPPLES,	//さざ波
+		E_EVM_LENGTH
+	}eEVM;
 
 	//再生方法
 	typedef enum {
@@ -64,21 +70,12 @@ public:
 
 	/*****************************************************
 	名前　：void ChangeSoundVolume();
-	概要　：
-	引数　：
-	戻り値：
-	補足　
+	概要　：音量値の変更を反映する
+	引数　：なし
+	戻り値：なし
+	補足　：値はファイルから読み取る
 	******************************************************/
 	void ChangeSoundVolume();
-
-	/*****************************************************
-	名前　：void PlaySE(eSE _se);
-	概要　：効果音を再生
-	引数　：eSE _se:鳴らしたい効果音
-	戻り値：なし
-	補足　：オーバーロード有
-	******************************************************/
-	void PlaySE(eSE _se);
 
 	/*****************************************************
 	名前　：void PlaySE(eSE _se);
@@ -86,105 +83,87 @@ public:
 	引数１：eSE _se:鳴らしたい効果音
 	引数２：ePlayType _type:再生方法
 	戻り値：なし
-	補足　：オーバーロード有
+	補足　：引数１に引数２を追加する形でオーバーロード有
 	******************************************************/
-	void PlaySE(eSE _se ,ePlayType _type);
+	void PlaySE(eSE _se);
+	void PlaySE(eSE _se, ePlayType _type);
 
 	/*****************************************************
 	名前　：void PlayBGM(eBGM _bgm);
-	概要　：BGMを頭から再生
-	引数　：eBGM _bgm:鳴らしたいBGM
-	戻り値：なし
-	補足　：オーバーロード有
-	******************************************************/
-	void PlayBGM(eBGM _bgm);
-
-	/*****************************************************
-	名前　：void PlayBGM(eBGM _bgm, ePlayType _type);
-	概要　：BGMを頭から再生、再生方法を選択可能
-	引数１：eBGM _bgm:鳴らしたい効果音
-	引数２：ePlayType _type:再生方法
-	戻り値：なし
-	補足　：オーバーロード有
-	******************************************************/
-	void PlayBGM(eBGM _bgm, ePlayType _type);
-
-	/*****************************************************
-	名前　：void PlayBGM(eBGM _bgm, ePlayType _type, bool _topPos);
-	概要　：
-	引数１：eBGM _bgm:鳴らしたい効果音
+	概要　：BGMを再生
+	引数１：eBGM _bgm:再生したいBGM
 	引数２：ePlayType _type:再生方法
 	引数３：bool _topPos:(TRUE)頭から再生 (FALSE)前回の中断点から再生
 	戻り値：なし
-	補足　：オーバーロード有
+	補足　：引数１に引数２,３を追加する形でオーバーロード有
 	******************************************************/
+	void PlayBGM(eBGM _bgm);
+	void PlayBGM(eBGM _bgm, ePlayType _type);
 	void PlayBGM(eBGM _bgm, ePlayType _type, bool _topPos);
 
 	/*****************************************************
-	名前　：void CheckSound(eSE _se);
-	概要　：効果音が再生されているか調べる
-	引数　：eSE _se:再生中か知りたい効果音
-	戻り値：(TRUE)再生中　(FALSE)再生されていない
-	補足　：オーバーロード有
+	名前　：void PlayEVM(eEVM _evm);
+	概要　：EVMを再生
+	引数１：eEVM _evm:再生したいEVM
+	引数２：ePlayType _type:再生方法
+	引数３：bool _topPos:(TRUE)頭から再生 (FALSE)前回の中断点から再生
+	戻り値：なし
+	補足　：引数１に引数２,３を追加する形でオーバーロード有
 	******************************************************/
-	bool CheckSound(eSE _se);
+	void PlayEVM(eEVM _evm);
+	void PlayEVM(eEVM _evm, ePlayType _type);
+	void PlayEVM(eEVM _evm, ePlayType _type, bool _topPos);
 
 	/*****************************************************
-	名前　：void CheckSound(eBGM _bgm);
-	概要　：BGMが再生されているか調べる
-	引数　：eBGM _bgm:再生中か知りたいBGM
+	名前　：void CheckSound(eSE _se);
+	概要　：音が再生されているか調べる
+	引数１：eSE _se:再生中か知りたいSE
+	引数１：eBGM _bgm:再生中か知りたいBGM
+	引数１：eEVM _evm:再生中か知りたいEVM
 	戻り値：(TRUE)再生中　(FALSE)再生されていない
-	補足　：オーバーロード有
+	補足　：引数毎にオーバーロード有
 	******************************************************/
+	bool CheckSound(eSE _se);
 	bool CheckSound(eBGM _bgm);
+	bool CheckSound(eEVM _evm);
 
 	/*****************************************************
 	名前　：void StopSound(eSE _se);
 	概要　：効果音を止める
-	引数　：eSE _se:止めたい効果音
+	引数１：eSE _se:止めたいSE
+	引数１：eBGM _bgm:止めたいBGM
+	引数１：eEVM _evm:止めたいEVM
 	戻り値：なし
-	補足　：オーバーロード有
+	補足　：引数毎にオーバーロード有
 	******************************************************/
 	void StopSound(eSE _se);
-
-	/*****************************************************
-	名前　：void StopSound(eBGM _bgm);
-	概要　：BGMを止める
-	引数　：eBGM _bgm:止めたいBGM
-	戻り値：なし
-	補足　：オーバーロード有
-	******************************************************/
 	void StopSound(eBGM _bgm);
+	void StopSound(eEVM _evm);
 
 #pragma endregion
 
 private:
 	string m_SEPath[E_SE_LENGTH];		//SEのファイルパス
 	string m_BGMPath[E_BGM_LENGTH];		//BGMのファイルパス
+	string m_EVMPath[E_EVM_LENGTH];		//EVMのファイルパス
 	int m_SE[E_SE_LENGTH];				//SEのサウンドハンドル
 	int m_BGM[E_BGM_LENGTH];			//BGMのサウンドハンドル
+	int m_EVM[E_EVM_LENGTH];			//EVMのサウンドハンドル
+
+	int m_volume[E_VOL_LENGTH];			//各項目の音量値
 
 	/*****************************************************
 	名前　：bool CheckValidArgument(eSE _se);
 	概要　：SEの引数が存在するかを調べる
-	引数　：eSE _se:調べたい値
+	引数１：eSE _se:調べたい値
+	引数１：eBGM _bgm:調べたい値
+	引数１：eEVM _evm:調べたい値
 	戻り値：(TRUE)有効範囲内　(FALSE)有効範囲外
-	補足　：オーバーロード有
+	補足　：引数毎にオーバーロード有
 	******************************************************/
 	bool CheckValidArgument(eSE _se);
-
-	/*****************************************************
-	名前　：bool CheckValidArgument(eBGM _bgm);
-	概要　：BGMの引数が存在するかを調べる
-	引数　：eBGM _bgm:調べたい値
-	戻り値：(TRUE)有効範囲内　(FALSE)有効範囲外
-	補足　：オーバーロード有
-	******************************************************/
 	bool CheckValidArgument(eBGM _bgm);
-
-
-
-	int m_volume[E_VOL_LENGTH];
+	bool CheckValidArgument(eEVM _evm);
 
 };
 

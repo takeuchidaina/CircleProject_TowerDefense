@@ -29,8 +29,8 @@ void cGameMgr::Init() {
 	cSound::Instance()->StopSound(cSound::Instance()->E_BGM_TITLE);
 	cSound::Instance()->PlayBGM(
 		cSound::Instance()->E_BGM_BATTLE, cSound::Instance()->E_PLAY_LOOP, FALSE);
-	cSound::Instance()->PlayBGM(
-		cSound::Instance()->E_BGM_SEA, cSound::Instance()->E_PLAY_LOOP, TRUE);
+	cSound::Instance()->PlayEVM(
+		cSound::Instance()->E_EVM_SEA_ROUGH, cSound::Instance()->E_PLAY_LOOP, TRUE);
 
 	m_maxPlayer = 15;
 	m_PlayerCnt = 0;
@@ -41,6 +41,8 @@ void cGameMgr::Init() {
 }
 
 void cGameMgr::Update() {
+
+	if (GET_KEY_PRESS(KEY_INPUT_ESCAPE) == 1) { m_gameState = E_POSE; }
 
 	switch (m_gameState)
 	{
@@ -66,6 +68,9 @@ void cGameMgr::Update() {
 		//ゲームに戻る
 		//設定
 		m_setting.Update();
+		if (m_setting.GetEndSetting() == TRUE) {
+			m_gameState = E_BATTLE;
+		}
 		//ゲームを終了
 		break;
 	}
@@ -82,8 +87,6 @@ void cGameMgr::Update() {
 	m_spawnType = GetRand(2);	// スポーンするタイプを決めるランダム
 
 #ifdef GAMEMGR_DEBUG
-	if (GET_KEY_PRESS(KEY_INPUT_ESCAPE) == 1 && m_gameState != E_POSE) {m_gameState = E_POSE;}
-	if (GET_KEY_PRESS(KEY_INPUT_B) == 1 && m_gameState != E_BATTLE) {m_gameState = E_BATTLE;}
 
 	//タイトルへ
 	if (GET_KEY_PRESS(KEY_INPUT_T) == 1) {m_sceneChanger->ChangeScene(E_SCENE_TITLE);}
@@ -143,8 +146,7 @@ void cGameMgr::Draw() {
 
 }
 
-void cGameMgr::End() {
-}
+
 
 void cGameMgr::ResultSave(bool _result) {
 	FILE* fp;
@@ -161,14 +163,14 @@ void cGameMgr::ResultSave(bool _result) {
 	else {
 		fprintf(fp, "lose");
 	}
-
 	fclose(fp);
+
 }
 void cGameMgr::EscortDamageCalc() {
 	//HPが無くなったらリザルトへ
 	if (m_unitMgr.EscortDie() == false) {
 		cSound::Instance()->StopSound(cSound::Instance()->E_BGM_BATTLE);
-		cSound::Instance()->StopSound(cSound::Instance()->E_BGM_SEA);
+		cSound::Instance()->StopSound(cSound::Instance()->E_EVM_SEA_ROUGH);
 		ResultSave(FALSE);
 		m_sceneChanger->ChangeScene(E_SCENE_RESULT);
 	}
@@ -177,7 +179,7 @@ void cGameMgr::EscortDamageCalc() {
 void cGameMgr::DefSuccessJudge() {
 	if (m_time.GetSecond() <= 1) {
 		cSound::Instance()->StopSound(cSound::Instance()->E_BGM_BATTLE);
-		cSound::Instance()->StopSound(cSound::Instance()->E_BGM_SEA);
+		cSound::Instance()->StopSound(cSound::Instance()->E_EVM_SEA_ROUGH);
 		ResultSave(TRUE);
 		m_sceneChanger->ChangeScene(E_SCENE_RESULT);
 	}
@@ -320,4 +322,8 @@ void cGameMgr::UnitData()
 	tmp.playerCnt = m_PlayerCnt;
 	tmp.typeCnt = m_unitMgr.Get_TypeCnt();
 	m_UI.SetUnitData(tmp);
+}
+
+void cGameMgr::End() {
+
 }

@@ -5,22 +5,22 @@ cResult::cResult(ISceneChanger* _scene) : cBaseScene(_scene) {
 }
 
 void cResult::Init() {
-	m_image = { 920,600,1220,700,"../resource/img/TitleEndButton.png" };
+	m_image = {/*左上y*/600,/*左上x*/880,/*右下x*/1180,/*右下y*/700,"../resource/img/TitleEndButton.png" };
 	m_image.handle = LoadGraph(m_image.filePath.c_str());
 	FileCheck(m_image.handle);
 
-	m_btn.Init(m_image.ux, m_image.uy,m_image.dx, m_image.dy,m_image.filePath.c_str());
+	m_btn.Init(m_image.rect,m_image.filePath.c_str());
 
 	FILE* fp;
 
 	errno_t err; // errno_t型(int型)
 	err = fopen_s(&fp, "../result.txt", "r"); // ファイルを開く。失敗するとエラーコードを返す。
 	if (err != 0) {
-
+		DEBUG_LOG("file not open");
 	}
 
 	char result[256];
-	if (fgets(result, 256, fp) != NULL){
+	if (fgets(result, 256, fp) != NULL) {
 		if (result[0] == 'w') {
 			m_BG = LoadGraph("../resource/img/seikou.png");
 		}
@@ -30,6 +30,7 @@ void cResult::Init() {
 	}
 
 	fclose(fp);
+
 }
 
 void cResult::Update() {
@@ -68,12 +69,8 @@ void cResult::Update() {
 
 void cResult::Draw() {
 
-	DrawGraph(0, -130,m_BG,FALSE);
+	DrawGraph(0, /*Y座標調節*/ -130,m_BG,FALSE);
 	m_btn.Draw();
-#ifdef RESULT_DEBUG
-	DrawFormatString(500, 400, RD, "GAME CLEAR");
-	DrawFormatString(0, 0, WH, "リザルト画面");
-#endif // RESULT_DEBUG
 
 }
 

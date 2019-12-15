@@ -1,18 +1,10 @@
 #include "Button.h"
 
-//cButton::cButton(double _ux, double _uy, double _dx, double _dy,const char* _filePath)
-//{
-//	//座標代入
-//	m_ux = _ux,m_uy = _uy,m_dx = _dx,m_dy = _dy;
-//	//画像代入
-//	m_image = LoadGraph(_filePath);
-//	if (m_image == NULL) {
-//		//error
-//	}
-//}
 cButton::cButton()
 {
-	m_ux = 0, m_uy = 0, m_dx = 0, m_dy = 0;
+	m_rect.left = 0, m_rect.top = 0, m_rect.right = 0, m_rect.bottom = 0;
+	m_image = 0;
+	buttonType = false;
 }
 
 cButton::~cButton()
@@ -20,28 +12,56 @@ cButton::~cButton()
 	DeleteGraph(m_image);
 }
 
-void cButton::Init(double _ux, double _uy, double _dx, double _dy, const char* _filePath){
+void cButton::Init(sRECT _rect, const char* _filePath){
 	
 	//座標代入
-	m_ux = _ux, m_uy = _uy, m_dx = _dx, m_dy = _dy;
+	m_rect.top = _rect.top, m_rect.left = _rect.left, m_rect.right = _rect.right, m_rect.bottom = _rect.bottom;
 
 	//画像代入
 	m_image = LoadGraph(_filePath);
 	FileCheck(m_image);
+
+	buttonType = TRUE;
+}
+
+void cButton::Init(sRECT _rect, short _transNum, const char* _text, short _fontSize) {
+
+	//座標代入
+	m_rect.top = _rect.top, m_rect.left = _rect.left,  m_rect.right = _rect.right, m_rect.bottom = _rect.bottom;
+
+	m_text = _text;
+	m_transNum = _transNum;
+	m_fontSize = _fontSize;
+
+	buttonType = FALSE;
 }
 
 //クリックされているかどうか
 bool cButton::ButtonClick() {
 
-	if(m_hit.RectOnClick(m_ux,m_uy,m_dx,m_dy) == TRUE) {
-		return TRUE;
+	//マウスがボタンと重なっているか確認
+	if (MOUSE_X > m_rect.left && MOUSE_X < m_rect.right && MOUSE_Y > m_rect.top && MOUSE_Y < m_rect.bottom) {
+		return TRUE;	//重なっている
 	}
 	else {
-		return FALSE;
+		return FALSE;	//重なっていない
 	}
 }
 
 void cButton::Draw() {
-	//指定された場所に指定されたサイズの画像を表示
-	DrawExtendGraph(m_ux, m_uy, m_dx, m_dy, m_image, TRUE);
+
+	if (buttonType == TRUE) {
+		//指定された場所に指定されたサイズの画像を表示
+		DrawExtendGraph(m_rect.left, m_rect.top, m_rect.right, m_rect.bottom, m_image, TRUE);
+	}
+	else {
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, m_transNum);	//半透明
+		DrawBox(m_rect.left, m_rect.top, m_rect.right, m_rect.bottom, BK, TRUE);
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);		//半透明をオフ
+
+		SetFontSize(m_fontSize);
+		DrawFormatString(m_rect.left + m_fontSize,
+			m_rect.top + ((m_rect.bottom - m_rect.top) / 2) - m_fontSize / 2, WH, m_text);
+	}
+
 }

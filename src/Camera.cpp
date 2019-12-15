@@ -1,25 +1,23 @@
 #include "Camera.h"
 
-cCamera::cCamera()
-{
+cCamera::cCamera(){
 	Init();
 }
 
-cCamera::~cCamera()
-{
+cCamera::~cCamera(){
 	End();
 }
 
 void cCamera::Init() {
 
-	//カメラの座標・注視点
+	//座標・注視点
 	m_camera.pos = VGet(0.0f,0.0f,-800.0f);
 	m_camera.target = VGet(0.0f, 0.0f, 0.0f);
 
 	//拡大縮小
 	MOUSE_WHEEL_INIT;			//マウスホイールの回した回数値を初期化
 	m_wheeled = MOUSE_WHEEL;	//マウスホイールの回した回数を取得
-	m_zoom = ZOOM_LIMIT_UP;		//カメラを一番拡大した状態へ
+	m_zoom = ZOOM_LIMIT_UP;		//カメラを一番引いた状態へ
 	m_zoomCnt = 0;
 
 	//移動
@@ -27,19 +25,19 @@ void cCamera::Init() {
 	m_wheelPosY = MOUSE_Y;
 	m_wheelClick = FALSE;
 
-	// カメラを正射影に変更
+	//2D運用する為、正射影に変更
 	SetupCamera_Ortho(m_zoom);
 }
 
 void cCamera::Update() {
 
-	// 拡大縮小
+	//拡大縮小
 	CameraScale();
 
-	// 移動
+	//移動
 	CameraMove();
 
-	// カメラの座標、注視点を更新
+	//カメラの座標、注視点を更新
 	SetCameraPositionAndTarget_UpVecY(m_camera.pos, m_camera.target);
 }
 
@@ -125,13 +123,13 @@ void cCamera::CameraMoveX(float _moveAmount) {
 	m_camera.target.x += _moveAmount;
 	m_camera.pos.x = m_camera.target.x;
 
-	CameraDrawControl();	//カメラが背景を越していないかチェック
+	CameraDrawControl();	//カメラが背景を越しているなら越さないように座標を調整
 }
 void cCamera::CameraMoveY(float _moveAmount) {
 	m_camera.target.y += _moveAmount;
 	m_camera.pos.y = m_camera.target.y;
 
-	CameraDrawControl();	//カメラが背景を越していないかチェック
+	CameraDrawControl();	//カメラが背景を越しているなら越さないように座標を調整
 }
 
 void cCamera::Draw() {
