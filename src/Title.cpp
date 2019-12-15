@@ -5,15 +5,11 @@ cTitle::cTitle(ISceneChanger* _scene) : cBaseScene(_scene) {
 
 void cTitle::Init() {
 
-	nowSelect = 0;
-
 	//メニューの初期化
-	m_menu[E_TITLE_MENU] = { {120,600,420,700,"../resource/img/TitleStartButton.png" },E_SCENE_GAME };
-	m_menu[E_TITLE_END] = { {420,600,720,700,"../resource/img/TitleEndButton.png" }, E_SCENE_END };
+	m_menu[E_TITLE_MENU] = { {/*左上y*/600,/*左上x*/100,/*右下x*/400,/*右下y*/700,"../resource/img/TitleStartButton.png" },E_SCENE_GAME };
+	m_menu[E_TITLE_END]  = { {/*左上y*/600,/*左上x*/420,/*右下x*/720,/*右下y*/700,"../resource/img/TitleEndButton.png" }, E_SCENE_END };
 	for (int i = 0; i < E_TITLE_MAX; i++) {
-		m_btn[i].Init(m_menu[i].image.ux, m_menu[i].image.uy,
-						 m_menu[i].image.dx, m_menu[i].image.dy,
-							m_menu[i].image.filePath.c_str());
+		m_btn[i].Init(m_menu[i].image.rect,m_menu[i].image.filePath.c_str());
 	}
 
 	//画像の初期化
@@ -58,21 +54,14 @@ void cTitle::Draw() {
 
 	//画像表示 (※背景があるので一番最初に呼び出すこと)
 	for (int i = 0; i < E_IMAGE_MAX; i++) {
-		DrawExtendGraph(m_image[i].ux, m_image[i].uy,
-			m_image[i].dx, m_image[i].dy, m_image[i].handle, TRUE);
+		DrawExtendGraph(m_image[i].rect.left, m_image[i].rect.top,
+			m_image[i].rect.right, m_image[i].rect.bottom, m_image[i].handle, TRUE);
 	}
 
 	//ボタン表示
 	for (int i = 0; i < E_TITLE_MAX; i++) {
 		m_btn[i].Draw();
 	}
-
-
-
-#ifdef TITLE_DEBUG
-	DrawFormatString(0, 0, WH, "タイトル画面");
-	DrawFormatString(0, 20, WH, "nowSelect:%d",nowSelect);
-#endif // TITLE_DEBUG
 
 }
 

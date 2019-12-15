@@ -74,3 +74,10 @@ typedef struct
 	int maxPlayer;
 	int playerCnt;
 }sUnitData;
+
+typedef struct {
+	int top;
+	int left;
+	int right;
+	int bottom;
+}sRECT;

@@ -3,6 +3,7 @@
 #include "DxLib.h"
 #include "DebugList.h"
 #include "ColorListh.h"
+#include "Constant.h"
 #include "BaseScene.h"
 #include "BaseTask.h"
 #include "ISceneChanger.h"
@@ -28,7 +29,7 @@ public:
 
 private:
 
-#ifdef TITLE_DEBUG
+#ifndef TITLE_DEBUG
 	// メニュー項目一覧
 	typedef enum {
 		E_TITLE_MENU,
@@ -39,7 +40,7 @@ private:
 	}eTitle;
 #endif // TITLE_DEBUG
 
-#ifndef TITLE_DEBUG
+#ifdef TITLE_DEBUG
 	// メニュー項目一覧
 	typedef enum {
 		E_TITLE_MENU,
@@ -57,9 +58,9 @@ private:
 
 	// 画像配置の必要情報
 	typedef struct {
-		double ux=0, uy=0, dx=0, dy=0;	//左上xy,右下xy
+		sRECT rect;				//左上xy,右下xy
 		string filePath="";		//画像のファイルパス
-		int handle=0;				//画像ハンドル
+		int handle=0;			//画像ハンドル
 	}sImage;
 
 	// メニューの必要情報
@@ -74,7 +75,6 @@ private:
 	const int FONT_SIZE = 20;	//フォントサイズ
 	const int TEXT_X = 350;		//一行目の座標x
 	const int TEXT_Y = 300;		//一行目の座標y
-	int nowSelect = 0;			//現在の選択メニュー
 
 	sImage m_image[E_IMAGE_MAX];	//ボタン以外の画像
 	cButton m_btn[E_TITLE_MAX];		//ボタン
