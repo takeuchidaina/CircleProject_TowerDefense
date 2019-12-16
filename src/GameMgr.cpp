@@ -8,83 +8,71 @@ void cGameMgr::Init() {
 	//時間
 	cTime* ptime = new cTime(TIME_LIMIT);
 	m_time = *ptime;
+	delete ptime;
 
-	//画像
-	m_wave = LoadGraph("../resource/img/wave.png");
-	FileCheck(m_wave);
-	m_BG = LoadGraph("../resource/img/Sea.jpg");
-	FileCheck(m_BG);
-	m_ship = LoadGraph("../resource/img/Ship.png");
-	FileCheck(m_ship);
-	m_cloud[0].pos = VGet(0.0f, 0.0f, 0.0f);
-	m_cloud[0].image = LoadGraph("../resource/img/BG_Cloud.png");
-	FileCheck(m_cloud[0].image);
-	m_cloud[1].pos = VGet(-1870.0f, 0.0f, 0.0f);
-	m_cloud[1].image = LoadGraph("../resource/img/BG_Cloud.png");
-	FileCheck(m_cloud[1].image);
-
+	//ユニット管理部・敵AIにマップ情報を渡す
 	m_unitMgr.Set_MapData(m_mapMgr.GetMapData());
+	m_mapNavigate.Set_MapDate(m_mapMgr.GetMapDes());
 
 	//BGM
 	cSound::Instance()->StopSound(cSound::Instance()->E_BGM_TITLE);
 	cSound::Instance()->PlayBGM(
-		cSound::Instance()->E_BGM_BATTLE, cSound::Instance()->E_PLAY_LOOP, FALSE);
+		cSound::Instance()->E_BGM_BATTLE, cSound::Instance()->E_PLAY_LOOP, FALSE);		//戦闘BGM
 	cSound::Instance()->PlayEVM(
-		cSound::Instance()->E_EVM_SEA_ROUGH, cSound::Instance()->E_PLAY_LOOP, TRUE);
+		cSound::Instance()->E_EVM_SEA_ROUGH, cSound::Instance()->E_PLAY_LOOP, TRUE);	//さざ波
 
-	m_maxPlayer = 15;
-	m_PlayerCnt = 0;
+	m_PlayerCnt = 0;		//プレイヤーユニットの出現数
 
-	m_gameState = E_BATTLE;
+	m_gameState = E_BATTLE;		//初期ステート
+	//m_gameState = E_PREPARATION;	//初期ステート
 
-	m_mapNavigate.Set_MapDate(m_mapMgr.GetMapDes());
 }
 
 void cGameMgr::Update() {
 
+	//Escapeキーでステートをポーズへ変更
 	if (GET_KEY_PRESS(KEY_INPUT_ESCAPE) == 1) { m_gameState = E_POSE; }
 
+	//ステート管理
 	switch (m_gameState)
 	{
+	//戦闘準備
 	case E_PREPARATION:
-		m_unitMgr.Update();
+		m_unitMgr.Update();		//TODO:ユニットの生成をUnitMgrで行う
+		m_UI.Update();			//UIのキャラクター出撃数更新
+		m_BG.Update();			//雲のアニメーション
 		break;
-
+	//戦闘
 	case E_BATTLE:
-		UnitGenerate();		//ユニット生成
-		DefSuccessJudge();
-		m_unitMgr.Update();
-		EscortDamageCalc();
-		m_time.Update();
+		UnitGenerate();			//ユニット生成
+		m_unitMgr.Update();		//ユニットの行動
+		UnitData();				//UIにユニットのデータをセットする
+		m_time.Update();		//制限時間を更新
+		DefSuccessJudge();		//時間制限による勝利判定
+		EscortDamageCalc();		//護衛対象のHPによる敗北判定
+		m_mapMgr.Update();		//マップサイズ用　特段処理は無し
+		m_camera.Update();		//カメラの移動・ズーム
+		m_UI.Update();			//UIのキャラクター出撃数更新
+		m_BG.Update();			//雲のアニメーション
 		break;
-
+	//イベント
 	case E_EVENT:
 		break;
-
+	//カットシーン
 	case E_CUTSCENE:
 		break;
-
+	//ポーズ
 	case E_POSE:
-		//ゲームに戻る
 		//設定
 		m_setting.Update();
+
+		//設定が終了したら戦闘へ戻る
 		if (m_setting.GetEndSetting() == TRUE) {
 			m_gameState = E_BATTLE;
 		}
 		//ゲームを終了
 		break;
 	}
-
-	//m_fps.Update();
-	m_mapMgr.Update();
-	
-	m_camera.Update();
-	
-	m_UI.Update();
-	MoveBackGround();
-
-	m_spawnCnt++;			// 一定数まで行ったらスポーン
-	m_spawnType = GetRand(2);	// スポーンするタイプを決めるランダム
 
 #ifdef GAMEMGR_DEBUG
 
@@ -103,49 +91,39 @@ void cGameMgr::Update() {
 
 void cGameMgr::Draw() {
 
-	DrawBillboard3D(VGet(0.0f, 0.0f, 0.0f), 0.5, 0.5, 1280, 0, m_BG, TRUE);				//背景
-	DrawBillboard3D(VGet(m_cloud[0].pos.x, m_cloud[0].pos.y, m_cloud[0].pos.z),
-		0.5, 0.5, 1903, 0, m_cloud[0].image, TRUE);		//雲(初期画面内)
-	DrawBillboard3D(VGet(m_cloud[1].pos.x, m_cloud[1].pos.y, m_cloud[1].pos.z),
-		0.5, 0.5, 1903, 0, m_cloud[1].image, TRUE);		//雲(後続)
-	DrawBillboard3D(VGet(0.0f, 0.0f, 0.0f), 0.5, 0.5, 1280, 0, m_ship, TRUE);			//船
-	DrawBillboard3D(VGet(-10.0f, -20.0f, 0.0f), 0.5, 0.5, 1280, 0, m_wave, TRUE);		//波
-
-	//m_fps.Draw();
-	m_mapMgr.Draw();
-	m_unitMgr.Draw();
-	m_camera.Draw();
-
-	UnitData();
-	m_UI.Draw();
-
+	//ステート管理
 	switch (m_gameState)
 	{
+	//戦闘準備
 	case E_PREPARATION:
+		m_BG.Draw();
+		m_mapMgr.Draw();
+		m_unitMgr.Draw();
+		m_UI.Draw();
 		break;
-
+	//戦闘
 	case E_BATTLE:
+		m_BG.Draw();
+		m_mapMgr.Draw();
+		m_unitMgr.Draw();
 		m_time.Draw();
+		m_UI.Draw();
 		break;
-
+	//イベント
 	case E_EVENT:
 		break;
-
+	//カットシーン
 	case E_CUTSCENE:
 		break;
-
+	//ポーズ
 	case E_POSE:
-		//ゲームに戻る
-		//設定
+		m_BG.Draw();
+		m_mapMgr.Draw();
+		m_unitMgr.Draw();
 		m_setting.Draw();
-		//ゲームを終了する
 		break;
 	}
-
-
-
 }
-
 
 
 void cGameMgr::ResultSave(bool _result) {
@@ -185,69 +163,75 @@ void cGameMgr::DefSuccessJudge() {
 	}
 }
 
-void cGameMgr::MoveBackGround() {
-	//移動
-	m_cloud[0].pos.x += CLOUD_SPEED;
-	m_cloud[1].pos.x += CLOUD_SPEED;
-	//画面外処理、スクロール設定
-	if (m_cloud[0].pos.x >= 1870.0f) {
-		m_cloud[0].pos.x = m_cloud[1].pos.x - 1870.0f;
-	}
-	else if (m_cloud[1].pos.x >= 1870.0f) {
-		m_cloud[1].pos.x = m_cloud[0].pos.x - 1870.0f;
-	}
+void cGameMgr::UnitGenerate() {
+
+	//プレイヤーの生成
+	PlayerGenerate();
+
+	//エネミーの生成
+	EnemyGenerate();
+
+	//UIにユニットの情報を渡す
+	UnitData();
 }
 
-void cGameMgr::UnitGenerate() {
-	int clickRoom = 0;
+void cGameMgr::PlayerGenerate() {
 
+	//プレイヤーの生成
+	int clickRoom = 0;
 	if (MOUSE_PRESS(LEFT_CLICK) == 1 || MOUSE_PRESS(RIGHT_CLICK) == 1) {
 		clickRoom = m_mapMgr.CheckInto(MOUSE_V.x, MOUSE_V.y);
 	}
 
-	if (m_maxPlayer > m_PlayerCnt){			// コスト制限
+	if (m_maxPlayer > m_PlayerCnt) {			// コスト制限
 		//Player
-		if (MOUSE_PRESS(LEFT_CLICK) == 1 && CheckHitKey(KEY_INPUT_S) >= 1){
-			if (clickRoom != -1){
-				if (m_unitMgr.Add_PSord(MOUSE_V.x, m_mapMgr.Get_Ground(clickRoom) + UNIT_HEIGHT / 2, clickRoom) == 0){
+		if (MOUSE_PRESS(LEFT_CLICK) == 1 && CheckHitKey(KEY_INPUT_S) >= 1) {
+			if (clickRoom != -1) {
+				if (m_unitMgr.Add_PSord(MOUSE_V.x, m_mapMgr.Get_Ground(clickRoom) + UNIT_HEIGHT / 2, clickRoom) == 0) {
 					m_PlayerCnt++;
 					m_UI.SetPlayerCount(0);
 				}
 			}
 		}
-		else if (MOUSE_PRESS(LEFT_CLICK) == 1 && CheckHitKey(KEY_INPUT_A) >= 1){
-			if (clickRoom != -1){
-				if (m_unitMgr.Add_PArcher(MOUSE_V.x, m_mapMgr.Get_Ground(clickRoom) + UNIT_HEIGHT / 2, clickRoom) == 0){
+		else if (MOUSE_PRESS(LEFT_CLICK) == 1 && CheckHitKey(KEY_INPUT_A) >= 1) {
+			if (clickRoom != -1) {
+				if (m_unitMgr.Add_PArcher(MOUSE_V.x, m_mapMgr.Get_Ground(clickRoom) + UNIT_HEIGHT / 2, clickRoom) == 0) {
 					m_PlayerCnt++;
 					m_UI.SetPlayerCount(1);
 				}
 			}
 		}
-		else if (MOUSE_PRESS(LEFT_CLICK) == 1 && CheckHitKey(KEY_INPUT_D) >= 1){
-			if (clickRoom != -1){
-				if (m_unitMgr.Add_PDefense(MOUSE_V.x, m_mapMgr.Get_Ground(clickRoom) + UNIT_HEIGHT / 2, clickRoom) == 0){
+		else if (MOUSE_PRESS(LEFT_CLICK) == 1 && CheckHitKey(KEY_INPUT_D) >= 1) {
+			if (clickRoom != -1) {
+				if (m_unitMgr.Add_PDefense(MOUSE_V.x, m_mapMgr.Get_Ground(clickRoom) + UNIT_HEIGHT / 2, clickRoom) == 0) {
 					m_PlayerCnt++;
 					m_UI.SetPlayerCount(2);
 				}
 			}
 		}
 	}
-	else if (MOUSE_PRESS(LEFT_CLICK) == 1 && cMouse::Instance()->GetPlayerNum() >= 0 && CheckHitKeyAll != 0){
+	else if (MOUSE_PRESS(LEFT_CLICK) == 1 && cMouse::Instance()->GetPlayerNum() >= 0 && CheckHitKeyAll != 0) {
 		int clickRoom = m_mapMgr.CheckInto(MOUSE_V.x, MOUSE_V.y);
-		if (clickRoom != -1){
+		if (clickRoom != -1) {
 			m_unitMgr.Set_NextPlayerPos(cMouse::Instance()->GetPlayerNum(), clickRoom, MOUSE_V.x);
 			cMouse::Instance()->SetPlayerNum(-1);
 		}
 	}
-	else if (MOUSE_PRESS(LEFT_CLICK) == 1){
+	else if (MOUSE_PRESS(LEFT_CLICK) == 1) {
 		int selectPlayer = 0;
 		clickRoom = m_unitMgr.CheckPlayerClick(MOUSE_V);
-		if (0 <= selectPlayer){
+		if (0 <= selectPlayer) {
 			cMouse::Instance()->SetPlayerNum(selectPlayer);
 		}
 	}
+}
 
-	// Enemyのランダム生成
+void cGameMgr::EnemyGenerate() {
+
+	//Enemyのランダム生成
+	m_spawnCnt++;				// 一定数まで行ったらスポーン
+	m_spawnType = GetRand(2);	// スポーンするタイプを決めるランダム
+
 	if (m_spawnCnt == SPAWN_CNT) {
 		switch (m_spawnType) {
 		case 0:	m_unitMgr.Add_ESord(m_mapMgr.GetStartRoomNum(), m_mapMgr.Get_Ground(5) + UNIT_HEIGHT / 2);
@@ -259,60 +243,9 @@ void cGameMgr::UnitGenerate() {
 		case 2:	m_unitMgr.Add_EDefense(m_mapMgr.GetStartRoomNum(), m_mapMgr.Get_Ground(5) + UNIT_HEIGHT / 2);
 			m_spawnCnt = 0;
 			break;
-			// TODO なぜかマップnumber2にリスポーンする謎
+			// TODO :なぜかマップnumber2にリスポーンする
 		}
 	}
-
-
-	/*
-	//Enemy		クリック生成 ESord
-	if (MOUSE_PRESS(RIGHT_CLICK) == 1 && CheckHitKey(KEY_INPUT_S) >= 1)
-	{
-		if (clickRoom != -1)
-		{
-			m_unitMgr.Add_ESord(MOUSE_V.x, m_mapMgr.Get_Ground(clickRoom) + UNIT_HEIGHT / 2, clickRoom);
-			//DEBUG_LOG("剣エネミー出現");
-		}
-	}
-	// クリック生成 EArcher
-	else if (MOUSE_PRESS(RIGHT_CLICK) == 1 && CheckHitKey(KEY_INPUT_A) >= 1)
-	{
-		if (clickRoom != -1)
-		{
-			m_unitMgr.Add_EArcher(MOUSE_V.x, m_mapMgr.Get_Ground(clickRoom) + UNIT_HEIGHT / 2, clickRoom);
-			//enemy.Set_NextEnemyPos(cMouse::Instance()->GetEnemyNum(), clickRoom, MOUSE_V.x);
-			//DEBUG_LOG("弓エネミー出現");
-		}
-	}
-	// クリック生成 EDefense
-	else if (MOUSE_PRESS(RIGHT_CLICK) == 1 && CheckHitKey(KEY_INPUT_D) >= 1)
-	{
-		if (clickRoom != -1)
-		{
-			m_unitMgr.Add_EDefense(MOUSE_V.x, m_mapMgr.Get_Ground(clickRoom) + UNIT_HEIGHT / 2, clickRoom);
-			//enemy.Set_NextEnemyPos(cMouse::Instance()->GetEnemyNum(), clickRoom, MOUSE_V.x);
-			//DEBUG_LOG("弓エネミー出現");
-		}
-	}
-	else if (MOUSE_PRESS(RIGHT_CLICK) == 1 && cMouse::Instance()->GetEnemyNum() >= 0 && CheckHitKeyAll != 0)
-	{
-		if (clickRoom != -1)
-		{
-			m_unitMgr.Set_NextEnemyPos(cMouse::Instance()->GetEnemyNum(), clickRoom, MOUSE_V.x);
-			cMouse::Instance()->SetEnemyNum(-1);
-		}
-	}
-	else if (MOUSE_PRESS(RIGHT_CLICK) == 1)
-	{
-		int selectEnemy = 0;
-		selectEnemy = m_unitMgr.CheckEnemyClick(MOUSE_V);
-		if (0 <= selectEnemy)
-		{
-			cMouse::Instance()->SetEnemyNum(selectEnemy);
-		}
-		//enemy.Set_NextEnemyPos(eMove);
-	}
-	*/
 }
 
 void cGameMgr::UnitData()
@@ -326,5 +259,5 @@ void cGameMgr::UnitData()
 }
 
 void cGameMgr::End() {
-
+	//
 }
