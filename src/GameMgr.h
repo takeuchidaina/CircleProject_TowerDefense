@@ -22,6 +22,7 @@
 #include "Setting.h"
 #include "MapNavigate.h"
 #include "InGameBackGround.h"
+#include <time.h>
 
 /********************************************************
 ●概要

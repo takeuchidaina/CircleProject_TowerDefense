@@ -26,6 +26,7 @@ void cGameMgr::Init() {
 	m_gameState = E_BATTLE;		//初期ステート
 	//m_gameState = E_PREPARATION;	//初期ステート
 
+	SRand(time(NULL));		//敵ユニットのランダム出現用に現在時刻でrandを初期化
 }
 
 void cGameMgr::Update() {
@@ -125,7 +126,47 @@ void cGameMgr::Draw() {
 	}
 }
 
+void cGameMgr::End() {
+	//
+}
 
+/*****************************************************
+名前　：void EscortDamageCalc();
+概要　：護衛対象のHPを元に敗北判定を行う
+引数　：なし
+戻り値：なし
+******************************************************/
+void cGameMgr::EscortDamageCalc() {
+	//HPが無くなったらリザルトへ
+	if (m_unitMgr.EscortDie() == false) {
+		cSound::Instance()->StopSound(cSound::Instance()->E_BGM_BATTLE);
+		cSound::Instance()->StopSound(cSound::Instance()->E_EVM_SEA_ROUGH);
+		ResultSave(FALSE);
+		m_sceneChanger->ChangeScene(E_SCENE_RESULT);
+	}
+}
+
+/*****************************************************
+名前　：void DefSuccessJudge();
+概要　：制限時間を元に勝利判定を行う
+引数　：なし
+戻り値：なし
+******************************************************/
+void cGameMgr::DefSuccessJudge() {
+	if (m_time.GetSecond() <= 1/*sec*/) {
+		cSound::Instance()->StopSound(cSound::Instance()->E_BGM_BATTLE);
+		cSound::Instance()->StopSound(cSound::Instance()->E_EVM_SEA_ROUGH);
+		ResultSave(TRUE);
+		m_sceneChanger->ChangeScene(E_SCENE_RESULT);
+	}
+}
+
+/*****************************************************
+名前　：void ResultSave(bool _result);
+概要　：ファイルに勝敗結果を書き出す
+引数　：bool _result : 勝敗結果　(TRUE)勝利 (FALSE)敗北
+戻り値：なし
+******************************************************/
 void cGameMgr::ResultSave(bool _result) {
 	FILE* fp;
 
@@ -144,25 +185,13 @@ void cGameMgr::ResultSave(bool _result) {
 	fclose(fp);
 
 }
-void cGameMgr::EscortDamageCalc() {
-	//HPが無くなったらリザルトへ
-	if (m_unitMgr.EscortDie() == false) {
-		cSound::Instance()->StopSound(cSound::Instance()->E_BGM_BATTLE);
-		cSound::Instance()->StopSound(cSound::Instance()->E_EVM_SEA_ROUGH);
-		ResultSave(FALSE);
-		m_sceneChanger->ChangeScene(E_SCENE_RESULT);
-	}
-}
 
-void cGameMgr::DefSuccessJudge() {
-	if (m_time.GetSecond() <= 1) {
-		cSound::Instance()->StopSound(cSound::Instance()->E_BGM_BATTLE);
-		cSound::Instance()->StopSound(cSound::Instance()->E_EVM_SEA_ROUGH);
-		ResultSave(TRUE);
-		m_sceneChanger->ChangeScene(E_SCENE_RESULT);
-	}
-}
-
+/*****************************************************
+名前　：void UnitGenerate();
+概要　：ユニットの生成関連の関数を呼び出す
+引数　：なし
+戻り値：なし
+******************************************************/
 void cGameMgr::UnitGenerate() {
 
 	//プレイヤーの生成
@@ -175,6 +204,12 @@ void cGameMgr::UnitGenerate() {
 	UnitData();
 }
 
+/*****************************************************
+名前　：void PlayerGenerate();
+概要　：プレイヤーユニットの生成
+引数　：なし
+戻り値：なし
+******************************************************/
 void cGameMgr::PlayerGenerate() {
 
 	//プレイヤーの生成
@@ -184,7 +219,7 @@ void cGameMgr::PlayerGenerate() {
 	}
 
 	if (m_maxPlayer > m_PlayerCnt) {			// コスト制限
-		//Player
+		//剣　生成
 		if (MOUSE_PRESS(LEFT_CLICK) == 1 && CheckHitKey(KEY_INPUT_S) >= 1) {
 			if (clickRoom != -1) {
 				if (m_unitMgr.Add_PSord(MOUSE_V.x, m_mapMgr.Get_Ground(clickRoom) + UNIT_HEIGHT / 2, clickRoom) == 0) {
@@ -193,6 +228,7 @@ void cGameMgr::PlayerGenerate() {
 				}
 			}
 		}
+		//銃　生成
 		else if (MOUSE_PRESS(LEFT_CLICK) == 1 && CheckHitKey(KEY_INPUT_A) >= 1) {
 			if (clickRoom != -1) {
 				if (m_unitMgr.Add_PArcher(MOUSE_V.x, m_mapMgr.Get_Ground(clickRoom) + UNIT_HEIGHT / 2, clickRoom) == 0) {
@@ -201,6 +237,7 @@ void cGameMgr::PlayerGenerate() {
 				}
 			}
 		}
+		//盾　生成
 		else if (MOUSE_PRESS(LEFT_CLICK) == 1 && CheckHitKey(KEY_INPUT_D) >= 1) {
 			if (clickRoom != -1) {
 				if (m_unitMgr.Add_PDefense(MOUSE_V.x, m_mapMgr.Get_Ground(clickRoom) + UNIT_HEIGHT / 2, clickRoom) == 0) {
@@ -210,6 +247,7 @@ void cGameMgr::PlayerGenerate() {
 			}
 		}
 	}
+	//部屋の移動
 	else if (MOUSE_PRESS(LEFT_CLICK) == 1 && cMouse::Instance()->GetPlayerNum() >= 0 && CheckHitKeyAll != 0) {
 		int clickRoom = m_mapMgr.CheckInto(MOUSE_V.x, MOUSE_V.y);
 		if (clickRoom != -1) {
@@ -217,6 +255,7 @@ void cGameMgr::PlayerGenerate() {
 			cMouse::Instance()->SetPlayerNum(-1);
 		}
 	}
+	//ユニットの選択
 	else if (MOUSE_PRESS(LEFT_CLICK) == 1) {
 		int selectPlayer = 0;
 		clickRoom = m_unitMgr.CheckPlayerClick(MOUSE_V);
@@ -226,6 +265,12 @@ void cGameMgr::PlayerGenerate() {
 	}
 }
 
+/*****************************************************
+名前　：void EnemyGenerate();
+概要　：敵ユニットの生成
+引数　：なし
+戻り値：なし
+******************************************************/
 void cGameMgr::EnemyGenerate() {
 
 	//Enemyのランダム生成
@@ -248,16 +293,19 @@ void cGameMgr::EnemyGenerate() {
 	}
 }
 
-void cGameMgr::UnitData()
-{
-	sUnitData tmp;
+/*****************************************************
+名前　：void UnitData();
+概要　：UIにプレイヤーのユニット情報(出現数等)を渡す
+引数　：ファイルを入れた変数
+戻り値：なし
+******************************************************/
+void cGameMgr::UnitData(){
 
-	tmp.maxPlayer = m_maxPlayer;
-	tmp.playerCnt = m_PlayerCnt;
-	tmp.typeCnt = m_unitMgr.Get_TypeCnt();
-	m_UI.SetUnitData(tmp);
-}
+	sUnitData data;
 
-void cGameMgr::End() {
-	//
+	//必要なデータを構造体に格納しセット
+	data.maxPlayer = m_maxPlayer;			//プレイヤーの最大数
+	data.playerCnt = m_PlayerCnt;			//プレイヤーの出現数
+	data.typeCnt = m_unitMgr.Get_TypeCnt();	//タイプのカウント
+	m_UI.SetUnitData(data);
 }
