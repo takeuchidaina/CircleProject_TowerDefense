@@ -1,4 +1,6 @@
 #pragma once
+#ifndef _INCLUDE_GAMEMGR_
+#define _INCLUDE_GAMEMGR_
 
 #include "DxLib.h"
 #include "DebugList.h"
@@ -20,8 +22,14 @@
 #include "Setting.h"
 #include "MapNavigate.h"
 
-#ifndef _INCLUDE_GAMEMGR_
-#define _INCLUDE_GAMEMGR_
+/********************************************************
+●概要
+　ゲーム画面
+ 　戦闘を行う
+
+●作成者
+　竹内 大奈
+********************************************************/
 
 #define SPAWN_CNT 200
 
@@ -40,7 +48,7 @@ private:
 	void EscortDamageCalc();
 	void DefSuccessJudge();
 
-	cFPS m_fps;
+	//cFPS m_fps;
 	cCamera m_camera;
 	cMapMgr m_mapMgr;
 	cTime m_time;
@@ -80,7 +88,7 @@ private:
 	sTypeCnt m_unitCnt;			// タイプ別の数
 
 	typedef enum {
-		E_PREPARATION,	//準備
+		E_PREPARATION,	//戦闘準備
 		E_BATTLE,		//戦闘
 		E_EVENT,		//イベント
 		E_CUTSCENE,		//カットシーン

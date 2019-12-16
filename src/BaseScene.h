@@ -1,4 +1,6 @@
 #pragma once
+#ifndef _INCLUDE_BASESCENE_
+#define _INCLUDE_BASESCENE_
 
 #include "DxLib.h"
 #include "DebugList.h"
@@ -9,17 +11,11 @@
 /**********************************************************
 ●概要
 シーンの基底クラス
-参考URL:https://dixq.net/g/sp_06.html
+遷移対象のシーンは全て継承をする
 
 ●作成者
 竹内大奈
-
-●更新日
-2019/08/01 作成
 **********************************************************/
-
-#ifndef _INCLUDE_BASESCENE_
-#define _INCLUDE_BASESCENE_
 
 class cBaseScene : public cBaseTask {
 

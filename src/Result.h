@@ -1,4 +1,6 @@
 #pragma once
+#ifndef _INCLUED_RESULT_
+#define _INCLUED_RESULT_
 
 #include "DxLib.h"
 #include "DebugList.h"
@@ -13,8 +15,16 @@
 #include <string.h>
 #include "ErrorCheck.h"
 #include "Sound.h"
+using namespace std;
 
-using namespace std;         //  名前空間指定
+/********************************************************
+●概要
+　リザルト画面
+ 　戦闘で起こった結果を表示する
+
+●作成者
+　竹内 大奈
+********************************************************/
 
 class cResult : public cBaseScene {
 
@@ -31,7 +41,7 @@ private:
 
 	// 画像配置の必要情報
 	typedef struct {
-		sRECT rect;					//左上xy,右下xy
+		sRECT rect = { 0,0,0,0 };					//左上xy,右下xy
 		string filePath = "";		//画像のファイルパス
 		int handle = 0;				//画像ハンドル
 	}sImage;
@@ -39,3 +49,4 @@ private:
 	sImage m_image;
 	cButton m_btn;
 };
+#endif // _INCLUED_RESULT_

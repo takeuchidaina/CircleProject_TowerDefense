@@ -4,48 +4,54 @@ cButton::cButton()
 {
 	m_rect.left = 0, m_rect.top = 0, m_rect.right = 0, m_rect.bottom = 0;
 	m_image = 0;
-	buttonType = false;
+	buttonType = FALSE;
 }
 
-cButton::~cButton()
-{
-	DeleteGraph(m_image);
+cButton::~cButton(){
+	End();
 }
 
+/*****************************************************
+名前　：bool ButtonClick();
+概要　：ボタンがクリックされているかどうかを判断
+引数　：なし
+戻り値：true:クリック　false:クリックされていない
+******************************************************/
 void cButton::Init(sRECT _rect, const char* _filePath){
 	
+	buttonType = TRUE;		//画像タイプのボタン
+
 	//座標代入
-	m_rect.top = _rect.top, m_rect.left = _rect.left, m_rect.right = _rect.right, m_rect.bottom = _rect.bottom;
+	m_rect.top = _rect.top;
+	m_rect.left = _rect.left;
+	m_rect.right = _rect.right;
+	m_rect.bottom = _rect.bottom;
 
 	//画像代入
 	m_image = LoadGraph(_filePath);
 	FileCheck(m_image);
-
-	buttonType = TRUE;
 }
 
+/*****************************************************
+名前　：bool ButtonClick();
+概要　：ボタンがクリックされているかどうかを判断
+引数　：なし
+戻り値：true:クリック　false:クリックされていない
+******************************************************/
 void cButton::Init(sRECT _rect, short _transNum, const char* _text, short _fontSize) {
 
+	buttonType = FALSE;		//図形タイプのボタン
+
 	//座標代入
-	m_rect.top = _rect.top, m_rect.left = _rect.left,  m_rect.right = _rect.right, m_rect.bottom = _rect.bottom;
+	m_rect.top = _rect.top;
+	m_rect.left = _rect.left;
+	m_rect.right = _rect.right;
+	m_rect.bottom = _rect.bottom;
 
-	m_text = _text;
-	m_transNum = _transNum;
-	m_fontSize = _fontSize;
-
-	buttonType = FALSE;
-}
-
-//クリックされているかどうか
-bool cButton::ButtonClick() {
-
-	//マウスがボタンと重なっているか確認
-	if (MOUSE_X > m_rect.left && MOUSE_X < m_rect.right && MOUSE_Y > m_rect.top && MOUSE_Y < m_rect.bottom) {
-		return TRUE;	//重なっている
-	}
-	else {
-		return FALSE;	//重なっていない
-	}
+	m_text = _text;				//テキスト
+	m_transNum = _transNum;		//図形の透明度 0～255
+	m_fontSize = _fontSize;		//フォントサイズ
+	
 }
 
 void cButton::Draw() {
@@ -64,4 +70,25 @@ void cButton::Draw() {
 			m_rect.top + ((m_rect.bottom - m_rect.top) / 2) - m_fontSize / 2, WH, m_text);
 	}
 
+}
+
+void cButton::End() {
+	DeleteGraph(m_image);
+}
+
+/*****************************************************
+名前　：bool ButtonClick();
+概要　：ボタンがクリックされているかどうかを判断
+引数　：なし
+戻り値：true:クリック　false:クリックされていない
+******************************************************/
+bool cButton::ButtonClick() {
+
+	//マウスがボタンと重なっているか確認
+	if (MOUSE_X > m_rect.left&& MOUSE_X < m_rect.right && MOUSE_Y > m_rect.top&& MOUSE_Y < m_rect.bottom) {
+		return TRUE;	//重なっている
+	}
+	else {
+		return FALSE;	//重なっていない
+	}
 }

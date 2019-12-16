@@ -9,10 +9,10 @@ cSetting::~cSetting(){
 }
 
 void cSetting::Init() {
-	m_volume[0] = {0};
-	m_settingEnd = FALSE;
 
-	string volume[E_VOL_LENGTH];
+
+	string volume[E_VOL_LENGTH];	//音量を格納
+
 	ifstream ifs("../Data/Setting.txt");
 	if (ifs.fail()) {DEBUG_LOG("設定ファイル読み込み失敗");}
 	
@@ -23,8 +23,11 @@ void cSetting::Init() {
 
 	ifs.close();
 
-	const int fontSize = 30,posX = 410,posY = 420, transe = 150,rectSpace = 50;
+	m_volume[0] = { 0 };
+	m_settingEnd = FALSE;
 
+	//決定・戻る・適用　ボタン
+	const int fontSize = 30,posX = 410,posY = 420, transe = 150,rectSpace = 50;
 	sRECT rect = {	/*左上y*/posY,
 					/*左上x*/posX,
 					/*右下x*/posX + fontSize * /*文字数＋左右の余白*/ 4 ,
@@ -44,8 +47,8 @@ void cSetting::Init() {
 	m_btn[E_BTN_APP].Init(rect3, transe, "適用", fontSize);
 
 
+	//音量を変化させる < > ボタン
 	const int volPosX = 600, volPosY = 250;
-
 	for (int i = 0; i < E_VOL_LENGTH;i++) {
 		for (int j = 0; j < 2;j++) {
 			sRECT volRect;
@@ -95,12 +98,12 @@ void cSetting::Update() {
 			SoundSettingApp();
 		}
 
-		//音量の調節
+		//音量の調節 < > のマウス処理
 		for (int i = 0; i < E_VOL_LENGTH;i++) {
 			for (int j = 0; j < 2; j++) {
 				if (m_volBtn[i][j].ButtonClick() == TRUE) {
-					if (j % 2 == 0) { m_volume[i]--; }
-					else{ m_volume[i]++; }
+					if (j % 2 == 0) { m_volume[i]--; }	//音量を下げる
+					else{ m_volume[i]++; }				//音量を上げる
 
 					cSound::Instance()->PlaySE(cSound::Instance()->E_SE_SELECT);
 				}
@@ -110,26 +113,6 @@ void cSetting::Update() {
 	}
 
 	
-}
-
-void cSetting::SoundSettingApp() {
-
-	ofstream ofs("../Data/Setting.txt");
-	if (ofs.fail()) { DEBUG_LOG("設定ファイル読み込み失敗"); }
-
-	for (int i = 0; i < E_VOL_LENGTH; i++) {
-		ofs << to_string(m_volume[i]) << endl;
-	}
-
-	ofs.close();
-
-	//TODO:enum番目だけ書き換える
-	cSound::Instance()->ChangeSoundVolume();
-}
-
-bool cSetting::GetEndSetting() {
-
-	return m_settingEnd;
 }
 
 void cSetting::Draw() {
@@ -161,4 +144,39 @@ void cSetting::Draw() {
 
 void cSetting::End() {
 
+}
+
+/*****************************************************
+名前　：void ChangeScene(eScene _nextScene)
+概要　：ファイルへ音量を書き込む
+引数　：なし
+戻り値：なし
+******************************************************/
+void cSetting::SoundSettingApp() {
+
+	//TODO:enum番目だけ書き換える
+	//ファイルに変更後の音量値を書き込み
+	ofstream ofs("../Data/Setting.txt");
+	if (ofs.fail()) { DEBUG_LOG("設定ファイル読み込み失敗"); }
+
+	for (int i = 0; i < E_VOL_LENGTH; i++) {
+		ofs << to_string(m_volume[i]) << endl;
+	}
+
+	ofs.close();
+
+	//ファイルを読み込みなおす
+	cSound::Instance()->ChangeSoundVolume();
+}
+
+/*****************************************************
+名前　：bool GetEndSetting()
+概要　：設定が変更し終わっているかのフラグを返す
+引数　：なし
+戻り値：bool m_setteingEnd  設定が終了しているかどうか
+		TRUE:終了　FALSE：設定中
+******************************************************/
+bool cSetting::GetEndSetting() {
+
+	return m_settingEnd;
 }

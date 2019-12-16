@@ -6,7 +6,8 @@ cTitle::cTitle(ISceneChanger* _scene) : cBaseScene(_scene) {
 void cTitle::Init() {
 
 	//メニューの初期化
-	m_menu[E_TITLE_MENU] = { {/*左上y*/600,/*左上x*/100,/*右下x*/400,/*右下y*/700,"../resource/img/TitleStartButton.png" },E_SCENE_GAME };
+	//左上y, 左上x, 右下x, 右下y, 画像ファイルパス,移動先シーン
+	m_menu[E_TITLE_MENU] = { {/*左上y*/600,/*左上x*/100,/*右下x*/400,/*右下y*/700,"../resource/img/TitleStartButton.png" },E_SCENE_MENU };
 	m_menu[E_TITLE_END]  = { {/*左上y*/600,/*左上x*/420,/*右下x*/720,/*右下y*/700,"../resource/img/TitleEndButton.png" }, E_SCENE_END };
 	for (int i = 0; i < E_TITLE_MAX; i++) {
 		m_btn[i].Init(m_menu[i].image.rect,m_menu[i].image.filePath.c_str());
@@ -20,27 +21,32 @@ void cTitle::Init() {
 		FileCheck(m_image[i].handle);
 	}
 
+	//タイトル用BGMの再生
 	cSound::Instance()->PlayBGM(
 		cSound::Instance()->E_BGM_TITLE, cSound::Instance()->E_PLAY_LOOP,TRUE);
 }
 
 void cTitle::Update() {
 
-	//クリックされたらボタンの上か判断
+	//左クリック
 	if (MOUSE_PRESS(LEFT_CLICK) == 1) {
+
+		//ボタンの上でクリックされているか判断
 		for (int i = 0; i < E_TITLE_MAX;i++) {
 			if (m_btn[i].ButtonClick() == TRUE) {
 
 				//TODO:if elseifで終了判断せずにChangeSceneだけで処理を行う
-				if (m_menu[i].menu == E_SCENE_GAME) {
-					cSound::Instance()->PlaySE(cSound::Instance()->E_SE_SELECT);
-					cSound::Instance()->StopSound(cSound::Instance()->E_BGM_TITLE);
-					m_sceneChanger->ChangeScene((eScene)m_menu[i].menu);
+				//STARTボタン
+				if (m_menu[i].menu == E_SCENE_MENU) {
+					cSound::Instance()->PlaySE(cSound::Instance()->E_SE_SELECT);		//決定音
+					cSound::Instance()->StopSound(cSound::Instance()->E_BGM_TITLE);		//BGMを止める
+					m_sceneChanger->ChangeScene((eScene)m_menu[i].menu);				//シーンを変更
 				}
+				//ENDボタン
 				else if (m_menu[i].menu == E_SCENE_END) {
-					cSound::Instance()->PlaySE(cSound::Instance()->E_SE_CANSEL);
-					cSound::Instance()->StopSound(cSound::Instance()->E_BGM_TITLE);
-					WaitTimer(300);
+					cSound::Instance()->PlaySE(cSound::Instance()->E_SE_CANSEL);		//キャンセル音
+					cSound::Instance()->StopSound(cSound::Instance()->E_BGM_TITLE);		//BGMを止める
+					WaitTimer(300);		//キャンセルSEが鳴り終わるのを待つ
 					cSound::Instance()->End();
 					DxLib_End();
 				}

@@ -75,7 +75,7 @@ void cGameMgr::Update() {
 		break;
 	}
 
-	m_fps.Update();
+	//m_fps.Update();
 	m_mapMgr.Update();
 	
 	m_camera.Update();
@@ -111,7 +111,7 @@ void cGameMgr::Draw() {
 	DrawBillboard3D(VGet(0.0f, 0.0f, 0.0f), 0.5, 0.5, 1280, 0, m_ship, TRUE);			//船
 	DrawBillboard3D(VGet(-10.0f, -20.0f, 0.0f), 0.5, 0.5, 1280, 0, m_wave, TRUE);		//波
 
-	m_fps.Draw();
+	//m_fps.Draw();
 	m_mapMgr.Draw();
 	m_unitMgr.Draw();
 	m_camera.Draw();

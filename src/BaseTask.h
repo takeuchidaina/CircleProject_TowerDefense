@@ -1,4 +1,7 @@
 #pragma once
+#ifndef _INCLUDE_BASETASK_
+#define _INCLUDE_BASETASK_
+
 #include <iostream>
 
 /**********************************************************
@@ -7,13 +10,7 @@
 
 ●作成者
 竹内大奈
-
-●更新日
-2019/07/11 作成
 **********************************************************/
-
-#ifndef _INCLUDE_BASETASK_
-#define _INCLUDE_BASETASK_
 
 class cBaseTask
 {
@@ -54,7 +51,6 @@ public:
 	　　　　メモリの開放などは必ず同一ファイル内で行うこと
 	******************************************************/
 	virtual void End() {}
-
 
 private:
 	// なし
