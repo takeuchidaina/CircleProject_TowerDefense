@@ -1,6 +1,7 @@
 #pragma once
 #ifndef _INCLUED_SOUND_
 #define _INCLUED_SOUND_
+
 #include "DxLib.h"
 #include <iostream>
 #include "BaseTask.h"
@@ -11,8 +12,17 @@
 #include "Singleton.h"
 #include <fstream>
 #include "Log.h"
-
 using namespace std;
+
+/**********************************************************
+●概要
+音楽ファイルを格納し再生や停止を行う
+シングルトン化されているのでどこの
+クラスからでも呼び出すことが可能
+
+●作成者
+竹内大奈
+**********************************************************/
 
 class cSound : public cBaseTask,public cSingleton<cSound>
 {
@@ -26,6 +36,7 @@ public:
 	virtual void Draw() {}
 	virtual void End();
 
+	//音量の設定項目
 	typedef enum {
 		E_VOL_EVM,		//環境音
 		E_VOL_BGM,		//BGM

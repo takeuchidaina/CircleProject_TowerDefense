@@ -23,36 +23,35 @@ cMouse::~cMouse(){
 ************************************************/
 void cMouse::Update() {
 
-	/*クリック*/
+	//クリック情報
 	int nowButtonState = GetMouseInput();
 
+	//座標情報
 	GetMousePoint(&m_x, &m_y);
 
-	for (int i = 0; i < KEY_NUM; i++) {
-		if ((nowButtonState >> i) & 1) {        //i番のボタンが押されていたら
-			if (m_buttonReleaseCnt[i] > 0) {		//離されカウンタが0より大きければ
-				m_buttonReleaseCnt[i] = 0;		//0に戻す
-			}
-			m_buttonPressCnt[i]++;				//押されカウンタを増やす
-		}
-		else {									//i番のキーが離されていたら
-			if (m_buttonPressCnt[i] > 0) {		//押されカウンタが0より大きければ
-				m_buttonPressCnt[i] = 0;			//0に戻す
-			}
-			m_buttonReleaseCnt[i]++;				//離されカウンタを増やす
-		}
-	}
-
-	/*ホイール*/
+	//ホイール情報
 	m_wheel += GetMouseWheelRotVol();
 
+	for (int i = 0; i < KEY_NUM; i++) {
+		//キーが押されている
+		if ((nowButtonState >> i) & 1) {
+			//離されカウンタが0より大きければ0に戻す
+			if (m_buttonReleaseCnt[i] > 0) {	
+				m_buttonReleaseCnt[i] = 0;
+			}
+			m_buttonPressCnt[i]++;		//押されカウンタを増やす
+		}
+		//キーが離されている
+		else {
+			//押されているカウンタが0より大きければ0に戻す
+			if (m_buttonPressCnt[i] > 0) {		
+				m_buttonPressCnt[i] = 0;		
+			}
+			m_buttonReleaseCnt[i]++;	//離されカウンタを増やす
+		}
+	}
 }
 
-/************************************************
-
-デバッグ文字の表示
-
-************************************************/
 void cMouse::Draw() {
 
 #ifdef MOUSE_DEBUG
@@ -156,8 +155,6 @@ void cMouse::InitMouseWheel() {
 void cMouse::SetMouseDisplay(bool _isDisplay) {
 	SetMouseDispFlag(_isDisplay);
 }
-
-
 #pragma endregion
 
 /************************************************

@@ -1,4 +1,6 @@
 #pragma once
+#ifndef _INCLUED_SCENEMGR_
+#define _INCLUED_SCENEMGR_
 
 #include "DxLib.h"
 #include "ISceneChanger.h"
@@ -11,18 +13,11 @@
 
 /**********************************************************
 ●概要
-全てのシーンを管理するクラス
-参考URL:https://dixq.net/g/sp_06.html
+全てのシーンを管理する
 
 ●作成者
 竹内大奈
-
-●更新日
-2019/08/01 作成
 **********************************************************/
-
-#ifndef _INCLUED_SCENEMGR_
-#define _INCLUED_SCENEMGR_
 
 class cSceneMgr:public ISceneChanger , cBaseTask {
 
@@ -35,12 +30,19 @@ public:
 	void Draw()override;
 	void End()override;
 
+	/*****************************************************
+	名前　：void ChangeScene(eScene _nextScene)
+	概要　：シーンを引数のシーンに変更する
+	引数　：eScene _nextScene:変更したいシーン
+	戻り値：なし
+	補足　：ISceneChangerよりオーバーライド
+	******************************************************/
 	void ChangeScene(eScene _nextScene)override;
 
 private:
 
-	cBaseScene* m_scene;	// シーン管理変数
-	eScene m_nextScene;		// 次のシーン
+	cBaseScene* m_scene;	//シーン管理変数
+	eScene m_nextScene;		//次のシーン
 
 };
 

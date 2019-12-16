@@ -5,14 +5,15 @@ cResult::cResult(ISceneChanger* _scene) : cBaseScene(_scene) {
 }
 
 void cResult::Init() {
+
+	//タイトルバックのボタン
 	m_image = {/*左上y*/600,/*左上x*/880,/*右下x*/1180,/*右下y*/700,"../resource/img/TitleEndButton.png" };
 	m_image.handle = LoadGraph(m_image.filePath.c_str());
 	FileCheck(m_image.handle);
-
 	m_btn.Init(m_image.rect,m_image.filePath.c_str());
 
+	//勝敗結果をファイルから読み取る
 	FILE* fp;
-
 	errno_t err; // errno_t型(int型)
 	err = fopen_s(&fp, "../result.txt", "r"); // ファイルを開く。失敗するとエラーコードを返す。
 	if (err != 0) {
@@ -20,6 +21,8 @@ void cResult::Init() {
 	}
 
 	char result[256];
+
+	//勝敗結果に応じて表示する画像を変更
 	if (fgets(result, 256, fp) != NULL) {
 		if (result[0] == 'w') {
 			m_BG = LoadGraph("../resource/img/seikou.png");
@@ -38,9 +41,15 @@ void cResult::Update() {
 	//クリックされたらボタンの上か判断
 	if (MOUSE_PRESS(LEFT_CLICK) == 1) {
 		if (m_btn.ButtonClick() == TRUE) {
+
+			//キャンセル音
 			cSound::Instance()->PlaySE(cSound::Instance()->E_SE_CANSEL);
-			WaitTimer(200);
-			m_sceneChanger->ChangeScene(E_SCENE_TITLE);
+
+			//SEが鳴り終わるのを待つ
+			WaitTimer(200);			
+
+			//タイトルへ
+			m_sceneChanger->ChangeScene(E_SCENE_TITLE);		
 		}
 	}
 	
@@ -69,11 +78,14 @@ void cResult::Update() {
 
 void cResult::Draw() {
 
+	//背景描画
 	DrawGraph(0, /*Y座標調節*/ -130,m_BG,FALSE);
+
+	//ボタン描画
 	m_btn.Draw();
 
 }
 
 void cResult::End() {
-	DeleteGraph(m_image.handle);
+	DeleteGraph(m_image.handle);	//画像削除
 }

@@ -4,7 +4,6 @@ cSceneMgr::cSceneMgr() : m_nextScene(E_SCENE_NONE){
 
 	//m_scene = (cBaseScene*) new cGameMgr(this);
 	m_scene = (cBaseScene*) new cTitle(this);
-
 }
 
 void cSceneMgr::Init() {
@@ -13,12 +12,11 @@ void cSceneMgr::Init() {
 
 void cSceneMgr::Update() {
 
-	// 次のシーンがセットされていたら
+	// 次のシーンがセットされているなら次のシーンに変更する
 	if (m_nextScene != E_SCENE_NONE) {
 		m_scene->End();
 		delete m_scene;
 
-		// シーンによって処理を分岐
 		switch (m_nextScene){
 
 		case E_SCENE_TITLE:
@@ -35,14 +33,16 @@ void cSceneMgr::Update() {
 			break;
 		}
 
-		m_nextScene = E_SCENE_NONE;		// 次のシーン情報のクリア
+		m_nextScene = E_SCENE_NONE;		//次のシーン情報のクリア
 		m_scene->Init();
 	}
 
+	//更新処理
 	m_scene->Update();
 }
 
 void cSceneMgr::Draw() {
+	//描画処理
 	m_scene->Draw();
 }
 
