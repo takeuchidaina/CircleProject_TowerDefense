@@ -33,7 +33,7 @@ using namespace std;
 #ifndef _INCLUED_UNIT_MGR_
 #define _INCLUED_UNIT_MGR_
 
-#define MOVE_CNT 400
+#define MOVE_CNT 500
 
 class cUnitMgr : public cBaseTask
 {
@@ -138,10 +138,13 @@ public:
 
 	// ランダム生成		変更後
 	// ESord
+	
 	int Add_ESord(double _x, double _y)
 	{
-		if (m_roomEnemy[2].size() >= m_mapData[2].roomSize) return 0;
-		enemy.emplace_back(new cESord(_x, _y, 2, m_num));
+		int spawnRoom = m_mapData.size() - 1;
+
+		if (m_roomEnemy[spawnRoom].size() >= m_mapData[spawnRoom].roomSize) return 0;
+		enemy.emplace_back(new cESord(_x, _y, spawnRoom, m_num));
 		m_num++;
 		//DEBUG_LOG("ESord Create");
 		return 0;
@@ -149,8 +152,10 @@ public:
 	// EArcher
 	int Add_EArcher(double _x, double _y)
 	{
-		if (m_roomEnemy[2].size() >= m_mapData[2].roomSize) return 0;
-		enemy.emplace_back(new cEArcher(_x, _y, 2, m_num));
+		int spawnRoom = m_mapData.size() - 1;
+
+		if (m_roomEnemy[spawnRoom].size() >= m_mapData[spawnRoom].roomSize) return 0;
+		enemy.emplace_back(new cEArcher(_x, _y, spawnRoom, m_num));
 		m_num++;
 
 		return 0;
@@ -158,13 +163,15 @@ public:
 	// EDefense
 	int Add_EDefense(double _x, double _y)
 	{
-		if (m_roomEnemy[2].size() >= m_mapData[2].roomSize) return 0;
-		enemy.emplace_back(new cEDefense(_x, _y, 2, m_num));
+		int spawnRoom = m_mapData.size() - 1;
+
+		if (m_roomEnemy[spawnRoom].size() >= m_mapData[spawnRoom].roomSize) return 0;
+		enemy.emplace_back(new cEDefense(_x, _y, spawnRoom, m_num));
 		m_num++;
 
 		return 0;
 	}
-
+	
 	/*********************************************************************
 	関数名：void RoomDraw()
 	概要：部屋内の描画
@@ -348,6 +355,8 @@ public:
 	戻り値：なし
 	*********************************************************************/
 	void UnitMove();
+
+	void moveRand();
 };
 
 #endif  // !_INCLUDE_UNIT_MGR_

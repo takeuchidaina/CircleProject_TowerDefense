@@ -23,7 +23,7 @@
 #ifndef _INCLUDE_GAMEMGR_
 #define _INCLUDE_GAMEMGR_
 
-#define SPAWN_CNT 200
+#define SPAWN_CNT 400
 
 class cGameMgr : public cBaseScene{
 

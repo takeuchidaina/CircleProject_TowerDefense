@@ -25,6 +25,13 @@ void cMapNavigate::Draw() {
 void cMapNavigate::Set_MapDate(vector<vector<int>> _MapDate) {
 	mapStack = _MapDate;		// Mapの繋がりを代入
 	tmpRand = GetRand(mapStack.size()-1);
+	int a = mapStack.size()-1;
+}
+
+// 敵リスポーンの時に使うGet
+int cMapNavigate::Get_MapDate() {	
+	int tmp = mapStack.size()-1;
+	return tmp;
 }
 
 // _start=出発	_goal=行き先		  2			  0
