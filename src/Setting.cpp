@@ -10,8 +10,8 @@ cSetting::~cSetting(){
 
 void cSetting::Init() {
 
-
-	string volume[E_VOL_LENGTH];	//音量を格納
+	m_volume[0] = { 0 };
+	string volume[E_VOL_LENGTH];	//ファイルに記入してある音量を格納
 
 	ifstream ifs("../Data/Setting.txt");
 	if (ifs.fail()) {DEBUG_LOG("設定ファイル読み込み失敗");}
@@ -23,7 +23,7 @@ void cSetting::Init() {
 
 	ifs.close();
 
-	m_volume[0] = { 0 };
+	
 	m_settingEnd = FALSE;
 
 	//決定・戻る・適用　ボタン
@@ -97,13 +97,16 @@ void cSetting::Update() {
 			cSound::Instance()->PlaySE(cSound::Instance()->E_SE_SELECT);
 			SoundSettingApp();
 		}
+	}
 
+	//ボタンがクリックされている間
+	if (MOUSE_PRESS(LEFT_CLICK) >= 1) {
 		//音量の調節 < > のマウス処理
-		for (int i = 0; i < E_VOL_LENGTH;i++) {
+		for (int i = 0; i < E_VOL_LENGTH; i++) {
 			for (int j = 0; j < 2; j++) {
 				if (m_volBtn[i][j].ButtonClick() == TRUE) {
 					if (j % 2 == 0) { m_volume[i]--; }	//音量を下げる
-					else{ m_volume[i]++; }				//音量を上げる
+					else { m_volume[i]++; }				//音量を上げる
 
 					cSound::Instance()->PlaySE(cSound::Instance()->E_SE_SELECT);
 				}
@@ -111,7 +114,6 @@ void cSetting::Update() {
 
 		}
 	}
-
 	
 }
 
