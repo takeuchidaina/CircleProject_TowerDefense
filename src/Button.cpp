@@ -4,6 +4,9 @@ cButton::cButton()
 {
 	m_rect.left = 0, m_rect.top = 0, m_rect.right = 0, m_rect.bottom = 0;
 	m_image = 0;
+	m_fontSize = 20;
+	m_text = "";
+	m_transNum = 100;
 	buttonType = FALSE;
 }
 
@@ -83,6 +86,8 @@ void cButton::End() {
 戻り値：true:クリック　false:クリックされていない
 ******************************************************/
 bool cButton::ButtonClick() {
+
+	//TODO:関数ポインタにする
 
 	//マウスがボタンと重なっているか確認
 	if (MOUSE_X > m_rect.left&& MOUSE_X < m_rect.right && MOUSE_Y > m_rect.top&& MOUSE_Y < m_rect.bottom) {
