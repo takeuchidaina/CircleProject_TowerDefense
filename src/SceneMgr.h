@@ -8,6 +8,8 @@
 #include "BaseTask.h"
 #include "Title.h"
 #include "Menu.h"
+#include "StageSelect.h"
+#include "UnitSelect.h"
 #include "GameMgr.h"
 #include "Result.h"
 

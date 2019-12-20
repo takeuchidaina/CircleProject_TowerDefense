@@ -15,12 +15,14 @@
 
 // シーンの定数
 typedef enum {
-	E_SCENE_TITLE,		// タイトル
-	E_SCENE_MENU,		// メニュー
-	E_SCENE_GAME,		// ゲーム
-	E_SCENE_RESULT,		// リザルト
+	E_SCENE_TITLE,			// タイトル
+	E_SCENE_MENU,			// メニュー
+	E_SCENE_STAGESELECT,	// ステージ選択
+	E_SCENE_UNITSELECT,		// ユニット選択
+	E_SCENE_GAME,			// ゲーム
+	E_SCENE_RESULT,			// リザルト
 	E_SCENE_END,
-	E_SCENE_NONE,		// 無し
+	E_SCENE_NONE,			// 無し
 
 }eScene;
 
