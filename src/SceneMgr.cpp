@@ -2,8 +2,10 @@
 
 cSceneMgr::cSceneMgr() : m_nextScene(E_SCENE_NONE){
 
-	//m_scene = (cBaseScene*) new cGameMgr(this);
-	m_scene = (cBaseScene*) new cTitle(this);
+	m_scene = (cBaseScene*) new cGameMgr(this);
+	//m_scene = (cBaseScene*) new cTitle(this);
+	//m_scene = (cBaseScene*) new cStageSelect(this);
+	//m_scene = (cBaseScene*) new cUnitSelect(this);
 }
 
 void cSceneMgr::Init() {
@@ -24,6 +26,12 @@ void cSceneMgr::Update() {
 			break;
 		case E_SCENE_MENU:
 			m_scene = (cBaseScene*) new cMenu(this);
+			break;
+		case E_SCENE_STAGESELECT:
+			m_scene = (cBaseScene*) new cStageSelect(this);
+			break;
+		case E_SCENE_UNITSELECT:
+			m_scene = (cBaseScene*) new cUnitSelect(this);
 			break;
 		case E_SCENE_GAME:
 			m_scene = (cBaseScene*) new cGameMgr(this);
