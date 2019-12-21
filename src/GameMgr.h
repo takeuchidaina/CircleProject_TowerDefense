@@ -56,6 +56,7 @@ private:
 		E_POSE,			//ポーズ
 	}eGameState;
 	eGameState m_gameState;		//現在のステート
+	eGameState m_stateHistory;	//前回のステートを保存する
 
 	//各種クラス実態宣言
 	cCamera m_camera;				//カメラ

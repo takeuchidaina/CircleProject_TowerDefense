@@ -1,7 +1,7 @@
 #include "GameMgr.h"
 
 cGameMgr::cGameMgr(ISceneChanger* _scene) : cBaseScene(_scene) {
-	Init();
+
 }
 
 void cGameMgr::Init() {
@@ -17,14 +17,16 @@ void cGameMgr::Init() {
 	//BGM
 	cSound::Instance()->StopSound(cSound::Instance()->E_BGM_TITLE);
 	cSound::Instance()->PlayBGM(
-		cSound::Instance()->E_BGM_BATTLE, cSound::Instance()->E_PLAY_LOOP, FALSE);		//戦闘BGM
+		cSound::Instance()->E_BGM_PREPARATION, cSound::Instance()->E_PLAY_LOOP, FALSE);		//戦闘BGM
 	cSound::Instance()->PlayEVM(
 		cSound::Instance()->E_EVM_SEA_ROUGH, cSound::Instance()->E_PLAY_LOOP, TRUE);	//さざ波
 
 	m_PlayerCnt = 0;		//プレイヤーユニットの出現数
 
-	m_gameState = E_BATTLE;		//初期ステート
 	//m_gameState = E_PREPARATION;	//初期ステート
+	m_gameState = E_BATTLE;		//初期ステート
+	m_stateHistory = m_gameState;
+	
 
 	SRand(time(NULL));		//敵ユニットのランダム出現用に現在時刻でrandを初期化
 }
@@ -34,18 +36,33 @@ void cGameMgr::Update() {
 	//Escapeキーでステートをポーズへ変更
 	if (GET_KEY_PRESS(KEY_INPUT_ESCAPE) == 1) { m_gameState = E_POSE; }
 
+	if (m_gameState != m_stateHistory) {
+		if (m_stateHistory == E_PREPARATION) {
+			cSound::Instance()->StopSound(cSound::Instance()->E_BGM_PREPARATION);
+			cSound::Instance()->PlayBGM(cSound::Instance()->E_BGM_BATTLE);		//戦闘BGM
+		}
+
+		m_stateHistory = m_gameState;
+	}
+
 	//ステート管理
 	switch (m_gameState)
 	{
 	//戦闘準備
 	case E_PREPARATION:
+		m_camera.Update();		//カメラの移動・ズーム
 		m_unitMgr.Update();		//TODO:ユニットの生成をUnitMgrで行う
 		m_UI.Update();			//UIのキャラクター出撃数更新
 		m_BG.Update();			//雲のアニメーション
+		UnitGenerate();			//ユニット生成
+		
+		//シーンをバトルへ
+		if (GET_KEY_PRESS(KEY_INPUT_B) == 1) {
+			m_gameState = E_BATTLE;
+		}
 		break;
 	//戦闘
 	case E_BATTLE:
-		UnitGenerate();			//ユニット生成
 		m_unitMgr.Update();		//ユニットの行動
 		UnitData();				//UIにユニットのデータをセットする
 		m_time.Update();		//制限時間を更新
@@ -74,19 +91,6 @@ void cGameMgr::Update() {
 		//ゲームを終了
 		break;
 	}
-
-#ifdef GAMEMGR_DEBUG
-
-	//タイトルへ
-	if (GET_KEY_PRESS(KEY_INPUT_T) == 1) {m_sceneChanger->ChangeScene(E_SCENE_TITLE);}
-	//メニューへ
-	if (GET_KEY_PRESS(KEY_INPUT_M) == 1) {m_sceneChanger->ChangeScene(E_SCENE_MENU);}
-	//ゲームへ
-	if (GET_KEY_PRESS(KEY_INPUT_G) == 1) {m_sceneChanger->ChangeScene(E_SCENE_GAME);}
-	//リザルトへ
-	if (GET_KEY_PRESS(KEY_INPUT_R) == 1) {m_sceneChanger->ChangeScene(E_SCENE_RESULT);}
-
-#endif // GAMEMGR_DEBUG
 
 }
 
