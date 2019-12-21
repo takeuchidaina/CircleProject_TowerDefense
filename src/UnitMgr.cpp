@@ -98,10 +98,6 @@ void cUnitMgr::Update()
 				enemy[i]->AttackSE();
 			}
 			break;
-
-
-
-			// TODO カウントが達したらE_MOVEを呼ぶ	ランドでE_MOVEにする
 		case E_MOVE:
 			UnitMove();
 			break;
@@ -475,46 +471,51 @@ void cUnitMgr::SelectUI(int _num)
 	DrawBillboard3D(VGet(sx, sy, 0.0f), 0.5f, 0.5f, 18.0f, 0.0f, m_selectMarkImg, TRUE);
 }
 
-void cUnitMgr::moveRand() {
-	int moveRand = 0;	// 動き始まめるかどうか　0=動かない, 1=tmptblの部屋番号に動く
-	moveRand = GetRand(1);	// 動き始まめるかどうか　0=動かない, 1=tmptblの部屋番号に動く
+void cUnitMgr::MoveRand() {
+
+	int moveRand = GetRand(1);	// 動き始まめるかどうか　0=動かない, 1=tmptblの部屋番号に動く
 
 	if (moveRand == 0) { return; }
-	else if (moveRand == 1) {
+
+	if (moveRand == 1) {
 		for (int i = 0; i < enemy.size(); i++) {
 			enemy[i]->Set_State(E_MOVE);
-			// ↑なんかできない
 		}
 	}
 }
 
+
 // Unitの移動
 void cUnitMgr::UnitMove() {
 
-	int tmpRand  = 0;	// MapNavvigateに送るからのgoal
-	int tmptbl   = 0;	// 次行く部屋
-	
-	if (m_moveCnt >= MOVE_CNT) {		// m_moveCntが一定になったら
+	int findNum  = 0;	// MapNavigationで中身を入れる
+	int loodtbl  = 0;	// 次行く部屋
+	int moveCoolTime = GetRand(MOVE_COOLTIME_MAX)+ MOVE_COOLTIME_MIN;	// 
 
-			for (int i = 0; i < enemy.size(); i++) {
+	//int moveRand = GetRand(1);	// 動き始まめるかどうか　0=動かない, 1=tmptblの部屋番号に動く
+	//int tmp = GetRand(m_mapNavigate.Get_EnemySpawnRoom);
 
-				// MapNavigation関数のreturnを代入
-				tmptbl = m_mapNavigate.MapNavigation(enemy[i]->Get_NowRoom(), tmpRand);
-				// int next = m_mapNavigate.MapNavigation(enemy[i]->Get_NowRoom(), tmpRand);//enemy[i]->Get_NowRoom() - 1;		// 今いる部屋の-1
-				// int next = enemy[i]->Get_NowRoom() - 1;
+	if (m_moveCnt >= moveCoolTime){		// m_moveCntが一定になったら
+		
+		// TODO i = 動かすユニットだからランダムで動かすユニットを決める
+		for (int i = 0; i < enemy.size(); i++) {
+			int moveSelectEnemy = GetRand(i);	// 今いる出現しているどの敵を動かすかランダム
 
-				if (enemy[i]->Get_NowRoom() != 0) {		// 今の部屋が0じゃなかったら
+			/// MapNavigation関数のreturnを代入　次行く部屋の早番号
+			loodtbl = m_mapNavigate.MapNavigation(enemy[i]->Get_NowRoom(), findNum);
 
-					int cnt = m_roomEnemy[tmptbl].size();		// 次行きたい部屋のエネミーの要素数
-					int max = m_mapData[tmptbl].roomSize;		// 次行きたい部屋のエネミーの数制限
+			if (enemy[moveSelectEnemy]->Get_NowRoom() != 0) {		// 今の部屋が0じゃなかったら
 
-					if (cnt >= max) {
-						return;
-					} else if (cnt < max) {		// 次行きたい部屋に空きがあったら
-							enemy[i]->Set_Room(tmptbl);
-					}
-					m_moveCnt = 0;
+				int cnt = m_roomEnemy[loodtbl].size();		// 次行きたい部屋のエネミーの要素数
+				int max = m_mapData[loodtbl].roomSize;		// 次行きたい部屋のエネミーの数制限
+
+				if (cnt >= max) { return enemy[i]->Set_Room(enemy[i]->Get_NowRoom()); }		// 今いる部屋をreturn
+				else if (cnt < max) {		// 次行きたい部屋に空きがあったら
+					enemy[moveSelectEnemy]->Set_Room(loodtbl);
 				}
+				m_moveCnt = 0;
+				//break;
 			}
+		}
 	}
 }

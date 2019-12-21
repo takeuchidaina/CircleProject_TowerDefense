@@ -33,7 +33,8 @@ using namespace std;
 #ifndef _INCLUED_UNIT_MGR_
 #define _INCLUED_UNIT_MGR_
 
-#define MOVE_CNT 500
+#define MOVE_COOLTIME_MAX 500	// 	Randで0~500
+#define MOVE_COOLTIME_MIN 300	//  MOVE_COOLTIME_MAXに固定+300
 
 class cUnitMgr : public cBaseTask
 {
@@ -356,7 +357,7 @@ public:
 	*********************************************************************/
 	void UnitMove();
 
-	void moveRand();
+	void MoveRand();
 };
 
 #endif  // !_INCLUDE_UNIT_MGR_

@@ -24,17 +24,17 @@ void cMapNavigate::Draw() {
 
 void cMapNavigate::Set_MapDate(vector<vector<int>> _MapDate) {
 	mapStack = _MapDate;		// Mapの繋がりを代入
-	tmpRand = GetRand(mapStack.size()-1);
-	int a = mapStack.size()-1;
+	//tmpRand = GetRand(mapStack.size()-1);
+	//int a = mapStack.size()-1;
 }
 
-// 敵リスポーンの時に使うGet
-int cMapNavigate::Get_MapDate() {	
-	int tmp = mapStack.size()-1;
-	return tmp;
+// 敵リスポーンの時に使うGet	Mapの要素数の最後でもある
+int cMapNavigate::Get_EnemySpawnRoom() {
+	int enemySpawnRoom = mapStack.size()-1;
+	return enemySpawnRoom;
 }
 
-// _start=出発	_goal=行き先		  2			  0
+// _start=出発	_goal=行き先		  			  
 int cMapNavigate::MapNavigation(int _start, int _goal) {
 	
 	int cnt = 0;
@@ -48,7 +48,6 @@ int cMapNavigate::MapNavigation(int _start, int _goal) {
 			//tbl.push_back(mapStack[_start][GetRand(mapStack[_start].size()-1)]);
 			///tbl = mapStack[_start][GetRand(mapStack[_start].size() - 1)];
 
-		
 			// 出発==_start, 行き先==_start	なら
 			if (mapStack[_start][j] == _start) {	
 				return _start;						//つながらないから返す
@@ -66,7 +65,7 @@ int cMapNavigate::MapNavigation(int _start, int _goal) {
 			// goalに行ける
 			if(mapStack[_start][j] == _goal) {		
 				cnt++;								// 何部屋移動したか
-				tbl=_goal;				// stratまでの道のりを入れる
+				tbl=_goal;				// 次の部屋を入れる
 				return tbl;
 			}
 		}
