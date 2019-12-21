@@ -40,7 +40,9 @@ public:
 	void Draw()override;
 
 	void Set_MapDate(vector<vector<int>> _MapDate);		// MapDateの受け取り
-	int Get_MapDate();					// 敵リスポーンの時に使うGet
+
+	int Get_EnemySpawnRoom();					// 敵リスポーンの時に使うGet
+
 	int MapNavigation(int _start, int _goal);	// 簡易版
 	int tmpRand;
 };
