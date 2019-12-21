@@ -71,3 +71,51 @@ vector<string> split(string str, char del) {
 
 	return result;
 }
+
+vector<sUnitLoad> UnitLoad(string& _filePath)
+{
+	ifstream ifs;
+	ifs.open(_filePath);
+
+	vector<sUnitLoad> vec;
+
+	string line;
+
+	vector<string> tmpStr;
+	vector<string> tmpStrVec;
+
+	char del = ',';
+	int Num = 0;
+
+	if (ifs.fail())
+	{//エラー処理、ifsをつけるのはファイルを開くのを失敗したかどうか
+		cerr << "ファイルオープン失敗" << endl;
+		exit(-1);
+	}
+
+	while (getline(ifs, line))
+	{
+		tmpStr.push_back(line);
+	}
+
+	for (int i = ADJUST; i < tmpStr.size(); i++)
+	{
+		tmpStrVec = split(tmpStr[i], del);					//1行読み込んでカンマで分解
+	
+		sUnitLoad tmpUnit;
+
+		tmpUnit.ID = atof(tmpStrVec[0].c_str());
+		tmpUnit.type = atof(tmpStrVec[1].c_str());
+		tmpUnit.HP = atof(tmpStrVec[2].c_str());
+		tmpUnit.ATK = atof(tmpStrVec[3].c_str());
+		tmpUnit.speed = atof(tmpStrVec[4].c_str());
+		tmpUnit.coolTime = atof(tmpStrVec[5].c_str());
+		tmpUnit.DEF = atof(tmpStrVec[6].c_str());
+		tmpUnit.unitPath = atof(tmpStrVec[7].c_str());
+		tmpUnit.effectPath = atof(tmpStrVec[8].c_str());
+
+		vec.push_back(tmpUnit);
+	}
+
+	return vec;
+}
