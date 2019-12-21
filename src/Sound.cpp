@@ -10,12 +10,16 @@ cSound::~cSound(){
 
 void cSound::Init() {
 
+	m_BGM[E_BGM_WIN] = 0;
+
 	//SE
 	m_SEPath[E_SE_SELECT] = { "../resource/Sound/SE/Select.wav" };
 	m_SEPath[E_SE_CANSEL] = { "../resource/Sound/SE/Cansel.wav" };
 	m_SEPath[E_SE_SWORD]  = { "../resource/Sound/SE/Sword.wav" };
-	m_SEPath[E_SE_SHEILD]  = { "../resource/Sound/SE/Arrow.wav" };
+	m_SEPath[E_SE_SHEILD]  = { "../resource/Sound/SE/Sheild_bySword.wav" };
 	m_SEPath[E_SE_BULLET] = { "../resource/Sound/SE/Bullet.wav" };
+	m_SEPath[E_SE_WIN] = { "../resource/Sound/SE/ME_Win.wav" };
+	m_SEPath[E_SE_LOSE] = { "../resource/Sound/SE/ME_Lose.ogg" };
 	for (int i = 0; i < E_SE_LENGTH;i++) {
 		m_SE[i] = LoadSoundMem(m_SEPath[i].c_str());	//音源読み込み
 		FileCheck(m_SE[i]);								//ロード成功かチェック
@@ -23,9 +27,10 @@ void cSound::Init() {
 
 	//BGM
 	m_BGMPath[E_BGM_TITLE]  = { "../resource/Sound/BGM/Title.wav" };
-	m_BGMPath[E_BGM_BATTLE] = { "../resource/Sound/BGM/Battle.wav" };
-	m_BGMPath[E_BGM_WIN]    = { "../resource/Sound/BGM/Win.wav" };
-	m_BGMPath[E_BGM_LOSE]   = { "../resource/Sound/BGM/Lose.wav" };
+	m_BGMPath[E_BGM_PREPARATION] = { "../resource/Sound/BGM/Battle_Wait.wav" };
+	m_BGMPath[E_BGM_BATTLE] = { "../resource/Sound/BGM/Battle_In.wav" };
+	m_BGMPath[E_BGM_WIN]    = { "../resource/Sound/BGM/BGM_Win.ogg" };	//oggなのは元のwavファイルが読み込めない周波数やbps、データ形式(アナログ)が違かったため
+	m_BGMPath[E_BGM_LOSE]   = { "../resource/Sound/BGM/BGM_Lose.wav" };
 	for (int i = 0; i < E_BGM_LENGTH; i++) {
 		m_BGM[i] = LoadSoundMem(m_BGMPath[i].c_str());	//音源読み込み
 		FileCheck(m_BGM[i]);							//ロード成功かチェック
@@ -53,7 +58,7 @@ void cSound::Init() {
 ******************************************************/
 void cSound::PlaySE(eSE _se) {
 	if (CheckValidArgument(_se) == TRUE) {
-		PlaySoundMem(m_SE[_se], DX_PLAYTYPE_NORMAL);
+		PlaySoundMem(m_SE[_se], DX_PLAYTYPE_BACK);
 	}
 }
 void cSound::PlaySE(eSE _se, ePlayType _type) {
