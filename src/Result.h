@@ -48,5 +48,7 @@ private:
 
 	sImage m_image;
 	cButton m_btn;
+	bool m_result;	//TRUE:Ÿ—˜ FALSE:”s–k
+	bool m_sound;	//TRUE:–Â‚ç‚µÏ‚İ FALSE:–Â‚ç‚µ‚Ä‚¢‚È‚¢@BGM
 };
 #endif // _INCLUED_RESULT_

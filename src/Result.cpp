@@ -1,7 +1,7 @@
 #include "Result.h"
 
 cResult::cResult(ISceneChanger* _scene) : cBaseScene(_scene) {
-	Init();
+	
 }
 
 void cResult::Init() {
@@ -26,13 +26,21 @@ void cResult::Init() {
 	if (fgets(result, 256, fp) != NULL) {
 		if (result[0] == 'w') {
 			m_BG = LoadGraph("../resource/img/seikou.png");
+			cSound::Instance()->PlaySE(cSound::Instance()->E_SE_WIN);
+			
+			m_result = TRUE;
 		}
 		else {
 			m_BG = LoadGraph("../resource/img/sippai.png");
+			cSound::Instance()->PlaySE(cSound::Instance()->E_SE_LOSE);
+			
+			m_result = FALSE;
 		}
 	}
 
 	fclose(fp);
+
+	m_sound = FALSE;
 
 }
 
@@ -43,37 +51,24 @@ void cResult::Update() {
 		if (m_btn.ButtonClick() == TRUE) {
 
 			//キャンセル音
-			cSound::Instance()->PlaySE(cSound::Instance()->E_SE_CANSEL);
-
-			//SEが鳴り終わるのを待つ
-			WaitTimer(200);			
+			cSound::Instance()->PlaySE(cSound::Instance()->E_SE_CANSEL, cSound::Instance()->E_PLAY_NORMAL);		
 
 			//タイトルへ
 			m_sceneChanger->ChangeScene(E_SCENE_TITLE);		
 		}
 	}
-	
-#ifdef RESULT_DEBUG
-	DrawFormatString(0, 0, RD, "GAME CLEAR");
-	//タイトルへ
-	if (GET_KEY_PRESS(KEY_INPUT_T) == 1) {
-		m_sceneChanger->ChangeScene(E_SCENE_TITLE);
-	}
-	//メニューへ
-	if (GET_KEY_PRESS(KEY_INPUT_M) == 1) {
-		m_sceneChanger->ChangeScene(E_SCENE_MENU);
-	}
-	//ゲームへ
-	if (GET_KEY_PRESS(KEY_INPUT_G) == 1) {
-		m_sceneChanger->ChangeScene(E_SCENE_GAME);
-	}
-	//リザルトへ
-	if (GET_KEY_PRESS(KEY_INPUT_R) == 1) {
-		m_sceneChanger->ChangeScene(E_SCENE_RESULT);
-	}
 
-#endif // RESULT_DEBUG
-
+	//MEが鳴り終わった後にBGMをループ再生(1回のみ)
+	if (m_sound == FALSE) {
+		if (m_result == TRUE && cSound::Instance()->CheckSound(cSound::Instance()->E_SE_WIN) == FALSE) {
+			cSound::Instance()->PlayBGM(cSound::Instance()->E_BGM_WIN);
+			m_sound = TRUE;
+		}
+		else if (m_result == FALSE && cSound::Instance()->CheckSound(cSound::Instance()->E_SE_LOSE) == FALSE) {
+			cSound::Instance()->PlayBGM(cSound::Instance()->E_BGM_LOSE);
+			m_sound = TRUE;
+		}
+	}
 }
 
 void cResult::Draw() {
@@ -88,4 +83,21 @@ void cResult::Draw() {
 
 void cResult::End() {
 	DeleteGraph(m_image.handle);	//画像削除
+
+	if (m_result == TRUE) {
+		if (cSound::Instance()->CheckSound(cSound::Instance()->E_SE_WIN) == TRUE) {
+			cSound::Instance()->StopSound(cSound::Instance()->E_SE_WIN);
+		}
+		if (m_sound == TRUE) {
+			cSound::Instance()->StopSound(cSound::Instance()->E_BGM_WIN);
+		}
+	}
+	else {
+		if (cSound::Instance()->CheckSound(cSound::Instance()->E_SE_LOSE) == TRUE) {
+			cSound::Instance()->StopSound(cSound::Instance()->E_SE_LOSE);
+		}
+		if (m_sound == TRUE) {
+			cSound::Instance()->StopSound(cSound::Instance()->E_BGM_LOSE);
+		}
+	}
 }

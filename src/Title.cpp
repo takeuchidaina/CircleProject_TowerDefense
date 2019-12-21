@@ -22,8 +22,8 @@ void cTitle::Init() {
 	}
 
 	//タイトル用BGMの再生
-	cSound::Instance()->PlayBGM(
-		cSound::Instance()->E_BGM_TITLE, cSound::Instance()->E_PLAY_LOOP,TRUE);
+	cSound::Instance()->PlayEVM(
+		cSound::Instance()->E_EVM_SEA_ROUGH, cSound::Instance()->E_PLAY_LOOP,TRUE);
 }
 
 void cTitle::Update() {
@@ -39,13 +39,13 @@ void cTitle::Update() {
 				//STARTボタン
 				if (m_menu[i].menu == E_SCENE_MENU) {
 					cSound::Instance()->PlaySE(cSound::Instance()->E_SE_SELECT);		//決定音
-					cSound::Instance()->StopSound(cSound::Instance()->E_BGM_TITLE);		//BGMを止める
+					cSound::Instance()->StopSound(cSound::Instance()->E_EVM_SEA_ROUGH);		//BGMを止める
 					m_sceneChanger->ChangeScene((eScene)m_menu[i].menu);				//シーンを変更
 				}
 				//ENDボタン
 				else if (m_menu[i].menu == E_SCENE_END) {
 					cSound::Instance()->PlaySE(cSound::Instance()->E_SE_CANSEL);		//キャンセル音
-					cSound::Instance()->StopSound(cSound::Instance()->E_BGM_TITLE);		//BGMを止める
+					cSound::Instance()->StopSound(cSound::Instance()->E_EVM_SEA_ROUGH);		//BGMを止める
 					WaitTimer(300);		//キャンセルSEが鳴り終わるのを待つ
 					cSound::Instance()->End();
 					DxLib_End();

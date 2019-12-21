@@ -51,13 +51,16 @@ public:
 		E_SE_SWORD,		//剣　攻撃
 		E_SE_SHEILD,	//盾　防御
 		E_SE_BULLET,	//銃　攻撃
+		E_SE_WIN,		//ME 勝ち
+		E_SE_LOSE,		//ME 負け
 		E_SE_LENGTH
 	}eSE;
 
 	//BGM
 	typedef enum{
 		E_BGM_TITLE,	//タイトル
-		E_BGM_BATTLE,	//バトル
+		E_BGM_PREPARATION,	//バトル　待機
+		E_BGM_BATTLE,	//バトル　戦闘
 		E_BGM_WIN,		//リザルト　勝利
 		E_BGM_LOSE,		//リザルト　敗北
 		E_BGM_LENGTH
