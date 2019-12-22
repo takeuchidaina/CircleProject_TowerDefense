@@ -696,43 +696,54 @@ void cUnitMgr::SelectUI(int _num){
 	DrawBillboard3D(VGet(sx, sy, 0.0f), 0.5f, 0.5f, 18.0f, 0.0f, m_selectMarkImg, TRUE);
 }
 
+void cUnitMgr::MoveRand() {
+
+	int moveRand = 0;	// 動き始まめるかどうか　0=動かない, 1=tmptblの部屋番号に動く
+	moveRand = GetRand(1);
+	for (int i = 0; i < enemy.size(); i++) {
+
+		if (moveRand == 0) { enemy[i]->Set_State(E_IDLE); }
+
+		if (moveRand == 1) {
+			enemy[i]->Set_State(E_MOVE);
+		}
+	}
+}
+
+// Unitの移動
 void cUnitMgr::UnitMove() {
 
-	// Unitの移動
-	//if (CheckUnitAdd(m_baseUnit.Get_NowRoom() - 1) == true) {		// 行き先の部屋に行けたら
-	if (m_moveCnt >= MOVE_CNT) {		// m_moveCntが一定になったら
+	int findNum = 0;	// MapNavigationで中身を入れる
+	int loodtbl = 0;	// 次行く部屋
+	int moveCoolTime = GetRand(MOVE_COOLTIME_MAX) + MOVE_COOLTIME_MIN;
+
+	//int moveRand = GetRand(1);	// 動き始まめるかどうか　0=動かない, 1=tmptblの部屋番号に動く
+	//int tmp = GetRand(m_mapNavigate.Get_EnemySpawnRoom);
+
+	if (m_moveCnt >= moveCoolTime) {		// m_moveCntが一定になったら
+
 		for (int i = 0; i < enemy.size(); i++) {
+			int moveSelectEnemy = GetRand(i);	// 今いる出現しているどの敵を動かすかランダム
 
-			int next = enemy[i]->Get_NowRoom() - 1;
+			/// MapNavigation関数のreturnを代入　次行く部屋の部屋番号
+			loodtbl = m_mapNavigate.MapNavigation(enemy[i]->Get_NowRoom(), findNum);
 
-			if (enemy[i]->Get_NowRoom() != 0) {
-				//if (m_baseUnit.Get_NowRoom() == 1) {	// 現在地と行先が同じの場合
+			if (enemy[moveSelectEnemy]->Get_NowRoom() != 0) {		// 今の部屋が0じゃなかったら
 
-				int cnt = m_roomEnemy[next].size();
-				int max = m_mapData[next].roomSize;
+				int cnt = 0;
+				cnt = m_roomEnemy[loodtbl].size();			// 次行きたい部屋の敵の数
+				int roomMax = m_mapData[loodtbl].roomSize;		// 次行きたい部屋の数制限
 
-				if (cnt < max)
-				{
-					//if (m_stayCnt >= STEY_CNT) {
-					enemy[i]->Set_Room(next);
-					//break;
-				//}
+				//	　今いる部屋をreturn
+				if (cnt > roomMax) { return enemy[i]->Set_Room(enemy[i]->Get_NowRoom()); }
+				else if (cnt < roomMax) {		// 次行きたい部屋に空きがあったら
+					enemy[moveSelectEnemy]->Set_Room(loodtbl);
+					WaitTimer(100);
+
 				}
-				//Set_NextEnemyPos(EnemyArreySearch(enemy[i]->Get_Num()), enemy[i]->Get_NowRoom() - 1, enemy[i]->Get_NowRoom() - 1);
 				m_moveCnt = 0;
-
-				/*
-				// 指定された座標についたらIdle状態へ
-				if (m_pos.x <= m_nextMove.sNextX + m_speed && m_nextMove.sNextX - m_speed <= m_pos.x)
-				{
-					m_state = E_IDLE;
-					m_imgNum = 0;
-				}
-				*/
-				//}
+				//break;
 			}
 		}
 	}
-	//}
-
 }
