@@ -2,8 +2,8 @@
 
 cSceneMgr::cSceneMgr() : m_nextScene(E_SCENE_NONE){
 
-	m_scene = (cBaseScene*) new cGameMgr(this);
-	//m_scene = (cBaseScene*) new cTitle(this);
+	//m_scene = (cBaseScene*) new cGameMgr(this);
+	m_scene = (cBaseScene*) new cTitle(this);
 	//m_scene = (cBaseScene*) new cStageSelect(this);
 	//m_scene = (cBaseScene*) new cUnitSelect(this);
 }
@@ -13,6 +13,16 @@ void cSceneMgr::Init() {
 }
 
 void cSceneMgr::Update() {
+
+	//設定が終了したら
+	if (m_setting.GetEndSetting() == TRUE) {
+		isPose = FALSE;
+	}
+
+	if (GET_KEY_PRESS(KEY_INPUT_ESCAPE) == 1) {
+		isPose = TRUE;
+	}
+
 
 	// 次のシーンがセットされているなら次のシーンに変更する
 	if (m_nextScene != E_SCENE_NONE) {
@@ -46,12 +56,21 @@ void cSceneMgr::Update() {
 	}
 
 	//更新処理
-	m_scene->Update();
+	if (isPose == FALSE) {
+		m_scene->Update();
+	}
+	else {
+		m_setting.Update();
+	}
 }
 
 void cSceneMgr::Draw() {
 	//描画処理
 	m_scene->Draw();
+	
+	if (isPose == TRUE) {
+		m_setting.Draw();
+	}
 }
 
 void cSceneMgr::End() {
