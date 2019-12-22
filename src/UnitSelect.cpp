@@ -8,7 +8,6 @@ cUnitSelect::cUnitSelect(ISceneChanger* _scene) : cBaseScene(_scene) {
 
 	ImageFilePath = "../resource/img/";
 
-	//Init();
 }
 
 void cUnitSelect::Init() {
@@ -44,8 +43,11 @@ void cUnitSelect::Update() {
 			}
 		}
 		if (okButton.ButtonClick() == true) {
-			//WIP
-			//ユニット情報を渡してScene以降
+			if (selectUnit.size() > 0) {
+				//WIP
+				//選択されているユニット情報を渡す
+				m_sceneChanger->ChangeScene((eScene)E_SCENE_GAME);
+			}
 		}
 		if (resetButton.ButtonClick() == true) {
 			selectUnit.clear();
