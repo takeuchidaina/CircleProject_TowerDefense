@@ -108,4 +108,13 @@ typedef struct{
 	int mapID;			// ¶¬‚·‚éêŠ‚ÌID
 }sUnitGene;
 
+// lŠp
+typedef struct{
+
+	int left;
+	int top;
+	int right;
+	int bottom;
+}sRECT;
+
 #endif // !_CONSTANT_INCLUDE_
