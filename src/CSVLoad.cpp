@@ -111,8 +111,8 @@ vector<sUnitLoad> UnitLoad(string& _filePath)
 		tmpUnit.speed = atof(tmpStrVec[4].c_str());
 		tmpUnit.coolTime = atof(tmpStrVec[5].c_str());
 		tmpUnit.DEF = atof(tmpStrVec[6].c_str());
-		tmpUnit.unitPath = atof(tmpStrVec[7].c_str());
-		tmpUnit.effectPath = atof(tmpStrVec[8].c_str());
+		tmpUnit.unitPath = tmpStrVec[7];
+		tmpUnit.effectPath = tmpStrVec[8];
 
 		vec.push_back(tmpUnit);
 	}
