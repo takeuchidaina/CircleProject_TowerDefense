@@ -12,5 +12,6 @@ ErrBox("ここにエラー内容");
 のように書く。
 */
 extern void ErrBox(const char*);
+extern void FormatErrBox(const char* _format, ...);
 extern void ReportBox(const char*);
 #endif
