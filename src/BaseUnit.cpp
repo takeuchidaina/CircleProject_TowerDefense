@@ -1,8 +1,9 @@
 #include "BaseUnit.h"
 
-cBaseUnit::cBaseUnit()
-{
-	m_condition = eNone;
+// コンストラクタ
+cBaseUnit::cBaseUnit(){
+
+	m_condition = E_NONE;
 	m_nextMove.sNextRoom = -1;
 	m_nextMove.sNextX = NULL;
 	m_isOnActive = true;
@@ -11,21 +12,19 @@ cBaseUnit::cBaseUnit()
 	m_targetNum = -1;
 	m_atkCnt = m_atkCoolTime;
 	m_moveCnt = 0;
-	m_effectFlg = false;
+	m_isEffect = false;
 	m_effectAnimeCnt = 0;
 	m_Defense = 0;
 
-	
-	for (int i = 0; i < 2; i++)
-	{
+	for (int i = 0; i < 2; i++){
 		m_effectImage[i] = MakeGraph(64, 64);
 	}
 }
 
-cBaseUnit::~cBaseUnit()
-{
-	for (int i = 0; i < 6; i++)
-	{
+// デストラクタ
+cBaseUnit::~cBaseUnit(){
+
+	for (int i = 0; i < 6; i++){
 		DeleteGraph(m_imgtbl[i]);
 	}
 
@@ -35,30 +34,32 @@ cBaseUnit::~cBaseUnit()
 	}
 }
 
+// 演算処理
 void cBaseUnit::Update()
 {
 	m_moveStartCnt++;				// 一定数まで行ったらmove
 	m_moveType = GetRand(2);	// moveするTypeを決めるランダム
 }
 
+// 描画処理
 void cBaseUnit::Draw()
 {
-	int imgNum = m_moveAnime[m_imgNum];
+	int imgNum = m_moveAnime[m_imgNum]; // 配列番号格納
 
 	// 右を向いている場合は画像配列番号に3足す
-	if (m_direction == U_RIGHT)
-	{
+	if (m_direction == U_RIGHT){
 		imgNum += 3;
 	}
 
+	// 描画
 	DrawBillboard3D(m_pos, 0.5f, 0.5f, 64, 0.0f, m_imgtbl[imgNum], TRUE);
 }
 
+// 移動処理
 void cBaseUnit::Move()
 {
 	// 現在地と行先が同じの場合
-	if (m_room == m_nextMove.sNextRoom)
-	{
+	if (m_room == m_nextMove.sNextRoom){
 		/* TODO
 		// 行先が右側
 		if (m_pos.x <= m_nextMove.sNextX)
@@ -80,9 +81,9 @@ void cBaseUnit::Move()
 			m_pos.x -= m_speed;
 		}
 		*/
+
 		// 指定された座標についたらIdle状態へ
-		if (m_pos.x <= m_nextMove.sNextX + m_speed && m_nextMove.sNextX - m_speed <= m_pos.x)
-		{
+		if (m_pos.x <= m_nextMove.sNextX + m_speed && m_nextMove.sNextX - m_speed <= m_pos.x){
 			m_state = E_IDLE;
 			m_imgNum = 0;
 		}
@@ -104,15 +105,18 @@ void cBaseUnit::Move()
 	*/
 }
 
+// 攻撃処理
 bool cBaseUnit::Attack()
 {
+
 	m_atkCnt--;
-	if (m_atkCnt <= 0)
-	{
+
+	// カウントが0になったら攻撃
+	if (m_atkCnt <= 0){
 		m_atkCnt = 300;
 		//DEBUG_LOG("SordAttack");
 
-		m_effectFlg = true;
+		m_isEffect = true;
 
 		return true;
 	}
@@ -120,18 +124,22 @@ bool cBaseUnit::Attack()
 	return false;
 }
 
-void cBaseUnit::AttackStart()
-{
-	if (m_targetNum != -1)
-	{
+// 攻撃開始判定
+void cBaseUnit::AttackStart(){
+
+	// ターゲットが見つかったら攻撃開始
+	if (m_targetNum != -1){
 		m_state = E_ATTACK;
 	}
 }
 
-void cBaseUnit::AttackAnime(VECTOR _targetPos)
-{
-	if (m_effectAnimeCnt <= 60)
-	{
+// 攻撃アニメーション制御
+void cBaseUnit::AttackAnime(VECTOR _targetPos){
+
+	// 攻撃モーションを60フレーム間描画
+	if (m_effectAnimeCnt <= 60){
+
+		// 向き
 		if (m_direction == U_LEFT)
 		{
 
@@ -145,28 +153,23 @@ void cBaseUnit::AttackAnime(VECTOR _targetPos)
 	else
 	{
 		m_effectAnimeCnt = 0;
-		m_effectFlg = false;
+		m_isEffect = false;
 	}
 
 	m_effectAnimeCnt++;
 }
 
-void cBaseUnit::Defense(int _atkPoint, int _atkNum)
-{
+// 攻撃判定を受け取る
+void cBaseUnit::Defense(int _atkPoint, int _atkNum){
+	
+	// 敵の攻撃力分HP減少
 	m_hp -= _atkPoint - m_Defense;
-	/*if (m_targetNum == -1)
-	{
-		m_targetNum = _atkNum;
-		m_effectFlg = true;
-
-
-	}*/
 
 	DEBUG_LOG("ナンバー%dは%dのダメージを受けた　残りHP:%d", m_num, _atkPoint, m_hp);
 }
 
+/*
 void cBaseUnit::UnitMove(int _player, int _enemy) {
-	/*
 	// Unitの移動
 	if (m_moveStartCnt >= MOVE_CNT) {		// m_moveCntが一定になったら
 		for (int i = 0; i < m_enemy.size(); i++) {
@@ -200,6 +203,5 @@ void cBaseUnit::UnitMove(int _player, int _enemy) {
 			}
 		}
 	}
-	*/
 		
-}
+}*/

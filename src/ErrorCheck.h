@@ -8,7 +8,7 @@
 
 /********************************************************
 ●概要
-　ファイルのエラーチェックを行う
+　エラーチェックを行う
 
 ●作成者
 　竹内 大奈
@@ -22,4 +22,5 @@
 ******************************************************/
 extern void FileCheck(int _fileName);
 
+extern void FileCheck(int _fileName, int _num);
 #endif // !_INCLUED_ERRORCHECK_

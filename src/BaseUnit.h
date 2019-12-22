@@ -5,6 +5,7 @@
 #include "Sound.h"
 #include <vector>
 #include "Log.h"
+#include "CSVLoad.h"
 using namespace std;
 
 #ifndef _INCLUDE_BASE_UNIT_
@@ -18,12 +19,10 @@ using namespace std;
 ●作成者
 　髙井隆太郎
 
-●更新日
-  
 ********************************************************/
 
-class cBaseUnit : public cBaseTask
-{
+class cBaseUnit : public cBaseTask{
+
 protected:
 	VECTOR m_pos;			// 座標
 	int m_num;				// ユニット番号
@@ -45,7 +44,7 @@ protected:
 	int m_moveAnime[4] = { 1, 0, 1, 2};	// アニメーション配列
 	int m_effectImage[2];	// Effect用
 	int m_effectAnimeCnt;	// Effectアニメーションカウント
-	bool m_effectFlg;		// Effect再生フラグ
+	bool m_isEffect;		// Effect再生フラグ
 	sNextMove m_nextMove;	// 次に向かう場所
 
 	int m_imgNum;			// アニメーションナンバー
@@ -61,13 +60,10 @@ protected:
 	
 public:
 
-	void Update();
-
- 	virtual void Draw();
-
 	cBaseUnit();
-
 	virtual ~cBaseUnit();
+	virtual void Update();
+ 	virtual void Draw();
 
 	/*********************************************************************
 	関数名：void RoomDraw()
@@ -75,7 +71,7 @@ public:
 	引数：VECTOR:描画座標
 	戻り値：なし
 	*********************************************************************/
-	void RoomDraw(VECTOR _vPos);
+	//void RoomDraw(VECTOR _vPos);
 
 	/*********************************************************************
 	関数名：void Move()
@@ -84,7 +80,6 @@ public:
 	戻り値：なし
 	*********************************************************************/
 	void Move();
-	//void UnitMove();
 
 	/*********************************************************************
 	関数名：bool Attack()
@@ -94,6 +89,12 @@ public:
 	*********************************************************************/
 	bool Attack();
 
+	/*********************************************************************
+	関数名：virtual void AttackSE()
+	概要：攻撃SE呼び出し
+	引数：なし
+	戻り値：なし
+	*********************************************************************/
 	virtual void AttackSE() {}
 
 	/*********************************************************************
@@ -115,81 +116,78 @@ public:
 	/*********************************************************************
 	関数名：virtual void AttackAnime()
 	概要：攻撃用アニメーション
-	引数：なし
+	引数：VECTOR:攻撃対象の位置
 	戻り値：なし
 	*********************************************************************/
 	void AttackAnime(VECTOR _targetPos);
 
+	/*********************************************************************
+	関数名：void UnitMove(int _player, int _enemy)
+	概要：Unitの部屋間移動処理
+	引数：
+	戻り値：なし
+	*********************************************************************/
+	//void UnitMove(int _player, int _enemy);
+
+
 	/************************************    Get    *****************************************/
 
 	// 向き
-	int Get_Direction()
-	{
+	int Get_Direction(){
 		return m_direction;
 	}
 
 	// 攻撃範囲
-	double Get_atkR()
-	{
+	double Get_atkR(){
 		return m_atkR;
 	}
 
 	// 現在の部屋番号
-	int Get_NowRoom()
-	{
+	int Get_NowRoom(){
 		return m_room;
 	}
 
 	// 攻撃タイミングカウント
-	int Get_AtkCnt()
-	{
+	int Get_AtkCnt(){
 		return m_atkCnt;
 	}
 
 	// 火力
-	int Get_AtkPoint()
-	{
+	int Get_AtkPoint(){
 		return m_atk;
 	}
 
 	// 現在のターゲットナンバー
-	int Get_TargetNum()
-	{
+	int Get_TargetNum(){
 		return m_targetNum;
 	}
 
 	// 体力
-	int Get_Hp()
-	{
+	int Get_Hp(){
 		return m_hp;
 	}
 
 	// 現在座標
-	VECTOR Get_Pos()
-	{
+	VECTOR Get_Pos(){
 		return m_pos;
 	}
 
 	// 現在のステート
-	int Get_State()
-	{
+	int Get_State(){
 		return m_state;
 	}
 
 	// Effect描画フラグ
-	bool Get_EffectFlg()
-	{
-		return m_effectFlg;
+	bool Get_EffectFlg(){
+		return m_isEffect;
 	}
 
 	// Unitナンバー
-	int Get_Num()
-	{
+	int Get_Num(){
 		return m_num;
 	}
 
-	int Get_Type()
-	{
+	int Get_Type(){
 		return m_Type;
 	}
 
@@ -201,8 +199,7 @@ public:
 	引数：int:移動先の部屋番号, double:移動先のx座標
 	戻り値：なし
 	*********************************************************************/
-	void Set_NextMove(int _nextRoom, double _nextX)
-	{
+	void Set_NextMove(int _nextRoom, double _nextX){
 		m_nextMove.sNextRoom = _nextRoom;
 		m_nextMove.sNextX = _nextX;
 	}
@@ -213,8 +210,7 @@ public:
 	引数：ターゲットにするUnitナンバー
 	戻り値：なし
 	*********************************************************************/
-	void Set_Target(int _num)
-	{
+	void Set_Target(int _num){
 		m_targetNum = _num;
 	}
 
@@ -225,35 +221,29 @@ public:
 	　　　Constant.h 参照
 	戻り値：なし
 	*********************************************************************/
-	void Set_State(eState _state)
-	{
+	void Set_State(eState _state){
 		m_state = _state;
 	}
 
-	void Set_Pos(VECTOR _pos)
-	{
+	/*********************************************************************
+	関数名：void Set_Pos(VECTOR _pos)
+	概要：座標セット
+	引数：VECTOR:座標
+	戻り値：なし
+	*********************************************************************/
+	void Set_Pos(VECTOR _pos){
 		m_pos = _pos;
 	}
 
-	void Set_Room(int _room)
-	{
-		m_room = _room;
-	}
-	/*
-	void Set_tmp(vector<vector<int>>_m_roomPlayer, vector<vector<int>>_m_roomEnemy) {
-		m_player = _player;
-		m_enemy = _enemy;
-		tmpRoomPlayer = _m_roomPlayer;
-		tmpRoomEnemy = _m_roomEnemy;
-	}
-	*/
 	/*********************************************************************
-	関数名：void UnitMove(eState _state)
-	概要：ステートの変更
-	引数：
+	関数名：void Set_Room(int _room)
+	概要：部屋をセット
+	引数：int:部屋番号
 	戻り値：なし
 	*********************************************************************/
-	void UnitMove(int _player, int _enemy);
+	void Set_Room(int _room){
+		m_room = _room;
+	}
 
 };
 
