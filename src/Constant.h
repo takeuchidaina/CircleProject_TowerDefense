@@ -111,8 +111,8 @@ typedef struct{
 // éläp
 typedef struct{
 
-	int left;
 	int top;
+	int left;
 	int right;
 	int bottom;
 }sRECT;

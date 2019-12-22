@@ -34,7 +34,7 @@ void cGameMgr::Init() {
 void cGameMgr::Update() {
 
 	//Escapeキーでステートをポーズへ変更
-	if (GET_KEY_PRESS(KEY_INPUT_ESCAPE) == 1) { m_gameState = E_POSE; }
+	//if (GET_KEY_PRESS(KEY_INPUT_ESCAPE) == 1) { m_gameState = E_POSE; }
 
 	if (m_gameState != m_stateHistory) {
 		if (m_stateHistory == E_PREPARATION) {

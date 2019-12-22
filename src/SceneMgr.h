@@ -12,6 +12,7 @@
 #include "UnitSelect.h"
 #include "GameMgr.h"
 #include "Result.h"
+#include "Setting.h"
 
 /**********************************************************
 ●概要
@@ -45,6 +46,8 @@ private:
 
 	cBaseScene* m_scene;	//シーン管理変数
 	eScene m_nextScene;		//次のシーン
+	cSetting m_setting;		//設定
+	bool isPose;			//TRUE:ポーズ中　FALSE:ポーズ中ではない
 
 };
 
