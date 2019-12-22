@@ -6,9 +6,9 @@ cGameMgr::cGameMgr(ISceneChanger* _scene) : cBaseScene(_scene) {
 
 void cGameMgr::Init() {
 	//時間
-	cTime* ptime = new cTime(TIME_LIMIT);
-	m_time = *ptime;
-	delete ptime;
+	//cTime* ptime = new cTime(TIME_LIMIT);
+	//m_time = *ptime;
+	//delete ptime;
 
 	//ユニット管理部・敵AIにマップ情報を渡す
 	m_unitMgr.Set_MapData(m_mapMgr.GetMapData());
@@ -23,10 +23,10 @@ void cGameMgr::Init() {
 
 	m_PlayerCnt = 0;		//プレイヤーユニットの出現数
 
-	//m_gameState = E_PREPARATION;	//初期ステート
-	m_gameState = E_BATTLE;		//初期ステート
+	m_gameState = E_PREPARATION;	//初期ステート
+	//m_gameState = E_BATTLE;		//初期ステート
 	m_stateHistory = m_gameState;
-	
+
 
 	SRand(time(NULL));		//敵ユニットのランダム出現用に現在時刻でrandを初期化
 }
@@ -48,20 +48,27 @@ void cGameMgr::Update() {
 	//ステート管理
 	switch (m_gameState)
 	{
-	//戦闘準備
+		//戦闘準備
 	case E_PREPARATION:
 		m_camera.Update();		//カメラの移動・ズーム
 		m_unitMgr.Update();		//TODO:ユニットの生成をUnitMgrで行う
 		m_UI.Update();			//UIのキャラクター出撃数更新
 		m_BG.Update();			//雲のアニメーション
-		UnitGenerate();			//ユニット生成
-		
+		PlayerGenerate();
+		UnitData();
+		//UnitGenerate();			//ユニット生成
+
 		//シーンをバトルへ
 		if (GET_KEY_PRESS(KEY_INPUT_B) == 1) {
 			m_gameState = E_BATTLE;
+
+			//時間
+			cTime* ptime = new cTime(TIME_LIMIT);
+			m_time = *ptime;
+			delete ptime;
 		}
 		break;
-	//戦闘
+		//戦闘
 	case E_BATTLE:
 		m_unitMgr.Update();		//ユニットの行動
 		UnitData();				//UIにユニットのデータをセットする
@@ -72,14 +79,15 @@ void cGameMgr::Update() {
 		m_camera.Update();		//カメラの移動・ズーム
 		m_UI.Update();			//UIのキャラクター出撃数更新
 		m_BG.Update();			//雲のアニメーション
+		EnemyGenerate();
 		break;
-	//イベント
+		//イベント
 	case E_EVENT:
 		break;
-	//カットシーン
+		//カットシーン
 	case E_CUTSCENE:
 		break;
-	//ポーズ
+		//ポーズ
 	case E_POSE:
 		//設定
 		m_setting.Update();
@@ -99,14 +107,18 @@ void cGameMgr::Draw() {
 	//ステート管理
 	switch (m_gameState)
 	{
-	//戦闘準備
+		//戦闘準備
 	case E_PREPARATION:
 		m_BG.Draw();
 		m_mapMgr.Draw();
 		m_unitMgr.Draw();
 		m_UI.Draw();
+
+		SetFontSize(80);
+		DrawFormatString(300, 300, GetColor(255, 0, 0), "PUSH B !!!");
+
 		break;
-	//戦闘
+		//戦闘
 	case E_BATTLE:
 		m_BG.Draw();
 		m_mapMgr.Draw();
@@ -114,13 +126,13 @@ void cGameMgr::Draw() {
 		m_time.Draw();
 		m_UI.Draw();
 		break;
-	//イベント
+		//イベント
 	case E_EVENT:
 		break;
-	//カットシーン
+		//カットシーン
 	case E_CUTSCENE:
 		break;
-	//ポーズ
+		//ポーズ
 	case E_POSE:
 		m_BG.Draw();
 		m_mapMgr.Draw();
@@ -175,37 +187,22 @@ void cGameMgr::ResultSave(bool _result) {
 	FILE* fp;
 
 	errno_t err; // errno_t型(int型)
-	err = fopen_s(&fp, "../result.txt", "w"); // ファイルを開く。失敗するとエラーコードを返す。
+	err = fopen_s(&fp, "../result.txt", "wb"); // ファイルを開く。失敗するとエラーコードを返す。
 	if (err != 0) {
 		DEBUG_LOG("file not open");
 	}
 
+	const char* result;
 	if (_result == TRUE) {
-		fprintf(fp, "win");
+		result = "win";
 	}
 	else {
-		fprintf(fp, "lose");
+		result = "lose";
 	}
+
+	fwrite(result, sizeof(result), 1, fp);
 	fclose(fp);
 
-}
-
-/*****************************************************
-名前　：void UnitGenerate();
-概要　：ユニットの生成関連の関数を呼び出す
-引数　：なし
-戻り値：なし
-******************************************************/
-void cGameMgr::UnitGenerate() {
-
-	//プレイヤーの生成
-	PlayerGenerate();
-
-	//エネミーの生成
-	EnemyGenerate();
-
-	//UIにユニットの情報を渡す
-	UnitData();
 }
 
 /*****************************************************
@@ -303,7 +300,7 @@ void cGameMgr::EnemyGenerate() {
 引数　：ファイルを入れた変数
 戻り値：なし
 ******************************************************/
-void cGameMgr::UnitData(){
+void cGameMgr::UnitData() {
 
 	sUnitData data;
 
