@@ -1,5 +1,4 @@
 #pragma once
-#pragma once
 #ifndef _INCLUED_UNITSELECT_
 #define _INCLUED_UNITSELECT_
 
@@ -16,6 +15,7 @@
 #include <string.h>
 #include "ErrorCheck.h"
 #include "Sound.h"
+#include "CSVLoad.h"
 
 class cUnitSelect : public cBaseScene {
 public:
@@ -28,6 +28,19 @@ public:
 
 private:
 
+	string CSVFilePath;
+	string ImageFilePath;
+	string pathBG = "../resource/img/UI_BG.png";
+	
+	vector<cButton> unitButton;
+	cButton resetButton;
+	cButton okButton;
+	vector<int> selectUnit;
+	vector<sUnitLoad> unitData;
+
+	sRECT selectUnitRect;
+	sRECT resetButtonRect;
+	sRECT okButtonRect;
 };
 
 #endif
