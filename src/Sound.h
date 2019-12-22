@@ -50,7 +50,7 @@ public:
 		E_SE_CANSEL,	//キャンセル
 		E_SE_SWORD,		//剣　攻撃
 		E_SE_SHEILD,	//盾　防御
-		E_SE_BULLET,	//銃　攻撃
+		E_SE_ARROW,		//銃　攻撃
 		E_SE_WIN,		//ME 勝ち
 		E_SE_LOSE,		//ME 負け
 		E_SE_LENGTH
