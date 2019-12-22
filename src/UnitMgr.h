@@ -15,8 +15,7 @@
 #include "Mouse.h"
 #include <vector>
 #include "Log.h"
-#include "MapNavigate.h"
-
+#include "UnitGenerateUI.h"
 using namespace std;
 
 /********************************************************
@@ -26,87 +25,72 @@ using namespace std;
 ●作成者
 　髙井隆太郎
 
-●更新日
-　
 ********************************************************/
 
 #ifndef _INCLUED_UNIT_MGR_
 #define _INCLUED_UNIT_MGR_
 
-#define MOVE_COOLTIME_MAX 500	// 	Randで0~500
-#define MOVE_COOLTIME_MIN 300	//  MOVE_COOLTIME_MAXに固定+300
+#define MOVE_CNT 400
 
-class cUnitMgr : public cBaseTask
-{
+class cUnitMgr : public cBaseTask{
+
 	vector<cPlayerUnit*> player;	// プレイヤー
-	vector<cEnemyUnit*> enemy;
-	int m_num;	// ナンバー
-	int m_selectMarkImg;
+	vector<cEnemyUnit*> enemy;		// エネミー
+	int m_num;						// ナンバー
+	int m_selectMarkImg;			// 選択マーカー画像格納
 	int m_mapStack;					// マップの数格納
 
 	int m_moveCnt = 0;				// 一定数まで行ったら移動
 	int m_moveType = 0;				// moveするTypeを決めるランダム
 
-	vector<vector<int>> m_roomPlayer;
-	vector<vector<int>> m_roomEnemy;
+	vector<vector<int>> m_roomPlayer;	// 各部屋内のプレイヤーID格納
+	vector<vector<int>> m_roomEnemy;	// 各部屋内のエネミーID格納
+
+	vector<sUnitLoad> m_unitCsvData;// ユニットCSVデータ
 
 	sTypeCnt m_typeCnt;	//タイプ別のカウント
 
-	vector<sMapData> m_mapData;
+	vector<sMapData> m_mapData;		// マップデータ
 
-	DATEDATA m_date;
-	cMapNavigate m_mapNavigate;
+	DATEDATA m_date;				// ランダム関数用日付取得
 
-	int m_escortCnt;	// 護衛対象の数
+	cUnitGeneUIMgr *m_geneUI;		// ユニット生成用UIクラスの宣言
+
+	int m_escortCnt;				// 護衛対象の数
 
 public:
 	cUnitMgr();
 	~cUnitMgr();
 
-	void Update();
-	void Draw();
-	
+	virtual void Update();
+	virtual void Draw();
 
+	int UnitGenerate();
+	
 	/*********************************************************************
 	関数名：void Add_PSord(double _x, double _y, int _room)
 	概要：剣士の生成
 	引数：座標
 	戻り値：なし
 	*********************************************************************/
-	int Add_PSord(double _x, double _y, int _room)
-	{
-		if (m_roomPlayer[_room].size() >= m_mapData[_room].roomSize) return -1;
-  		player.emplace_back(new cPSord(_x, _y, _room, m_num));
-		DEBUG_LOG("playerSize:%d", player.size());
-		m_num++;
+	int Add_PSord(double _x, double _y, int _room);
 
-		return 0;
-	}
 	/*********************************************************************
 	関数名：void Add_PArcher(double _x, double _y, int _room)
 	概要：弓兵？の生成
 	引数：座標
 	戻り値：なし
 	*********************************************************************/
-	int Add_PArcher(double _x, double _y, int _room)
-	{
-		if (m_roomPlayer[_room].size() >= m_mapData[_room].roomSize) return -1;
-		player.emplace_back(new cPArcher(_x, _y, _room, m_num));
-		m_num++;
+	int Add_PArcher(double _x, double _y, int _room);
+	
+	/*********************************************************************
+	関数名：void Add_PArcher(double _x, double _y, int _room)
+	概要：弓兵？の生成
+	引数：座標
+	戻り値：なし
+	*********************************************************************/
+	int Add_PDefense(double _x, double _y, int _room);
 
-		return 0;
-	}
-
-	int Add_PDefense(double _x, double _y, int _room)
-	{
-		if (m_roomPlayer[_room].size() >= m_mapData[_room].roomSize) return -1;
-		player.emplace_back(new cPDefense(_x, _y, _room, m_num));
-		m_num++;
-
-		return 0;
-	}
-
-	/**************************** エネミー ************************/
 	/*		クリック生成関数 ESord	変更前
 	int Add_ESord(double _x, double _y, int _room)
 	{
@@ -137,15 +121,12 @@ public:
 	}
 	*/
 
-	// ランダム生成		変更後
+	// ランダム生成		変更後 (だいご追加)
 	// ESord
-	
 	int Add_ESord(double _x, double _y)
 	{
-		int spawnRoom = m_mapData.size() - 1;
-
-		if (m_roomEnemy[spawnRoom].size() >= m_mapData[spawnRoom].roomSize) return 0;
-		enemy.emplace_back(new cESord(_x, _y, spawnRoom, m_num));
+		if (m_roomEnemy[2].size() >= m_mapData[2].roomSize) return 0;
+		enemy.emplace_back(new cESord(_x, _y, 2, m_num));
 		m_num++;
 		//DEBUG_LOG("ESord Create");
 		return 0;
@@ -153,10 +134,8 @@ public:
 	// EArcher
 	int Add_EArcher(double _x, double _y)
 	{
-		int spawnRoom = m_mapData.size() - 1;
-
-		if (m_roomEnemy[spawnRoom].size() >= m_mapData[spawnRoom].roomSize) return 0;
-		enemy.emplace_back(new cEArcher(_x, _y, spawnRoom, m_num));
+		if (m_roomEnemy[2].size() >= m_mapData[2].roomSize) return 0;
+		enemy.emplace_back(new cEArcher(_x, _y, 2, m_num));
 		m_num++;
 
 		return 0;
@@ -164,15 +143,13 @@ public:
 	// EDefense
 	int Add_EDefense(double _x, double _y)
 	{
-		int spawnRoom = m_mapData.size() - 1;
-
-		if (m_roomEnemy[spawnRoom].size() >= m_mapData[spawnRoom].roomSize) return 0;
-		enemy.emplace_back(new cEDefense(_x, _y, spawnRoom, m_num));
+		if (m_roomEnemy[2].size() >= m_mapData[2].roomSize) return 0;
+		enemy.emplace_back(new cEDefense(_x, _y, 2, m_num));
 		m_num++;
 
 		return 0;
 	}
-	
+
 	/*********************************************************************
 	関数名：void RoomDraw()
 	概要：部屋内の描画
@@ -188,7 +165,7 @@ public:
 	戻り値：true:入れる
 			false:入れない
 	*********************************************************************/
-	bool CheckUnitAdd(int _roomNum);
+	//bool CheckUnitAdd(int _roomNum);
 
 	/*********************************************************************
 	関数名：void TargetSelect()
@@ -196,8 +173,15 @@ public:
 	引数：なし
 	戻り値：なし
 	*********************************************************************/
-	void TargetSelect();
+	//void TargetSelect();
 
+	/*********************************************************************
+	関数名：void TargetSelect(int _arrayNum, int _unit)
+	概要：ターゲットの検索
+	引数：int:検索をするUnitID
+		  int:1 プレイヤー / -1 敵
+	戻り値：なし
+	*********************************************************************/
 	void TargetSelect(int _arrayNum, int _unit);
 
 	/*********************************************************************
@@ -209,6 +193,14 @@ public:
 	void InRoomUnit();
 
 	/*********************************************************************
+	関数名：void UnitMove()
+	概要：移動処理
+	引数：なし
+	戻り値：なし
+	*********************************************************************/
+	void UnitMove();
+
+	/*********************************************************************
 	関数名：int AttackRelay(int _atkP, int _difNum, int _atkNum)
 	概要：攻撃の中継
 	引数：int:火力, int:攻撃を受けるUnitナンバー, int:攻撃をするUnitナンバー
@@ -216,53 +208,30 @@ public:
 	*********************************************************************/
 	int AttackRelay(int _atkP, int _difNum, int _atkNum);
 
-	bool EscortDie()
-	{
-		if (player[0]->Get_Hp() <= 0)
-		{
-			return false;
-		}
+	/*********************************************************************
+	関数名：bool EscortDie()
+	概要：護衛対象が生きているかどうかの判定
+	引数：なし
+	戻り値：true:生きている
+			false:死んだ
+	*********************************************************************/
+	bool EscortDie();
 
-		return true;
-	}
+	/*********************************************************************
+	関数名：void UnitDie()
+	概要：ユニットが死んだときの処理
+	引数：なし
+	戻り値：なし
+	*********************************************************************/
+	void UnitDie();
 
-	void UnitDie()
-	{
-		for (int i = 0; i < player.size(); i++)
-		{
-			if (player[i]->Get_Hp() <= 0)
-			{
-				player.erase(player.begin() + i);
-				DEBUG_LOG("player[%d].Die:%d", i, player.size());
-			}
-		}
-		for (int i = 0; i < enemy.size(); i++)
-		{
-			if (enemy[i]->Get_Hp() <= 0)
-			{
-				enemy.erase(enemy.begin() + i);
-				DEBUG_LOG("enemy[%d].Die:%d", i, enemy.size());
-			}
-		}
-	}
-
-	void NoTarget()
-	{
-		for (int i = 0; i < player.size(); i++)
-		{
-			if (player[i]->Get_TargetNum() < 0)
-			{
-				player[i]->Set_State(E_IDLE);
-			}
-		}
-		for (int i = 0; i < enemy.size(); i++)
-		{
-			if (enemy[i]->Get_TargetNum() < 0)
-			{
-				enemy[i]->Set_State(E_IDLE);
-			}
-		}
-	}
+	/*********************************************************************
+	関数名：void NoTarget()
+	概要：攻撃対象がいなくなったらIdleへ
+	引数：なし
+	戻り値：なし
+	*********************************************************************/
+	void NoTarget();
 
 	/*********************************************************************
 	関数名：int PlayerArreySearch(int _num)
@@ -289,41 +258,27 @@ public:
 	int CheckPlayerClick(VECTOR _pos);
 
 	// だいご追加
-	int CheckEnemyClick(VECTOR _pos);
+	//int CheckEnemyClick(VECTOR _pos);
 
-	sTypeCnt Get_TypeCnt()
-	{
-		m_typeCnt.sord = 0;
-		m_typeCnt.archar = 0;
-		m_typeCnt.defense = 0;
+	/************************************    Get    *****************************************/
 
-		for (int i = 0; i < player.size(); i++)
-		{
-			switch (player[i]->Get_Type())
-			{
-			case E_SORD:
-				m_typeCnt.sord++;
-				break;
+	/*********************************************************************
+	関数名：sTypeCnt Get_TypeCnt()
+	概要：プレイヤーユニットのタイプ別の数を返す
+	引数：なし
+	戻り値：sTypeCnt:プレイヤーユニットのタイプ別の数
+	*********************************************************************/
+	sTypeCnt Get_TypeCnt();
 
-			case E_ARCHAR:
-				m_typeCnt.archar++;
-				break;
+	/************************************    Set    *****************************************/
 
-			case E_DEFENSE:
-				m_typeCnt.defense++;
-				break;
-			default:
-				break;
-			}
-		}
-
-		return m_typeCnt;
-	}
-
-	void Set_MapData(vector<sMapData> _mapData)
-	{
-		m_mapData = _mapData;
-	}
+	/*********************************************************************
+	関数名：void Set_MapData(vector<sMapData> _mapData)
+	概要：マップデータ格納
+	引数：vector<sMapData>:マップデータ
+	戻り値：なし
+	*********************************************************************/
+	void Set_MapData(vector<sMapData> _mapData);
 
 	/*********************************************************************
 	関数名：void Set_NextPlayerPos(int _playerNum, int _nextRoom, double _nextX)
@@ -349,15 +304,7 @@ public:
 	*********************************************************************/
 	// だいご追加
 	void Set_NextEnemyPos(int _enemyNum, int _nextRoom, int _nextX);
-	/*********************************************************************
-	関数名：void UnitMove()
-	概要：移動処理
-	引数：なし
-	戻り値：なし
-	*********************************************************************/
-	void UnitMove();
 
-	void MoveRand();
 };
 
 #endif  // !_INCLUDE_UNIT_MGR_

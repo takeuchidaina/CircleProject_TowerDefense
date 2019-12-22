@@ -2,14 +2,8 @@
 #include "DxLib.h"
 #include <vector>
 
-#define WINDOW_WIDTH 1280	// Window幅
-#define WINDOW_HEIGHT 720	// Window高さ
-
-#define UNIT_WIDTH 64		// ユニット幅
-#define UNIT_HEIGHT 64		// ユニット高さ
-
-#define U_RIGHT 1			// 右向き
-#define U_LEFT -1			// 左向き
+#ifndef _CONSTANT_INCLUDE_
+#define _CONSTANT_INCLUDE_
 
 /********************************************************
 ●概要
@@ -21,63 +15,97 @@
 ●作成者
 　髙井隆太郎
 
-●更新日
-　
 ********************************************************/
 
-typedef enum
-{
-	eNone,		// なし
+/********************************************************
+
+	マクロ
+
+********************************************************/
+
+#define WINDOW_WIDTH 1280	// Window幅
+#define WINDOW_HEIGHT 720	// Window高さ
+
+#define UNIT_WIDTH 64		// ユニット幅
+#define UNIT_HEIGHT 64		// ユニット高さ
+
+#define U_RIGHT 1			// 右向き
+#define U_LEFT -1			// 左向き
+
+/********************************************************
+
+	列挙型
+
+********************************************************/
+
+// ユニットの体調
+typedef enum{
+
+	E_NONE		// 元気！！
 
 
 }eCondition;
 
-typedef enum
-{
+// ユニットのタイプ
+typedef enum{
+
 	E_SORD,		// 剣士
-	E_ARCHAR,	// 弓兵
+	E_ARCHAR,	// 銃兵
 	E_DEFENSE,	// 盾
 	E_ESCORT	// 護衛対象
 }eUnitType;
 
-typedef enum
-{
+// ユニットの状態
+typedef enum{
+
 	E_IDLE,		// 待機中
 	E_ATTACK,	// 攻撃中
 	E_MOVE		// 移動中
 }eState;
 
-typedef struct
-{
-	int sNextRoom;
-	double sNextX;
+/********************************************************
+
+	構造体
+
+********************************************************/
+
+// 次の移動先設定用
+typedef struct{
+
+	int sNextRoom;	// 部屋番号
+	double sNextX;	// x座標
 }sNextMove;
 
-typedef struct
-{
-	VECTOR pos;
-	double width;
-	double height;
-	int roomSize;
+// マップデータの受け渡し用
+typedef struct{
+
+	VECTOR pos;		// 座標
+	double width;	// 幅
+	double height;	// 高さ
+	int roomSize;	// ユニットが入れる数
 }sMapData;
 
-typedef struct
-{
-	int sord;
-	int archar;
-	int defense;
+// ユニットのタイプ別の数受け渡し用
+typedef struct{
+
+	int sord;		// 剣士
+	int archar;		// 銃兵
+	int defense;	// 盾
 }sTypeCnt;
 
-typedef struct
-{
-	sTypeCnt typeCnt;
-	int maxPlayer;
-	int playerCnt;
+// プレイヤーユニットの数データ受け渡し用
+typedef struct{
+
+	sTypeCnt typeCnt;	// タイプ別
+	int maxPlayer;		// 最大数
+	int playerCnt;		// 全体数
 }sUnitData;
 
-typedef struct {
-	int top;
-	int left;
-	int right;
-	int bottom;
-}sRECT;
+// ユニット生成用
+typedef struct{
+
+	int unitID;			// 生成するユニットID
+	int mapID;			// 生成する場所のID
+}sUnitGene;
+
+#endif // !_CONSTANT_INCLUDE_

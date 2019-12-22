@@ -8,6 +8,13 @@
 ******************************************************/
 void FileCheck(int _fileName) {
 	if (_fileName == -1 || _fileName == NULL) {
-		ErrBox("ファイルの中身がありません");
+		ErrBox("ヌルポ");
+	}
+}
+
+void FileCheck(int _fileName, int _num){
+
+	if (_fileName == -1 || _fileName == NULL) {
+		FormatErrBox("ヌルポ：%d", _num);
 	}
 }
