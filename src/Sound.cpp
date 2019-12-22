@@ -17,7 +17,7 @@ void cSound::Init() {
 	m_SEPath[E_SE_CANSEL] = { "../resource/Sound/SE/Cansel.wav" };
 	m_SEPath[E_SE_SWORD]  = { "../resource/Sound/SE/Sword.wav" };
 	m_SEPath[E_SE_SHEILD]  = { "../resource/Sound/SE/Sheild_bySword.wav" };
-	m_SEPath[E_SE_BULLET] = { "../resource/Sound/SE/Bullet.wav" };
+	m_SEPath[E_SE_ARROW] = { "../resource/Sound/SE/Bullet.wav" };
 	m_SEPath[E_SE_WIN] = { "../resource/Sound/SE/ME_Win.wav" };
 	m_SEPath[E_SE_LOSE] = { "../resource/Sound/SE/ME_Lose.ogg" };
 	for (int i = 0; i < E_SE_LENGTH;i++) {
