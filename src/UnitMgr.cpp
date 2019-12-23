@@ -3,7 +3,7 @@
 cUnitMgr::cUnitMgr(){
 
 	m_num = 0;
-	m_mapStack = 3;
+	m_mapStack = 7;
 
 	// 生成用UI実態宣言
 	m_geneUI = new cUnitGeneUIMgr();
@@ -726,20 +726,23 @@ void cUnitMgr::UnitMove() {
 			int moveSelectEnemy = GetRand(i);	// 今いる出現しているどの敵を動かすかランダム
 
 			/// MapNavigation関数のreturnを代入　次行く部屋の部屋番号
-			loodtbl = m_mapNavigate.MapNavigation(enemy[i]->Get_NowRoom(), findNum);
+			loodtbl = m_mapNavigate.MapNavigation(enemy[moveSelectEnemy]->Get_NowRoom(), findNum);
 
 			if (enemy[moveSelectEnemy]->Get_NowRoom() != 0) {		// 今の部屋が0じゃなかったら
 
-				int cnt = 0;
-				cnt = m_roomEnemy[loodtbl].size();			// 次行きたい部屋の敵の数
+				int Ecnt = m_roomEnemy[loodtbl].size();			// 次行きたい部屋の敵の数
+				int Pcnt = m_roomPlayer[enemy[moveSelectEnemy]->Get_NowRoom()].size();		//	エネミーがいる部屋にプレイヤーがいるか
 				int roomMax = m_mapData[loodtbl].roomSize;		// 次行きたい部屋の数制限
+				
 
 				//	　今いる部屋をreturn
-				if (cnt > roomMax) { return enemy[i]->Set_Room(enemy[i]->Get_NowRoom()); }
-				else if (cnt < roomMax) {		// 次行きたい部屋に空きがあったら
-					enemy[moveSelectEnemy]->Set_Room(loodtbl);
-					WaitTimer(100);
+				if (Ecnt > roomMax) { return enemy[i]->Set_Room(enemy[i]->Get_NowRoom()); }
 
+				if (Pcnt == 0) {	// マップのプレイヤーユニットがいなかったら移動
+					if (Ecnt < roomMax) {		// 次行きたい部屋に空きがあったら
+						enemy[moveSelectEnemy]->Set_Room(loodtbl);
+						WaitTimer(100);
+					}
 				}
 				m_moveCnt = 0;
 				//break;
