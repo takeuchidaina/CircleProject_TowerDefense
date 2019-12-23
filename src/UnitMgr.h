@@ -16,6 +16,7 @@
 #include <vector>
 #include "Log.h"
 #include "UnitGenerateUI.h"
+#include "MapNavigate.h"
 using namespace std;
 
 /********************************************************
@@ -30,7 +31,8 @@ using namespace std;
 #ifndef _INCLUED_UNIT_MGR_
 #define _INCLUED_UNIT_MGR_
 
-#define MOVE_CNT 400
+#define MOVE_COOLTIME_MAX 500    //  Randで0~500
+#define MOVE_COOLTIME_MIN 300    //  MOVE_COOLTIME_MAXに固定+300
 
 class cUnitMgr : public cBaseTask{
 
@@ -55,6 +57,7 @@ class cUnitMgr : public cBaseTask{
 	DATEDATA m_date;				// ランダム関数用日付取得
 
 	cUnitGeneUIMgr *m_geneUI;		// ユニット生成用UIクラスの宣言
+	cMapNavigate m_mapNavigate;		// エネミールート検索
 
 	int m_escortCnt;				// 護衛対象の数
 
@@ -125,8 +128,10 @@ public:
 	// ESord
 	int Add_ESord(double _x, double _y)
 	{
-		if (m_roomEnemy[2].size() >= m_mapData[2].roomSize) return 0;
-		enemy.emplace_back(new cESord(_x, _y, 2, m_num));
+		int spawnRoom = m_mapData.size() - 1;
+
+		if (m_roomEnemy[spawnRoom].size() >= m_mapData[spawnRoom].roomSize) return 0;
+		enemy.emplace_back(new cESord(_x, _y, spawnRoom, m_num));
 		m_num++;
 		//DEBUG_LOG("ESord Create");
 		return 0;
@@ -134,8 +139,10 @@ public:
 	// EArcher
 	int Add_EArcher(double _x, double _y)
 	{
-		if (m_roomEnemy[2].size() >= m_mapData[2].roomSize) return 0;
-		enemy.emplace_back(new cEArcher(_x, _y, 2, m_num));
+		int spawnRoom = m_mapData.size() - 1;
+
+		if (m_roomEnemy[spawnRoom].size() >= m_mapData[spawnRoom].roomSize) return 0;
+		enemy.emplace_back(new cESord(_x, _y, spawnRoom, m_num));
 		m_num++;
 
 		return 0;
@@ -143,8 +150,10 @@ public:
 	// EDefense
 	int Add_EDefense(double _x, double _y)
 	{
-		if (m_roomEnemy[2].size() >= m_mapData[2].roomSize) return 0;
-		enemy.emplace_back(new cEDefense(_x, _y, 2, m_num));
+		int spawnRoom = m_mapData.size() - 1;
+
+		if (m_roomEnemy[spawnRoom].size() >= m_mapData[spawnRoom].roomSize) return 0;
+		enemy.emplace_back(new cESord(_x, _y, spawnRoom, m_num));
 		m_num++;
 
 		return 0;
@@ -305,6 +314,7 @@ public:
 	// だいご追加
 	void Set_NextEnemyPos(int _enemyNum, int _nextRoom, int _nextX);
 
+	void MoveRand();
 };
 
 #endif  // !_INCLUDE_UNIT_MGR_
