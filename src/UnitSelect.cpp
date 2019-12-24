@@ -7,13 +7,13 @@ cUnitSelect::cUnitSelect(ISceneChanger* _scene) : cBaseScene(_scene) {
 	resetButtonRect.top = 650;	resetButtonRect.left = 1000; resetButtonRect.right = 1100; resetButtonRect.bottom = 700;
 
 	ImageFilePath = "../resource/img/";
-
-	//Init();
 }
 
 void cUnitSelect::Init() {
 	unitData = UnitLoad(CSVFilePath);
 	cButton tmpButton;
+
+
 
 	for (int i = 0; i < unitData.size(); i++) {
 		unitButton.push_back(tmpButton);
@@ -27,6 +27,8 @@ void cUnitSelect::Init() {
 		//cButton Init(sRECT _rect, const char* _filepth);
 		//cButton Init(sRECT _rect, short _transNum, const char* _text, short _fontSize);
 		unitButton[i].Init(tmpRect, (ImageFilePath + unitData[i].unitPath).c_str());
+
+		graphArray.push_back(LoadGraph((ImageFilePath + unitData[i].unitPath).c_str()));
 	}
 
 	okButton.Init(okButtonRect, 255, "OK", 20);
@@ -44,8 +46,12 @@ void cUnitSelect::Update() {
 			}
 		}
 		if (okButton.ButtonClick() == true) {
-			//WIP
-			//ユニット情報を渡してScene以降
+			if (selectUnit.size() > 0) {
+				//WIP
+				//選択されているユニット情報を渡す
+				//ファイル書き出し
+				m_sceneChanger->ChangeScene((eScene)E_SCENE_GAME);
+			}
 		}
 		if (resetButton.ButtonClick() == true) {
 			selectUnit.clear();
@@ -61,7 +67,7 @@ void cUnitSelect::Draw() {
 		DrawExtendGraph(
 			selectUnitRect.left + i * 100, selectUnitRect.top,
 			selectUnitRect.right + i * 100, selectUnitRect.bottom,
-			LoadGraph((ImageFilePath + unitData[selectUnit[i]].unitPath).c_str()), TRUE);
+			graphArray[selectUnit[i]], TRUE);
 	}
 
 	okButton.Draw();

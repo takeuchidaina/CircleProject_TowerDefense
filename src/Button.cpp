@@ -76,7 +76,9 @@ void cButton::Draw() {
 }
 
 void cButton::End() {
-	DeleteGraph(m_image);
+	if (buttonType == FALSE) {
+		DeleteGraph(m_image);
+	}
 }
 
 /*****************************************************
