@@ -57,7 +57,12 @@ void cUnitSelect::Update() {
 					DEBUG_LOG("file not open");
 				}
 				for (int i = 0; i < selectUnit.size(); i++) {
-					fprintf(fp, "%d", selectUnit[i]);
+					if (i == selectUnit.size()-1) {				//データが末尾なら改行なし
+						fprintf(fp, "%d", selectUnit[i]);
+					}
+					else {
+						fprintf(fp, "%d\n", selectUnit[i]);
+					}
 				}
 
 				fclose(fp);
