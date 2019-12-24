@@ -113,6 +113,7 @@ vector<sUnitLoad> UnitLoad(string& _filePath)
 		tmpUnit.DEF = atof(tmpStrVec[6].c_str());
 		tmpUnit.unitPath = tmpStrVec[7];
 		tmpUnit.effectPath = tmpStrVec[8];
+		tmpUnit.cost = atof(tmpStrVec[9].c_str());
 
 		vec.push_back(tmpUnit);
 	}
