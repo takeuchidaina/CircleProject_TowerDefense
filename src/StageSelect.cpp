@@ -36,7 +36,7 @@ void cStageSelect::Update() {
 					DEBUG_LOG("file not open");
 				}
 
-				fprintf(fp, "%d", i);
+				fprintf(fp, "%d", i+1);
 
 				fclose(fp);
 
