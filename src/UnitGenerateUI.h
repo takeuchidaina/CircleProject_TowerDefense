@@ -42,11 +42,14 @@ private:
 
 	int m_unitID;				// 対応するユニットID
 	string m_unitType;			// ユニットタイプUI
+	int m_nowHP;				// 現在のHP
 
 	int m_img;					// 画像
 	int m_unitImg[6];			// ユニット画像
 
 	sUnitLoad m_unit;
+
+	bool isActive;				// true:生成済み
 
 public:
 
@@ -57,6 +60,7 @@ public:
 		m_width = 250;
 		m_height = 80;
 		m_unit = _unit;
+		m_nowHP = m_unit.HP;
 
 		// 画像格納
 		m_img = LoadGraph("../resource/img/TitleBackGround.jpg");
@@ -92,7 +96,9 @@ public:
 	void UnitDataDraw()
 	{
 		DrawFormatString(m_x + 10, m_y + 10, BK, m_unitType.c_str());
-		DrawFormatString(m_x + 10, m_y + 30, BK, "HP：%d", m_unit.HP);
+		DrawFormatString(m_x + 10, m_y + 25, BK, "ATK：%d", m_unit.ATK);
+		DrawFormatString(m_x + 10, m_y + 40, BK, "DEF：%d", m_unit.DEF);
+		DrawFormatString(m_x + 10, m_y + 55, BK, "HP：%d", m_unit.HP);
 		DrawGraph(m_x + 190, m_y + 10, m_unitImg[0], TRUE);
 	}
 
@@ -109,6 +115,11 @@ public:
 		default:
 			break;
 		}
+	}
+
+	void Set_NowHP(int _hp)
+	{
+		m_nowHP = _hp;
 	}
 };
 
@@ -290,6 +301,11 @@ public:
 
 		m_map = _map;
 	}
+
+	/*void Set_NowHP(int _hp, int _num)
+	{
+		 = _hp;
+	}*/
 };
 
 #endif // !_UNIT_GENERATE_UI_INCLUDE_
