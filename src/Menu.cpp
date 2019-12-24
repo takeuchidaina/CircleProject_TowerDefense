@@ -6,8 +6,9 @@ cMenu::cMenu(ISceneChanger* _scene) : cBaseScene(_scene) {
 void cMenu::Init() {
 	//メニューの初期化
 //左上y, 左上x, 右下x, 右下y, 画像ファイルパス,移動先シーン
-	m_menu[E_TITLE_MENU] = { {/*左上y*/600,/*左上x*/100,/*右下x*/400,/*右下y*/700,"../resource/img/TitleStartButton.png" },E_SCENE_STAGESELECT };
-	m_menu[E_TITLE_END] = { {/*左上y*/600,/*左上x*/420,/*右下x*/720,/*右下y*/700,"../resource/img/TitleEndButton.png" }, E_SCENE_END };
+	m_menu[E_MENU_NSCENE] =  { {/*左上y*/600,/*左上x*/100,/*右下x*/400,/*右下y*/700,"../resource/img/Button_Start.png" },E_SCENE_STAGESELECT };
+	m_menu[E_MENU_SETTING] = { {/*左上y*/600,/*左上x*/420,/*右下x*/720,/*右下y*/700,"../resource/img/Button_Setting.png" }, E_SCENE_NONE };
+	m_menu[E_MENU_BACK] =	 { {/*左上y*/600,/*左上x*/740,/*右下x*/1060,/*右下y*/700,"../resource/img/Button_BACK.png" }, E_SCENE_TITLE };
 	for (int i = 0; i < E_TITLE_MAX; i++) {
 		m_btn[i].Init(m_menu[i].image.rect, m_menu[i].image.filePath.c_str());
 	}
@@ -41,13 +42,17 @@ void cMenu::Update() {
 					cSound::Instance()->StopSound(cSound::Instance()->E_EVM_SEA_ROUGH);		//BGMを止める
 					m_sceneChanger->ChangeScene((eScene)m_menu[i].menu);				//シーンを変更
 				}
-				//ENDボタン
-				else if (m_menu[i].menu == E_SCENE_END) {
+				//SETTINGボタン
+				else if (m_menu[i].menu == E_SCENE_NONE) {
+					cSound::Instance()->PlaySE(cSound::Instance()->E_SE_SELECT);		//決定音
+					m_sceneChanger->SettingStart();
+				}
+				//BACKボタン
+				else if (m_menu[i].menu == E_SCENE_TITLE) {
 					cSound::Instance()->PlaySE(cSound::Instance()->E_SE_CANSEL);		//キャンセル音
 					cSound::Instance()->StopSound(cSound::Instance()->E_EVM_SEA_ROUGH);		//BGMを止める
 					WaitTimer(300);		//キャンセルSEが鳴り終わるのを待つ
-					cSound::Instance()->End();
-					DxLib_End();
+					m_sceneChanger->ChangeScene((eScene)m_menu[i].menu);
 				}
 			}
 		}
