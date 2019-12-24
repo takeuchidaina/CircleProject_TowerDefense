@@ -39,6 +39,15 @@ void cBaseUnit::Update()
 {
 	m_moveStartCnt++;				// 一定数まで行ったらmove
 	m_moveType = GetRand(2);	// moveするTypeを決めるランダム
+
+	if (m_state != E_ATTACK)
+	{
+		m_isEffect = false;
+	}
+	else
+	{
+		m_isEffect = true;
+	}
 }
 
 // 描画処理
@@ -113,8 +122,9 @@ bool cBaseUnit::Attack()
 
 	// カウントが0になったら攻撃
 	if (m_atkCnt <= 0){
-		m_atkCnt = 300;
+		m_atkCnt = m_atkCoolTime;
 		//DEBUG_LOG("SordAttack");
+		AttackSE();
 
 		m_isEffect = true;
 
@@ -149,6 +159,7 @@ void cBaseUnit::AttackAnime(VECTOR _targetPos){
 		{
 			DrawBillboard3D(_targetPos, 0.5f, 0.5f, 64, 0.0f, m_effectImage[0], TRUE);
 		}
+
 	}
 	else
 	{
