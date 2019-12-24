@@ -14,7 +14,6 @@ void cUnitSelect::Init() {
 	cButton tmpButton;
 
 
-
 	for (int i = 0; i < unitData.size(); i++) {
 		unitButton.push_back(tmpButton);
 		sRECT tmpRect;
@@ -45,11 +44,24 @@ void cUnitSelect::Update() {
 				}
 			}
 		}
+
 		if (okButton.ButtonClick() == true) {
 			if (selectUnit.size() > 0) {
-				//WIP
 				//選択されているユニット情報を渡す
-				//ファイル書き出し
+				//txtファイル書き出し
+				FILE* fp;
+
+				errno_t err; // errno_t型(int型)
+				err = fopen_s(&fp, "../UnitSelect.txt", "w"); // ファイルを開く。失敗するとエラーコードを返す。
+				if (err != 0) {
+					DEBUG_LOG("file not open");
+				}
+				for (int i = 0; i < selectUnit.size(); i++) {
+					fprintf(fp, "%d", selectUnit[i]);
+				}
+
+				fclose(fp);
+
 				m_sceneChanger->ChangeScene((eScene)E_SCENE_GAME);
 			}
 		}
@@ -65,8 +77,8 @@ void cUnitSelect::Draw() {
 	}
 	for (int i = 0; i < selectUnit.size(); i++) {
 		DrawExtendGraph(
-			selectUnitRect.left + i * 100, selectUnitRect.top,
-			selectUnitRect.right + i * 100, selectUnitRect.bottom,
+			selectUnitRect.left + (i % 5) * 100, selectUnitRect.top + (i / 5) * 100,
+			selectUnitRect.right + (i % 5) * 100, selectUnitRect.bottom + (i / 5) * 100,
 			graphArray[selectUnit[i]], TRUE);
 	}
 

@@ -21,9 +21,29 @@ void cStageSelect::Init() {
 }
 
 void cStageSelect::Update() {
+
+	//選択ステージ情報の受け渡し
+	//シーン移行
+
 	if (MOUSE_PRESS(LEFT_CLICK) == 1) {
-		//選択ステージ情報の受け渡し
-		//シーン移行
+		for (int i = 0; i < stageButton.size(); i++) {
+			if (stageButton[i].ButtonClick() == true) {
+				FILE* fp;
+
+				errno_t err; // errno_t型(int型)
+				err = fopen_s(&fp, "../StageSelect.txt", "w"); // ファイルを開く。失敗するとエラーコードを返す。
+				if (err != 0) {
+					DEBUG_LOG("file not open");
+				}
+
+				fprintf(fp, "%d", i);
+
+				fclose(fp);
+
+				m_sceneChanger->ChangeScene((eScene)E_SCENE_UNITSELECT);
+
+			}
+		}
 	}
 }
 
