@@ -37,6 +37,8 @@ private:
 	cButton okButton;
 	vector<int> selectUnit;
 	vector<sUnitLoad> unitData;
+	vector<int> unitCostArray;		//unitDataèá
+	int unitCostNum;
 	vector<int> graphArray;
 
 	sRECT selectUnitRect;
