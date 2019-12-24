@@ -42,6 +42,8 @@ public:
 	******************************************************/
 	void ChangeScene(eScene _nextScene)override;
 
+	void SettingStart()override;
+
 private:
 
 	cBaseScene* m_scene;	//ƒV[ƒ“ŠÇ—•Ï”

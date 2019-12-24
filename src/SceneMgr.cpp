@@ -2,8 +2,8 @@
 
 cSceneMgr::cSceneMgr() : m_nextScene(E_SCENE_NONE){
 
-	m_scene = (cBaseScene*) new cGameMgr(this);
-	//m_scene = (cBaseScene*) new cTitle(this);
+	//m_scene = (cBaseScene*) new cGameMgr(this);
+	m_scene = (cBaseScene*) new cTitle(this);
 	//m_scene = (cBaseScene*) new cStageSelect(this);
 	//m_scene = (cBaseScene*) new cUnitSelect(this);
 }
@@ -79,4 +79,8 @@ void cSceneMgr::End() {
 
 void cSceneMgr::ChangeScene(eScene _nextScene) {
 	m_nextScene = _nextScene;	// 次のシーンをセットする
+}
+
+void cSceneMgr::SettingStart() {
+	isPose = TRUE;
 }
