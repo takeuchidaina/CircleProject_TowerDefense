@@ -48,12 +48,12 @@ public:
 		}
 	}
 
-	cPSord(sUnitLoad _unitData, int _room) : cPlayerUnit() {
+	cPSord(sUnitLoad _unitData, int _room, int _num) : cPlayerUnit() {
 
 		m_pos.x = 0.0;
 		m_pos.y = 0.0;
 		m_pos.z = 0.0f;
-		m_num = _unitData.ID;
+		m_num = _num;
 		m_room = _room;
 		m_hp = _unitData.HP;
 		m_atk = _unitData.ATK;

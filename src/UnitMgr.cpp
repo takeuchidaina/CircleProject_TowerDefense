@@ -62,6 +62,7 @@ void cUnitMgr::Update(){
 
 	UnitDie();
 	InRoomUnit();
+	NoTarget();
 	
 	// ユニットの各ステートに対する処理
 	for (int i = 0; i < player.size(); i++){
@@ -71,9 +72,9 @@ void cUnitMgr::Update(){
 		case E_IDLE:	// 待機
 
 			// 攻撃できる場合、ターゲットを探す
-			if (player[i]->Attack() == true){
+			//if (player[i]->Attack() == true){
 				TargetSelect(i, 1);
-			}
+			//}
 			break;
 
 		case E_ATTACK:	// 攻撃
@@ -83,7 +84,7 @@ void cUnitMgr::Update(){
 				TargetSelect(i, 1);	// 攻撃対象検索
 				// 攻撃
 				AttackRelay(player[i]->Get_AtkPoint(), player[i]->Get_TargetNum(), player[i]->Get_Num());
-				player[i]->AttackSE();
+				//player[i]->AttackSE();
 			}
 			
 			break;
@@ -108,9 +109,9 @@ void cUnitMgr::Update(){
 		case E_IDLE:	// 待機
 
 			// 攻撃できる場合、ターゲットを探す
-			if (enemy[i]->Attack() == true){
+			//if (enemy[i]->Attack() == true){
 				TargetSelect(i, -1);
-			}
+			//}
 			break;
 
 		case E_ATTACK:	// 攻撃
@@ -474,7 +475,8 @@ void cUnitMgr::NoTarget(){
 	// プレイヤー
 	for (int i = 0; i < player.size(); i++){
 
-		if (player[i]->Get_TargetNum() < 0){
+		int tmpNum = player[i]->Get_TargetNum();
+		if (EnemyArreySearch(tmpNum) == -1){
 			// 俺の獲物いねーじゃん！
 			player[i]->Set_State(E_IDLE);
 		}
@@ -483,7 +485,8 @@ void cUnitMgr::NoTarget(){
 	// 敵
 	for (int i = 0; i < enemy.size(); i++){
 
-		if (enemy[i]->Get_TargetNum() < 0){
+		int tmpNum = enemy[i]->Get_TargetNum();
+		if (PlayerArreySearch(tmpNum) == -1) {
 
 			enemy[i]->Set_State(E_IDLE);
 		}
@@ -571,21 +574,24 @@ int cUnitMgr::UnitGenerate()
 		if (m_roomPlayer[gene.mapID].size() >= m_mapData[gene.mapID].roomSize) {
 			return -1;
 		}
-		player.emplace_back(new cPSord(m_unitCsvData[gene.unitID], gene.mapID));
+		player.emplace_back(new cPSord(m_unitCsvData[gene.unitID], gene.mapID, m_num));
+		m_num++;
 		break;
 
 	case E_ARCHAR:
 		if (m_roomPlayer[gene.mapID].size() >= m_mapData[gene.mapID].roomSize) {
 			return -1;
 		}
-		player.emplace_back(new cPArcher(m_unitCsvData[gene.unitID], gene.mapID));
+		player.emplace_back(new cPArcher(m_unitCsvData[gene.unitID], gene.mapID, m_num));
+		m_num++;
 		break;
 
 	case E_DEFENSE:
 		if (m_roomPlayer[gene.mapID].size() >= m_mapData[gene.mapID].roomSize) {
 			return -1;
 		}
-		player.emplace_back(new cPDefense(m_unitCsvData[gene.unitID], gene.mapID));
+		player.emplace_back(new cPDefense(m_unitCsvData[gene.unitID], gene.mapID, m_num));
+		m_num++;
 		break;
 	default:
 		break;

@@ -31,8 +31,8 @@ using namespace std;
 #ifndef _INCLUED_UNIT_MGR_
 #define _INCLUED_UNIT_MGR_
 
-#define MOVE_COOLTIME_MAX 50    //  Randで0~500
-#define MOVE_COOLTIME_MIN 10    //  MOVE_COOLTIME_MAXに固定+300
+#define MOVE_COOLTIME_MAX 500    //  Randで0~500
+#define MOVE_COOLTIME_MIN 300    //  MOVE_COOLTIME_MAXに固定+300
 
 class cUnitMgr : public cBaseTask{
 
@@ -142,7 +142,7 @@ public:
 		int spawnRoom = m_mapData.size() - 1;
 
 		if (m_roomEnemy[spawnRoom].size() >= m_mapData[spawnRoom].roomSize) return 0;
-		enemy.emplace_back(new cEArcher(_x, _y, spawnRoom, m_num));
+		enemy.emplace_back(new cESord(_x, _y, spawnRoom, m_num));
 		m_num++;
 
 		return 0;
@@ -153,7 +153,7 @@ public:
 		int spawnRoom = m_mapData.size() - 1;
 
 		if (m_roomEnemy[spawnRoom].size() >= m_mapData[spawnRoom].roomSize) return 0;
-		enemy.emplace_back(new cEDefense(_x, _y, spawnRoom, m_num));
+		enemy.emplace_back(new cESord(_x, _y, spawnRoom, m_num));
 		m_num++;
 
 		return 0;
