@@ -52,7 +52,7 @@ void cGameMgr::Update() {
 	case E_PREPARATION:
 		m_camera.Update();		//カメラの移動・ズーム
 		m_unitMgr.Update();		//TODO:ユニットの生成をUnitMgrで行う
-		m_UI.Update();			//UIのキャラクター出撃数更新
+		//m_UI.Update();			//UIのキャラクター出撃数更新
 		m_BG.Update();			//雲のアニメーション
 		PlayerGenerate();
 		UnitData();
@@ -77,7 +77,7 @@ void cGameMgr::Update() {
 		EscortDamageCalc();		//護衛対象のHPによる敗北判定
 		m_mapMgr.Update();		//マップサイズ用　特段処理は無し
 		m_camera.Update();		//カメラの移動・ズーム
-		m_UI.Update();			//UIのキャラクター出撃数更新
+		//m_UI.Update();			//UIのキャラクター出撃数更新
 		m_BG.Update();			//雲のアニメーション
 		EnemyGenerate();
 		break;
@@ -112,7 +112,7 @@ void cGameMgr::Draw() {
 		m_BG.Draw();
 		m_mapMgr.Draw();
 		m_unitMgr.Draw();
-		m_UI.Draw();
+		//m_UI.Draw();
 
 		SetFontSize(80);
 		DrawFormatString(300, 300, GetColor(255, 0, 0), "PUSH B !!!");
@@ -124,7 +124,7 @@ void cGameMgr::Draw() {
 		m_mapMgr.Draw();
 		m_unitMgr.Draw();
 		m_time.Draw();
-		m_UI.Draw();
+		//m_UI.Draw();
 		break;
 		//イベント
 	case E_EVENT:

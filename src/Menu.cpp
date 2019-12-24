@@ -4,75 +4,73 @@ cMenu::cMenu(ISceneChanger* _scene) : cBaseScene(_scene) {
 }
 
 void cMenu::Init() {
-	m_stageSelect = 0;
+	//メニューの初期化
+//左上y, 左上x, 右下x, 右下y, 画像ファイルパス,移動先シーン
+	m_menu[E_TITLE_MENU] = { {/*左上y*/600,/*左上x*/100,/*右下x*/400,/*右下y*/700,"../resource/img/TitleStartButton.png" },E_SCENE_STAGESELECT };
+	m_menu[E_TITLE_END] = { {/*左上y*/600,/*左上x*/420,/*右下x*/720,/*右下y*/700,"../resource/img/TitleEndButton.png" }, E_SCENE_END };
+	for (int i = 0; i < E_TITLE_MAX; i++) {
+		m_btn[i].Init(m_menu[i].image.rect, m_menu[i].image.filePath.c_str());
+	}
+
+	//画像の初期化
+	m_image[E_BACK_GROUND] = { 0,0,1280,960,"../resource/img/BackGround.jpg" };
+	//m_image[E_LOGO] = { 50,0,1330,960,"../resource/img/TitleLogo.png"};
+	for (int i = 0; i < E_IMAGE_MAX; i++) {
+		m_image[i].handle = LoadGraph(m_image[i].filePath.c_str());
+		FileCheck(m_image[i].handle);
+	}
+
+	//タイトル用BGMの再生
+	cSound::Instance()->PlayEVM(
+		cSound::Instance()->E_EVM_SEA_ROUGH, cSound::Instance()->E_PLAY_LOOP, TRUE);
 }
 
 void cMenu::Update() {
 
-	if (GET_KEY_PRESS(KEY_INPUT_UP) == 1) {
-		m_stageSelect++;
-	}
-	if (GET_KEY_PRESS(KEY_INPUT_DOWN) == 1) {
-		m_stageSelect--;
-	}
-	if (m_stageSelect < 1) {
-		m_stageSelect = 1;
-	}
+	//左クリック
+	if (MOUSE_PRESS(LEFT_CLICK) == 1) {
 
-	if (GET_KEY_PRESS(KEY_INPUT_RETURN) == 1) {
-		
-		FILE* fp;
+		//ボタンの上でクリックされているか判断
+		for (int i = 0; i < E_TITLE_MAX; i++) {
+			if (m_btn[i].ButtonClick() == TRUE) {
 
-		errno_t err; // errno_t型(int型)
-		err = fopen_s(&fp, "../StageSelect.txt", "w"); // ファイルを開く。失敗するとエラーコードを返す。
-		if (err != 0) {
-			DEBUG_LOG("file not open");
+				//TODO:if elseifで終了判断せずにChangeSceneだけで処理を行う
+				//STARTボタン
+				if (m_menu[i].menu == E_SCENE_STAGESELECT) {
+					cSound::Instance()->PlaySE(cSound::Instance()->E_SE_SELECT);		//決定音
+					cSound::Instance()->StopSound(cSound::Instance()->E_EVM_SEA_ROUGH);		//BGMを止める
+					m_sceneChanger->ChangeScene((eScene)m_menu[i].menu);				//シーンを変更
+				}
+				//ENDボタン
+				else if (m_menu[i].menu == E_SCENE_END) {
+					cSound::Instance()->PlaySE(cSound::Instance()->E_SE_CANSEL);		//キャンセル音
+					cSound::Instance()->StopSound(cSound::Instance()->E_EVM_SEA_ROUGH);		//BGMを止める
+					WaitTimer(300);		//キャンセルSEが鳴り終わるのを待つ
+					cSound::Instance()->End();
+					DxLib_End();
+				}
+			}
 		}
-		fprintf(fp,"%d",m_stageSelect);
-
-		fclose(fp);
-
-		m_sceneChanger->ChangeScene(E_SCENE_GAME);
 	}
-		
-
-#ifdef MENU_DEBUG
-
-	//タイトルへ
-	if (GET_KEY_PRESS(KEY_INPUT_T) == 1) {
-		m_sceneChanger->ChangeScene(E_SCENE_TITLE);
-	}
-	//メニューへ
-	if (GET_KEY_PRESS(KEY_INPUT_M) == 1) {
-		m_sceneChanger->ChangeScene(E_SCENE_MENU);
-	}
-	//ゲームへ
-	if (GET_KEY_PRESS(KEY_INPUT_G) == 1) {
-		m_sceneChanger->ChangeScene(E_SCENE_GAME);
-	}
-	//リザルトへ
-	if (GET_KEY_PRESS(KEY_INPUT_R) == 1) {
-		m_sceneChanger->ChangeScene(E_SCENE_RESULT);
-	}
-
-#endif // MENU_DEBUG
 
 }
 
 void cMenu::Draw() {
+	//画像表示 (※背景があるので一番最初に呼び出すこと)
+	for (int i = 0; i < E_IMAGE_MAX; i++) {
+		DrawExtendGraph(m_image[i].rect.left, m_image[i].rect.top,
+			m_image[i].rect.right, m_image[i].rect.bottom, m_image[i].handle, TRUE);
+	}
 
-	cBaseScene::Draw();
-
-	DrawFormatString(400,400,WH,"上下矢印でステージ数を選択");
-	DrawFormatString(400, 420, WH, "ステージ番号：%d",m_stageSelect);
-	DrawFormatString(400, 440, WH, "エンターでステージ決定");
-
-#ifdef MENU_DEBUG
-	DrawFormatString(0, 0, WH, "メニュー画面");
-#endif // MENU_DEBUG
-
+	//ボタン表示
+	for (int i = 0; i < E_TITLE_MAX; i++) {
+		m_btn[i].Draw();
+	}
 }
 
 void cMenu::End() {
-
+	//画像ハンドルの削除
+	for (int i = 0; i < E_IMAGE_MAX; i++) {
+		DeleteGraph(m_image[i].handle);
+	}
 }
