@@ -10,9 +10,12 @@ cUnitSelect::cUnitSelect(ISceneChanger* _scene) : cBaseScene(_scene) {
 }
 
 void cUnitSelect::Init() {
-	unitData = UnitLoad(CSVFilePath);
-	cButton tmpButton;
+	unitCostNum = 0;
 
+	//ユニットデータ読み込み
+	unitData = UnitLoad(CSVFilePath);
+
+	cButton tmpButton;
 
 	for (int i = 0; i < unitData.size(); i++) {
 		unitButton.push_back(tmpButton);
@@ -26,8 +29,10 @@ void cUnitSelect::Init() {
 		//cButton Init(sRECT _rect, const char* _filepth);
 		//cButton Init(sRECT _rect, short _transNum, const char* _text, short _fontSize);
 		unitButton[i].Init(tmpRect, (ImageFilePath + unitData[i].unitPath).c_str());
-
+		
 		graphArray.push_back(LoadGraph((ImageFilePath + unitData[i].unitPath).c_str()));
+
+		unitCostArray.push_back(unitData[i].cost);
 	}
 
 	okButton.Init(okButtonRect, 255, "OK", 20);
@@ -39,8 +44,9 @@ void cUnitSelect::Update() {
 		for (int i = 0; i < unitButton.size(); i++) {
 			if (unitButton[i].ButtonClick() == true) {
 				auto itr = find(selectUnit.begin(), selectUnit.end(), i);
-				if (itr == selectUnit.end()) {
+				if (itr == selectUnit.end() && unitCostNum + unitCostArray[i] <= MAP_COST) {
 					selectUnit.push_back(i);
+					unitCostNum += unitCostArray[i];
 				}
 			}
 		}
@@ -72,6 +78,7 @@ void cUnitSelect::Update() {
 		}
 		if (resetButton.ButtonClick() == true) {
 			selectUnit.clear();
+			unitCostNum = 0;
 		}
 	}
 }
