@@ -23,6 +23,7 @@ typedef struct
 	int DEF;
 	string unitPath;
 	string effectPath;
+	int cost;
 }sUnitLoad;
 
 vector<sUnitLoad> UnitLoad(string& _filePath);
