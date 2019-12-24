@@ -25,8 +25,9 @@ public:
 private:
 	//ƒƒjƒ…[€–Úˆê——
 	typedef enum {
-		E_TITLE_MENU,
-		E_TITLE_END,
+		E_MENU_NSCENE,
+		E_MENU_BACK,
+		E_MENU_SETTING,
 		E_TITLE_MAX,
 	}eTitle;
 

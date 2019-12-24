@@ -39,6 +39,10 @@ public:
 	補足　：抽象クラス　記入必須
 	******************************************************/
 	virtual void ChangeScene(eScene _nextScene) = 0;
+
+
+	virtual void SettingStart() = 0;
+
 private:
 
 };
