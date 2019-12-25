@@ -29,8 +29,8 @@ public:
 		m_pos.z = 0.0f;
 		m_num = _num;
 		m_room = _room;
-		m_hp = 150;
-		m_atk = 10;
+		m_hp = 300;
+		m_atk = 100;
 		m_speed = 0.25;
 		m_atkCoolTime = 200;
 		m_imgNum = 0;
