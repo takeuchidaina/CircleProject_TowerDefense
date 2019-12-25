@@ -27,16 +27,20 @@ void cGameMgr::Init() {
 	//m_gameState = E_BATTLE;		//初期ステート
 	m_stateHistory = m_gameState;
 
-
 	SRand(time(NULL));		//敵ユニットのランダム出現用に現在時刻でrandを初期化
+
+	//const int fontSize = 30;
+	//int posX = 410, posY = 520;
+	//short transe = 150;
+	//sRECT rect = {/*左上y*/posY,/*左上x*/posX,/*右下x*/posX + fontSize * /*文字数＋左右の余白*/ 7 ,/*右下y*/posY + fontSize * /*文字列数＋上下の余白*/ 7 };
+	//m_endButton.Init(rect, transe, "タイトルへ戻る", fontSize);
+
 }
 
 void cGameMgr::Update() {
 
-	//Escapeキーでステートをポーズへ変更
-	//if (GET_KEY_PRESS(KEY_INPUT_ESCAPE) == 1) { m_gameState = E_POSE; }
-
-	if (m_gameState != m_stateHistory) {
+	//BGM変更
+	if (m_gameState != m_stateHistory && m_stateHistory == E_PREPARATION) {
 		if (m_stateHistory == E_PREPARATION) {
 			cSound::Instance()->StopSound(cSound::Instance()->E_BGM_PREPARATION);
 			cSound::Instance()->PlayBGM(cSound::Instance()->E_BGM_BATTLE);		//戦闘BGM
@@ -52,7 +56,6 @@ void cGameMgr::Update() {
 	case E_PREPARATION:
 		m_camera.Update();		//カメラの移動・ズーム
 		m_unitMgr.Update();		//TODO:ユニットの生成をUnitMgrで行う
-		//m_UI.Update();			//UIのキャラクター出撃数更新
 		m_BG.Update();			//雲のアニメーション
 		PlayerGenerate();
 		UnitData();
@@ -77,9 +80,8 @@ void cGameMgr::Update() {
 		EscortDamageCalc();		//護衛対象のHPによる敗北判定
 		m_mapMgr.Update();		//マップサイズ用　特段処理は無し
 		m_camera.Update();		//カメラの移動・ズーム
-		//m_UI.Update();			//UIのキャラクター出撃数更新
 		m_BG.Update();			//雲のアニメーション
-		EnemyGenerate();
+		EnemyGenerate();		//敵生成
 		break;
 		//イベント
 	case E_EVENT:
@@ -89,14 +91,8 @@ void cGameMgr::Update() {
 		break;
 		//ポーズ
 	case E_POSE:
-		//設定
-		m_setting.Update();
-
-		//設定が終了したら戦闘へ戻る
-		if (m_setting.GetEndSetting() == TRUE) {
-			m_gameState = E_BATTLE;
-		}
-		//ゲームを終了
+		m_time.PoseTimer();
+		//ゲームを終了ボタン
 		break;
 	}
 
@@ -112,7 +108,6 @@ void cGameMgr::Draw() {
 		m_BG.Draw();
 		m_mapMgr.Draw();
 		m_unitMgr.Draw();
-		//m_UI.Draw();
 
 		SetFontSize(80);
 		DrawFormatString(300, 300, GetColor(255, 0, 0), "PUSH B !!!");
@@ -124,7 +119,6 @@ void cGameMgr::Draw() {
 		m_mapMgr.Draw();
 		m_unitMgr.Draw();
 		m_time.Draw();
-		//m_UI.Draw();
 		break;
 		//イベント
 	case E_EVENT:
@@ -137,13 +131,16 @@ void cGameMgr::Draw() {
 		m_BG.Draw();
 		m_mapMgr.Draw();
 		m_unitMgr.Draw();
-		m_setting.Draw();
 		break;
 	}
 }
 
 void cGameMgr::End() {
 	//
+}
+
+void cGameMgr::Set_GameState(eGameState _state) {
+	m_gameState = _state;
 }
 
 /*****************************************************
