@@ -15,7 +15,7 @@ void cResult::Init() {
 	//勝敗結果をファイルから読み取る
 	FILE* fp;
 	errno_t err; // errno_t型(int型)
-	err = fopen_s(&fp, "../result.txt", "r"); // ファイルを開く。失敗するとエラーコードを返す。
+	err = fopen_s(&fp, "../Data/result.txt", "r"); // ファイルを開く。失敗するとエラーコードを返す。
 	if (err != 0) {
 		DEBUG_LOG("file not open");
 	}
