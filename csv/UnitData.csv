@@ -1,9 +1,9 @@
 /Unit,,,,,,,,,
-/ƒ†ƒjƒbƒg”Ô†,ƒ^ƒCƒv,HP,ATK,ˆÚ“®‘¬“x,Ÿ‚ÌUŒ‚‚Ü‚Å‚ÌŠÔ,DEF,‰æ‘œƒpƒX,ƒGƒtƒFƒNƒg‰æ‘œƒpƒX,ƒRƒXƒg
-0,0,300,30,0.25,200,0,PSord1.png,SordEffect.png,10
-1,1,200,60,0.25,500,0,PArchar1.png,ArcharEffect.png,15
-2,2,1000,0,0.25,64,10,PShield1.png,null,20
-3,1,200,60,0.25,500,0,PArchar2.png,ArcharEffect.png,15
-4,1,200,60,0.25,500,0,PArchar3.png,ArcharEffect.png,16
-5,2,1000,0,0.25,64,10,PShield2.png,null,20
-6,2,1000,0,0.25,64,10,PShield3.png,null,20
+/ãƒ¦ãƒ‹ãƒƒãƒˆç•ªå·,ã‚¿ã‚¤ãƒ—,HP,ATK,ç§»å‹•é€Ÿåº¦,æ¬¡ã®æ”»æ’ƒã¾ã§ã®æ™‚é–“,DEF,ç”»åƒãƒ‘ã‚¹,ã‚¨ãƒ•ã‚§ã‚¯ãƒˆç”»åƒãƒ‘ã‚¹,ã‚³ã‚¹ãƒˆ
+0,0,300,100,0.25,200,0,PSord1.png,SordEffect.png,30
+1,1,100,50,0.25,500,0,PArchar1.png,ArcharEffect.png,10
+2,2,300,0,0.25,0,10,PShield1.png,null,10
+3,1,200,75,0.25,500,0,PArchar2.png,ArcharEffect.png,15
+4,1,300,100,0.25,500,0,PArchar3.png,ArcharEffect.png,20
+5,2,500,0,0.25,0,10,PShield2.png,null,15
+6,2,800,0,0.25,0,10,PShield3.png,null,20

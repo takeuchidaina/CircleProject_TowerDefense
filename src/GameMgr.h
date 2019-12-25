@@ -35,7 +35,7 @@
 　竹内 大奈
 ********************************************************/
 
-#define SPAWN_CNT 400
+#define SPAWN_CNT 300
 
 class cGameMgr : public cBaseScene{
 
