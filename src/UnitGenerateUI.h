@@ -50,7 +50,7 @@ private:
 
 	sUnitLoad m_unit;
 
-	bool isActive;				// true:¶¬Ï‚İ
+	bool m_isActive;				// true:¶¬Ï‚İ
 
 public:
 
@@ -62,6 +62,7 @@ public:
 		m_height = 80;
 		m_unit = _unit;
 		m_nowHP = m_unit.HP;
+		m_isActive = true;
 
 		// ‰æ‘œŠi”[
 		m_img = LoadGraph("../resource/img/TitleBackGround.jpg");
@@ -116,6 +117,16 @@ public:
 		default:
 			break;
 		}
+	}
+
+	bool Get_Active()
+	{
+		return m_isActive;
+	}
+
+	void Set_Active(bool _isActive)
+	{
+		m_isActive = _isActive;
 	}
 
 	void Set_NowHP(int _hp)
@@ -205,6 +216,15 @@ public:
 
 		// •`‰æ
 		for (int i = 0; i < m_ui.size(); i++){
+
+			if (m_ui[i].Get_Active() != true)
+			{
+				SetDrawBlendMode(DX_BLENDMODE_ALPHA, 128);
+			}
+			else
+			{
+				SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255);
+			}
 			m_ui[i].Draw();
 		}
 
@@ -245,6 +265,8 @@ public:
 
 		for (int i = 0; i < m_ui.size(); i++){
 
+			if (m_ui[i].Get_Active() != true) { continue; }
+
 			sPos pos = m_ui[i].Get_Pos();
 
 			int id = DragAndDrop(pos.x, pos.y, pos.w, pos.h);
@@ -252,6 +274,7 @@ public:
 			if (id != -1){
 
 				unit = { i, id };
+				m_ui[i].Set_Active(false);
 				return unit;
 			}
 		}
@@ -307,6 +330,11 @@ public:
 			}
 		}
 		return -1;
+	}
+
+	int Get_PlayerSize()
+	{
+		return m_ui.size();
 	}
 
 	/*********************************************************************
