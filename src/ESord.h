@@ -30,7 +30,7 @@ public:
 		m_num = _num;
 		m_room = _room;
 		m_hp = 300;
-		m_atk = 100;
+		m_atk = 50;
 		m_speed = 0.25;
 		m_atkCoolTime = 200;
 		m_imgNum = 0;

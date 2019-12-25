@@ -752,7 +752,7 @@ void cUnitMgr::UnitMove() {
 				if (Pcnt == 0) {	// マップのプレイヤーユニットがいなかったら移動
 					if (Ecnt < roomMax) {		// 次行きたい部屋に空きがあったら
 						enemy[moveSelectEnemy]->Set_Room(loodtbl);
-						WaitTimer(100);
+						//WaitTimer(100);
 					}
 				}
 				m_moveCnt = 0;
