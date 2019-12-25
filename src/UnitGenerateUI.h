@@ -48,6 +48,8 @@ private:
 	int m_img;					// 画像
 	int m_unitImg[10];			// ユニット画像
 
+	int m_scroll;
+
 	sUnitLoad m_unit;
 
 	bool m_isActive;				// true:生成済み
@@ -64,6 +66,7 @@ public:
 		m_nowHP = m_unit.HP;
 		m_isActive = true;
 		m_unitID = _unit.ID;
+		m_scroll = 0;
 
 		// 画像格納
 		m_img = LoadGraph("../resource/img/TitleBackGround.jpg");
@@ -80,8 +83,8 @@ public:
 
 	virtual void Update(){}
 	virtual void Draw(){
-
-		DrawExtendGraph(m_x, m_y, m_x + m_width, m_y + m_height, m_img, TRUE);
+		float tmpY = m_scroll * WINDOW_HEIGHT;
+		DrawExtendGraph(m_x, m_y - tmpY, m_x + m_width, m_y + m_height - tmpY, m_img, TRUE);
 		UnitDataDraw();
 	}
 	
@@ -98,14 +101,15 @@ public:
 
 	void UnitDataDraw()
 	{
-		DrawFormatString(m_x + 10, m_y + 10, BK, m_unitType.c_str());
-		DrawFormatString(m_x + 10, m_y + 25, BK, "ATK：%d", m_unit.ATK);
-		DrawFormatString(m_x + 10, m_y + 40, BK, "DEF：%d", m_unit.DEF);
-		DrawFormatString(m_x + 10, m_y + 55, BK, "HP：%d", m_unit.HP);
+		float tmpY = m_scroll * WINDOW_HEIGHT;
+		DrawFormatString(m_x + 10, m_y + 10 - tmpY, BK, m_unitType.c_str());
+		DrawFormatString(m_x + 10, m_y + 25 - tmpY, BK, "ATK：%d", m_unit.ATK);
+		DrawFormatString(m_x + 10, m_y + 40 - tmpY, BK, "DEF：%d", m_unit.DEF);
+		DrawFormatString(m_x + 10, m_y + 55 - tmpY, BK, "HP：%d", m_unit.HP);
 		DrawExtendGraph(
-			m_x+160, m_y,
+			m_x+160, m_y - tmpY,
 			m_x + m_width,
-			m_y + m_height,
+			m_y + m_height - tmpY,
 			m_unitImg[3], TRUE
 		);
 		//DrawGraph(m_x + 190, m_y + 10, m_unitImg[3], TRUE);
@@ -145,6 +149,11 @@ public:
 	{
 		m_nowHP = _hp;
 	}
+
+	void Set_Scroll(int _scroll)
+	{
+		m_scroll = _scroll;
+	}
 };
 
 //////////////////////////////////////////////////////////// UI管理
@@ -155,6 +164,9 @@ private:
 	float m_width, m_height;	// 大きさ
 
 	bool m_isMouseOver;			// マウスオーバーフラグ
+
+	int m_wheel;
+	int m_scroll;
 
 	int m_img;					// 画像
 
@@ -200,6 +212,8 @@ public:
 		m_img = LoadGraph("../resource/img/PlayerGeneBack(tmp).png");
 		FileCheck(m_img, 0003);
 
+		m_wheel = MOUSE_WHEEL;
+
 	}
 
 	virtual ~cUnitGeneUIMgr() {}
@@ -207,24 +221,26 @@ public:
 	virtual void Update(){
 
 		m_isMouseOver = MouseOverCheck(MOUSE_X, MOUSE_Y);
+
+		if (m_isMouseOver == true)
+		{
+			if (m_wheel > MOUSE_WHEEL)
+			{
+				m_scroll = 1;
+				m_wheel = MOUSE_WHEEL;
+			}
+			else if (m_wheel < MOUSE_WHEEL)
+			{
+				m_scroll = 0;
+				m_wheel = MOUSE_WHEEL;
+			}
+		}
 	}
 
 	virtual void Draw(){
 
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 128);
 		DrawExtendGraph(m_x, m_y, m_x + m_width, m_y + m_height, m_img, TRUE);
-
-		if (m_isMouseOver == true){ // マウスオーバー中なら
-
-			// 透明度0％
-			SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255);
-			//DEBUG_LOG("MouseOver");
-		}
-		else{
-
-			// 透明度50％
-			SetDrawBlendMode(DX_BLENDMODE_ALPHA, 128);
-		}
 
 		// 描画
 		for (int i = 0; i < m_ui.size(); i++){
@@ -237,6 +253,8 @@ public:
 			{
 				SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255);
 			}
+
+			m_ui[i].Set_Scroll(m_scroll);
 			m_ui[i].Draw();
 		}
 
