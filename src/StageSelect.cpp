@@ -26,6 +26,9 @@ void cStageSelect::Init() {
 		//cButton Init(sRECT _rect, short _transNum, const char* _text, short _fontSize);
 		stageButton[i].Init(tmpRect, 255, "", 30);
 	}
+
+	cSound::Instance()->PlayBGM(cSound::Instance()->E_BGM_TITLE, cSound::Instance()->E_PLAY_LOOP, FALSE);
+	cSound::Instance()->PlayEVM(cSound::Instance()->E_EVM_SEA_ROUGH, cSound::Instance()->E_PLAY_LOOP, TRUE);
 }
 
 void cStageSelect::Update() {
@@ -77,5 +80,6 @@ void cStageSelect::Draw() {
 }
 
 void cStageSelect::End() {
-
+	cSound::Instance()->StopSound(cSound::Instance()->E_BGM_TITLE);		//BGM‚ðŽ~‚ß‚é
+	cSound::Instance()->StopSound(cSound::Instance()->E_EVM_SEA_ROUGH);
 }

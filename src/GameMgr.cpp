@@ -11,9 +11,8 @@ void cGameMgr::Init() {
 	m_mapNavigate.Set_MapDate(m_mapMgr.GetMapDes());
 
 	//BGM
-	cSound::Instance()->StopSound(cSound::Instance()->E_BGM_TITLE);
 	cSound::Instance()->PlayBGM(
-		cSound::Instance()->E_BGM_PREPARATION, cSound::Instance()->E_PLAY_LOOP, FALSE);		//戦闘BGM
+		cSound::Instance()->E_BGM_PREPARATION, cSound::Instance()->E_PLAY_LOOP, TRUE);		//戦闘BGM
 	cSound::Instance()->PlayEVM(
 		cSound::Instance()->E_EVM_SEA_ROUGH, cSound::Instance()->E_PLAY_LOOP, TRUE);	//さざ波
 
