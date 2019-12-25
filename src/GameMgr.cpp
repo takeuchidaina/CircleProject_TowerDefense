@@ -278,8 +278,9 @@ void cGameMgr::EnemyGenerate() {
 	//Enemyのランダム生成
 	m_spawnCnt++;				// 一定数まで行ったらスポーン
 	m_spawnType = GetRand(2);	// スポーンするタイプを決めるランダム
+	m_spawnCoolTime = GetRand(MOVE_COOLTIME_MAX) + MOVE_COOLTIME_MIN;
 
-	if (m_spawnCnt == SPAWN_CNT) {
+	if (m_spawnCnt >= m_spawnCoolTime) {
 		switch (m_spawnType) {
 		case 0:	m_unitMgr.Add_ESord(m_mapMgr.GetStartRoomNum(), m_mapMgr.Get_Ground(0) + UNIT_HEIGHT / 2);
 			m_spawnCnt = 0;

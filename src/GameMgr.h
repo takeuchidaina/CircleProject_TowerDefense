@@ -35,7 +35,8 @@
 　竹内 大奈
 ********************************************************/
 
-#define SPAWN_CNT 400
+#define SPAWN_COOLTIME_MAX 200    //  Randで0~200
+#define SPAWN_COOLTIME_MIN 300    //  MOVE_COOLTIME_MAXに固定+300
 
 class cGameMgr : public cBaseScene{
 
@@ -78,6 +79,7 @@ private:
 
 	int m_spawnCnt = 0;			// 一定数まで行ったら敵ユニット生成		TODO:UnitMgrに管理させる
 	int m_spawnType = 0;		// 一定数まで行ったら敵ユニット移動		TODO:UnitMgrに管理させる
+	int m_spawnCoolTime = 0;	// m_spawnCntの最大数こきめる
 
 	const int TIME_LIMIT_WAIT = 10;
 	const int TIME_LIMIT_GAME = 120;	//時間制限	TODO:MAPから情報を受け取る
