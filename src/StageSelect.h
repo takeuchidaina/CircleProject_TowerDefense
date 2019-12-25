@@ -66,15 +66,20 @@ public:
 		SetFontSize(30);
 		DrawFormatString(m_pos.x + 20, m_pos.y + 10, BK, tmpStr.c_str());
 
+		DrawBox(m_imagePos.x - 5, m_imagePos.y - 5,
+			m_imagePos.x + m_imagePos.w + 5, m_imagePos.y + m_imagePos.h + 5, WH, TRUE);
+
 		DrawExtendGraph(
 			m_imagePos.x, m_imagePos.y,
 			m_imagePos.x + m_imagePos.w, m_imagePos.y + m_imagePos.h,
 			m_image, FALSE
 		);
 
+
+
 		ostringstream tmpMapSize;
 		tmpMapSize << m_mapSize;
-		tmpStr = "MapSizeF" + tmpMapSize.str();
+		tmpStr = "RoomF" + tmpMapSize.str();
 
 		SetFontSize(20);
 		DrawFormatString(m_pos.x + 20, m_pos.y + 150, BK, tmpStr.c_str());
