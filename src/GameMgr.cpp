@@ -44,7 +44,7 @@ void cGameMgr::Update() {
 	{
 		//戦闘準備
 	case E_PREPARATION:
-		//m_camera.Update();		//カメラの移動・ズーム
+		m_camera.Update();		//カメラの移動・ズーム
 		m_unitMgr.Update();		//TODO:ユニットの生成をUnitMgrで行う
 		m_BG.Update();			//雲のアニメーション
 		PlayerGenerate();
@@ -69,7 +69,7 @@ void cGameMgr::Update() {
 		DefSuccessJudge();		//時間制限による勝利判定
 		EscortDamageCalc();		//護衛対象のHPによる敗北判定
 		m_mapMgr.Update();		//マップサイズ用　特段処理は無し
-		//m_camera.Update();		//カメラの移動・ズーム
+		m_camera.Update();		//カメラの移動・ズーム
 		m_BG.Update();			//雲のアニメーション
 		EnemyGenerate();		//敵生成
 

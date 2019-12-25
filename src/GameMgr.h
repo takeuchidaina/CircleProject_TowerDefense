@@ -12,7 +12,7 @@
 #include "Mouse.h"
 #include "Keyboard.h"
 #include "FPS.h"
-//#include "Camera.h"
+#include "Camera.h"
 #include "UnitMgr.h"
 #include "MapMgr.h"
 #include "Map.h"
@@ -64,7 +64,7 @@ private:
 	eGameState m_stateHistory;	//前回のステートを保存する
 
 	//各種クラス実態宣言
-	//cCamera m_camera;				//カメラ
+	cCamera m_camera;				//カメラ
 	cMapMgr m_mapMgr;				//マップ
 	cTime m_time;					//時間制限
 	cUI m_UI;						//UI
