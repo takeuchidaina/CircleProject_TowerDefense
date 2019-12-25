@@ -6,9 +6,9 @@ cMenu::cMenu(ISceneChanger* _scene) : cBaseScene(_scene) {
 void cMenu::Init() {
 	//メニューの初期化
 //左上y, 左上x, 右下x, 右下y, 画像ファイルパス,移動先シーン
-	m_menu[E_MENU_NSCENE] =  { {/*左上y*/600,/*左上x*/100,/*右下x*/400,/*右下y*/700,"../resource/img/Button_Start.png" },E_SCENE_STAGESELECT };
-	m_menu[E_MENU_SETTING] = { {/*左上y*/600,/*左上x*/420,/*右下x*/720,/*右下y*/700,"../resource/img/Button_Setting.png" }, E_SCENE_NONE };
-	m_menu[E_MENU_BACK] =	 { {/*左上y*/600,/*左上x*/740,/*右下x*/1060,/*右下y*/700,"../resource/img/Button_BACK.png" }, E_SCENE_TITLE };
+	m_menu[E_MENU_NSCENE] =  { {/*左上y*/600,/*左上x*/170,/*右下x*/470,/*右下y*/700,"../resource/img/Button_Start.png" },E_SCENE_STAGESELECT };
+	m_menu[E_MENU_SETTING] = { {/*左上y*/600,/*左上x*/490,/*右下x*/790,/*右下y*/700,"../resource/img/Button_Setting.png" }, E_SCENE_NONE };
+	m_menu[E_MENU_BACK] =	 { {/*左上y*/600,/*左上x*/810,/*右下x*/1130,/*右下y*/700,"../resource/img/Button_BACK.png" }, E_SCENE_TITLE };
 	for (int i = 0; i < E_TITLE_MAX; i++) {
 		m_btn[i].Init(m_menu[i].image.rect, m_menu[i].image.filePath.c_str());
 	}
@@ -17,7 +17,7 @@ void cMenu::Init() {
 	m_btnSetumeiRect[E_TUTO_TAKARA] =	{/*左上y*/100,/*左上x*/30,		   /*右下x*/30 + 400,	   /*右下y*/400 };
 	m_btnSetumeiRect[E_TUTO_SOUSA]	=	{/*左上y*/100,/*左上x*/30 + 400 + 10,/*右下x*/30 + 800 + 10 ,/*右下y*/400 };
 	m_btnSetumeiRect[E_TUTO_TYPE]	=	{/*左上y*/100,/*左上x*/30 + 800 + 20,/*右下x*/30 + 1200 + 20,/*右下y*/400 };
-	m_btnSetumeiRect[E_TUTO_EXPANTION] = { 150,150,1280 - 150,720 - 150 };
+	m_btnSetumeiRect[E_TUTO_EXPANTION] = { 50,150,1280 - 150,720 - 150 };
 	m_setumeiFilePath[E_TUTO_TAKARA] = "../resource/img/Menu_Setumei1.jpg";
 	m_setumeiFilePath[E_TUTO_SOUSA] = "../resource/img/Menu_Setumei2.jpg";
 	m_setumeiFilePath[E_TUTO_TYPE] = "../resource/img/Menu_Setumei3.jpg";
