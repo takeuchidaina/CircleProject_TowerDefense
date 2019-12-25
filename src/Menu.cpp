@@ -49,9 +49,8 @@ void cMenu::Update() {
 				}
 				//BACKボタン
 				else if (m_menu[i].menu == E_SCENE_TITLE) {
-					cSound::Instance()->PlaySE(cSound::Instance()->E_SE_CANSEL);		//キャンセル音
+					cSound::Instance()->PlaySE(cSound::Instance()->E_SE_CANSEL, cSound::Instance()->E_PLAY_NORMAL);		//キャンセル音
 					cSound::Instance()->StopSound(cSound::Instance()->E_EVM_SEA_ROUGH);		//BGMを止める
-					WaitTimer(300);		//キャンセルSEが鳴り終わるのを待つ
 					m_sceneChanger->ChangeScene((eScene)m_menu[i].menu);
 				}
 			}
