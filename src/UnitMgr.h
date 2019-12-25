@@ -274,19 +274,19 @@ public:
 		switch (m_selectStage)
 		{
 		case 1:
-			m_dieEnemyNum = 20;
+			m_dieEnemyNum = 10;
 			break;
 		case 2:
-			m_dieEnemyNum = 25;
+			m_dieEnemyNum = 13;
 			break;
 		case 3:
-			m_dieEnemyNum = 30;
+			m_dieEnemyNum = 15;
 			break;
 		case 4:
-			m_dieEnemyNum = 35;
+			m_dieEnemyNum = 17;
 			break;
 		case 5:
-			m_dieEnemyNum = 40;
+			m_dieEnemyNum = 20;
 			break;
 		default:
 			break;
@@ -317,10 +317,10 @@ public:
 	{
 		if (m_dieEnemyNum <= m_dieEnemyCount)
 		{
-			return true;
+			return TRUE;
 		}
 
-		return false;
+		return FALSE;
 	}
 
 	/************************************    Set    *****************************************/
