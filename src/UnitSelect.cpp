@@ -15,7 +15,7 @@ cUnitSelect::cUnitSelect(ISceneChanger* _scene) : cBaseScene(_scene) {
 
 void cUnitSelect::Init() {
 	unitCostNum = 0;
-	
+
 	pathBGGraph = LoadGraph(pathBG.c_str());
 	pathUIGraph = LoadGraph(pathUI.c_str());
 
@@ -55,10 +55,10 @@ void cUnitSelect::Update() {
 			if (unitButton[i].ButtonClick() == true) {
 				//auto itr = find(selectUnit.begin(), selectUnit.end(), i);
 				//if (itr == selectUnit.end()) {
-					if (unitCostNum + unitCostArray[i] <= MAP_COST) {
-						selectUnit.push_back(i);
-						unitCostNum += unitCostArray[i];
-					}
+				if (unitCostNum + unitCostArray[i] <= MAP_COST) {
+					selectUnit.push_back(i);
+					unitCostNum += unitCostArray[i];
+				}
 				//}
 			}
 		}
@@ -75,7 +75,7 @@ void cUnitSelect::Update() {
 					DEBUG_LOG("file not open");
 				}
 				for (int i = 0; i < selectUnit.size(); i++) {
-					if (i == selectUnit.size()-1) {				//データが末尾なら改行なし
+					if (i == selectUnit.size() - 1) {				//データが末尾なら改行なし
 						fprintf(fp, "%d", selectUnit[i]);
 					}
 					else {
@@ -96,6 +96,17 @@ void cUnitSelect::Update() {
 			m_sceneChanger->ChangeScene((eScene)E_SCENE_STAGESELECT);
 		}
 	}
+
+	//カーソルがあってるとき
+	for (int i = 0; i < unitButton.size(); i++) {
+		if (unitButton[i].ButtonClick() == true) {
+			unitCursorFlg = i;
+			break;
+		}
+		else {
+			unitCursorFlg = -1;
+		}
+	}
 }
 
 void cUnitSelect::Draw() {
@@ -113,7 +124,7 @@ void cUnitSelect::Draw() {
 
 		DrawExtendGraph(tmpRect.left, tmpRect.top, tmpRect.right, tmpRect.bottom, graphArray[i], true);
 
-		DrawFormatString(tmpRect.left, tmpRect.top+5, BK, "%d", unitCostArray[i]);
+		DrawFormatString(tmpRect.left, tmpRect.top + 5, BK, "%d", unitCostArray[i]);
 	}
 	for (int i = 0; i < selectUnit.size(); i++) {
 
@@ -132,15 +143,27 @@ void cUnitSelect::Draw() {
 	}
 
 	//ユニットボタン上のコスト
-	DrawExtendGraph(840,80,1040,100,pathUIGraph, true);
+	DrawExtendGraph(840, 80, 1040, 100, pathUIGraph, true);
 	DrawFormatString(850, 85, BK, "コスト : %d / %d", unitCostNum, MAP_COST);
 
-	DrawExtendGraph(640, 80,840, 100, pathUIGraph, true);
+	DrawExtendGraph(640, 80, 840, 100, pathUIGraph, true);
 	DrawFormatString(680, 85, BK, "ユニットを選択");
 
 
 	//左の方
 	DrawExtendGraph(100, 50, 540, 550, pathUIGraph, true);
+
+	if (unitCursorFlg != -1) {
+		switch (unitData[unitCursorFlg].type) {
+		case 0: DrawFormatString(110, 100, BK, "タイプ：Sord");break;
+		case 1: DrawFormatString(110, 100, BK, "タイプ：Archar");break;
+		case 2: DrawFormatString(110, 100, BK, "タイプ：Shield");break;
+		}
+		DrawFormatString(110, 150, BK, "HP：%d",unitData[unitCursorFlg].HP);
+		DrawFormatString(110, 200, BK, "ATK：%d", unitData[unitCursorFlg].ATK);
+		DrawFormatString(110, 250, BK, "コスト：%d", unitData[unitCursorFlg].cost);
+	}
+
 
 
 	okButton.Draw();
