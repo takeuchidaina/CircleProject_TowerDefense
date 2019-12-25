@@ -55,12 +55,12 @@ void cUnitSelect::Update() {
 		for (int i = 0; i < unitButton.size(); i++) {
 			if (unitButton[i].ButtonClick() == true) {
 				auto itr = find(selectUnit.begin(), selectUnit.end(), i);
-				if (itr == selectUnit.end()) {
+				//if (itr == selectUnit.end()) {
 					if (unitCostNum + unitCostArray[i] <= MAP_COST) {
 						selectUnit.push_back(i);
 						unitCostNum += unitCostArray[i];
 					}
-				}
+				//}
 			}
 		}
 
@@ -130,8 +130,16 @@ void cUnitSelect::Draw() {
 	}
 
 	//ユニットボタン上のコスト
-	DrawExtendGraph(640,80,840,100,pathUIGraph, true);
-	DrawFormatString(650, 85, BK, "コスト : %d / %d", unitCostNum, MAP_COST);
+	DrawExtendGraph(840,80,1040,100,pathUIGraph, true);
+	DrawFormatString(850, 85, BK, "コスト : %d / %d", unitCostNum, MAP_COST);
+
+	DrawExtendGraph(640, 80,840, 100, pathUIGraph, true);
+	DrawFormatString(680, 85, BK, "ユニットを選択");
+
+
+	//左の方
+	DrawExtendGraph(100, 50, 540, 550, pathUIGraph, true);
+
 
 	okButton.Draw();
 	resetButton.Draw();
