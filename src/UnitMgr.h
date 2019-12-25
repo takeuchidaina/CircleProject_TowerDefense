@@ -142,7 +142,7 @@ public:
 		int spawnRoom = m_mapData.size() - 1;
 
 		if (m_roomEnemy[spawnRoom].size() >= m_mapData[spawnRoom].roomSize) return 0;
-		enemy.emplace_back(new cESord(_x, _y, spawnRoom, m_num));
+		enemy.emplace_back(new cEArcher(_x, _y, spawnRoom, m_num));
 		m_num++;
 
 		return 0;
@@ -153,7 +153,7 @@ public:
 		int spawnRoom = m_mapData.size() - 1;
 
 		if (m_roomEnemy[spawnRoom].size() >= m_mapData[spawnRoom].roomSize) return 0;
-		enemy.emplace_back(new cESord(_x, _y, spawnRoom, m_num));
+		enemy.emplace_back(new cEDefense(_x, _y, spawnRoom, m_num));
 		m_num++;
 
 		return 0;
