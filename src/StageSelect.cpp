@@ -4,19 +4,26 @@ cStageSelect::cStageSelect(ISceneChanger* _scene) : cBaseScene(_scene) {
 }
 
 void cStageSelect::Init() {
-	stageButton.resize(STAGE_NUM);
+
+	for (int i = 1; i <= STAGE_NUM;i++) {
+		m_stageUI.emplace_back(100 + (i-1) * 400, 200, i);
+	}
+
+	stageButton.resize(m_stageUI.size());
 	sRECT tmpRect;
+	m_imgBacGround = LoadGraph("../resource/img/BackGround.jpg");
+	FileCheck(m_imgBacGround, 0015);
 	const char* stageStr = "stage";
 		;
 	for (int i = 0; i < stageButton.size(); i++) {
 
-		tmpRect.left = LEFT_MARGIN + (BUTTON_WIDTH + BUTTON_MARGIN) * i;
-		tmpRect.top = TOP_MARGIN;
-		tmpRect.right = tmpRect.left + BUTTON_WIDTH;
-		tmpRect.bottom = TOP_MARGIN + BUTTON_HEIGHT;
+		tmpRect.left = m_stageUI[i].Get_Pos().x;
+		tmpRect.top = m_stageUI[i].Get_Pos().y;
+		tmpRect.right = tmpRect.left + m_stageUI[i].Get_Pos().w;
+		tmpRect.bottom = tmpRect.top + m_stageUI[i].Get_Pos().h;
 
 		//cButton Init(sRECT _rect, short _transNum, const char* _text, short _fontSize);
-		stageButton[i].Init(tmpRect, 255, stageStr, 30);
+		stageButton[i].Init(tmpRect, 255, "", 30);
 	}
 }
 
@@ -24,6 +31,11 @@ void cStageSelect::Update() {
 
 	//選択ステージ情報の受け渡し
 	//シーン移行
+
+	for (int i = 0; i < m_stageUI.size(); i++)
+	{
+		m_stageUI[i].Update();
+	}
 
 	if (MOUSE_PRESS(LEFT_CLICK) == 1) {
 		for (int i = 0; i < stageButton.size(); i++) {
@@ -48,8 +60,17 @@ void cStageSelect::Update() {
 }
 
 void cStageSelect::Draw() {
-	for (int i = 0; i < stageButton.size(); i++) {
+	DrawGraph(0, 0, m_imgBacGround, FALSE);
+	/*for (int i = 0; i < stageButton.size(); i++) {
 		stageButton[i].Draw();
+	}*/
+
+	SetFontSize(64);
+	DrawFormatString(20, 20, BK, "Stage Select");
+
+	for (int i = 0; i < m_stageUI.size(); i++)
+	{
+		m_stageUI[i].Draw();
 	}
 }
 
