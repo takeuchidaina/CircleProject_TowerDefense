@@ -27,7 +27,7 @@ void cSetting::Init() {
 	m_settingEnd = FALSE;
 
 	//決定・戻る・適用　ボタン
-	const int fontSize = 30,posX = 410,posY = 420, transe = 150,rectSpace = 50;
+	const int fontSize = 30,posX = 410,posY = 420, transe = 220,rectSpace = 50;
 	sRECT rect = {	/*左上y*/posY,
 					/*左上x*/posX,
 					/*右下x*/posX + fontSize * /*文字数＋左右の余白*/ 4 ,
@@ -125,7 +125,7 @@ void cSetting::Update() {
 void cSetting::Draw() {
 
 	//背景の四角
-	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 128);	//半透明
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 180);	//半透明
 	DrawBox(400,200,WINDOW_WIDTH - 400,WINDOW_HEIGHT - 200,BK,TRUE);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);	//半透明をオフ
 

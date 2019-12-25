@@ -5,6 +5,7 @@
 #include "DxLib.h"
 #include "DebugList.h"
 #include "ColorListh.h"
+#include "Constant.h"
 #include "BaseScene.h"
 #include "BaseTask.h"
 #include "ISceneChanger.h"
@@ -70,7 +71,6 @@ private:
 	cUnitMgr m_unitMgr;				//ユニット
 	cMapNavigate m_mapNavigate;		//敵AI
 	cBackGround m_BG;				//背景
-	cButton m_endButton;			//タイトルバックボタン
 
 	const int m_maxPlayer = 15;		//ユニット生成上限		TODO:MAPから情報を受け取る
 	int m_PlayerCnt;				//ユニット出現数		TODO:UnitMgrから情報を受け取る
@@ -79,7 +79,8 @@ private:
 	int m_spawnCnt = 0;			// 一定数まで行ったら敵ユニット生成		TODO:UnitMgrに管理させる
 	int m_spawnType = 0;		// 一定数まで行ったら敵ユニット移動		TODO:UnitMgrに管理させる
 
-	const int TIME_LIMIT = 180;	//時間制限	TODO:MAPから情報を受け取る
+	const int TIME_LIMIT_WAIT = 10;
+	const int TIME_LIMIT_GAME = 180;	//時間制限	TODO:MAPから情報を受け取る
 
 	/*****************************************************
 	名前　：void EscortDamageCalc();
