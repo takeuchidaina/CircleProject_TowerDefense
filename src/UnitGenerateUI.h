@@ -273,7 +273,7 @@ public:
 	*********************************************************************/
 	sUnitGene UnitGenerate(){
 
-		sUnitGene unit = { -1, -1 };
+		sUnitGene unit = { -1, -1, -1};
 
 		for (int i = 0; i < m_ui.size(); i++){
 
@@ -285,8 +285,8 @@ public:
 
 			if (id != -1){
 
-				unit = { m_ui[i].Get_ID(), id };
-				m_ui[i].Set_Active(false);
+				unit = { m_ui[i].Get_ID(), id, i};
+				//m_ui[i].Set_Active(false);
 				return unit;
 			}
 		}
@@ -358,6 +358,11 @@ public:
 	void Set_MapData(vector<sMapData> _map){
 
 		m_map = _map;
+	}
+
+	void Set_isActive(bool _isActive, int _uiID)
+	{
+		m_ui[_uiID].Set_Active(_isActive);
 	}
 
 	/*void Set_NowHP(int _hp, int _num)
