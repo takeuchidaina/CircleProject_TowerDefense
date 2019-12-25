@@ -32,8 +32,7 @@ cUnitMgr::cUnitMgr(){
 		m_roomPlayer.push_back(vector<int>());
 		m_roomEnemy.push_back(vector<int>());
 	}
-	Set_SelectStage();
-	m_dieEnemyCount = 0;
+
 	m_escortCnt = 0;
 }
 
@@ -467,7 +466,6 @@ void cUnitMgr::UnitDie(){
 		if (enemy[i]->Get_Hp() <= 0){
 
 			enemy.erase(enemy.begin() + i);
-			m_dieEnemyCount++;
 			DEBUG_LOG("enemy[%d].Die:%d", i, enemy.size());
 		}
 	}
