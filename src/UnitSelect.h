@@ -50,6 +50,7 @@ private:
 	vector<int> unitCostArray;		//unitDataèá
 	int unitCostNum;
 	vector<int> graphArray;
+	int unitCursorFlg;
 
 };
 #endif
