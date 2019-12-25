@@ -24,7 +24,7 @@ cBaseUnit::cBaseUnit(){
 // デストラクタ
 cBaseUnit::~cBaseUnit(){
 
-	for (int i = 0; i < 6; i++){
+	for (int i = 0; i < 10; i++){
 		DeleteGraph(m_imgtbl[i]);
 	}
 
@@ -57,7 +57,7 @@ void cBaseUnit::Draw()
 
 	// 右を向いている場合は画像配列番号に3足す
 	if (m_direction == U_RIGHT){
-		imgNum += 3;
+		imgNum += 5;
 	}
 
 	// 描画

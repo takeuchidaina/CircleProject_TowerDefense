@@ -60,7 +60,7 @@ public:
 		m_Defense = _unitData.DEF;
 
 		string unitPath = "../resource/img/" + _unitData.unitPath;
-		if (0 != LoadDivGraph(unitPath.c_str(), 6, 3, 2, 64, 64, m_imgtbl))
+		if (0 != LoadDivGraph(unitPath.c_str(), 10, 5, 2, 256, 256, m_imgtbl))
 		{
 			ErrBox("‰æ‘œ“Ç‚İ‚İ¸”s");
 		}
