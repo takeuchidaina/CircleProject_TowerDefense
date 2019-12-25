@@ -63,6 +63,7 @@ public:
 		m_unit = _unit;
 		m_nowHP = m_unit.HP;
 		m_isActive = true;
+		m_unitID = _unit.ID;
 
 		// ‰æ‘œŠi”[
 		m_img = LoadGraph("../resource/img/TitleBackGround.jpg");
@@ -122,6 +123,11 @@ public:
 	bool Get_Active()
 	{
 		return m_isActive;
+	}
+
+	int Get_ID()
+	{
+		return m_unitID;
 	}
 
 	void Set_Active(bool _isActive)
@@ -273,7 +279,7 @@ public:
 
 			if (id != -1){
 
-				unit = { i, id };
+				unit = { m_ui[i].Get_ID(), id };
 				m_ui[i].Set_Active(false);
 				return unit;
 			}
