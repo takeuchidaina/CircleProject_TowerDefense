@@ -1,5 +1,9 @@
 /Unit,,,,,,,,,
 /ユニット番号,タイプ,HP,ATK,移動速度,次の攻撃までの時間,DEF,画像パス,エフェクト画像パス,コスト
-0,0,300,30,0.25,200,0,PSord01.png,SordEffect.png,10
-1,1,200,60,0.25,500,0,PArchar01.png,ArcharEffect.png,15
-2,2,1000,0,0.25,64,10,PShield01.png,null,20
+0,0,300,30,0.25,200,0,PSord1.png,SordEffect.png,10
+1,1,200,60,0.25,500,0,PArchar1.png,ArcharEffect.png,15
+2,2,1000,0,0.25,64,10,PShield1.png,null,20
+3,1,200,60,0.25,500,0,PArchar2.png,ArcharEffect.png,15
+4,1,200,60,0.25,500,0,PArchar3.png,ArcharEffect.png,16
+5,2,1000,0,0.25,64,10,PShield2.png,null,20
+6,2,1000,0,0.25,64,10,PShield3.png,null,20
