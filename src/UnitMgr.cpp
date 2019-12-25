@@ -8,6 +8,7 @@ cUnitMgr::cUnitMgr(){
 	// 生成用UI実態宣言
 	m_geneUI = new cUnitGeneUIMgr();
 	m_geneUI->Set_MapData(m_mapData);
+	m_num = m_geneUI->Get_PlayerSize();
 
 	// ランダム関数準備
 	GetDateTime(&m_date);
@@ -302,11 +303,11 @@ void cUnitMgr::TargetSelect(int _arrayNum, int _unit){
 			}
 
 			// プレイヤーの護衛対象がいたら
-			if (player[num]->Get_Type() == E_ESCORT && player[num]->Get_State() != E_MOVE){
+			/*if (player[num]->Get_Type() == E_ESCORT && player[num]->Get_State() != E_MOVE){
 
 				vNum.push_back(num);
 				break;
-			}
+			}*/
 
 			if (player[num]->Get_State() != E_MOVE){
 
