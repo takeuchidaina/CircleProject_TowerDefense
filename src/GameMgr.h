@@ -80,7 +80,7 @@ private:
 	int m_spawnType = 0;		// 一定数まで行ったら敵ユニット移動		TODO:UnitMgrに管理させる
 
 	const int TIME_LIMIT_WAIT = 10;
-	const int TIME_LIMIT_GAME = 180;	//時間制限	TODO:MAPから情報を受け取る
+	const int TIME_LIMIT_GAME = 120;	//時間制限	TODO:MAPから情報を受け取る
 
 	/*****************************************************
 	名前　：void EscortDamageCalc();

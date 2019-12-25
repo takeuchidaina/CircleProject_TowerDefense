@@ -2,9 +2,10 @@
 
 cSceneMgr::cSceneMgr() : m_nextScene(E_SCENE_NONE){
 
-	m_scene = (cBaseScene*) new cGameMgr(this);
-	m_nowScene = E_SCENE_GAME;
-	//m_scene = (cBaseScene*) new cTitle(this);
+	//m_scene = (cBaseScene*) new cGameMgr(this);
+	//m_nowScene = E_SCENE_GAME;
+	m_scene = (cBaseScene*) new cTitle(this);
+	m_nowScene = E_SCENE_TITLE;
 	//m_scene = (cBaseScene*) new cStageSelect(this);
 	//m_scene = (cBaseScene*) new cUnitSelect(this);
 }
@@ -12,7 +13,7 @@ cSceneMgr::cSceneMgr() : m_nextScene(E_SCENE_NONE){
 void cSceneMgr::Init() {
 	m_scene->Init();
 
-	sRECT rect = {/*左上y*/625,/*左上x*/975,/*右下x*/1200,/*右下y*/700 };
+	sRECT rect = {/*左上y*/625,/*左上x*/1055,/*右下x*/1280,/*右下y*/700 };
 	m_button.Init(rect, "../resource/img/Button_End.png");
 }
 
@@ -77,7 +78,7 @@ void cSceneMgr::Update() {
 		}
 
 		//タイトルへ戻る
-		if (MOUSE_PRESS(LEFT_CLICK) && m_button.ButtonClick() == TRUE) {
+		if (m_nowScene == E_SCENE_GAME && MOUSE_PRESS(LEFT_CLICK) && m_button.ButtonClick() == TRUE) {
 			isPose = FALSE;
 			m_nextScene = E_SCENE_TITLE;
 		}
@@ -90,7 +91,9 @@ void cSceneMgr::Draw() {
 	
 	if (isPose == TRUE) {
 		m_setting.Draw();
-		m_button.Draw();
+		if (m_nowScene == E_SCENE_GAME) {
+			m_button.Draw();
+		}
 	}
 }
 

@@ -7,8 +7,8 @@ void cTitle::Init() {
 
 	//メニューの初期化
 	//左上y, 左上x, 右下x, 右下y, 画像ファイルパス,移動先シーン
-	m_menu[E_TITLE_MENU] = { {/*左上y*/600,/*左上x*/100,/*右下x*/400,/*右下y*/700,"../resource/img/TitleStartButton.png" },E_SCENE_MENU };
-	m_menu[E_TITLE_END]  = { {/*左上y*/600,/*左上x*/420,/*右下x*/720,/*右下y*/700,"../resource/img/TitleEndButton.png" }, E_SCENE_END };
+	m_menu[E_TITLE_MENU] = { {/*左上y*/600,/*左上x*/100,/*右下x*/400,/*右下y*/700,"../resource/img/Button_Start.png" },E_SCENE_MENU };
+	m_menu[E_TITLE_END]  = { {/*左上y*/600,/*左上x*/420,/*右下x*/720,/*右下y*/700,"../resource/img/Button_End.png" }, E_SCENE_END };
 	for (int i = 0; i < E_TITLE_MAX; i++) {
 		m_btn[i].Init(m_menu[i].image.rect,m_menu[i].image.filePath.c_str());
 	}
