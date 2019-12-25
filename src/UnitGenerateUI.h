@@ -292,6 +292,7 @@ public:
 	sUnitGene UnitGenerate(){
 
 		sUnitGene unit = { -1, -1, -1};
+		float tmpY = m_scroll * WINDOW_HEIGHT;
 
 		for (int i = 0; i < m_ui.size(); i++){
 
@@ -299,7 +300,7 @@ public:
 
 			sPos pos = m_ui[i].Get_Pos();
 
-			int id = DragAndDrop(pos.x, pos.y, pos.w, pos.h);
+			int id = DragAndDrop(pos.x, pos.y-tmpY, pos.w, pos.h);
 
 			if (id != -1){
 
