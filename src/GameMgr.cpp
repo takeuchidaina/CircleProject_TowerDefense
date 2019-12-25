@@ -33,11 +33,9 @@ void cGameMgr::Update() {
 
 	//BGM変更
 	if (m_gameState != m_stateHistory && m_stateHistory == E_PREPARATION) {
-		if (m_stateHistory == E_PREPARATION) {
-			cSound::Instance()->StopSound(cSound::Instance()->E_BGM_PREPARATION);
-			cSound::Instance()->PlayBGM(cSound::Instance()->E_BGM_BATTLE);		//戦闘BGM
-		}
-
+		cSound::Instance()->StopSound(cSound::Instance()->E_BGM_PREPARATION);
+		cSound::Instance()->PlayBGM(cSound::Instance()->E_BGM_BATTLE);		//戦闘BGM
+		m_sceneChanger->ResetPoseCount();
 		m_stateHistory = m_gameState;
 	}
 
@@ -130,7 +128,19 @@ void cGameMgr::Draw() {
 }
 
 void cGameMgr::End() {
-	//
+	if (m_gameState == E_PREPARATION) {
+		cSound::Instance()->StopSound(cSound::Instance()->E_BGM_PREPARATION);
+	}
+	else if (m_gameState == E_BATTLE) {
+		cSound::Instance()->StopSound(cSound::Instance()->E_BGM_BATTLE);
+	}
+	else {
+		cSound::Instance()->StopSound(cSound::Instance()->E_BGM_PREPARATION);
+		cSound::Instance()->StopSound(cSound::Instance()->E_BGM_BATTLE);
+	}
+	cSound::Instance()->StopSound(cSound::Instance()->E_EVM_SEA_ROUGH);
+
+	m_sceneChanger->ResetPoseCount();
 }
 
 void cGameMgr::Set_GameState(eGameState _state) {

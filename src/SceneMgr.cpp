@@ -11,12 +11,15 @@ cSceneMgr::cSceneMgr() : m_nextScene(E_SCENE_NONE){
 
 void cSceneMgr::Init() {
 	m_scene->Init();
+
+	sRECT rect = {/*左上y*/625,/*左上x*/975,/*右下x*/1200,/*右下y*/700 };
+	m_button.Init(rect, "../resource/img/Button_End.png");
 }
 
 void cSceneMgr::Update() {
 
 	//設定が終了したら
-	if (m_setting.GetEndSetting() == TRUE) {
+	if (m_setting.GetEndSetting() == TRUE && isPose == TRUE) {
 		isPose = FALSE;
 	}
 
@@ -24,11 +27,11 @@ void cSceneMgr::Update() {
 		isPose = TRUE;
 	}
 
-
 	// 次のシーンがセットされているなら次のシーンに変更する
 	if (m_nextScene != E_SCENE_NONE) {
 		m_scene->End();
 		delete m_scene;
+		//m_poseCount = 0;
 
 		switch (m_nextScene){
 
@@ -70,7 +73,13 @@ void cSceneMgr::Update() {
 		m_setting.Update();
 
 		if (m_nowScene == E_SCENE_GAME) {
-			m_poseCount++;
+			m_poseCount++;		//ポーズ中の時間をカウントし時間制限に渡すことによりポーズ中に時間制限が減らない
+		}
+
+		//タイトルへ戻る
+		if (MOUSE_PRESS(LEFT_CLICK) && m_button.ButtonClick() == TRUE) {
+			isPose = FALSE;
+			m_nextScene = E_SCENE_TITLE;
 		}
 	}
 }
@@ -81,6 +90,7 @@ void cSceneMgr::Draw() {
 	
 	if (isPose == TRUE) {
 		m_setting.Draw();
+		m_button.Draw();
 	}
 }
 
@@ -99,4 +109,8 @@ void cSceneMgr::SettingStart() {
 
 int cSceneMgr::Get_PoseCount() {
 	return m_poseCount;
+}
+
+void cSceneMgr::ResetPoseCount() {
+	m_poseCount = 0;
 }

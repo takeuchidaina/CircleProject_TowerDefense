@@ -13,6 +13,7 @@
 #include "GameMgr.h"
 #include "Result.h"
 #include "Setting.h"
+#include "Mouse.h"
 
 /**********************************************************
 ●概要
@@ -46,6 +47,8 @@ public:
 
 	int Get_PoseCount()override;
 
+	void ResetPoseCount()override;
+
 private:
 
 	cBaseScene* m_scene;	//シーン管理変数
@@ -54,6 +57,7 @@ private:
 	bool isPose;			//TRUE:ポーズ中　FALSE:ポーズ中ではない
 	eScene m_nowScene;		//現在のシーン
 	int m_poseCount;		//設定している時間
+	cButton m_button;		//タイトルバックボタン
 
 };
 
