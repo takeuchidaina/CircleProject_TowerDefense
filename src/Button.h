@@ -48,6 +48,7 @@ public:
 
 	virtual void Update() {}
 	virtual void Draw();
+	void DrawJPG();
 	virtual void End();
 
 	/*****************************************************
