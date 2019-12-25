@@ -10,6 +10,7 @@
 #include "Log.h"
 #include "CSVLoad.h"
 #include "ColorListh.h"
+#include <fstream>
 using namespace std;
 
 /********************************************************
@@ -152,13 +153,30 @@ public:
 
 		// ¶¬‚Å‚«‚éƒ†ƒjƒbƒg•ª‚ğ¶¬
 		m_unitData = UnitLoad(unitCsv);
-		for (int i = 0; i < m_unitData.size(); i++){
+
+		ifstream ifs("../UnitSelect.txt");
+		if (ifs.fail())
+		{
+			ErrBox("UnitSelect.txt not file");
+		}
+		char str[10];
+		int loadCnt = 0;
+
+		while (ifs.getline(str, 9))
+		{
+			int tmp = atoi(str);
+			m_ui.emplace_back(20, 20 + loadCnt * (80 + 20), m_unitData[tmp]);
+			loadCnt++;
+		}
+
+		/*for (int i = 0; i < m_unitData.size(); i++){
 
 			m_ui.emplace_back(20, 20 + i * (80 + 20), m_unitData[i]);
-		}
+		}*/
 
 		m_img = LoadGraph("../resource/img/PlayerGeneBack(tmp).png");
 		FileCheck(m_img, 0003);
+
 	}
 
 	virtual ~cUnitGeneUIMgr() {}
