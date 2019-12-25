@@ -32,7 +32,7 @@ void cTime::Update() {
 void cTime::Draw() {
 	//制限時間表示
 	SetFontSize(30);
-	DrawFormatString(980, 20, m_color, "防衛成功まで:%02d秒",m_timeCnt-1);
+	DrawFormatString(980, 20, m_color, "　　　　　　%02d秒",m_timeCnt-1);
 }
 
 void cTime::End() {

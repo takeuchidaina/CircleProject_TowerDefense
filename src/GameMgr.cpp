@@ -5,10 +5,6 @@ cGameMgr::cGameMgr(ISceneChanger* _scene) : cBaseScene(_scene) {
 }
 
 void cGameMgr::Init() {
-	//時間
-	//cTime* ptime = new cTime(TIME_LIMIT);
-	//m_time = *ptime;
-	//delete ptime;
 
 	//ユニット管理部・敵AIにマップ情報を渡す
 	m_unitMgr.Set_MapData(m_mapMgr.GetMapData());
@@ -24,17 +20,13 @@ void cGameMgr::Init() {
 	m_PlayerCnt = 0;		//プレイヤーユニットの出現数
 
 	m_gameState = E_PREPARATION;	//初期ステート
-	//m_gameState = E_BATTLE;		//初期ステート
 	m_stateHistory = m_gameState;
 
 	SRand(time(NULL));		//敵ユニットのランダム出現用に現在時刻でrandを初期化
 
-	//const int fontSize = 30;
-	//int posX = 410, posY = 520;
-	//short transe = 150;
-	//sRECT rect = {/*左上y*/posY,/*左上x*/posX,/*右下x*/posX + fontSize * /*文字数＋左右の余白*/ 7 ,/*右下y*/posY + fontSize * /*文字列数＋上下の余白*/ 7 };
-	//m_endButton.Init(rect, transe, "タイトルへ戻る", fontSize);
-
+	cTime* ptime = new cTime(TIME_LIMIT_WAIT);
+	m_time = *ptime;
+	delete ptime;
 }
 
 void cGameMgr::Update() {
@@ -59,16 +51,16 @@ void cGameMgr::Update() {
 		m_BG.Update();			//雲のアニメーション
 		PlayerGenerate();
 		UnitData();
-		//UnitGenerate();			//ユニット生成
+		m_time.Update();		//制限時間を更新
+		m_time.Set_PoseTimer(m_sceneChanger->Get_PoseCount());
 
-		//シーンをバトルへ
-		if (GET_KEY_PRESS(KEY_INPUT_B) == 1) {
-			m_gameState = E_BATTLE;
-
+		if (m_time.GetSecond() <= 1/*sec*/) {
 			//時間
-			cTime* ptime = new cTime(TIME_LIMIT);
+			cTime* ptime = new cTime(TIME_LIMIT_GAME);
 			m_time = *ptime;
 			delete ptime;
+
+			m_gameState = E_BATTLE;
 		}
 		break;
 		//戦闘
@@ -109,16 +101,17 @@ void cGameMgr::Draw() {
 		m_BG.Draw();
 		m_mapMgr.Draw();
 		m_unitMgr.Draw();
-
-		SetFontSize(80);
-		DrawFormatString(300, 300, GetColor(255, 0, 0), "PUSH B !!!");
-
+		m_time.Draw();
+		SetFontSize(30);
+		DrawFormatString(900, 20, WH, " Defense Starts:");
 		break;
 		//戦闘
 	case E_BATTLE:
 		m_BG.Draw();
 		m_mapMgr.Draw();
 		m_unitMgr.Draw();
+		SetFontSize(30);
+		DrawFormatString(900, 20, WH, "Defense Success:");
 		m_time.Draw();
 		break;
 		//イベント
