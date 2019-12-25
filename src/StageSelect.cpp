@@ -52,6 +52,7 @@ void cStageSelect::Update() {
 
 				fclose(fp);
 
+				cSound::Instance()->PlaySE(cSound::Instance()->E_SE_SELECT);
 				m_sceneChanger->ChangeScene((eScene)E_SCENE_UNITSELECT);
 
 			}
