@@ -11,7 +11,7 @@ cUI::~cUI()
 }
 
 void cUI::Init() {
-
+	/*
 	int bgSizeX = 130;
 	int bgSizeY = 42;
 	int charSize = 32;
@@ -41,18 +41,20 @@ void cUI::Init() {
 
 	m_maxPlayer = 15;	//MapMgrかGameMgrから取得
 	m_playerCnt[0] = 0;m_playerCnt[1] = 0;m_playerCnt[2] = 0;
-
+	*/
 }
 
 void cUI::Update() {
+	/*
 	for (int i = 0; i < sizeof(m_maxPlayer); i++) {
 		//m_playerCnt[i] = プレイヤーの数;
 	}
 	m_sumPlayerCnt = m_playerCnt[0] + m_playerCnt[1] + m_playerCnt[2];
+	*/
 }
 
 void cUI::Draw() {
-
+	/*
 	for (int i = 0; i < E_UI_LENGTH; i++) {
 		DrawExtendGraph(m_UI[i].ux, m_UI[i].uy, m_UI[i].dx, m_UI[i].dy, m_UI[i].image, TRUE);
 	}
@@ -61,22 +63,23 @@ void cUI::Draw() {
 	DrawFormatString(m_UI[E_CHAR_ARCHER].ux + 60, m_UI[E_CHAR_ARCHER].uy + 10, BK, "X %d", m_unitData.typeCnt.archar);
 	DrawFormatString(m_UI[E_CHAR_SHIELD].ux + 60, m_UI[E_CHAR_SHIELD].uy + 10, BK, "X %d", m_unitData.typeCnt.defense);
 	DrawFormatString(m_UI[E_BG_SUM].ux+10, m_UI[E_BG_SUM].uy + 15,BK,"%d / %d",m_unitData.playerCnt,m_unitData.maxPlayer);
-
+	*/
 }
 
 void cUI::End() {
+	/*
 	for (int i = 0; i < E_UI_LENGTH; i++) {
 		DeleteGraph(m_UI[i].image);
 	}
-	
+	*/
 }
 
 void cUI::SetUnitData(sUnitData _unitData)
 {
-	m_unitData = _unitData;
+	//m_unitData = _unitData;
 }
 
 void cUI::SetPlayerCount(int _type) {
-	m_playerCnt[_type]++;
+	//m_playerCnt[_type]++;
 }
 
