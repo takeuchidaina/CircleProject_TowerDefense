@@ -8,13 +8,13 @@
 ******************************************************/
 void FileCheck(int _fileName) {
 	if (_fileName == -1 || _fileName == NULL) {
-		ErrBox("ヌルポ");
+		ErrBox("ファイルが見つかりませんでした");
 	}
 }
 
 void FileCheck(int _fileName, int _num){
 
 	if (_fileName == -1 || _fileName == NULL) {
-		FormatErrBox("ヌルポ：%d", _num);
+		FormatErrBox("ファイルが見つかりませんでした：%d", _num);
 	}
 }
