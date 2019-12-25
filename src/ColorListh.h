@@ -23,4 +23,6 @@ RGBF ˆê——
 #define YL	GetColor(255,255,0)		// ‰©	Î‘q
 #define PK	GetColor(234,145,152)	// “	“c“‡
 
+#define BR  GetColor(176, 84, 56)		// ’ƒ
+
 #endif // !_INCLUED_COLORLIST_

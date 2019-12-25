@@ -98,7 +98,7 @@ void cMapMgr::Init(){
 		}
 	}
 
-	enemyStartPos = {-500,500,0};
+	enemyStartPos = {1000,200,0};
 }
 
 void cMapMgr::Update(){
@@ -115,7 +115,7 @@ void cMapMgr::Draw(){
 	VECTOR tmp2 = map[GetStartRoomNum()].GetPos();
 	tmp2.x += map[GetStartRoomNum()].GetWidth() / 2;
 	tmp2.y += map[GetStartRoomNum()].GetHeight() / 2;
-	DrawLine3D(tmp1, tmp2, BLACKNESS);
+	DrawLine3D(tmp1, tmp2, BR);
 
 	//部屋をつなぐ線の描写
 	for (int i = 0; i < LinePos.size(); i++) {
@@ -125,7 +125,7 @@ void cMapMgr::Draw(){
 		VECTOR tmp2 = map[LinePos[i].v].GetPos();
 		tmp2.x += map[LinePos[i].v].GetWidth() / 2;
 		tmp2.y += map[LinePos[i].v].GetHeight() / 2;
-		DrawLine3D(tmp1,tmp2 ,BLACKNESS);
+		DrawLine3D(tmp1,tmp2 ,BR);
 	}
 
 
