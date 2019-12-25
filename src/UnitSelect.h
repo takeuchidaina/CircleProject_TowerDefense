@@ -30,20 +30,26 @@ private:
 
 	string CSVFilePath;
 	string ImageFilePath;
-	string pathBG = "../resource/img/UI_BG.png";
+	string pathBG;
+	int pathBGGraph;
+	string pathUI;
+	int pathUIGraph;
 	
 	vector<cButton> unitButton;
 	cButton resetButton;
 	cButton okButton;
+	cButton backButton;
+
+	sRECT selectUnitRect;
+	sRECT resetButtonRect;
+	sRECT okButtonRect;
+	sRECT backButtonRect;
+
 	vector<int> selectUnit;
 	vector<sUnitLoad> unitData;
 	vector<int> unitCostArray;		//unitDataèá
 	int unitCostNum;
 	vector<int> graphArray;
 
-	sRECT selectUnitRect;
-	sRECT resetButtonRect;
-	sRECT okButtonRect;
 };
-
 #endif

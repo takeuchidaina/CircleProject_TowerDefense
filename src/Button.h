@@ -58,6 +58,8 @@ public:
 	******************************************************/
 	bool ButtonClick();
 
+	sRECT GetRect() { return m_rect; }
+
 private:
 
 	sRECT m_rect;		//‰æ‘œÀ•W(y1,x1,x2,y2)
