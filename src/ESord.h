@@ -39,7 +39,7 @@ public:
 		//target = NULL;
 		m_Type = E_SORD;
 
-		if (0 != LoadDivGraph("../resource/img/PSord1.png", 10, 5, 2, 256, 256, m_imgtbl))
+		if (0 != LoadDivGraph("../resource/img/ESord1.png", 10, 5, 2, 256, 256, m_imgtbl))
 		{
 			ErrBox("‰æ‘œ“Ç‚İ‚İ¸”s");
 		}
