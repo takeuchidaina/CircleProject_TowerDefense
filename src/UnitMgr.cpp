@@ -35,6 +35,8 @@ cUnitMgr::cUnitMgr(){
 	Set_SelectStage();
 	m_dieEnemyCount = 0;
 	m_escortCnt = 0;
+
+	StageClear();
 }
 
 // デストラクタ

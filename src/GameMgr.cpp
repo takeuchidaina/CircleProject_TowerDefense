@@ -67,6 +67,7 @@ void cGameMgr::Update() {
 		UnitData();				//UIにユニットのデータをセットする
 		m_time.Update();		//制限時間を更新
 		DefSuccessJudge();		//時間制限による勝利判定
+		EnemyExtermination();	//敵残滅数による勝利判定
 		EscortDamageCalc();		//護衛対象のHPによる敗北判定
 		m_mapMgr.Update();		//マップサイズ用　特段処理は無し
 		m_camera.Update();		//カメラの移動・ズーム
@@ -171,6 +172,21 @@ void cGameMgr::EscortDamageCalc() {
 ******************************************************/
 void cGameMgr::DefSuccessJudge() {
 	if (m_time.GetSecond() <= 1/*sec*/) {
+		cSound::Instance()->StopSound(cSound::Instance()->E_BGM_BATTLE);
+		cSound::Instance()->StopSound(cSound::Instance()->E_EVM_SEA_ROUGH);
+		ResultSave(TRUE);
+		m_sceneChanger->ChangeScene(E_SCENE_RESULT);
+	}
+}
+
+/*****************************************************
+名前　：void DefSuccessJudge();
+概要　：制限時間を元に勝利判定を行う
+引数　：なし
+戻り値：なし
+******************************************************/
+void cGameMgr::EnemyExtermination() {
+	if (m_unitMgr.Get_GameClear() == TRUE) {
 		cSound::Instance()->StopSound(cSound::Instance()->E_BGM_BATTLE);
 		cSound::Instance()->StopSound(cSound::Instance()->E_EVM_SEA_ROUGH);
 		ResultSave(TRUE);
