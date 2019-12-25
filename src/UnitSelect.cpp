@@ -21,8 +21,7 @@ void cUnitSelect::Init() {
 
 	//ユニットデータ読み込み
 	unitData = UnitLoad(CSVFilePath);
-
-
+	int tmpGraph[7][10];
 	//各種ボタン生成
 	cButton tmpButton;
 
@@ -37,9 +36,9 @@ void cUnitSelect::Init() {
 		//cButton Init引数 RECT:右上と左下座標(top,left,right,buttom) filePath:ファイルパス
 		//cButton Init(sRECT _rect, const char* _filepth);
 		//cButton Init(sRECT _rect, short _transNum, const char* _text, short _fontSize);
-		unitButton[i].Init(tmpRect, (ImageFilePath + unitData[i].unitPath).c_str());
-		
-		graphArray.push_back(LoadGraph((ImageFilePath + unitData[i].unitPath).c_str()));
+		unitButton[i].Init(tmpRect, pathUI.c_str());
+		LoadDivGraph((ImageFilePath + unitData[i].unitPath).c_str(), 10, 5, 2, 256, 256, tmpGraph[i]);
+		graphArray.push_back(tmpGraph[i][0]);
 
 		unitCostArray.push_back(unitData[i].cost);
 	}
@@ -54,7 +53,7 @@ void cUnitSelect::Update() {
 
 		for (int i = 0; i < unitButton.size(); i++) {
 			if (unitButton[i].ButtonClick() == true) {
-				auto itr = find(selectUnit.begin(), selectUnit.end(), i);
+				//auto itr = find(selectUnit.begin(), selectUnit.end(), i);
 				//if (itr == selectUnit.end()) {
 					if (unitCostNum + unitCostArray[i] <= MAP_COST) {
 						selectUnit.push_back(i);
@@ -110,11 +109,11 @@ void cUnitSelect::Draw() {
 
 		sRECT tmpRect = unitButton[i].GetRect();
 
-		DrawExtendGraph(tmpRect.left, tmpRect.top, tmpRect.right, tmpRect.bottom, pathUIGraph, true);
-
 		unitButton[i].Draw();
 
-		DrawFormatString(tmpRect.left, tmpRect.top, BK, "%d", unitCostArray[i]);
+		DrawExtendGraph(tmpRect.left, tmpRect.top, tmpRect.right, tmpRect.bottom, graphArray[i], true);
+
+		DrawFormatString(tmpRect.left, tmpRect.top+5, BK, "%d", unitCostArray[i]);
 	}
 	for (int i = 0; i < selectUnit.size(); i++) {
 
@@ -127,6 +126,9 @@ void cUnitSelect::Draw() {
 			selectUnitRect.left + (i % 5) * 100, selectUnitRect.top + (i / 5) * 100,
 			selectUnitRect.right + (i % 5) * 100, selectUnitRect.bottom + (i / 5) * 100,
 			graphArray[selectUnit[i]], TRUE);
+
+		DrawFormatString(selectUnitRect.left + (i % 5) * 100, selectUnitRect.top + 5 + (i / 5) * 100, BK, "%d", unitCostArray[selectUnit[i]]);
+
 	}
 
 	//ユニットボタン上のコスト
