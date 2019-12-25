@@ -1,5 +1,5 @@
 /Unit,,,,,,,,,
-/ユニット番号,タイプ,HP,ATK,移動速度,次の攻撃までの時間,DEF,画像パス,エフェクト画像パス,コスト
+/ユニット番号,タイチEHP,ATK,移動速度,次の攻撁E��での時間,DEF,画像パス,エフェクト画像パス,コスチE,
 0,0,300,100,0.25,200,0,PSord1.png,SordEffect.png,30
 1,1,100,50,0.25,500,0,PArchar1.png,ArcharEffect.png,10
 2,2,300,0,0.25,0,10,PShield1.png,null,10
@@ -7,3 +7,5 @@
 4,1,300,100,0.25,500,0,PArchar3.png,ArcharEffect.png,20
 5,2,500,0,0.25,0,10,PShield2.png,null,15
 6,2,800,0,0.25,0,10,PShield3.png,null,20
+7,0,300,150,0.25,200,0,PSord2.png,SordEffect.png,30
+8,0,350,150,0.25,250,0,PSord3.png,SordEffect.png,30
