@@ -20,7 +20,6 @@
 class cUnitSelect : public cBaseScene {
 public:
 	cUnitSelect(ISceneChanger* _scene);
-
 	void Init()override;
 	void Update()override;
 	void Draw()override;
@@ -34,6 +33,7 @@ private:
 	int pathBGGraph;
 	string pathUI;
 	int pathUIGraph;
+	int** tmpGraph;
 	
 	vector<cButton> unitButton;
 	cButton resetButton;

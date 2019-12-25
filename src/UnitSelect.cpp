@@ -21,7 +21,11 @@ void cUnitSelect::Init() {
 
 	//ユニットデータ読み込み
 	unitData = UnitLoad(CSVFilePath);
-	int tmpGraph[7][10];
+	tmpGraph = new int* [unitData.size()];
+	for (int i = 0; i < unitData.size(); i++) {
+		tmpGraph[i] = new int[10];
+	}
+
 	//各種ボタン生成
 	cButton tmpButton;
 
@@ -46,6 +50,12 @@ void cUnitSelect::Init() {
 	okButton.Init(okButtonRect, (ImageFilePath + "Button_OK.png").c_str());
 	resetButton.Init(resetButtonRect, (ImageFilePath + "Button_Reset.png").c_str());
 	backButton.Init(backButtonRect, (ImageFilePath + "Button_Back.png").c_str());
+
+	//ユニットデータの画像データのみ消去(動的確保のため)
+	for (int i = 0; i < unitData.size(); i++) {
+		delete[] tmpGraph[i];
+	}
+	delete[] tmpGraph;
 }
 
 void cUnitSelect::Update() {
@@ -155,11 +165,11 @@ void cUnitSelect::Draw() {
 
 	if (unitCursorFlg != -1) {
 		switch (unitData[unitCursorFlg].type) {
-		case 0: DrawFormatString(110, 100, BK, "タイプ：Sord");break;
-		case 1: DrawFormatString(110, 100, BK, "タイプ：Archar");break;
-		case 2: DrawFormatString(110, 100, BK, "タイプ：Shield");break;
+		case 0: DrawFormatString(110, 100, BK, "タイプ：Sord"); break;
+		case 1: DrawFormatString(110, 100, BK, "タイプ：Archar"); break;
+		case 2: DrawFormatString(110, 100, BK, "タイプ：Shield"); break;
 		}
-		DrawFormatString(110, 150, BK, "HP：%d",unitData[unitCursorFlg].HP);
+		DrawFormatString(110, 150, BK, "HP：%d", unitData[unitCursorFlg].HP);
 		DrawFormatString(110, 200, BK, "ATK：%d", unitData[unitCursorFlg].ATK);
 		DrawFormatString(110, 250, BK, "コスト：%d", unitData[unitCursorFlg].cost);
 	}
@@ -172,5 +182,4 @@ void cUnitSelect::Draw() {
 }
 
 void cUnitSelect::End() {
-
 }
