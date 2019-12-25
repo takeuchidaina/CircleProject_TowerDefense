@@ -52,5 +52,7 @@ private:
 	vector<int> graphArray;
 	int unitCursorFlg;
 
+	string pathImage1;
+	int pathImage1Graph;
 };
 #endif
