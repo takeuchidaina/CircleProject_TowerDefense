@@ -11,6 +11,7 @@ cUnitSelect::cUnitSelect(ISceneChanger* _scene) : cBaseScene(_scene) {
 	ImageFilePath = "../resource/img/";
 	pathBG = "../resource/img/SelectScene_BG.jpg";
 	pathUI = "../resource/img/UI_BG.png";
+	pathImage1 = "../resource/img/3.png";
 }
 
 void cUnitSelect::Init() {
@@ -18,6 +19,7 @@ void cUnitSelect::Init() {
 
 	pathBGGraph = LoadGraph(pathBG.c_str());
 	pathUIGraph = LoadGraph(pathUI.c_str());
+	pathImage1Graph = LoadGraph(pathImage1.c_str());
 
 	//ユニットデータ読み込み
 	unitData = UnitLoad(CSVFilePath);
@@ -163,18 +165,19 @@ void cUnitSelect::Draw() {
 	//左の方
 	DrawExtendGraph(100, 50, 540, 550, pathUIGraph, true);
 
+	SetFontSize(30);
 	if (unitCursorFlg != -1) {
 		switch (unitData[unitCursorFlg].type) {
-		case 0: DrawFormatString(110, 100, BK, "タイプ：Sord"); break;
-		case 1: DrawFormatString(110, 100, BK, "タイプ：Archar"); break;
-		case 2: DrawFormatString(110, 100, BK, "タイプ：Shield"); break;
+		case 0: DrawFormatString(130, 100, BK, "タイプ：Sord"); break;
+		case 1: DrawFormatString(130, 100, BK, "タイプ：Archar"); break;
+		case 2: DrawFormatString(130, 100, BK, "タイプ：Shield"); break;
 		}
-		DrawFormatString(110, 150, BK, "HP：%d", unitData[unitCursorFlg].HP);
-		DrawFormatString(110, 200, BK, "ATK：%d", unitData[unitCursorFlg].ATK);
-		DrawFormatString(110, 250, BK, "コスト：%d", unitData[unitCursorFlg].cost);
+		DrawFormatString(130, 150, BK, "HP：%d", unitData[unitCursorFlg].HP);
+		DrawFormatString(130, 200, BK, "ATK：%d", unitData[unitCursorFlg].ATK);
+		DrawFormatString(130, 250, BK, "コスト：%d", unitData[unitCursorFlg].cost);
 	}
 
-
+	DrawExtendGraph(210, 340, 410, 540, pathImage1Graph, true);
 
 	okButton.Draw();
 	resetButton.Draw();
