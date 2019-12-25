@@ -116,6 +116,11 @@ void cMapMgr::Draw(){
 	tmp2.x += map[GetStartRoomNum()].GetWidth() / 2;
 	tmp2.y += map[GetStartRoomNum()].GetHeight() / 2;
 	DrawLine3D(tmp1, tmp2, BR);
+	DrawLine3D(VAdd(tmp1, { 0,1,0 }), VAdd(tmp2, { 0,1,0 }), BR);
+	DrawLine3D(VAdd(tmp1, { 0,-1,0 }), VAdd(tmp2, { 0,-1,0 }), BR);
+	DrawLine3D(VAdd(tmp1, { 0,2,0 }), VAdd(tmp2, { 0,2,0 }), BR);
+	DrawLine3D(VAdd(tmp1, { 0,-2,0 }), VAdd(tmp2, { 0,-2,0 }), BR);
+
 
 	//部屋をつなぐ線の描写
 	for (int i = 0; i < LinePos.size(); i++) {
@@ -126,6 +131,10 @@ void cMapMgr::Draw(){
 		tmp2.x += map[LinePos[i].v].GetWidth() / 2;
 		tmp2.y += map[LinePos[i].v].GetHeight() / 2;
 		DrawLine3D(tmp1,tmp2 ,BR);
+		DrawLine3D(VAdd(tmp1, { 0,1,0 }), VAdd(tmp2, { 0,1,0 }), BR);
+		DrawLine3D(VAdd(tmp1, { 0,-1,0 }), VAdd(tmp2, { 0,-1,0 }), BR);
+		DrawLine3D(VAdd(tmp1, { 0,2,0 }), VAdd(tmp2, { 0,2,0 }), BR);
+		DrawLine3D(VAdd(tmp1, { 0,-2,0 }), VAdd(tmp2, { 0,-2,0 }), BR);
 	}
 
 
