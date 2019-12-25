@@ -12,6 +12,9 @@ cUnitSelect::cUnitSelect(ISceneChanger* _scene) : cBaseScene(_scene) {
 	pathBG = "../resource/img/SelectScene_BG.jpg";
 	pathUI = "../resource/img/UI_BG.png";
 	pathImage1 = "../resource/img/3.png";
+
+	cSound::Instance()->PlayBGM(cSound::Instance()->E_BGM_TITLE, cSound::Instance()->E_PLAY_LOOP, FALSE);
+	cSound::Instance()->PlayEVM(cSound::Instance()->E_EVM_SEA_ROUGH, cSound::Instance()->E_PLAY_LOOP, TRUE);
 }
 
 void cUnitSelect::Init() {
@@ -68,6 +71,7 @@ void cUnitSelect::Update() {
 				//auto itr = find(selectUnit.begin(), selectUnit.end(), i);
 				//if (itr == selectUnit.end()) {
 				if (unitCostNum + unitCostArray[i] <= MAP_COST) {
+					cSound::Instance()->PlaySE(cSound::Instance()->E_SE_SELECT);
 					selectUnit.push_back(i);
 					unitCostNum += unitCostArray[i];
 				}
@@ -97,14 +101,17 @@ void cUnitSelect::Update() {
 
 				fclose(fp);
 
+				cSound::Instance()->PlaySE(cSound::Instance()->E_SE_SELECT);
 				m_sceneChanger->ChangeScene((eScene)E_SCENE_GAME);
 			}
 		}
 		if (resetButton.ButtonClick() == true) {
+			cSound::Instance()->PlaySE(cSound::Instance()->E_SE_CANSEL);
 			selectUnit.clear();
 			unitCostNum = 0;
 		}
 		if (backButton.ButtonClick() == true) {
+			cSound::Instance()->PlaySE(cSound::Instance()->E_SE_CANSEL);
 			m_sceneChanger->ChangeScene((eScene)E_SCENE_STAGESELECT);
 		}
 	}
@@ -187,4 +194,6 @@ void cUnitSelect::Draw() {
 }
 
 void cUnitSelect::End() {
+	cSound::Instance()->StopSound(cSound::Instance()->E_BGM_TITLE);		//BGM‚ðŽ~‚ß‚é
+	cSound::Instance()->StopSound(cSound::Instance()->E_EVM_SEA_ROUGH);
 }

@@ -36,8 +36,8 @@ void cMenu::Init() {
 	}
 
 	//タイトル用BGMの再生
-	cSound::Instance()->PlayEVM(
-		cSound::Instance()->E_EVM_SEA_ROUGH, cSound::Instance()->E_PLAY_LOOP, TRUE);
+	cSound::Instance()->PlayBGM(cSound::Instance()->E_BGM_TITLE, cSound::Instance()->E_PLAY_LOOP, TRUE);
+	
 }
 
 void cMenu::Update() {
@@ -53,7 +53,6 @@ void cMenu::Update() {
 				//STARTボタン
 				if (m_menu[i].menu == E_SCENE_STAGESELECT) {
 					cSound::Instance()->PlaySE(cSound::Instance()->E_SE_SELECT);		//決定音
-					cSound::Instance()->StopSound(cSound::Instance()->E_EVM_SEA_ROUGH);		//BGMを止める
 					m_sceneChanger->ChangeScene((eScene)m_menu[i].menu);				//シーンを変更
 				}
 				//SETTINGボタン
@@ -64,7 +63,6 @@ void cMenu::Update() {
 				//BACKボタン
 				else if (m_menu[i].menu == E_SCENE_TITLE) {
 					cSound::Instance()->PlaySE(cSound::Instance()->E_SE_CANSEL, cSound::Instance()->E_PLAY_NORMAL);		//キャンセル音
-					cSound::Instance()->StopSound(cSound::Instance()->E_EVM_SEA_ROUGH);		//BGMを止める
 					m_sceneChanger->ChangeScene((eScene)m_menu[i].menu);
 				}
 			}
@@ -116,4 +114,5 @@ void cMenu::End() {
 	for (int i = 0; i < E_IMAGE_MAX; i++) {
 		DeleteGraph(m_image[i].handle);
 	}
+	cSound::Instance()->StopSound(cSound::Instance()->E_BGM_TITLE);		//BGMを止める
 }
