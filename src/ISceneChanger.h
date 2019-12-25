@@ -45,6 +45,8 @@ public:
 
 	virtual int Get_PoseCount() = 0;
 
+	virtual void ResetPoseCount() = 0;
+
 private:
 
 };

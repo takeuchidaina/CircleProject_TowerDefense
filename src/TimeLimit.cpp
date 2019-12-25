@@ -19,9 +19,9 @@ void cTime::Init() {
 }
 
 void cTime::Update() {
-	m_second = (GetNowCount() + m_poseTime - m_startTime) / 1000;
-	m_second %= m_timeLimit;
-	m_timeCnt = m_timeLimit - m_second + (m_poseTime / 60);
+	m_second = (GetNowCount() - m_startTime - m_poseTime) / 1000;
+	m_second = m_second % (m_timeLimit +(m_poseTime / 60));
+	m_timeCnt = (m_timeLimit + (m_poseTime / 60)) - m_second;
 
 	if (m_timeCnt < 10) {
 		m_color = RD;
