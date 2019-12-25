@@ -78,7 +78,7 @@ void cSceneMgr::Update() {
 		}
 
 		//ƒ^ƒCƒgƒ‹‚Ö–ß‚é
-		if (MOUSE_PRESS(LEFT_CLICK) && m_button.ButtonClick() == TRUE) {
+		if (m_nowScene == E_SCENE_GAME && MOUSE_PRESS(LEFT_CLICK) && m_button.ButtonClick() == TRUE) {
 			isPose = FALSE;
 			m_nextScene = E_SCENE_TITLE;
 		}
@@ -91,7 +91,9 @@ void cSceneMgr::Draw() {
 	
 	if (isPose == TRUE) {
 		m_setting.Draw();
-		m_button.Draw();
+		if (m_nowScene == E_SCENE_GAME) {
+			m_button.Draw();
+		}
 	}
 }
 
