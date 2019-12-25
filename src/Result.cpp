@@ -7,7 +7,7 @@ cResult::cResult(ISceneChanger* _scene) : cBaseScene(_scene) {
 void cResult::Init() {
 
 	//タイトルバックのボタン
-	m_image = {/*左上y*/600,/*左上x*/880,/*右下x*/1180,/*右下y*/700,"../resource/img/TitleEndButton.png" };
+	m_image = {/*左上y*/600,/*左上x*/880,/*右下x*/1180,/*右下y*/700,"../resource/img/Button_End.png" };
 	m_image.handle = LoadGraph(m_image.filePath.c_str());
 	FileCheck(m_image.handle);
 	m_btn.Init(m_image.rect,m_image.filePath.c_str());
