@@ -27,6 +27,8 @@ void cCamera::Init() {
 
 	//2D‰^—p‚·‚éˆ×A³ŽË‰e‚É•ÏX
 	SetupCamera_Ortho(m_zoom);
+
+	m_shakeCnt = 0;
 }
 
 void cCamera::Update() {
@@ -39,6 +41,9 @@ void cCamera::Update() {
 
 	//ƒJƒƒ‰‚ÌÀ•WA’Ž‹“_‚ðXV
 	SetCameraPositionAndTarget_UpVecY(m_camera.pos, m_camera.target);
+
+	//ƒJƒƒ‰‚ð—h‚ç‚·
+	CameraShake();
 }
 
 //Šg‘åk¬‚ðs‚¤
@@ -130,6 +135,22 @@ void cCamera::CameraMoveY(float _moveAmount) {
 	m_camera.pos.y = m_camera.target.y;
 
 	CameraDrawControl();	//ƒJƒƒ‰‚ª”wŒi‚ð‰z‚µ‚Ä‚¢‚é‚È‚ç‰z‚³‚È‚¢‚æ‚¤‚ÉÀ•W‚ð’²®
+}
+
+void cCamera::CameraShake() {
+	m_shakeCnt++;
+
+	if (m_shakeCnt >= SHAKE_CNT && m_shakeCnt <= SHAKE_CNT + 30) {
+		CameraMoveX(4.0f);
+		CameraMoveY(7.0f);
+	}
+	else if (m_shakeCnt > SHAKE_CNT + 60 && m_shakeCnt < SHAKE_CNT + 90) {
+		CameraMoveX(-4.0f);
+		CameraMoveY(-7.0f);
+	}
+	else if (m_shakeCnt == SHAKE_CNT + 90) {
+		m_shakeCnt = 0;
+	}
 }
 
 void cCamera::Draw() {

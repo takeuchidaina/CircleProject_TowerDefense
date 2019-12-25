@@ -10,6 +10,8 @@
 #include "Keyboard.h"
 #include "Constant.h"
 
+#define SHAKE_CNT 600
+
 class cCamera : public cBaseTask
 {
 public:
@@ -45,6 +47,7 @@ private:
 	const float ZOOM_LIMIT_DOWN = 300.0f;	//カメラの最小拡大値
 	const float ZOOM_SCALE = 100.0f;		//拡大縮小の1スクロールに対するカメラの移動値
 	const float ZOOM_ADJUSTMENT = 11.0f;	//縮小のカメラ誤差調整用数値
+	int m_shakeCnt;
 #pragma endregion
 
 #pragma region 関数
@@ -87,6 +90,13 @@ private:
 	 　　　 それらを一定の値に変更します
 	******************************************************/
 	void CameraDrawControl();
+	/*****************************************************
+	名前　：void CameraShake();
+	概要　：カメラを揺らす
+	引数　：なし
+	戻り値：なし
+	******************************************************/
+	void CameraShake();
 #pragma endregion
 
 };
