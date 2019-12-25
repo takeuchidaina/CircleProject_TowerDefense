@@ -3,7 +3,7 @@
 0,0,200,75,0.25,200,0,PSord1.png,SordEffect.png,10
 1,0,250,100,0.25,200,0,PSord2.png,SordEffect.png,15
 2,0,300,150,0.25,250,0,PSord3.png,SordEffect.png,20
-3,1,100,100,0.25,300,0,PArchar1.png,ArcharEffect.png,10
+3,1,150,100,0.25,300,0,PArchar1.png,ArcharEffect.png,10
 4,1,150,200,0.25,400,0,PArchar2.png,ArcharEffect.png,15
 5,1,250,300,0.25,500,0,PArchar3.png,ArcharEffect.png,20
 6,2,500,0,0.25,0,10,PShield1.png,null,10
