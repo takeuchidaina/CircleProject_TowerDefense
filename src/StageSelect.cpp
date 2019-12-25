@@ -11,7 +11,7 @@ void cStageSelect::Init() {
 
 	stageButton.resize(m_stageUI.size());
 	sRECT tmpRect;
-	m_imgBacGround = LoadGraph("../resource/img/BackGround.jpg");
+	m_imgBacGround = LoadGraph("../resource/img/SelectScene_BG.jpg");
 	FileCheck(m_imgBacGround, 0015);
 	const char* stageStr = "stage";
 		;

@@ -9,7 +9,7 @@ cUnitSelect::cUnitSelect(ISceneChanger* _scene) : cBaseScene(_scene) {
 	backButtonRect.top = 600; backButtonRect.left = 100; backButtonRect.right = 400; backButtonRect.bottom = 700;
 
 	ImageFilePath = "../resource/img/";
-	pathBG = "../resource/img/BackGround.jpg";
+	pathBG = "../resource/img/SelectScene_BG.jpg";
 	pathUI = "../resource/img/UI_BG.png";
 }
 
@@ -129,6 +129,7 @@ void cUnitSelect::Draw() {
 			graphArray[selectUnit[i]], TRUE);
 	}
 
+	//ユニットボタン上のコスト
 	DrawExtendGraph(640,80,840,100,pathUIGraph, true);
 	DrawFormatString(650, 85, BK, "コスト : %d / %d", unitCostNum, MAP_COST);
 
