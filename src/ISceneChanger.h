@@ -43,6 +43,8 @@ public:
 
 	virtual void SettingStart() = 0;
 
+	virtual int Get_PoseCount() = 0;
+
 private:
 
 };

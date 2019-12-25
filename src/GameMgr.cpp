@@ -82,6 +82,8 @@ void cGameMgr::Update() {
 		m_camera.Update();		//カメラの移動・ズーム
 		m_BG.Update();			//雲のアニメーション
 		EnemyGenerate();		//敵生成
+
+		m_time.Set_PoseTimer(m_sceneChanger->Get_PoseCount());
 		break;
 		//イベント
 	case E_EVENT:
@@ -91,7 +93,6 @@ void cGameMgr::Update() {
 		break;
 		//ポーズ
 	case E_POSE:
-		m_time.PoseTimer();
 		//ゲームを終了ボタン
 		break;
 	}

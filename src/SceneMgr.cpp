@@ -3,6 +3,7 @@
 cSceneMgr::cSceneMgr() : m_nextScene(E_SCENE_NONE){
 
 	m_scene = (cBaseScene*) new cGameMgr(this);
+	m_nowScene = E_SCENE_GAME;
 	//m_scene = (cBaseScene*) new cTitle(this);
 	//m_scene = (cBaseScene*) new cStageSelect(this);
 	//m_scene = (cBaseScene*) new cUnitSelect(this);
@@ -69,8 +70,7 @@ void cSceneMgr::Update() {
 		m_setting.Update();
 
 		if (m_nowScene == E_SCENE_GAME) {
-			m_scene->Update();
-			//cGameMgr::Set_GameState(cGameMgr::E_POSE);
+			m_poseCount++;
 		}
 	}
 }
@@ -95,4 +95,8 @@ void cSceneMgr::ChangeScene(eScene _nextScene) {
 void cSceneMgr::SettingStart() {
 	m_setting.StartSetting();
 	isPose = TRUE;
+}
+
+int cSceneMgr::Get_PoseCount() {
+	return m_poseCount;
 }

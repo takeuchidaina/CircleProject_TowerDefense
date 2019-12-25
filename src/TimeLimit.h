@@ -20,7 +20,7 @@ public:
 		return m_timeCnt;
 	}
 
-	void PoseTimer();
+	void Set_PoseTimer(int _time);
 
 private:
 

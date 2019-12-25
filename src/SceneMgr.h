@@ -44,6 +44,8 @@ public:
 
 	void SettingStart()override;
 
+	int Get_PoseCount()override;
+
 private:
 
 	cBaseScene* m_scene;	//シーン管理変数
@@ -51,6 +53,7 @@ private:
 	cSetting m_setting;		//設定
 	bool isPose;			//TRUE:ポーズ中　FALSE:ポーズ中ではない
 	eScene m_nowScene;		//現在のシーン
+	int m_poseCount;		//設定している時間
 
 };
 

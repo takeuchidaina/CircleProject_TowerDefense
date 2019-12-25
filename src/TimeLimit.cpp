@@ -21,7 +21,7 @@ void cTime::Init() {
 void cTime::Update() {
 	m_second = (GetNowCount() + m_poseTime - m_startTime) / 1000;
 	m_second %= m_timeLimit;
-	m_timeCnt = m_timeLimit - m_second;
+	m_timeCnt = m_timeLimit - m_second + (m_poseTime / 60);
 
 	if (m_timeCnt < 10) {
 		m_color = RD;
@@ -39,6 +39,6 @@ void cTime::End() {
 
 }
 
-void cTime::PoseTimer() {
-	m_poseTime++;
+void cTime::Set_PoseTimer(int _time) {
+	m_poseTime = _time;
 }
