@@ -174,7 +174,8 @@ void cUnitSelect::Draw() {
 		}
 		DrawFormatString(130, 150, BK, "HP：%d", unitData[unitCursorFlg].HP);
 		DrawFormatString(130, 200, BK, "ATK：%d", unitData[unitCursorFlg].ATK);
-		DrawFormatString(130, 250, BK, "攻撃クールタイム：%df", unitData[unitCursorFlg].coolTime);
+		float tmp = unitData[unitCursorFlg].coolTime / 60.0f;
+		DrawFormatString(130, 250, BK, "攻撃クールタイム：%0.2f(s)", tmp);
 		DrawFormatString(130, 300, BK, "コスト：%d", unitData[unitCursorFlg].cost);
 	}
 

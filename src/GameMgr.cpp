@@ -180,7 +180,7 @@ void cGameMgr::DefSuccessJudge() {
 }
 
 /*****************************************************
-名前　：void DefSuccessJudge();
+名前　：void EnemyExtermination();
 概要　：制限時間を元に勝利判定を行う
 引数　：なし
 戻り値：なし
