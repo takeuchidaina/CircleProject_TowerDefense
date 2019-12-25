@@ -14,9 +14,9 @@ void cMenu::Init() {
 	}
 
 	//チュートリアル画像
-	m_btnSetumeiRect[E_TUTO_TAKARA] =	{/*左上y*/100,/*左上x*/25,		   /*右下x*/25 + 400,	   /*右下y*/400 };
-	m_btnSetumeiRect[E_TUTO_SOUSA]	=	{/*左上y*/100,/*左上x*/25 + 400 + 10,/*右下x*/25 + 800 + 10 ,/*右下y*/400 };
-	m_btnSetumeiRect[E_TUTO_TYPE]	=	{/*左上y*/100,/*左上x*/25 + 800 + 20,/*右下x*/25 + 1200 + 20,/*右下y*/400 };
+	m_btnSetumeiRect[E_TUTO_TAKARA] =	{/*左上y*/100,/*左上x*/30,		   /*右下x*/30 + 400,	   /*右下y*/400 };
+	m_btnSetumeiRect[E_TUTO_SOUSA]	=	{/*左上y*/100,/*左上x*/30 + 400 + 10,/*右下x*/30 + 800 + 10 ,/*右下y*/400 };
+	m_btnSetumeiRect[E_TUTO_TYPE]	=	{/*左上y*/100,/*左上x*/30 + 800 + 20,/*右下x*/30 + 1200 + 20,/*右下y*/400 };
 	m_btnSetumeiRect[E_TUTO_EXPANTION] = { 150,150,1280 - 150,720 - 150 };
 	m_setumeiFilePath[E_TUTO_TAKARA] = "../resource/img/Menu_Setumei1.jpg";
 	m_setumeiFilePath[E_TUTO_SOUSA] = "../resource/img/Menu_Setumei2.jpg";
@@ -103,10 +103,10 @@ void cMenu::Draw() {
 
 	//チュートリアル表示
 	for (int i = 0; i < E_TUTO_LENGTH-1; i++) {
-		m_btnSetumei[i].Draw();
+		m_btnSetumei[i].DrawJPG();
 	}
 	if (isExpantion == TRUE) {
-		m_btnSetumei[E_TUTO_EXPANTION].Draw();
+		m_btnSetumei[E_TUTO_EXPANTION].DrawJPG();
 	}
 
 }

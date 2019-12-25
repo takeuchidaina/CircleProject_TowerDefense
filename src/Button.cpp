@@ -75,6 +75,13 @@ void cButton::Draw() {
 
 }
 
+void cButton::DrawJPG() {
+	if (buttonType == TRUE) {
+		//指定された場所に指定されたサイズの画像を表示
+		DrawExtendGraph(m_rect.left, m_rect.top, m_rect.right, m_rect.bottom, m_image, FALSE);
+	}
+}
+
 void cButton::End() {
 	if (buttonType == FALSE) {
 		DeleteGraph(m_image);
