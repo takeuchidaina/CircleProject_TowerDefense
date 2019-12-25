@@ -17,7 +17,7 @@ public:
 		m_pos.z = 0.0f;
 		m_num = _num;
 		m_room = _room;
-		m_hp = 350;
+		m_hp = 100;
 		m_atk = 0;
 		m_speed = 0.25;
 		m_atkCoolTime = 0;
