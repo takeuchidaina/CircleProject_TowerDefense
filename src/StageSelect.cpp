@@ -6,6 +6,7 @@ cStageSelect::cStageSelect(ISceneChanger* _scene) : cBaseScene(_scene) {
 void cStageSelect::Init() {
 
 	for (int i = 1; i <= STAGE_NUM;i++) {
+		
 		m_stageUI.emplace_back(100 + (i-1) * 200, 200, i);
 	}
 

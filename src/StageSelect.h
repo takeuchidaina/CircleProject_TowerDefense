@@ -18,6 +18,7 @@
 #include <string>
 #include <sstream>
 #include "CSVLoad.h"
+#include "Sound.h"
 
 typedef struct {
 	float x, y, w, h;
@@ -29,6 +30,8 @@ public:
 		ostringstream tmpInt;
 		tmpInt << _num;
 		m_stageCsvPath = "../resource/Map/Map" + tmpInt.str() + ".csv";
+		string imgPath = "../resource/img/Map" + tmpInt.str() + ".png";
+		m_image = LoadGraph(imgPath.c_str());
 
 		vector<vector<double>> tmpMapData;
 		tmpMapData = CSVLoad(m_stageCsvPath);
@@ -39,7 +42,6 @@ public:
 		m_imagePos = { _x + 20, _y + 50, 160, 90 };
 		m_num = _num;
 
-		m_image = LoadGraph("../resource/img/Ship.png");
 		m_imageMouseOver = LoadGraph("../resource/img/PlayerGeneBack(tmp).png");
 	}
 
