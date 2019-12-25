@@ -60,6 +60,9 @@ class cUnitMgr : public cBaseTask{
 	cMapNavigate m_mapNavigate;		// エネミールート検索
 
 	int m_escortCnt;				// 護衛対象の数
+	int m_selectStage;
+	int m_dieEnemyNum;
+	int m_dieEnemyCount;			// 死んだエネミーの数
 
 public:
 	cUnitMgr();
@@ -266,6 +269,30 @@ public:
 	*********************************************************************/
 	int CheckPlayerClick(VECTOR _pos);
 
+	void StageClear()
+	{
+		switch (m_selectStage)
+		{
+		case 1:
+			m_dieEnemyNum = 20;
+			break;
+		case 2:
+			m_dieEnemyNum = 25;
+			break;
+		case 3:
+			m_dieEnemyNum = 30;
+			break;
+		case 4:
+			m_dieEnemyNum = 35;
+			break;
+		case 5:
+			m_dieEnemyNum = 40;
+			break;
+		default:
+			break;
+		}
+	}
+
 	// だいご追加
 	//int CheckEnemyClick(VECTOR _pos);
 
@@ -278,6 +305,23 @@ public:
 	戻り値：sTypeCnt:プレイヤーユニットのタイプ別の数
 	*********************************************************************/
 	sTypeCnt Get_TypeCnt();
+
+	/*********************************************************************
+	関数名：bool Get_GameClear()
+	概要：敵を一定数倒したか判定
+	引数：なし
+	戻り値：true:倒した
+			false:まだ
+	*********************************************************************/
+	bool Get_GameClear()
+	{
+		if (m_dieEnemyNum <= m_dieEnemyCount)
+		{
+			return true;
+		}
+
+		return false;
+	}
 
 	/************************************    Set    *****************************************/
 
@@ -304,6 +348,22 @@ public:
 	戻り値：なし
 	*********************************************************************/
 	void SelectUI(int _num);	//-1	// 触れてるか	//mouse X
+
+	void Set_SelectStage()
+	{
+		ifstream ifs("../StageSelect.txt");
+		if (ifs.fail())
+		{
+			ErrBox("StageSelect.txt not file");
+		}
+		char str[10];
+		int loadCnt = 0;
+
+		while (ifs.getline(str, 9))
+		{
+			m_selectStage = atoi(str);
+		}
+	}
 
 	/*********************************************************************
 	関数名：void Set_NextEnemyPos(int _enemyNum, int _nextRoom, double _nextX)
