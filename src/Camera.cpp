@@ -32,7 +32,7 @@ void cCamera::Init() {
 void cCamera::Update() {
 
 	//Šg‘åk¬
-	CameraScale();
+	//CameraScale();
 
 	//ˆÚ“®
 	CameraMove();
