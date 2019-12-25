@@ -13,6 +13,20 @@ void cMenu::Init() {
 		m_btn[i].Init(m_menu[i].image.rect, m_menu[i].image.filePath.c_str());
 	}
 
+	//チュートリアル画像
+	m_btnSetumeiRect[E_TUTO_TAKARA] =	{/*左上y*/100,/*左上x*/25,		   /*右下x*/25 + 400,	   /*右下y*/400 };
+	m_btnSetumeiRect[E_TUTO_SOUSA]	=	{/*左上y*/100,/*左上x*/25 + 400 + 10,/*右下x*/25 + 800 + 10 ,/*右下y*/400 };
+	m_btnSetumeiRect[E_TUTO_TYPE]	=	{/*左上y*/100,/*左上x*/25 + 800 + 20,/*右下x*/25 + 1200 + 20,/*右下y*/400 };
+	m_btnSetumeiRect[E_TUTO_EXPANTION] = { 150,150,1280 - 150,720 - 150 };
+	m_setumeiFilePath[E_TUTO_TAKARA] = "../resource/img/Menu_Setumei1.jpg";
+	m_setumeiFilePath[E_TUTO_SOUSA] = "../resource/img/Menu_Setumei2.jpg";
+	m_setumeiFilePath[E_TUTO_TYPE] = "../resource/img/Menu_Setumei3.jpg";
+	m_setumeiFilePath[E_TUTO_EXPANTION] = m_setumeiFilePath[0];
+	for (int i = 0; i < E_TUTO_LENGTH; i++) {
+		m_btnSetumei[i].Init(m_btnSetumeiRect[i], m_setumeiFilePath[i].c_str());
+	}
+	isExpantion = FALSE;
+
 	//画像の初期化
 	m_image[E_BACK_GROUND] = { 0,0,1280,960,"../resource/img/BackGround.jpg" };
 	//m_image[E_LOGO] = { 50,0,1330,960,"../resource/img/TitleLogo.png"};
@@ -55,7 +69,23 @@ void cMenu::Update() {
 				}
 			}
 		}
+
+		//チュートリアルボタン
+		for (int i = 0; i < E_TUTO_LENGTH-1; i++) {
+			if (m_btnSetumei[i].ButtonClick() == TRUE && isExpantion == FALSE) {
+				m_setumeiFilePath[E_TUTO_EXPANTION] = m_setumeiFilePath[i].c_str();
+				m_btnSetumei[E_TUTO_EXPANTION].Init(m_btnSetumeiRect[E_TUTO_EXPANTION], m_setumeiFilePath[E_TUTO_EXPANTION].c_str());
+				cSound::Instance()->PlaySE(cSound::Instance()->E_SE_SELECT);		//決定音
+				isExpantion = TRUE;
+				break;
+			}
+			else if (m_btnSetumei[i].ButtonClick() == FALSE && isExpantion == TRUE) {
+				isExpantion = FALSE;
+				break;
+			}
+		}
 	}
+
 
 }
 
@@ -70,6 +100,15 @@ void cMenu::Draw() {
 	for (int i = 0; i < E_TITLE_MAX; i++) {
 		m_btn[i].Draw();
 	}
+
+	//チュートリアル表示
+	for (int i = 0; i < E_TUTO_LENGTH-1; i++) {
+		m_btnSetumei[i].Draw();
+	}
+	if (isExpantion == TRUE) {
+		m_btnSetumei[E_TUTO_EXPANTION].Draw();
+	}
+
 }
 
 void cMenu::End() {

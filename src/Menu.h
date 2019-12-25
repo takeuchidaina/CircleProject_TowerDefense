@@ -51,10 +51,23 @@ private:
 		int menu = 0;	//メニュー項目
 	}sSelectMenu;
 
+	typedef enum {
+		E_TUTO_TAKARA,
+		E_TUTO_SOUSA,
+		E_TUTO_TYPE,
+		E_TUTO_EXPANTION,
+		E_TUTO_LENGTH
+	}eTutoRial;
+
 	const int m_menuNum = E_TITLE_MAX;	//メニュー項目数
 	sSelectMenu m_menu[E_TITLE_MAX];	//メニュー情報の実態宣言
 
 	sImage m_image[E_IMAGE_MAX];	//ボタン以外の画像
 	cButton m_btn[E_TITLE_MAX];		//ボタン
+
+	sRECT m_btnSetumeiRect[E_TUTO_LENGTH];
+	cButton m_btnSetumei[E_TUTO_LENGTH];
+	string m_setumeiFilePath[E_TUTO_LENGTH];
+	bool isExpantion;
 
 };
