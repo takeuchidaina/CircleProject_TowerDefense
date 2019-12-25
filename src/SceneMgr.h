@@ -50,6 +50,7 @@ private:
 	eScene m_nextScene;		//次のシーン
 	cSetting m_setting;		//設定
 	bool isPose;			//TRUE:ポーズ中　FALSE:ポーズ中ではない
+	eScene m_nowScene;		//現在のシーン
 
 };
 
