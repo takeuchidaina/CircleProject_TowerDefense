@@ -13,10 +13,10 @@ public:
 		m_pos.z = 0.0f;
 		m_num = _num;
 		m_room = _room;
-		m_hp = 200;
+		m_hp = 500;
 		m_atk = 0;
 		m_speed = 0.25;
-		m_atkCoolTime = 64;
+		m_atkCoolTime = 0;
 		m_imgNum = 0;
 		m_atkR = UNIT_WIDTH;
 		//m_atkCoolTime = 64;
