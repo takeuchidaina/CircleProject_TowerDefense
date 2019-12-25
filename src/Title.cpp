@@ -44,9 +44,8 @@ void cTitle::Update() {
 				}
 				//ENDボタン
 				else if (m_menu[i].menu == E_SCENE_END) {
-					cSound::Instance()->PlaySE(cSound::Instance()->E_SE_CANSEL);		//キャンセル音
+					cSound::Instance()->PlaySE(cSound::Instance()->E_SE_CANSEL, cSound::Instance()->E_PLAY_NORMAL);		//キャンセル音
 					cSound::Instance()->StopSound(cSound::Instance()->E_EVM_SEA_ROUGH);		//BGMを止める
-					WaitTimer(300);		//キャンセルSEが鳴り終わるのを待つ
 					cSound::Instance()->End();
 					DxLib_End();
 				}

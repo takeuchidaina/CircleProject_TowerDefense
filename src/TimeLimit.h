@@ -20,6 +20,8 @@ public:
 		return m_timeCnt;
 	}
 
+	void Set_PoseTimer(int _time);
+
 private:
 
 	int m_second;
@@ -27,6 +29,7 @@ private:
 	int m_timeCnt;
 	int m_timeLimit;
 	int m_color;
+	long m_poseTime;
 
 };
 

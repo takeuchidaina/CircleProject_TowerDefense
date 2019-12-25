@@ -2,8 +2,9 @@
 
 cSceneMgr::cSceneMgr() : m_nextScene(E_SCENE_NONE){
 
-	//m_scene = (cBaseScene*) new cGameMgr(this);
-	m_scene = (cBaseScene*) new cTitle(this);
+	m_scene = (cBaseScene*) new cGameMgr(this);
+	m_nowScene = E_SCENE_GAME;
+	//m_scene = (cBaseScene*) new cTitle(this);
 	//m_scene = (cBaseScene*) new cStageSelect(this);
 	//m_scene = (cBaseScene*) new cUnitSelect(this);
 }
@@ -33,21 +34,27 @@ void cSceneMgr::Update() {
 
 		case E_SCENE_TITLE:
 			m_scene = (cBaseScene*) new cTitle(this);
+			m_nowScene = E_SCENE_TITLE;
 			break;
 		case E_SCENE_MENU:
 			m_scene = (cBaseScene*) new cMenu(this);
+			m_nowScene = E_SCENE_MENU;
 			break;
 		case E_SCENE_STAGESELECT:
 			m_scene = (cBaseScene*) new cStageSelect(this);
+			m_nowScene = E_SCENE_STAGESELECT;
 			break;
 		case E_SCENE_UNITSELECT:
 			m_scene = (cBaseScene*) new cUnitSelect(this);
+			m_nowScene = E_SCENE_UNITSELECT;
 			break;
 		case E_SCENE_GAME:
 			m_scene = (cBaseScene*) new cGameMgr(this);
+			m_nowScene = E_SCENE_GAME;
 			break;
 		case E_SCENE_RESULT:
 			m_scene = (cBaseScene*) new cResult(this);
+			m_nowScene = E_SCENE_RESULT;
 			break;
 		}
 
@@ -61,6 +68,10 @@ void cSceneMgr::Update() {
 	}
 	else {
 		m_setting.Update();
+
+		if (m_nowScene == E_SCENE_GAME) {
+			m_poseCount++;
+		}
 	}
 }
 
@@ -82,5 +93,10 @@ void cSceneMgr::ChangeScene(eScene _nextScene) {
 }
 
 void cSceneMgr::SettingStart() {
+	m_setting.StartSetting();
 	isPose = TRUE;
+}
+
+int cSceneMgr::Get_PoseCount() {
+	return m_poseCount;
 }

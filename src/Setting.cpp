@@ -100,14 +100,19 @@ void cSetting::Update() {
 	}
 
 	//ボタンがクリックされている間
-	if (MOUSE_PRESS(LEFT_CLICK) >= 1) {
+	if (MOUSE_PRESS(LEFT_CLICK) % 4 == 1) {
 		//音量の調節 < > のマウス処理
 		for (int i = 0; i < E_VOL_LENGTH; i++) {
 			for (int j = 0; j < 2; j++) {
-				if (m_volBtn[i][j].ButtonClick() == TRUE) {
-					if (j % 2 == 0) { m_volume[i]--; }	//音量を下げる
-					else { m_volume[i]++; }				//音量を上げる
 
+				//ボタンが押されている
+				if (m_volBtn[i][j].ButtonClick() == TRUE) {
+					if (j % 2 == 0 && m_volume[i] > 0){
+						m_volume[i]--;	//音量を下げる
+					}
+					else if(j % 2 == 1 && m_volume[i] < 100){
+						m_volume[i]++;	//音量を上げる
+					}		
 					cSound::Instance()->PlaySE(cSound::Instance()->E_SE_SELECT);
 				}
 			}
@@ -181,4 +186,14 @@ void cSetting::SoundSettingApp() {
 bool cSetting::GetEndSetting() {
 
 	return m_settingEnd;
+}
+
+/*****************************************************
+名前　：bool StartSetting()
+概要　：設定を開始する、フラグを変化させる
+引数　：なし
+戻り値：なし
+******************************************************/
+void cSetting::StartSetting() {
+	m_settingEnd = FALSE;
 }
