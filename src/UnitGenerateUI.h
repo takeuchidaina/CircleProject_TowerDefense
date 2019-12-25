@@ -46,7 +46,7 @@ private:
 	int m_nowHP;				// 現在のHP
 
 	int m_img;					// 画像
-	int m_unitImg[6];			// ユニット画像
+	int m_unitImg[10];			// ユニット画像
 
 	sUnitLoad m_unit;
 
@@ -70,7 +70,7 @@ public:
 		FileCheck(m_img, 0001);
 
 		string imgPath = "../resource/img/" + m_unit.unitPath;
-		LoadDivGraph(imgPath.c_str(), 6, 3, 2, 64, 64, m_unitImg);
+		LoadDivGraph(imgPath.c_str(), 10, 5, 2, 256, 256, m_unitImg);
 		FileCheck(m_unitImg[0], 0000);
 
 		m_unitType = "タイプ："+TypeUI(m_unit.type);
@@ -102,7 +102,13 @@ public:
 		DrawFormatString(m_x + 10, m_y + 25, BK, "ATK：%d", m_unit.ATK);
 		DrawFormatString(m_x + 10, m_y + 40, BK, "DEF：%d", m_unit.DEF);
 		DrawFormatString(m_x + 10, m_y + 55, BK, "HP：%d", m_unit.HP);
-		DrawGraph(m_x + 190, m_y + 10, m_unitImg[0], TRUE);
+		DrawExtendGraph(
+			m_x+160, m_y,
+			m_x + m_width,
+			m_y + m_height,
+			m_unitImg[3], TRUE
+		);
+		//DrawGraph(m_x + 190, m_y + 10, m_unitImg[3], TRUE);
 	}
 
 	string TypeUI(int _type)

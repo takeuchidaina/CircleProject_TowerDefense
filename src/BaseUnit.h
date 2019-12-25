@@ -41,14 +41,14 @@ protected:
 	int m_state;			// 現在の状態
 	int m_direction;		// ユニットの向き　1(U_RIGHT):右 -1(U_LEFT):左
 	int m_moveCnt;			// アニメーション用カウント
-	int m_moveAnime[4] = { 1, 0, 1, 2};	// アニメーション配列
+	int m_moveAnime[8] = { 2, 1, 0, 1, 2, 3, 4, 3};	// アニメーション配列
 	int m_effectImage[2];	// Effect用
 	int m_effectAnimeCnt;	// Effectアニメーションカウント
 	bool m_isEffect;		// Effect再生フラグ
 	sNextMove m_nextMove;	// 次に向かう場所
 
 	int m_imgNum;			// アニメーションナンバー
-	int m_imgtbl[6];		// 画像配列
+	int m_imgtbl[10];		// 画像配列
 
 	int m_moveStartCnt = 0;				// 一定数まで行ったら移動
 	int m_moveType = 0;				// moveするTypeを決めるランダム

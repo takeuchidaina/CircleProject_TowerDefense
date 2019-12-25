@@ -36,7 +36,7 @@ public:
 		//target = NULL;
 		m_Type = E_ARCHAR;
 
-		if (0 != LoadDivGraph("../resource/img/EArchar.png", 6, 3, 2, 64, 64, m_imgtbl))
+		if (0 != LoadDivGraph("../resource/img/PArchar1.png", 10, 5, 2, 256, 256, m_imgtbl))
 		{
 			ErrBox("‰æ‘œ“Ç‚İ‚İ¸”s");
 		}

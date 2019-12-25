@@ -23,7 +23,7 @@ public:
 		m_direction = U_LEFT;
 		m_Type = E_DEFENSE;
 
-		if (0 != LoadDivGraph("../resource/img/EShield.png", 6, 3, 2, 64, 64, m_imgtbl))
+		if (0 != LoadDivGraph("../resource/img/PShield1.png", 10, 5, 2, 256, 256, m_imgtbl))
 		{
 			ErrBox("‰æ‘œ“Ç‚İ‚İ¸”s");
 		}
