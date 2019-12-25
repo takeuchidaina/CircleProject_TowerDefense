@@ -12,6 +12,8 @@
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
 	// 画面サイズの変更
+	SetWindowIconID(333);
+	SetMainWindowText("海の雇われ護衛団");
 	SetWindowSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 	SetGraphMode(WINDOW_WIDTH, WINDOW_HEIGHT, 16);
 
