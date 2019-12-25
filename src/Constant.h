@@ -108,6 +108,7 @@ typedef struct{
 
 	int unitID;			// 生成するユニットID
 	int mapID;			// 生成する場所のID
+	int uiID;			// 生成したUI
 }sUnitGene;
 
 // 四角

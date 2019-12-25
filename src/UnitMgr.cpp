@@ -205,9 +205,9 @@ void cUnitMgr::RoomDraw(){
 
 				float y = m_mapData[i].pos.y;
 
-				float hPos = m_mapData[i].height / 2 / (m_mapData[i].roomSize + 1) * num;
+				float hPos = m_mapData[i].height / 2 / (m_mapData[i].roomSize + 5) * num;
 
-				y += hPos + 40;
+				y += hPos + 30;
 
 
 				player[arreyNum]->Set_Pos(VGet(x, y, -(j / 10)));
@@ -238,9 +238,9 @@ void cUnitMgr::RoomDraw(){
 
 				float y = m_mapData[i].pos.y;
 
-				float hPos = m_mapData[i].height / 2 / (m_mapData[i].roomSize + 1) * num;
+				float hPos = m_mapData[i].height / 2 / (m_mapData[i].roomSize + 5) * num;
 
-				y += hPos + 40;
+				y += hPos + 30;
 
 
 				enemy[arreyNum]->Set_Pos(VGet(x, y, -(j / 10)));
@@ -597,7 +597,7 @@ int cUnitMgr::UnitGenerate()
 	default:
 		break;
 	}
-
+	m_geneUI->Set_isActive(false, gene.uiID);
 	return 0;
 }
 
