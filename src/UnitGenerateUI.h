@@ -189,10 +189,10 @@ public:
 		// ¶¬‚Å‚«‚éƒ†ƒjƒbƒg•ª‚ğ¶¬
 		m_unitData = UnitLoad(unitCsv);
 
-		ifstream ifs("../UnitSelect.txt");
+		ifstream ifs("../UnitSelect.dat");
 		if (ifs.fail())
 		{
-			ErrBox("UnitSelect.txt not file");
+			ErrBox("UnitSelect.dat not file");
 		}
 		char str[10];
 		int loadCnt = 0;

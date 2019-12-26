@@ -180,7 +180,7 @@ void cUnitMgr::Draw(){
 	m_geneUI->Draw();
 
 	SetFontSize(30);
-	DrawFormatString(760, 50, WH, "BreakCnt %d / ClearBreakCnt %d", m_dieEnemyCount, m_dieEnemyNum);
+	DrawFormatString(980, 50, WH, "Enemy Down:%d/%d", m_dieEnemyCount, m_dieEnemyNum);
 
 
 #ifdef UNIT_MGR_DEBUG

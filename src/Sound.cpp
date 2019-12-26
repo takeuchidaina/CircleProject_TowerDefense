@@ -275,7 +275,7 @@ void cSound::ChangeSoundVolume() {
 	string volume[E_VOL_LENGTH];	//ファイルから読み込んだ音量値を格納
 
 	//ファイルから音量設定ファイルの値を読み込む
-	ifstream ifs("../Data/Setting.txt");
+	ifstream ifs("../Data/Setting.dat");
 	if (ifs.fail()) { DEBUG_LOG("設定ファイル読み込み失敗"); }
 
 	//音量を格納

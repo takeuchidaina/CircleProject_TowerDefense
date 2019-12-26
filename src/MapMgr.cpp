@@ -2,7 +2,7 @@
 
 cMapMgr::cMapMgr(){
 
-	ifstream ifs("../StageSelect.txt");
+	ifstream ifs("../StageSelect.dat");
 	string str;
 	if (ifs.fail())std::cerr << "Failed to open file." << std::endl;
 	getline(ifs, str);

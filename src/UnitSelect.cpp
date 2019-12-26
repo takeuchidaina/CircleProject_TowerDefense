@@ -86,7 +86,7 @@ void cUnitSelect::Update() {
 				FILE* fp;
 
 				errno_t err; // errno_t型(int型)
-				err = fopen_s(&fp, "../UnitSelect.txt", "w"); // ファイルを開く。失敗するとエラーコードを返す。
+				err = fopen_s(&fp, "../UnitSelect.dat", "w"); // ファイルを開く。失敗するとエラーコードを返す。
 				if (err != 0) {
 					DEBUG_LOG("file not open");
 				}
