@@ -176,7 +176,12 @@ void cUnitMgr::Draw(){
 		}
 	}
 
+	
 	m_geneUI->Draw();
+
+	SetFontSize(30);
+	DrawFormatString(760, 50, WH, "BreakCnt %d / ClearBreakCnt %d", m_dieEnemyCount, m_dieEnemyNum);
+
 
 #ifdef UNIT_MGR_DEBUG
 	//DrawFormatString(100, 100, GetColor(255, 0, 0), "roomPlayer:%d", roomPlayer.size());
