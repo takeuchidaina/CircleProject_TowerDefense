@@ -352,10 +352,10 @@ public:
 
 	void Set_SelectStage()
 	{
-		ifstream ifs("../StageSelect.txt");
+		ifstream ifs("../StageSelect.dat");
 		if (ifs.fail())
 		{
-			ErrBox("StageSelect.txt not file");
+			ErrBox("StageSelect.dat not file");
 		}
 		char str[10];
 		int loadCnt = 0;

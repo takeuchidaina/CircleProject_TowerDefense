@@ -47,7 +47,7 @@ void cStageSelect::Update() {
 				FILE* fp;
 
 				errno_t err; // errno_t型(int型)
-				err = fopen_s(&fp, "../StageSelect.txt", "w"); // ファイルを開く。失敗するとエラーコードを返す。
+				err = fopen_s(&fp, "../StageSelect.dat", "w"); // ファイルを開く。失敗するとエラーコードを返す。
 				if (err != 0) {
 					DEBUG_LOG("file not open");
 				}

@@ -13,7 +13,7 @@ void cSetting::Init() {
 	m_volume[0] = { 0 };
 	string volume[E_VOL_LENGTH];	//ファイルに記入してある音量を格納
 
-	ifstream ifs("../Data/Setting.txt");
+	ifstream ifs("../Data/Setting.dat");
 	if (ifs.fail()) {DEBUG_LOG("設定ファイル読み込み失敗");}
 	
 	for (int i = 0; i < E_VOL_LENGTH;i++) {
@@ -163,7 +163,7 @@ void cSetting::SoundSettingApp() {
 
 	//TODO:enum番目だけ書き換える
 	//ファイルに変更後の音量値を書き込み
-	ofstream ofs("../Data/Setting.txt");
+	ofstream ofs("../Data/Setting.dat");
 	if (ofs.fail()) { DEBUG_LOG("設定ファイル読み込み失敗"); }
 
 	for (int i = 0; i < E_VOL_LENGTH; i++) {
