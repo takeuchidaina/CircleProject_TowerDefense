@@ -5,6 +5,7 @@
 #include "PlayerUnit.h"
 #include "EnemyUnit.h"
 #include "Constant.h"
+#include "ColorListh.h"
 #include "PSord.h"
 #include "PArcher.h"
 #include "PDefense.h"
@@ -31,8 +32,8 @@ using namespace std;
 #ifndef _INCLUED_UNIT_MGR_
 #define _INCLUED_UNIT_MGR_
 
-#define MOVE_COOLTIME_MAX 500    //  Randで0~500
-#define MOVE_COOLTIME_MIN 300    //  MOVE_COOLTIME_MAXに固定+300
+#define MOVE_COOLTIME_MAX 300    //  Randで0~500
+#define MOVE_COOLTIME_MIN 250    //  MOVE_COOLTIME_MAXに固定+300
 
 class cUnitMgr : public cBaseTask{
 

@@ -35,8 +35,8 @@
 　竹内 大奈
 ********************************************************/
 
-#define SPAWN_COOLTIME_MAX 200    //  Randで0~200
-#define SPAWN_COOLTIME_MIN 300    //  MOVE_COOLTIME_MAXに固定+300
+#define SPAWN_COOLTIME_MAX 200    //  Randで0~150
+#define SPAWN_COOLTIME_MIN 250    //  MOVE_COOLTIME_MAXに固定+100
 
 class cGameMgr : public cBaseScene{
 
@@ -82,7 +82,7 @@ private:
 	int m_spawnCoolTime = 0;	// m_spawnCntの最大数こきめる
 
 	const int TIME_LIMIT_WAIT = 10;
-	const int TIME_LIMIT_GAME = 120;	//時間制限	TODO:MAPから情報を受け取る
+	const int TIME_LIMIT_GAME = 61;	//時間制限	TODO:MAPから情報を受け取る
 
 	/*****************************************************
 	名前　：void EscortDamageCalc();

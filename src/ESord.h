@@ -29,10 +29,10 @@ public:
 		m_pos.z = 0.0f;
 		m_num = _num;
 		m_room = _room;
-		m_hp = 300;
-		m_atk = 50;
+		m_hp = 350;
+		m_atk = 80;
 		m_speed = 0.25;
-		m_atkCoolTime = 200;
+		m_atkCoolTime = 250;
 		m_imgNum = 0;
 		m_moveCnt = 0;
 		m_direction = U_LEFT;

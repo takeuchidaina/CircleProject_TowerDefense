@@ -135,6 +135,11 @@ void cMapMgr::Draw(){
 		DrawLine3D(VAdd(tmp1, { 0,-1,0 }), VAdd(tmp2, { 0,-1,0 }), BR);
 		DrawLine3D(VAdd(tmp1, { 0,2,0 }), VAdd(tmp2, { 0,2,0 }), BR);
 		DrawLine3D(VAdd(tmp1, { 0,-2,0 }), VAdd(tmp2, { 0,-2,0 }), BR);
+
+		DrawLine3D(VAdd(tmp1, { 1,0,0 }), VAdd(tmp2, { 1,0,0 }), BR);
+		DrawLine3D(VAdd(tmp1, { -1,0,0 }), VAdd(tmp2, { -1,0,0 }), BR);
+		DrawLine3D(VAdd(tmp1, { 2,0,0 }), VAdd(tmp2, { 2,0,0 }), BR);
+		DrawLine3D(VAdd(tmp1, { -2,0,0 }), VAdd(tmp2, { -2,0,0 }), BR);
 	}
 
 
